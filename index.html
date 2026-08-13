@@ -25,7 +25,7 @@
             100% { transform: scale(1); }
         }
 
-        /* Barra de tareas (Ajustada la altura a 35px para calzar justo sobre la tablet) */
+        /* Barra de tareas (35px sobre la tablet) */
         #taskbar { position: fixed; bottom: 35px; left: 0; width: 100%; height: 45px; background: rgba(0,0,0,0.92); backdrop-filter: blur(10px); display: flex; align-items: center; color: white; padding: 0 10px; z-index: 99999; }
         .start-btn { font-size: 22px; cursor: pointer; padding: 0 15px; height: 100%; display: flex; align-items: center; }
         .start-btn:hover { background: rgba(255, 255, 255, 0.1); }
@@ -58,7 +58,7 @@
         .view-details .file-item { display: flex; align-items: center; justify-content: space-between; padding: 8px; border-bottom: 1px solid #eee; font-size: 12px; }
 
         /* Panel Guía */
-        #win-ejercicios { width: 520px; height: 470px; border: 2px solid #27ae60; }
+        #win-ejercicios { width: 520px; height: 490px; border: 2px solid #27ae60; }
         .ejercicio-box { background: #f4fbf7; border: 1px solid #a3e4d7; border-radius: 6px; padding: 12px; margin-bottom: 12px; }
         .ejercicio-box h4 { color: #1e8449; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
         
@@ -68,6 +68,10 @@
         .feedback-msg { margin-top: 10px; padding: 10px; border-radius: 4px; font-size: 13px; display: none; line-height: 1.4; }
         .feedback-info { background: #e8f4f8; color: #1d6f8a; border: 1px solid #bce8f1; }
         .feedback-success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+
+        /* Área de Práctica de Pad */
+        #pad-practice-area { display: none; background: #fff; border: 2px dashed #3498db; padding: 15px; border-radius: 6px; text-align: center; margin-top: 10px; }
+        .pad-target { display: inline-block; padding: 10px 15px; background: #e74c3c; color: white; border-radius: 4px; cursor: pointer; font-size: 12px; margin: 5px; }
     </style>
 </head>
 <body>
@@ -92,12 +96,13 @@
         <div class="win-body">
             <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:4px; font-weight:bold;">
                 <span>Progreso del Curso:</span>
-                <span id="progreso-texto">0 / 7 Completados</span>
+                <span id="progreso-texto">0 / 8 Completados</span>
             </div>
             <div class="progress-bar-bg"><div id="progreso-fill" class="progress-bar-fill"></div></div>
 
             <label style="font-size: 12px; font-weight: bold;">Seleccioná la tarea:</label>
             <select id="select-ejercicio" class="input-box" onchange="cargarEjercicio()">
+                <option value="0">0. Entrenamiento del Pad (Precisión de Clics)</option>
                 <option value="1">1. Abrir WordPad y Este Equipo</option>
                 <option value="2">2. Abrir el Menú Inicio</option>
                 <option value="3">3. Crear un Documento en WordPad</option>
@@ -110,6 +115,14 @@
             <div class="ejercicio-box">
                 <h4 id="ej-titulo"><i class="fa-solid fa-circle-play"></i> Cargando...</h4>
                 <p id="ej-instruccion" style="font-size: 13px; line-height: 1.4; margin-top: 5px; color:#444;"></p>
+                
+                <!-- Sub-área para el ejercicio de Pad -->
+                <div id="pad-practice-area">
+                    <p style="font-size:12px; color:#666; margin-bottom:8px;">Hacé <b>Doble Clic rápido</b> en el objetivo azul para afilar el puntero:</p>
+                    <div id="pad-target-btn" class="pad-target" style="background:#3498db;" ondblclick="completarPracticaPad()">
+                        <i class="fa-solid fa-computer-mouse"></i> ¡Hacé DOBLE CLIC acá!
+                    </div>
+                </div>
             </div>
 
             <div style="display:flex; gap:10px;">
@@ -238,12 +251,13 @@
 
         // ESTADO Y NIVELES DE ERROR
         let archivos = [];
-        let estadoAcciones = { winWordAbierta: false, winPcAbierta: false, inicioAbierto: false, wordGuardado: false, facturaGuardada: false, vistaDetallesUsada: false, mailEnviado: false, waEnviado: false };
+        let estadoAcciones = { practicaPadLista: false, winWordAbierta: false, winPcAbierta: false, inicioAbierto: false, wordGuardado: false, facturaGuardada: false, vistaDetallesUsada: false, mailEnviado: false, waEnviado: false };
         let intentosFallidos = 0;
         let completados = new Set();
-        let ultimoEjercicioSeleccionado = "1";
+        let ultimoEjercicioSeleccionado = "0";
 
         const ejercicios = {
+            "0": { titulo: "0. Entrenamiento del Pad", inst: "Realizá dos toques rápidos (Doble Clic) sobre el recuadro azul para comprobar la velocidad de tu dedo en el touchpad.", check: () => estadoAcciones.practicaPadLista, reset: () => { estadoAcciones.practicaPadLista = false; const btn = document.getElementById('pad-target-btn'); btn.style.background = "#3498db"; btn.innerHTML = '<i class="fa-solid fa-computer-mouse"></i> ¡Hacé DOBLE CLIC acá!'; }, target: ["pad-target-btn"], ayuda: "Intentá tocar dos veces seguidas rápido con el dedo sobre el recuadro azul sin mover el puntero." },
             "1": { titulo: "1. Abrir Ventanas", inst: "Abrí la ventana 'WordPad' y la ventana 'Este Equipo' desde el escritorio.", check: () => estadoAcciones.winWordAbierta && estadoAcciones.winPcAbierta, reset: () => { estadoAcciones.winWordAbierta = false; estadoAcciones.winPcAbierta = false; closeWindow('win-word'); closeWindow('win-pc'); }, target: ["icon-word", "icon-pc"], ayuda: "Hacé clic directamente sobre los íconos de WordPad y Este Equipo." },
             "2": { titulo: "2. Menú Inicio", inst: "Hacé clic en el botón de Windows (extremo inferior izquierdo) para abrir el Menú Inicio.", check: () => estadoAcciones.inicioAbierto, reset: () => { estadoAcciones.inicioAbierto = false; document.getElementById('start-menu').style.display = 'none'; }, target: ["start-btn"], ayuda: "Buscá el ícono de las ventanas de Windows en la barra negra de abajo." },
             "3": { titulo: "3. Crear Nota en WordPad", inst: "Abrí WordPad, escribí un texto y presiona 'Guardar en Documentos'.", check: () => estadoAcciones.wordGuardado, reset: () => { estadoAcciones.wordGuardado = false; }, target: ["icon-word"], ayuda: "Abrí WordPad, escribí una palabra y tocá el botón azul 'Guardar'." },
@@ -253,11 +267,27 @@
             "7": { titulo: "7. Compartir por WhatsApp", inst: "Abrí 'WhatsApp', elegí tu documento en el selector y hacé clic en 'Compartir'.", check: () => estadoAcciones.waEnviado, reset: () => { estadoAcciones.waEnviado = false; }, target: ["icon-wa"], ayuda: "Tocá el selector dentro de WhatsApp y elegí tu archivo." }
         };
 
+        function completarPracticaPad() {
+            estadoAcciones.practicaPadLista = true;
+            const btn = document.getElementById('pad-target-btn');
+            btn.style.background = "#27ae60";
+            btn.innerHTML = '<i class="fa-solid fa-circle-check"></i> ¡Excelente Doble Clic!';
+        }
+
         function cargarEjercicio() {
             limpiarResaltados();
             intentosFallidos = 0;
             ultimoEjercicioSeleccionado = document.getElementById('select-ejercicio').value;
             const val = ultimoEjercicioSeleccionado;
+            
+            // Mostrar u ocultar área especial de práctica de Pad
+            const areaPad = document.getElementById('pad-practice-area');
+            if(val === "0") {
+                areaPad.style.display = "block";
+            } else {
+                areaPad.style.display = "none";
+            }
+
             document.getElementById('ej-titulo').innerHTML = `<i class="fa-solid fa-circle-play"></i> ` + ejercicios[val].titulo;
             document.getElementById('ej-instruccion').innerHTML = ejercicios[val].inst;
             document.getElementById('feedback').style.display = 'none';
@@ -297,7 +327,7 @@
                 if (intentosFallidos === 1) {
                     fb.innerHTML = "<b>Pista:</b> Todavía falta realizar la acción. Revisa las instrucciones con calma y volvé a probar.";
                 } else if (intentosFallidos >= 2) {
-                    fb.innerHTML = "<b>Guía en pantalla:</b> " + ej.ayuda + " Mirá el ícono marcado en azul que está parpadeando.";
+                    fb.innerHTML = "<b>Guía en pantalla:</b> " + ej.ayuda + " Mirá el elemento marcado que está parpadeando.";
                     resaltarObjetivos(ej.target);
                 }
             }
@@ -329,7 +359,6 @@
             if(id === 'win-word') estadoAcciones.winWordAbierta = true;
             if(id === 'win-pc') estadoAcciones.winPcAbierta = true;
             if(id === 'win-ejercicios') {
-                // Mantiene el ejercicio que estaba seleccionado previamente
                 document.getElementById('select-ejercicio').value = ultimoEjercicioSeleccionado;
             }
         }
