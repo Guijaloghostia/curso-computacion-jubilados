@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escritorio Virtual - Aula Digital</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            height: 100vh;
+            background: #0078d7;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        #desktop {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            align-content: flex-start;
+            gap: 20px;
+            position: relative;
+        }
+        .icon {
+            width: 90px;
+            text-align: center;
+            color: white;
+            cursor: pointer;
+            padding: 10px 5px;
+            border-radius: 5px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+        }
+        .icon:hover { background: rgba(255, 255, 255, 0.2); }
+        .icon-img { font-size: 40px; display: block; margin-bottom: 5px; }
+        .icon-text { font-size: 13px; line-height: 1.2; }
+        #taskbar {
+            height: 40px;
+            background: #111;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 10px;
+            color: white;
+            z-index: 1000;
+        }
+        #start-btn {
+            background: #0078d7;
+            border: none;
+            color: white;
+            padding: 5px 15px;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+        #start-btn:hover { background: #106ebe; }
+        #clock { font-size: 13px; }
+        .window {
+            position: absolute;
+            top: 60px;
+            left: 120px;
+            width: 500px;
+            height: 350px;
+            background: white;
+            border: 2px solid #0078d7;
+            border-radius: 6px 6px 0 0;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            display: none;
+            flex-direction: column;
+            z-index: 100;
+        }
+        .window-header {
+            background: #0078d7;
+            color: white;
+            padding: 8px 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .close-btn {
+            background: #e81123;
+            color: white;
+            border: none;
+            width: 25px;
+            height: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+        .window-body {
+            padding: 20px;
+            flex: 1;
+            overflow-y: auto;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div id="desktop">
+        <div class="icon" onclick="openWindow('win-tramites')">
+            <span class="icon-img">🏥</span>
+            <span class="icon-text">Turnos y Trámites</span>
+        </div>
+        <div class="icon" onclick="openWindow('win-memorias')">
+            <span class="icon-img">📖</span>
+            <span class="icon-text">Mi Libro de Memorias</span>
+        </div>
+        <div class="icon" onclick="openWindow('win-revista')">
+            <span class="icon-img">📰</span>
+            <span class="icon-text">Revista Digital</span>
+        </div>
+    </div>
+
+    <div id="win-tramites" class="window">
+        <div class="window-header">
+            <span>Simulador de Trámites y Turnos</span>
+            <button class="close-btn" onclick="closeWindow('win-tramites')">X</button>
+        </div>
+        <div class="window-body">
+            <h3>Bienvenido al Simulador</h3>
+            <p style="margin-top: 10px;">Acá vamos a practicar cómo sacar turnos médicos sin miedo a equivocarnos.</p>
+        </div>
+    </div>
+
+    <div id="win-memorias" class="window">
+        <div class="window-header">
+            <span>Mi Libro de Memorias</span>
+            <button class="close-btn" onclick="closeWindow('win-memorias')">X</button>
+        </div>
+        <div class="window-body">
+            <h3>Escribí tu Historia</h3>
+            <p style="margin-top: 10px;">Acá vas a redactar tus recuerdos y subir tus fotos familiares.</p>
+        </div>
+    </div>
+
+    <div id="win-revista" class="window">
+        <div class="window-header">
+            <span>Portal Comunitario</span>
+            <button class="close-btn" onclick="closeWindow('win-revista')">X</button>
+        </div>
+        <div class="window-body">
+            <h3>Revista Digital del Grupo</h3>
+            <p style="margin-top: 10px;">Acá publicamos las noticias y recetas del taller.</p>
+        </div>
+    </div>
+
+    <div id="taskbar">
+        <button id="start-btn">Inicio</button>
+        <div id="clock">00:00</div>
+    </div>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            document.getElementById('clock').innerText = `${hours}:${minutes}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        function openWindow(id) {
+            document.getElementById(id).style.display = 'flex';
+        }
+        function closeWindow(id) {
+            document.getElementById(id).style.display = 'none';
+        }
+    </script>
+</body>
+</html>
