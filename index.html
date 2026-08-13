@@ -3,172 +3,348 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Escritorio Virtual - Aula Digital</title>
+    <title>Windows 10 Virtual - Aula Digital</title>
+    <!-- Iconos de FontAwesome para interfaz tipo Windows -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             height: 100vh;
-            background: #0078d7;
+            /* Fondo HD clásico de Windows 10 */
+            background: #004275 url('https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?q=80&w=1920&auto=format&fit=crop') no-repeat center center fixed;
+            background-size: cover;
             overflow: hidden;
             display: flex;
             flex-direction: column;
         }
+
+        /* ESCRITORIO */
         #desktop {
             flex: 1;
-            padding: 20px;
+            padding: 10px;
             display: flex;
             flex-direction: column;
             flex-wrap: wrap;
             align-content: flex-start;
-            gap: 20px;
+            gap: 15px;
             position: relative;
         }
+
+        /* ÍCONOS DEL ESCRITORIO CON ESTILO WINDOWS */
         .icon {
-            width: 90px;
+            width: 85px;
+            padding: 8px 4px;
             text-align: center;
             color: white;
             cursor: pointer;
-            padding: 10px 5px;
-            border-radius: 5px;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+            border: 1px solid transparent;
+            border-radius: 2px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.9);
+            font-size: 12px;
         }
-        .icon:hover { background: rgba(255, 255, 255, 0.2); }
-        .icon-img { font-size: 40px; display: block; margin-bottom: 5px; }
-        .icon-text { font-size: 13px; line-height: 1.2; }
+        .icon:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .icon i {
+            font-size: 32px;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .icon-folder { color: #f2c94c; } /* Color carpeta Windows */
+        .icon-pc { color: #56ccf2; }
+        .icon-trash { color: #e0e0e0; }
+
+        /* BARRA DE TAREAS OFICIAL */
         #taskbar {
             height: 40px;
-            background: #111;
+            background: rgba(16, 16, 16, 0.85);
+            backdrop-filter: blur(10px);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 10px;
             color: white;
-            z-index: 1000;
+            z-index: 2000;
         }
+        .taskbar-left { display: flex; align-items: center; height: 100%; }
+        
         #start-btn {
-            background: #0078d7;
-            border: none;
+            width: 48px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        #start-btn:hover { background: rgba(255, 255, 255, 0.15); color: #00adef; }
+
+        .search-bar {
+            background: rgba(255, 255, 255, 0.15);
+            height: 100%;
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+            width: 220px;
+            color: #ccc;
+            font-size: 13px;
+            border-left: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .taskbar-icons { display: flex; height: 100%; align-items: center; margin-left: 10px; }
+        .tb-icon {
+            padding: 0 12px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .tb-icon:hover { background: rgba(255, 255, 255, 0.1); }
+
+        #clock-area {
+            padding: 0 12px;
+            font-size: 12px;
+            text-align: right;
+            line-height: 1.2;
+            cursor: pointer;
+        }
+        #clock-area:hover { background: rgba(255, 255, 255, 0.1); }
+
+        /* MENÚ INICIO */
+        #start-menu {
+            position: absolute;
+            bottom: 40px;
+            left: 0;
+            width: 320px;
+            height: 450px;
+            background: rgba(20, 20, 20, 0.95);
+            backdrop-filter: blur(15px);
+            border-top-right-radius: 5px;
+            display: none;
+            flex-direction: column;
             color: white;
-            padding: 5px 15px;
-            font-weight: bold;
-            font-size: 14px;
+            z-index: 1500;
+            box-shadow: 5px 0 15px rgba(0,0,0,0.5);
+        }
+        .start-header { padding: 15px; background: rgba(255,255,255,0.05); font-weight: bold; font-size: 14px;}
+        .start-list { flex: 1; padding: 10px; overflow-y: auto; }
+        .start-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px;
+            font-size: 13px;
             cursor: pointer;
             border-radius: 3px;
         }
-        #start-btn:hover { background: #106ebe; }
-        #clock { font-size: 13px; }
+        .start-item:hover { background: rgba(255, 255, 255, 0.1); }
+
+        /* VENTANAS DE EXPLORADOR WINDOWS */
         .window {
             position: absolute;
-            top: 60px;
-            left: 120px;
-            width: 500px;
-            height: 350px;
-            background: white;
-            border: 2px solid #0078d7;
-            border-radius: 6px 6px 0 0;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            top: 50px;
+            left: 150px;
+            width: 650px;
+            height: 420px;
+            background: #ffffff;
+            border: 1px solid #7a7a7a;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
             display: none;
             flex-direction: column;
             z-index: 100;
+            border-radius: 4px 4px 0 0;
         }
         .window-header {
-            background: #0078d7;
-            color: white;
-            padding: 8px 12px;
+            background: #f0f0f0;
+            height: 32px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-weight: bold;
-            font-size: 14px;
+            padding-left: 10px;
+            border-bottom: 1px solid #d9d9d9;
         }
-        .close-btn {
-            background: #e81123;
-            color: white;
+        .window-title { font-size: 12px; color: #333; display: flex; align-items: center; gap: 8px; }
+        .window-controls { display: flex; height: 100%; }
+        .win-btn {
+            width: 45px;
+            height: 100%;
             border: none;
-            width: 25px;
-            height: 25px;
-            font-weight: bold;
+            background: transparent;
+            font-size: 12px;
             cursor: pointer;
-            border-radius: 3px;
         }
+        .win-btn:hover { background: #e5e5e5; }
+        .win-btn.close:hover { background: #e81123; color: white; }
+
         .window-body {
-            padding: 20px;
             flex: 1;
-            overflow-y: auto;
+            display: flex;
+            background: #f9f9f9;
+        }
+        .sidebar {
+            width: 160px;
+            background: #f0f0f0;
+            border-right: 1px solid #e5e5e5;
+            padding: 10px 5px;
+            font-size: 12px;
+        }
+        .sidebar-item {
+            padding: 6px 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #444;
+            cursor: pointer;
+        }
+        .sidebar-item:hover { background: #e5e5e5; }
+        .content-area {
+            flex: 1;
+            padding: 20px;
+            background: white;
             color: #333;
         }
     </style>
 </head>
 <body>
+
+    <!-- ESCRITORIO CON ÍCONOS REALES -->
     <div id="desktop">
+        <div class="icon" onclick="openWindow('win-pc')">
+            <i class="fa-solid fa-desktop icon-pc"></i>
+            <span>Este Equipo</span>
+        </div>
         <div class="icon" onclick="openWindow('win-tramites')">
-            <span class="icon-img">🏥</span>
-            <span class="icon-text">Turnos y Trámites</span>
+            <i class="fa-solid fa-folder icon-folder"></i>
+            <span>Trámites y Turnos</span>
         </div>
         <div class="icon" onclick="openWindow('win-memorias')">
-            <span class="icon-img">📖</span>
-            <span class="icon-text">Mi Libro de Memorias</span>
+            <i class="fa-solid fa-folder icon-folder"></i>
+            <span>Mi Libro de Memorias</span>
         </div>
-        <div class="icon" onclick="openWindow('win-revista')">
-            <span class="icon-img">📰</span>
-            <span class="icon-text">Revista Digital</span>
+        <div class="icon" onclick="openWindow('win-trash')">
+            <i class="fa-solid fa-trash-can icon-trash"></i>
+            <span>Papelera</span>
         </div>
     </div>
 
+    <!-- MENÚ DE INICIO -->
+    <div id="start-menu">
+        <div class="start-header"><i class="fa-solid fa-user-circle"></i> Usuario - Aula Digital</div>
+        <div class="start-list">
+            <div class="start-item" onclick="openWindow('win-tramites')"><i class="fa-solid fa-notes-medical"></i> Simulador de Turnos</div>
+            <div class="start-item" onclick="openWindow('win-memorias')"><i class="fa-solid fa-book"></i> Libro de Memorias</div>
+            <div class="start-item" onclick="openWindow('win-pc')"><i class="fa-solid fa-folder"></i> Documentos</div>
+        </div>
+    </div>
+
+    <!-- VENTANA: ESTE EQUIPO -->
+    <div id="win-pc" class="window">
+        <div class="window-header">
+            <div class="window-title"><i class="fa-solid fa-desktop"></i> Este Equipo</div>
+            <div class="window-controls">
+                <button class="win-btn" onclick="closeWindow('win-pc')">─</button>
+                <button class="win-btn close" onclick="closeWindow('win-pc')">✕</button>
+            </div>
+        </div>
+        <div class="window-body">
+            <div class="sidebar">
+                <div class="sidebar-item"><i class="fa-solid fa-desktop"></i> Escritorio</div>
+                <div class="sidebar-item"><i class="fa-solid fa-file"></i> Documentos</div>
+                <div class="sidebar-item"><i class="fa-solid fa-download"></i> Descargas</div>
+            </div>
+            <div class="content-area">
+                <h3>Carpetas del Sistema</h3>
+                <p style="margin-top:10px; font-size:13px; color:#666;">Seleccioná una carpeta para practicar el manejo de archivos.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- VENTANA: TRÁMITES -->
     <div id="win-tramites" class="window">
         <div class="window-header">
-            <span>Simulador de Trámites y Turnos</span>
-            <button class="close-btn" onclick="closeWindow('win-tramites')">X</button>
+            <div class="window-title"><i class="fa-solid fa-folder"></i> Trámites y Turnos</div>
+            <div class="window-controls">
+                <button class="win-btn" onclick="closeWindow('win-tramites')">─</button>
+                <button class="win-btn close" onclick="closeWindow('win-tramites')">✕</button>
+            </div>
         </div>
         <div class="window-body">
-            <h3>Bienvenido al Simulador</h3>
-            <p style="margin-top: 10px;">Acá vamos a practicar cómo sacar turnos médicos sin miedo a equivocarnos.</p>
+            <div class="sidebar">
+                <div class="sidebar-item"><i class="fa-solid fa-hospital"></i> PAMI</div>
+                <div class="sidebar-item"><i class="fa-solid fa-building-columns"></i> ANSES</div>
+            </div>
+            <div class="content-area">
+                <h2>Simulador de Turnos Médicos</h2>
+                <hr style="margin: 10px 0;">
+                <p>Acá los alumnos practicarán la solicitud de turnos en un entorno seguro.</p>
+            </div>
         </div>
     </div>
 
+    <!-- VENTANA: MEMORIAS -->
     <div id="win-memorias" class="window">
         <div class="window-header">
-            <span>Mi Libro de Memorias</span>
-            <button class="close-btn" onclick="closeWindow('win-memorias')">X</button>
+            <div class="window-title"><i class="fa-solid fa-folder"></i> Mi Libro de Memorias</div>
+            <div class="window-controls">
+                <button class="win-btn" onclick="closeWindow('win-memorias')">─</button>
+                <button class="win-btn close" onclick="closeWindow('win-memorias')">✕</button>
+            </div>
         </div>
         <div class="window-body">
-            <h3>Escribí tu Historia</h3>
-            <p style="margin-top: 10px;">Acá vas a redactar tus recuerdos y subir tus fotos familiares.</p>
+            <div class="content-area">
+                <h2>Redacción de Recuerdos</h2>
+                <hr style="margin: 10px 0;">
+                <p>Escribí historias y subí imágenes para el proyecto grupal.</p>
+            </div>
         </div>
     </div>
 
-    <div id="win-revista" class="window">
-        <div class="window-header">
-            <span>Portal Comunitario</span>
-            <button class="close-btn" onclick="closeWindow('win-revista')">X</button>
-        </div>
-        <div class="window-body">
-            <h3>Revista Digital del Grupo</h3>
-            <p style="margin-top: 10px;">Acá publicamos las noticias y recetas del taller.</p>
-        </div>
-    </div>
-
+    <!-- BARRA DE TAREAS -->
     <div id="taskbar">
-        <button id="start-btn">Inicio</button>
-        <div id="clock">00:00</div>
+        <div class="taskbar-left">
+            <div id="start-btn" onclick="toggleStartMenu()"><i class="fa-brands fa-windows"></i></div>
+            <div class="search-bar"><i class="fa-solid fa-magnifying-glass" style="margin-right:8px;"></i> Escribe aquí para buscar</div>
+            <div class="taskbar-icons">
+                <div class="tb-icon" onclick="openWindow('win-pc')"><i class="fa-solid fa-folder" style="color:#f2c94c;"></i></div>
+            </div>
+        </div>
+        <div id="clock-area">
+            <div id="clock-time">00:00</div>
+            <div id="clock-date" style="font-size:10px; color:#aaa;">12/08/2026</div>
+        </div>
     </div>
 
     <script>
+        // Actualizar Reloj y Fecha estilo Windows
         function updateClock() {
             const now = new Date();
             const hours = String(now.getHours()).padStart(2, '0');
             const minutes = String(now.getMinutes()).padStart(2, '0');
-            document.getElementById('clock').innerText = `${hours}:${minutes}`;
+            document.getElementById('clock-time').innerText = `${hours}:${minutes}`;
+            
+            const day = String(now.getDate()).padStart(2, '0');
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const year = now.getFullYear();
+            document.getElementById('clock-date').innerText = `${day}/${month}/${year}`;
         }
         setInterval(updateClock, 1000);
         updateClock();
 
+        // Abrir y cerrar ventanas
         function openWindow(id) {
             document.getElementById(id).style.display = 'flex';
+            document.getElementById('start-menu').style.display = 'none';
         }
         function closeWindow(id) {
             document.getElementById(id).style.display = 'none';
+        }
+
+        // Alternar Menú Inicio
+        function toggleStartMenu() {
+            const menu = document.getElementById('start-menu');
+            menu.style.display = (menu.style.display === 'flex') ? 'none' : 'flex';
         }
     </script>
 </body>
