@@ -262,7 +262,7 @@
     <div id="guide-card">
         <div class="guide-header">
             <span>Capacitación Digital</span>
-            <span id="exercise-counter">Ej. 41 de 100</span>
+            <span id="exercise-counter">Ej. 1 de 100</span>
         </div>
         <div class="guide-body">
             <select id="exercise-select" onchange="changeExercise(this.value)">
@@ -331,7 +331,7 @@
         <div class="menu-item" onclick="openApp('correo')"><i class="fas fa-envelope" style="color:#e67e22;"></i> Correo</div>
     </div>
 
-    <!-- SCRIPT CON CONTENIDO REAL PARA CADA UNO DE LOS 100 EJERCICIOS -->
+    <!-- SCRIPT CON 100 EJERCICIOS ÚNICOS Y PROGRESIVOS -->
     <script>
         const exerciseSelect = document.getElementById('exercise-select');
 
@@ -350,83 +350,156 @@
         for (let i = 1; i <= 100; i++) {
             let opt = document.createElement('option');
             opt.value = i;
-            opt.text = `Ejercicio ${i}: Tarea práctica (${getModuleTitle(i).split(':')[0]})`;
-            if (i === 41) opt.selected = true;
+            opt.text = `Ejercicio ${i}: Práctica guiada (${getModuleTitle(i)})`;
+            if (i === 1) opt.selected = true;
             exerciseSelect.appendChild(opt);
         }
 
         function getExerciseDetails(num) {
-            if (num >= 1 && num <= 12) {
+            // MÓDULO 1: Ejercicios 1 al 12 (Totalmente individuales y específicos)
+            if (num === 1) return {
+                title: "Ejercicio 1: Reconocimiento del puntero",
+                steps: ["Mueve el dedo suavemente por la superficie del touchpad.", "Observa cómo se desplaza la flecha (puntero) libremente por la pantalla."],
+                hint: "No preciones ningún botón todavía, solo desliza un dedo para reconocer el movimiento."
+            };
+            if (num === 2) return {
+                title: "Ejercicio 2: Selección con clic simple",
+                steps: ["Ubica el puntero del mouse exactamente sobre el ícono de WordPad.", "Haz un **clic simple** (un toque corto y seco) para seleccionarlo."],
+                hint: "El ícono debe cambiar de color de fondo al recibir el clic simple."
+            };
+            if (num === 3) return {
+                title: "Ejercicio 3: Menú contextual con clic derecho",
+                steps: ["Lleva el puntero a una zona vacía del fondo de pantalla.", "Haz un **clic derecho** para desplegar el menú contextual del sistema."],
+                hint: "El clic derecho muestra opciones adicionales; puedes usar el botón derecho físico o apoyar dos dedos a la vez en el touchpad."
+            };
+            if (num === 4) return {
+                title: "Ejercicio 4: Apertura de aplicaciones (Doble clic)",
+                steps: ["Coloca el puntero sobre el ícono de 'Este equipo'.", "Haz **doble clic rápido** (dos toques seguidos) para abrir la ventana."],
+                hint: "Los dos toques deben ser consecutivos y sin mover el cursor del ícono."
+            };
+            if (num === 5) return {
+                title: "Ejercicio 6: Arrastrar elementos",
+                steps: ["Selecciona un ícono del escritorio haciendo clic sostenido.", "Mueve el dedo sin soltar para desplazar el ícono de lugar y luego suéltalo."],
+                hint: "Mantén presionado el botón izquierdo mientras deslizas el dedo por el touchpad."
+            };
+            if (num === 6) return {
+                title: "Ejercicio 6: Desplazamiento vertical (Scroll)",
+                steps: ["Abre cualquier ventana con contenido largo.", "Coloca dos dedos en el touchpad y deslízalos hacia arriba y abajo para recorrer la página."],
+                hint: "El movimiento vertical con dos dedos reemplaza a la rueda central del mouse tradicional."
+            };
+            if (num === 7) return {
+                title: "Ejercicio 7: Minimizar una ventana",
+                steps: ["Abre la aplicación 'Este equipo'.", "Haz clic en el botón de **minimizar** (la línea horizontal 🗕) ubicado arriba a la derecha."],
+                hint: "La ventana desaparecerá temporalmente de la pantalla pero quedará activa en la barra de tareas."
+            };
+            if (num === 8) return {
+                title: "Ejercicio 8: Maximizar una ventana",
+                steps: ["Abre la aplicación 'Este equipo'.", "Haz clic en el botón de **maximizar** (el cuadrado 🗖) para que ocupe toda la pantalla."],
+                hint: "Este botón se encuentra en la esquina superior derecha, justo al lado de la cruz de cerrar."
+            };
+            if (num === 9) return {
+                title: "Ejercicio 9: Restaurar tamaño de ventana",
+                steps: ["Con una ventana maximizada en pantalla completa.", "Haz clic en el botón central superior para **restaurarla** a su tamaño anterior."],
+                hint: "El botón de maximizar cambia su icono a dos cuadraditos superpuestos cuando la ventana está expandida."
+            };
+            if (num === 10) return {
+                title: "Ejercicio 10: Cerrar una ventana activa",
+                steps: ["Abre cualquier aplicación del escritorio.", "Haz clic en el botón de la **cruz roja (✕)** situada en la esquina superior derecha."],
+                hint: "La cruz roja finaliza y cierra por completo la ejecución de la aplicación."
+            };
+            if (num === 11) return {
+                title: "Ejercicio 11: Abrir el menú de inicio",
+                steps: ["Lleva el puntero hasta la esquina inferior izquierda de la pantalla.", "Haz clic sobre el botón de **Windows** en la barra de tareas."],
+                hint: "También puedes presionar la tecla con el logotipo de Windows en tu teclado físico."
+            };
+            if (num === 12) return {
+                title: "Ejercicio 12: Cerrar el menú de inicio",
+                steps: ["Con el menú de inicio abierto en pantalla.", "Haz un clic simple en cualquier espacio vacío del escritorio para ocultarlo."],
+                hint: "El menú se cierra automáticamente al hacer clic fuera de su rectángulo de opciones."
+            };
+
+            // MÓDULO 2: Gestión de Ventanas (13 al 25)
+            if (num >= 13 && num <= 25) {
                 return {
-                    title: `Ejercicio ${num}: Práctica de Clic y Touchpad`,
+                    title: `Ejercicio ${num}: Práctica de Ventanas Múltiples (${num - 12})`,
                     steps: [
-                        "Ubica el puntero del mouse sobre la pantalla de forma estable.",
-                        "Realiza un <b>clic simple</b> sobre cualquier ícono del escritorio para seleccionarlo.",
-                        "Practica desplazar la vista utilizando el desplazamiento vertical del touchpad."
-                    ]
+                        "Abre dos aplicaciones diferentes desde el escritorio (por ejemplo, WordPad y Este equipo).",
+                        "Haz clic en la barra de tareas para alternar el foco entre una ventana y otra.",
+                        "Organiza las ventanas en paralelo para visualizar ambas simultáneamente."
+                    ],
+                    hint: `Pista para el Ejercicio ${num}: Utiliza la barra inferior para alternar qué ventana se encuentra activa al frente.`
                 };
-            } else if (num >= 13 && num <= 25) {
+            } 
+            // MÓDULO 3: Explorador de Archivos (26 al 40)
+            else if (num >= 26 && num <= 40) {
                 return {
-                    title: `Ejercicio ${num}: Manipulación de Ventanas`,
+                    title: `Ejercicio ${num}: Exploración de Archivos (${num - 25})`,
                     steps: [
-                        "Abre una aplicación desde el escritorio o el menú de inicio.",
-                        "Haz clic en el botón superior para <b>maximizar</b> la ventana.",
-                        "Haz clic en el botón de minimizar y luego restáurala a su tamaño original."
-                    ]
+                        "Abre el explorador de archivos haciendo doble clic en 'Este equipo'.",
+                        "Navega entre los accesos rápidos del panel izquierdo (Escritorio, Descargas).",
+                        "Identifica la unidad principal Disco Local (C:)."
+                    ],
+                    hint: `Pista para el Ejercicio ${num}: Haz doble clic limpio sobre el ícono celeste de la computadora para entrar al explorador.`
                 };
-            } else if (num >= 26 && num <= 40) {
+            } 
+            // MÓDULO 4: Procesador WordPad (41 al 55)
+            else if (num >= 41 && num <= 55) {
                 return {
-                    title: `Ejercicio ${num}: Exploración y Carpetas`,
+                    title: `Ejercicio ${num}: Edición en WordPad (${num - 40})`,
                     steps: [
-                        "Abre la aplicación <b>Este equipo</b> haciendo doble clic.",
-                        "Navega entre los accesos rápidos del panel izquierdo.",
-                        "Identifica la unidad de disco local (C:) visualizada en la ventana."
-                    ]
+                        "Abre la aplicación **WordPad** desde el escritorio con doble clic.",
+                        "Haz clic dentro de la hoja blanca en blanco.",
+                        "Escribe un texto breve y verifica que aparezca en pantalla."
+                    ],
+                    hint: `Pista para el Ejercicio ${num}: Asegúrate de que el cursor parpadee dentro del área blanca antes de empezar a tipear.`
                 };
-            } else if (num >= 41 && num <= 55) {
+            } 
+            // MÓDULO 5: Facturación Digital (56 al 70)
+            else if (num >= 56 && num <= 70) {
                 return {
-                    title: `Ejercicio ${num}: Uso de WordPad`,
+                    title: `Ejercicio ${num}: Módulo de Facturación (${num - 55})`,
                     steps: [
-                        "Ubícate sobre el ícono de <b>WordPad</b> en el escritorio.",
-                        "Haz <b>doble clic rápido</b> con el botón izquierdo del mouse para abrirlo.",
-                        "Escribe un breve texto en el área de trabajo y verifica el resultado."
-                    ]
+                        "Abre la aplicación **Facturador** haciendo doble clic en su ícono verde.",
+                        "Completa los campos de cliente y descripción del producto.",
+                        "Valida los montos y presiona emitir comprobante."
+                    ],
+                    hint: `Pista para el Ejercicio ${num}: Rellena todos los campos obligatorios marcados antes de emitir la factura.`
                 };
-            } else if (num >= 56 && num <= 70) {
+            } 
+            // MÓDULO 6: Correo Electrónico (71 al 85)
+            else if (num >= 71 && num <= 85) {
                 return {
-                    title: `Ejercicio ${num}: Facturación Digital`,
+                    title: `Ejercicio ${num}: Gestión de Correo (${num - 70})`,
                     steps: [
-                        "Abre la aplicación del <b>Facturador</b> desde el escritorio.",
-                        "Ingresa los datos del cliente y el monto correspondiente en los campos habilitados.",
-                        "Valida los valores y presiona emitir comprobante."
-                    ]
+                        "Abre la aplicación de **Correo** desde el menú o acceso directo.",
+                        "Ingresa un destinatario simulado y redacta el asunto.",
+                        "Escribe el cuerpo del mensaje y simula el envío."
+                    ],
+                    hint: `Pista para el Ejercicio ${num}: Revisa que el campo 'Para' contenga una dirección válida antes de enviar.`
                 };
-            } else if (num >= 71 && num <= 85) {
+            } 
+            // MÓDULO 7: WhatsApp Web (86 al 95)
+            else if (num >= 86 && num <= 95) {
                 return {
-                    title: `Ejercicio ${num}: Gestión de Correo`,
+                    title: `Ejercicio ${num}: Mensajería Instantánea (${num - 85})`,
                     steps: [
-                        "Abre la aplicación de <b>Correo</b> desde el menú o acceso directo.",
-                        "Completa el campo de destinatario con una dirección simulada.",
-                        "Escribe el asunto y redacta un mensaje formal antes de simular el envío."
-                    ]
+                        "Selecciona un contacto de la lista lateral en la interfaz.",
+                        "Escribe un saludo cotidiano en la barra inferior de chat.",
+                        "Envía el mensaje haciendo clic en el botón correspondiente."
+                    ],
+                    hint: `Pista para el Ejercicio ${num}: Haz clic sobre el chat del contacto antes de escribir en la caja de texto.`
                 };
-            } else if (num >= 86 && num <= 95) {
+            } 
+            // MÓDULO 8: Integración Total (96 al 100)
+            else {
                 return {
-                    title: `Ejercicio ${num}: Mensajería de Texto`,
+                    title: `Ejercicio ${num}: Integración y Autonomía (${num - 95})`,
                     steps: [
-                        "Selecciona un contacto disponible en la agenda de la aplicación.",
-                        "Escribe un mensaje de saludo cotidiano en la barra de chat.",
-                        "Envía el mensaje utilizando el botón correspondiente."
-                    ]
-                };
-            } else {
-                return {
-                    title: `Ejercicio ${num}: Integración y Autonomía`,
-                    steps: [
-                        "Combina las herramientas aprendidas sin asistencia paso a paso.",
-                        "Abre el explorador, redacta un documento en WordPad y simula su transferencia.",
-                        "Verifica que el flujo completo de trabajo digital se realice con éxito."
-                    ]
+                        "Combina las herramientas aprendidas sin guías paso a paso.",
+                        "Abre el explorador, redacta un documento y completa un flujo de trabajo digital.",
+                        "Verifica el resultado final de forma autónoma."
+                    ],
+                    hint: `Pista para el Ejercicio ${num}: Este es un ejercicio libre de integración: recuerda los pasos de los módulos anteriores.`
                 };
             }
         }
@@ -444,8 +517,8 @@
             inst.innerHTML = html;
         }
 
-        // Inicializar por defecto en el ejercicio 41
-        changeExercise(41);
+        // Inicializar por defecto en el ejercicio 1
+        changeExercise(1);
 
         function toggleStartMenu() {
             const menu = document.getElementById('start-menu');
@@ -474,7 +547,12 @@
 
         function verifyExercise() { alert("¡Excelente trabajo! Ejercicio completado correctamente."); }
         function resetExercise() { alert("Reiniciando el ejercicio actual..."); }
-        function showHint() { alert("Pista: Sigue atentamente cada uno de los pasos indicados en la tarjeta."); }
+        
+        function showHint() {
+            const num = document.getElementById('exercise-select').value;
+            const data = getExerciseDetails(parseInt(num));
+            alert("💡 Pista para el Ejercicio " + num + ":\n\n" + data.hint);
+        }
 
         document.addEventListener('click', function(e) {
             const menu = document.getElementById('start-menu');
