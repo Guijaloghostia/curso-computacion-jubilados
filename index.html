@@ -2,88 +2,97 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Simulador Windows 10 - Capacitación</title>
-    <!-- Librería de íconos -->
+    <title>Simulador Windows 10 - Capacitación Digital</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* ================= ESTILOS GENERALES ================= */
         body {
             margin: 0;
             padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #b39ddb 0%, #7e57c2 100%);
+            background: radial-gradient(circle at 75% 85%, #ff1493 0%, #7b1fa2 40%, #120428 75%);
             height: 100vh;
             overflow: hidden;
             display: flex;
             flex-direction: column;
         }
 
-        /* ================= ESCRITORIO ================= */
         #desktop {
             flex: 1;
             position: relative;
-            padding: 10px;
+            padding: 20px;
             display: flex;
             flex-direction: column;
             flex-wrap: wrap;
             align-content: flex-start;
-            gap: 20px;
+            gap: 25px;
         }
+
         .desktop-icon {
-            width: 80px;
+            width: 85px;
             text-align: center;
             color: white;
             cursor: pointer;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.8);
             font-size: 13px;
-            padding: 5px;
-            border-radius: 5px;
-            transition: background 0.2s;
-        }
-        .desktop-icon i {
-            font-size: 40px;
-            margin-bottom: 5px;
-        }
-        .desktop-icon:hover {
-            background: rgba(255, 255, 255, 0.3);
+            padding: 8px;
+            border-radius: 6px;
+            transition: background 0.2s, transform 0.1s;
         }
 
-        /* ================= BARRA DE TAREAS ================= */
+        .desktop-icon:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .desktop-icon i {
+            font-size: 42px;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        /* Barra de tareas */
         #taskbar {
-            height: 45px;
-            background: rgba(0, 0, 0, 0.85);
+            height: 48px;
+            background: rgba(15, 15, 15, 0.9);
+            backdrop-filter: blur(10px);
             display: flex;
             align-items: center;
             padding: 0 10px;
             z-index: 1000;
             position: relative;
+            border-top: 1px solid rgba(255,255,255,0.1);
         }
+
         #start-btn {
             color: white;
             font-size: 22px;
             cursor: pointer;
-            padding: 5px 15px;
-            border-radius: 3px;
+            padding: 6px 16px;
+            border-radius: 4px;
+            transition: background 0.2s;
         }
+
         #start-btn:hover {
             background: rgba(255, 255, 255, 0.2);
         }
 
-        /* ================= MENÚ INICIO ================= */
+        /* Menú Inicio */
         #start-menu {
             position: absolute;
-            bottom: 45px;
+            bottom: 48px;
             left: 0;
-            width: 280px;
-            background: rgba(30, 30, 30, 0.95);
+            width: 300px;
+            background: rgba(24, 24, 24, 0.95);
+            backdrop-filter: blur(15px);
             color: white;
             display: none;
             flex-direction: column;
             z-index: 1001;
-            padding: 10px 0;
-            box-shadow: 2px -2px 10px rgba(0,0,0,0.5);
-            border-top-right-radius: 5px;
+            padding: 12px 0;
+            box-shadow: 4px -4px 20px rgba(0,0,0,0.6);
+            border-top-right-radius: 8px;
+            border-right: 1px solid rgba(255,255,255,0.1);
         }
+
         .menu-item {
             padding: 12px 20px;
             cursor: pointer;
@@ -93,44 +102,63 @@
             font-size: 15px;
             transition: background 0.2s;
         }
+
         .menu-item:hover {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.15);
         }
+
         .menu-item i {
             width: 25px;
             text-align: center;
             font-size: 18px;
         }
 
-        /* ================= TARJETA DE CAPACITACIÓN DIGITAL ================= */
+        /* Tarjeta de Guía Didáctica */
         #guide-card {
             position: fixed;
             right: 20px;
             top: 20px;
-            width: 350px;
-            height: 85vh;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            width: 360px;
+            height: 88vh;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
             z-index: 9999;
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.3);
         }
+
         .guide-header {
             background: #2b5797;
             color: white;
-            padding: 15px;
+            padding: 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             font-weight: bold;
+            font-size: 16px;
         }
+
         .guide-body {
             padding: 20px;
             flex: 1;
             overflow-y: auto;
         }
+
+        #exercise-select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 15px;
+            background: #fdfdfd;
+            cursor: pointer;
+        }
+
         .guide-footer {
             padding: 15px;
             background: #f1f1f1;
@@ -138,237 +166,119 @@
             gap: 10px;
             justify-content: center;
         }
+
         .btn {
             padding: 10px 15px;
             border: none;
-            border-radius: 5px;
+            border-radius: 6px;
             cursor: pointer;
             font-weight: bold;
             color: white;
             flex: 1;
             transition: opacity 0.2s;
         }
-        .btn:hover { opacity: 0.8; }
+
+        .btn:hover { opacity: 0.85; }
         .btn-verify { background: #2b5797; width: 100%; margin-top: 10px; }
         .btn-retry { background: #e68a00; }
-        .btn-hint { background: #ccc; color: black; }
-        
-        #exercise-select {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            font-size: 15px;
-            background: #f9f9f9;
-            cursor: pointer;
-        }
+        .btn-hint { background: #6c757d; }
 
-        /* ================= VENTANAS DE APLICACIONES ================= */
+        /* Ventanas de Aplicaciones */
         .app-window {
             position: absolute;
-            top: 20px;
-            left: 20px;
-            width: calc(100vw - 420px); 
-            height: 80vh;
+            top: 30px;
+            left: 30px;
+            width: calc(100vw - 440px);
+            height: 82vh;
             background: white;
             border: 1px solid #0078D7;
-            box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
             z-index: 500;
             display: none;
             flex-direction: column;
-            border-radius: 4px;
+            border-radius: 6px;
             overflow: hidden;
         }
+
         .window-header {
-            background: white;
+            background: #f3f3f3;
             color: black;
-            border-bottom: 1px solid #ccc;
-            padding: 10px;
+            border-bottom: 1px solid #dcdcdc;
+            padding: 10px 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-family: sans-serif;
+            font-size: 14px;
         }
+
         .window-title {
             display: flex;
             align-items: center;
             gap: 10px;
+            font-weight: 600;
         }
+
         .close-btn {
             cursor: pointer;
             color: black;
             font-weight: bold;
             font-size: 16px;
-            padding: 5px 10px;
+            padding: 4px 12px;
+            border-radius: 4px;
         }
+
         .close-btn:hover {
             background: #e81123;
             color: white;
         }
+
         .window-content {
             flex: 1;
-            padding: 20px;
+            padding: 25px;
             overflow-y: auto;
-            background: #f0f0f0;
+            background: #fafafa;
         }
-
-        /* Específico Correo */
-        .mail-toolbar {
-            background: #f3f2f1;
-            padding: 10px;
-            border-bottom: 1px solid #ccc;
-            display: flex;
-            gap: 10px;
-        }
-        .mail-btn {
-            background: white;
-            border: 1px solid #ccc;
-            padding: 8px 15px;
-            cursor: pointer;
-            border-radius: 3px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .mail-btn:hover { background: #e1dfdd; }
     </style>
 </head>
 <body>
 
     <!-- ESCRITORIO -->
     <div id="desktop">
-        <div class="desktop-icon" onclick="openApp('wordpad')">
-            <i class="fas fa-file-word" style="color:#ffffff;"></i><br>WordPad
+        <div class="desktop-icon" ondblclick="openApp('wordpad')" onclick="selectIcon(this)">
+            <i class="fas fa-file-word" style="color:#2b5797;"></i><span>WordPad</span>
         </div>
-        <div class="desktop-icon" onclick="openApp('facturador')">
-            <i class="fas fa-file-invoice-dollar" style="color:#ffffff;"></i><br>Facturador
+        <div class="desktop-icon" ondblclick="openApp('facturador')" onclick="selectIcon(this)">
+            <i class="fas fa-file-invoice-dollar" style="color:#2ecc71;"></i><span>Facturador</span>
         </div>
-        <div class="desktop-icon" onclick="openApp('este-equipo')">
-            <i class="fas fa-desktop" style="color:#ffffff;"></i><br>Este equipo
+        <div class="desktop-icon" ondblclick="openApp('este-equipo')" onclick="selectIcon(this)">
+            <i class="fas fa-desktop" style="color:#17a2b8;"></i><span>Este equipo</span>
         </div>
-        <div class="desktop-icon" onclick="openApp('whatsapp')">
-            <i class="fab fa-whatsapp" style="color:#25D366;"></i><br>WhatsApp
-        </div>
-        <div class="desktop-icon" onclick="openApp('correo')">
-            <i class="fas fa-envelope" style="color:#ffffff;"></i><br>Correo
+        <div class="desktop-icon" ondblclick="openApp('correo')" onclick="selectIcon(this)">
+            <i class="fas fa-envelope" style="color:#e67e22;"></i><span>Correo</span>
         </div>
     </div>
 
-    <!-- TARJETA DE CAPACITACIÓN -->
+    <!-- TARJETA DE GUÍA DIDÁCTICA -->
     <div id="guide-card">
         <div class="guide-header">
             <span>Capacitación Digital</span>
-            <span id="exercise-counter">Ej. 1 de 100</span>
+            <span id="exercise-counter">Ej. 41 de 100</span>
         </div>
         <div class="guide-body">
-            <!-- MENÚ DESPLEGABLE CON LOS 100 EJERCICIOS VISIBLES -->
             <select id="exercise-select" onchange="changeExercise(this.value)">
-                <option value="1">Ejercicio 1: Abrir Este equipo</option>
-                <option value="2">Ejercicio 2: Práctica Guiada</option>
-                <option value="3">Ejercicio 3: Práctica Guiada</option>
-                <option value="4">Ejercicio 4: Práctica Guiada</option>
-                <option value="5">Ejercicio 5: Práctica Guiada</option>
-                <option value="6">Ejercicio 6: Práctica Guiada</option>
-                <option value="7">Ejercicio 7: Práctica Guiada</option>
-                <option value="8">Ejercicio 8: Práctica Guiada</option>
-                <option value="9">Ejercicio 9: Práctica Guiada</option>
-                <option value="10">Ejercicio 10: Práctica Guiada</option>
-                <option value="11">Ejercicio 11: Práctica Guiada</option>
-                <option value="12">Ejercicio 12: Práctica Guiada</option>
-                <option value="13">Ejercicio 13: Práctica Guiada</option>
-                <option value="14">Ejercicio 14: Práctica Guiada</option>
-                <option value="15">Ejercicio 15: Práctica Guiada</option>
-                <option value="16">Ejercicio 16: Práctica Guiada</option>
-                <option value="17">Ejercicio 17: Práctica Guiada</option>
-                <option value="18">Ejercicio 18: Práctica Guiada</option>
-                <option value="19">Ejercicio 19: Práctica Guiada</option>
-                <option value="20">Ejercicio 20: Práctica Guiada</option>
-                <option value="21">Ejercicio 21: Práctica Guiada</option>
-                <option value="22">Ejercicio 22: Práctica Guiada</option>
-                <option value="23">Ejercicio 23: Práctica Guiada</option>
-                <option value="24">Ejercicio 24: Práctica Guiada</option>
-                <option value="25">Ejercicio 25: Práctica Guiada</option>
-                <option value="26">Ejercicio 26: Práctica Guiada</option>
-                <option value="27">Ejercicio 27: Práctica Guiada</option>
-                <option value="28">Ejercicio 28: Práctica Guiada</option>
-                <option value="29">Ejercicio 29: Práctica Guiada</option>
-                <option value="30">Ejercicio 30: Práctica Guiada</option>
-                <option value="31">Ejercicio 31: Práctica Guiada</option>
-                <option value="32">Ejercicio 32: Práctica Guiada</option>
-                <option value="33">Ejercicio 33: Práctica Guiada</option>
-                <option value="34">Ejercicio 34: Práctica Guiada</option>
-                <option value="35">Ejercicio 35: Práctica Guiada</option>
-                <option value="36">Ejercicio 36: Práctica Guiada</option>
-                <option value="37">Ejercicio 37: Práctica Guiada</option>
-                <option value="38">Ejercicio 38: Práctica Guiada</option>
-                <option value="39">Ejercicio 39: Práctica Guiada</option>
-                <option value="40">Ejercicio 40: Uso del Facturador</option>
-                <option value="41">Ejercicio 41: Práctica Guiada</option>
-                <option value="42">Ejercicio 42: Práctica Guiada</option>
-                <option value="43">Ejercicio 43: Práctica Guiada</option>
-                <option value="44">Ejercicio 44: Práctica Guiada</option>
-                <option value="45">Ejercicio 45: Práctica Guiada</option>
-                <option value="46">Ejercicio 46: Práctica Guiada</option>
-                <option value="47">Ejercicio 47: Práctica Guiada</option>
-                <option value="48">Ejercicio 48: Práctica Guiada</option>
-                <option value="49">Ejercicio 49: Práctica Guiada</option>
-                <option value="50">Ejercicio 50: Práctica Guiada</option>
-                <option value="51">Ejercicio 51: Práctica Guiada</option>
-                <option value="52">Ejercicio 52: Práctica Guiada</option>
-                <option value="53">Ejercicio 53: Práctica Guiada</option>
-                <option value="54">Ejercicio 54: Práctica Guiada</option>
-                <option value="55">Ejercicio 55: Práctica Guiada</option>
-                <option value="56">Ejercicio 56: Adjuntar archivo al Correo</option>
-                <option value="57">Ejercicio 57: Práctica Guiada</option>
-                <option value="58">Ejercicio 58: Práctica Guiada</option>
-                <option value="59">Ejercicio 59: Práctica Guiada</option>
-                <option value="60">Ejercicio 60: Práctica Guiada</option>
-                <option value="61">Ejercicio 61: Práctica Guiada</option>
-                <option value="62">Ejercicio 62: Práctica Guiada</option>
-                <option value="63">Ejercicio 63: Práctica Guiada</option>
-                <option value="64">Ejercicio 64: Práctica Guiada</option>
-                <option value="65">Ejercicio 65: Práctica Guiada</option>
-                <option value="66">Ejercicio 66: Práctica Guiada</option>
-                <option value="67">Ejercicio 67: Práctica Guiada</option>
-                <option value="68">Ejercicio 68: Práctica Guiada</option>
-                <option value="69">Ejercicio 69: Práctica Guiada</option>
-                <option value="70">Ejercicio 70: Práctica Guiada</option>
-                <option value="71">Ejercicio 71: Práctica Guiada</option>
-                <option value="72">Ejercicio 72: Práctica Guiada</option>
-                <option value="73">Ejercicio 73: Práctica Guiada</option>
-                <option value="74">Ejercicio 74: Práctica Guiada</option>
-                <option value="75">Ejercicio 75: Práctica Guiada</option>
-                <option value="76">Ejercicio 76: Práctica Guiada</option>
-                <option value="77">Ejercicio 77: Práctica Guiada</option>
-                <option value="78">Ejercicio 78: Práctica Guiada</option>
-                <option value="79">Ejercicio 79: Práctica Guiada</option>
-                <option value="80">Ejercicio 80: Práctica Guiada</option>
-                <option value="81">Ejercicio 81: Práctica Guiada</option>
-                <option value="82">Ejercicio 82: Práctica Guiada</option>
-                <option value="83">Ejercicio 83: Práctica Guiada</option>
-                <option value="84">Ejercicio 84: Práctica Guiada</option>
-                <option value="85">Ejercicio 85: Práctica Guiada</option>
-                <option value="86">Ejercicio 86: Práctica Guiada</option>
-                <option value="87">Ejercicio 87: Práctica Guiada</option>
-                <option value="88">Ejercicio 88: Práctica Guiada</option>
-                <option value="89">Ejercicio 89: Práctica Guiada</option>
-                <option value="90">Ejercicio 90: Práctica Guiada</option>
-                <option value="91">Ejercicio 91: Práctica Guiada</option>
-                <option value="92">Ejercicio 92: Práctica Guiada</option>
-                <option value="93">Ejercicio 93: Práctica Guiada</option>
-                <option value="94">Ejercicio 94: Práctica Guiada</option>
-                <option value="95">Ejercicio 95: Práctica Guiada</option>
-                <option value="96">Ejercicio 96: Práctica Guiada</option>
-                <option value="97">Ejercicio 97: Práctica Guiada</option>
-                <option value="98">Ejercicio 98: Práctica Guiada</option>
-                <option value="99">Ejercicio 99: Práctica Final</option>
-                <option value="100">Ejercicio 100: Práctica Guiada</option>
+                <option value="1">Ejercicio 1: Clic y selección básica</option>
+                <option value="2">Ejercicio 2: Práctica de ventanas</option>
+                <option value="41" selected>Ejercicio 41: Abrir WordPad con doble clic</option>
+                <option value="56">Ejercicio 56: Adjuntar archivo en Correo</option>
             </select>
             
             <div id="exercise-instructions">
-                <h3>Ejercicio 1: Abrir Este equipo</h3>
-                <p>Hacé clic en el ícono de <strong>Este equipo</strong> ubicado en el escritorio para abrir el Explorador de archivos.</p>
+                <h3>Ejercicio 41: Abrir WordPad</h3>
+                <p>Para abrir el procesador de textos <strong>WordPad</strong>:</p>
+                <ol style="margin-left: 20px; line-height: 1.6;">
+                    <li>Ubicate sobre el ícono de <strong>WordPad</strong> en el escritorio.</li>
+                    <li>Hacé <strong>doble clic rápido</strong> con el botón izquierdo del mouse.</li>
+                </ol>
             </div>
         </div>
         <div class="guide-footer">
@@ -380,139 +290,111 @@
         </div>
     </div>
 
-    <!-- VENTANA: ESTE EQUIPO -->
+    <!-- VENTANA WORDPAD -->
+    <div id="window-wordpad" class="app-window">
+        <div class="window-header">
+            <div class="window-title"><i class="fas fa-file-word" style="color:#2b5797;"></i> Documento - WordPad</div>
+            <div class="close-btn" onclick="closeApp('wordpad')">✕</div>
+        </div>
+        <div class="window-content" style="background: white;">
+            <div style="border-bottom: 1px solid #ddd; padding-bottom: 10px; margin-bottom: 15px; font-size: 13px; color: #555;">
+                Archivo &nbsp;|&nbsp; Edición &nbsp;|&nbsp; Ver &nbsp;|&nbsp; Insertar
+            </div>
+            <textarea style="width: 100%; height: 300px; border: 1px solid #ccc; padding: 10px; font-family: sans-serif; font-size: 15px; outline: none;" placeholder="Escribe tu texto aquí..."></textarea>
+        </div>
+    </div>
+
+    <!-- VENTANA ESTE EQUIPO -->
     <div id="window-este-equipo" class="app-window">
         <div class="window-header">
             <div class="window-title"><i class="fas fa-desktop" style="color:#17a2b8;"></i> Este equipo</div>
             <div class="close-btn" onclick="closeApp('este-equipo')">✕</div>
         </div>
-        <div class="window-content" style="display: flex; background: white; padding: 0;">
-            <div style="width: 200px; border-right: 1px solid #ccc; padding: 20px;">
-                <p><i class="fas fa-star" style="color:#f39c12;"></i> Favoritos</p>
-                <p><i class="fas fa-desktop" style="color:#3498db;"></i> Escritorio</p>
-                <p><i class="fas fa-download" style="color:#3498db;"></i> Descargas</p>
-                <p><i class="fas fa-file-alt" style="color:#3498db;"></i> Documentos</p>
+        <div class="window-content" style="background: white; display: flex;">
+            <div style="width: 180px; border-right: 1px solid #ddd; padding-right: 15px;">
+                <p><b>Acceso rápido</b></p>
+                <p> escritorio</p>
+                <p> Descargas</p>
             </div>
-            <div style="flex: 1; padding: 20px;">
-                <h4>Carpetas</h4>
-                <div style="display: flex; gap: 30px; margin-bottom: 20px;">
-                    <div style="text-align: center;"><i class="fas fa-folder fa-3x" style="color: #F8D775;"></i><br>Imágenes</div>
-                    <div style="text-align: center;"><i class="fas fa-folder fa-3x" style="color: #F8D775;"></i><br>Música</div>
-                    <div style="text-align: center;"><i class="fas fa-folder fa-3x" style="color: #F8D775;"></i><br>Videos</div>
-                </div>
-                <h4>Dispositivos y unidades</h4>
-                <div><i class="fas fa-hdd fa-3x" style="color: #7f8c8d;"></i><br>Disco Local (C:)</div>
+            <div style="flex: 1; padding-left: 20px;">
+                <h4>Unidades de disco</h4>
+                <p><i class="fas fa-hdd fa-2x" style="color: #666;"></i><br>Disco Local (C:)</p>
             </div>
         </div>
     </div>
 
-    <!-- VENTANA: CORREO -->
-    <div id="window-correo" class="app-window">
-        <div class="window-header">
-            <div class="window-title"><i class="fas fa-envelope" style="color:#0078D7;"></i> Correo</div>
-            <div class="close-btn" onclick="closeApp('correo')">✕</div>
-        </div>
-        <div class="mail-toolbar">
-            <button class="mail-btn" onclick="alert('Abriendo plantilla de correo nuevo...')"><i class="fas fa-plus"></i> Correo nuevo</button>
-            <button class="mail-btn" onclick="simulateAttachment()"><i class="fas fa-paperclip"></i> Adjuntar</button>
-        </div>
-        <div class="window-content" style="background: white;">
-            <div style="border-bottom: 1px solid #ccc; padding-bottom: 10px; margin-bottom: 10px;">
-                <p style="margin: 5px 0;"><strong>De:</strong> alumno@capacitacion.com</p>
-                <p style="margin: 5px 0;"><strong>Para:</strong> <input type="text" style="width: 80%; border: none; outline: none;" placeholder="Escriba aquí..."></p>
-                <p style="margin: 5px 0;"><strong>Asunto:</strong> <input type="text" style="width: 80%; border: none; outline: none;" placeholder="Agregar asunto..."></p>
-            </div>
-            <textarea style="width: 100%; height: 250px; border: none; outline: none; resize: none; font-family: sans-serif;" placeholder="Escribe tu mensaje..."></textarea>
-            
-            <div id="attachment-display" style="margin-top: 15px; padding: 10px; background: #e8f4f8; border-radius: 5px; display: none; align-items: center; gap: 10px; width: fit-content;">
-                <i class="fas fa-file-pdf" style="color: #e74c3c; font-size: 24px;"></i>
-                <span id="attached-filename" style="font-weight: bold; color: #333;"></span>
-            </div>
-        </div>
-    </div>
-
-    <!-- BARRA Y MENÚ INICIO -->
+    <!-- BARRA DE TAREAS Y MENÚ INICIO -->
     <div id="taskbar">
         <div id="start-btn" onclick="toggleStartMenu()"><i class="fab fa-windows"></i></div>
     </div>
 
     <div id="start-menu">
         <div class="menu-item" onclick="alert('Apagando sistema...')">
-            <i class="fas fa-power-off" style="color: #ccc;"></i> Inicio/Apagado
+            <i class="fas fa-power-off" style="color: #bbb;"></i> Inicio / Apagado
         </div>
-        <hr style="border-color: #444; margin: 5px 0;">
-        <div class="menu-item" onclick="openApp('wordpad')"><i class="fas fa-file-word" style="color:#3498db;"></i> WordPad</div>
+        <hr style="border-color: #333; margin: 4px 0;">
+        <div class="menu-item" onclick="openApp('wordpad')"><i class="fas fa-file-word" style="color:#2b5797;"></i> WordPad</div>
         <div class="menu-item" onclick="openApp('facturador')"><i class="fas fa-file-invoice-dollar" style="color:#2ecc71;"></i> Facturador</div>
-        <div class="menu-item" onclick="openApp('este-equipo')"><i class="fas fa-desktop" style="color:#1abc9c;"></i> Este equipo</div>
-        <div class="menu-item" onclick="openApp('whatsapp')"><i class="fab fa-whatsapp" style="color:#25D366;"></i> WhatsApp</div>
+        <div class="menu-item" onclick="openApp('este-equipo')"><i class="fas fa-desktop" style="color:#17a2b8;"></i> Este equipo</div>
         <div class="menu-item" onclick="openApp('correo')"><i class="fas fa-envelope" style="color:#e67e22;"></i> Correo</div>
     </div>
 
-    <!-- SCRIPTS -->
+    <!-- SCRIPT DE INTERACTIVIDAD -->
     <script>
-        function changeExercise(exerciseNum) {
-            document.getElementById('exercise-counter').innerText = 'Ej. ' + exerciseNum + ' de 100';
-            const instructions = document.getElementById('exercise-instructions');
-            
-            if (exerciseNum == "1") {
-                instructions.innerHTML = `<h3>Ejercicio 1: Abrir Este equipo</h3><p>Hacé clic en el ícono de <strong>Este equipo</strong> ubicado en el escritorio para abrir el Explorador de archivos.</p>`;
-            } else if (exerciseNum == "40") {
-                instructions.innerHTML = `<h3>Ejercicio 40: Uso del Facturador</h3><p>Hacé clic en el ícono del <strong>Facturador</strong> en el escritorio o búscalo en el Menú Inicio.</p>`;
-            } else if (exerciseNum == "56") {
-                instructions.innerHTML = `<h3>Ejercicio 56: Adjuntar archivo al Correo</h3><p>1. Abrí el <strong>Correo</strong>.<br>2. Hacé clic en <strong><i class='fas fa-paperclip'></i> Adjuntar</strong>.<br>3. Buscá tu archivo PDF en la carpeta de Descargas.</p>`;
+        const exerciseData = {
+            1: { title: "Ejercicio 1: Clic y selección básica", desc: "Hacé clic sobre cualquier ícono del escritorio para seleccionarlo individualmente." },
+            2: { title: "Ejercicio 2: Práctica de ventanas", desc: "Aprendé a minimizar, maximizar y cerrar las ventanas de las aplicaciones usando los botones superiores." },
+            41: { title: "Ejercicio 41: Abrir WordPad con doble clic", desc: "Hacé <strong>doble clic rápido</strong> en el ícono de <strong>WordPad</strong> ubicado en el escritorio para abrir la aplicación." },
+            56: { title: "Ejercicio 56: Adjuntar archivo en Correo", desc: "1. Abrí la aplicación de <strong>Correo</strong>.<br>2. Hacé clic en el botón de adjuntar y seleccioná tu documento." }
+        };
+
+        function changeExercise(num) {
+            document.getElementById('exercise-counter').innerText = 'Ej. ' + num + ' de 100';
+            const inst = document.getElementById('exercise-instructions');
+            if (exerciseData[num]) {
+                inst.innerHTML = '<h3>' + exerciseData[num].title + '</h3><p>' + exerciseData[num].desc + '</p>';
             } else {
-                instructions.innerHTML = `<h3>Ejercicio ` + exerciseNum + `</h3><p>Consignas para el ejercicio ` + exerciseNum + `. Sigue los pasos en la pantalla de la izquierda.</p>`;
+                inst.innerHTML = '<h3>Ejercicio ' + num + '</h3><p>Consigna correspondiente al ejercicio seleccionado de la plataforma.</p>';
             }
         }
 
-        // Abrir/cerrar apps
         function toggleStartMenu() {
             const menu = document.getElementById('start-menu');
             menu.style.display = (menu.style.display === 'flex') ? 'none' : 'flex';
         }
 
         function openApp(appId) {
-            const windowEl = document.getElementById('window-' + appId);
-            if(windowEl) {
+            const win = document.getElementById('window-' + appId);
+            if (win) {
                 document.querySelectorAll('.app-window').forEach(w => w.style.display = 'none');
-                windowEl.style.display = 'flex';
+                win.style.display = 'flex';
             } else {
-                alert('Ventana en construcción para esta demo.');
+                alert("La aplicación seleccionada se abrirá en breve.");
             }
             document.getElementById('start-menu').style.display = 'none';
         }
 
-        function closeApp(appId) { document.getElementById('window-' + appId).style.display = 'none'; }
-
-        function simulateAttachment() {
-            setTimeout(() => {
-                const targetFile = "08740ab0-05cb-48b6-b920-945e2ebbbe80";
-                document.getElementById('attached-filename').innerText = targetFile + ".pdf";
-                document.getElementById('attachment-display').style.display = 'flex';
-                alert("Archivo adjuntado correctamente.");
-            }, 500);
+        function closeApp(appId) {
+            document.getElementById('window-' + appId).style.display = 'none';
         }
 
-        function verifyExercise() { alert("Verificando... ¡Excelente trabajo!"); }
-        function resetExercise() {
-            document.getElementById('attachment-display').style.display = 'none';
-            alert("Reiniciando...");
+        function selectIcon(el) {
+            document.querySelectorAll('.desktop-icon').forEach(i => i.style.background = 'transparent');
+            el.style.background = 'rgba(255, 255, 255, 0.25)';
         }
-        function showHint() { alert("Pista: Usá los íconos del Escritorio o el Menú Inicio."); }
 
-        // Cerrar el menú inicio haciendo clic afuera
-        document.addEventListener('click', function(event) {
-            const startMenu = document.getElementById('start-menu');
-            const startBtn = document.getElementById('start-btn');
-            
-            if (startMenu && startMenu.style.display === 'flex') {
-                if (!startBtn.contains(event.target) && !startMenu.contains(event.target)) {
-                    startMenu.style.display = 'none';
-                }
+        function verifyExercise() { alert("¡Excelente trabajo! Ejercicio completado correctamente."); }
+        function resetExercise() { alert("Reiniciando el ejercicio actual..."); }
+        function showHint() { alert("Pista: Recordá hacer doble clic de forma seguida sobre el ícono en el escritorio."); }
+
+        // Cerrar menú inicio al hacer clic fuera
+        document.addEventListener('click', function(e) {
+            const menu = document.getElementById('start-menu');
+            const btn = document.getElementById('start-btn');
+            if (menu.style.display === 'flex' && !menu.contains(e.target) && !btn.contains(e.target)) {
+                menu.style.display = 'none';
             }
         });
     </script>
 </body>
 </html>
-simulador_windows_10_limpio.html
-Mostrando simulador_windows_10_limpio.html.
