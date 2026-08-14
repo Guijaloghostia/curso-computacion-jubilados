@@ -1,660 +1,458 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Simulador Windows 10 - Competencias Digitales</title>
-  <style>
-    /* RESET & BASE */
-    * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      height: 100vh;
-      overflow: hidden;
-      background: #0078d7 url('https://images.unsplash.com/photo-1579546929518-9e396f3cc809?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
-      display: flex;
-      flex-direction: column;
-    }
+    <meta charset="UTF-8">
+    <title>Simulador Windows 10 - Jubilados</title>
+    <!-- Librería de íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* ================= ESTILOS GENERALES ================= */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Windows_10_Default_Wallpaper_%281909_and_newer%29.jpg/1200px-Windows_10_Default_Wallpaper_%281909_and_newer%29.jpg') no-repeat center center fixed;
+            background-size: cover;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
 
-    /* ESCRITORIO CON ÍCONOS ALINEADOS EN COLUMNA A LA IZQUIERDA */
-    #desktop {
-      flex: 1;
-      position: relative;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      flex-wrap: wrap;
-      align-content: flex-start;
-      gap: 15px;
-      width: calc(100% - 520px); /* Reserva espacio para la guía ensanchada */
-      height: calc(100vh - 42px);
-    }
+        /* ================= ESCRITORIO ================= */
+        #desktop {
+            flex: 1;
+            position: relative;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            align-content: flex-start;
+            gap: 20px;
+        }
+        .desktop-icon {
+            width: 80px;
+            text-align: center;
+            color: white;
+            cursor: pointer;
+            text-shadow: 1px 1px 2px black;
+            font-size: 13px;
+            padding: 5px;
+        }
+        .desktop-icon i {
+            font-size: 40px;
+            margin-bottom: 5px;
+        }
+        .desktop-icon:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+        }
 
-    .icon-shortcut {
-      width: 95px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 8px;
-      border: 1px solid transparent;
-      border-radius: 4px;
-      cursor: pointer;
-      color: white;
-      text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
-    }
-    .icon-shortcut:hover {
-      background: rgba(255, 255, 255, 0.2);
-      border-color: rgba(255, 255, 255, 0.3);
-    }
-    .icon-shortcut svg, .icon-shortcut img { width: 48px; height: 48px; margin-bottom: 6px; }
-    .icon-shortcut span { font-size: 14px; line-height: 1.2; word-break: break-word; font-weight: 500; }
+        /* ================= BARRA DE TAREAS ================= */
+        #taskbar {
+            height: 45px;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            z-index: 1000;
+            position: relative;
+        }
+        #start-btn {
+            color: white;
+            font-size: 22px;
+            cursor: pointer;
+            padding: 5px 15px;
+        }
+        #start-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
 
-    /* GUÍA DE EJERCICIOS (MÁS ANCHA Y MÁS LARGA, PROTEGIENDO LA BARRA) */
-    #exercise-guide {
-      position: fixed;
-      top: 15px;
-      right: 15px;
-      width: 480px; /* Mas ancha */
-      max-height: calc(100vh - 75px); /* No toca la barra de tareas */
-      background: #ffffff;
-      border: 2px solid #0078d7;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-      border-radius: 8px;
-      z-index: 9999;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
-    .guide-header {
-      background: #0078d7;
-      color: white;
-      padding: 14px 18px;
-      font-weight: bold;
-      font-size: 18px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .guide-body { padding: 22px; overflow-y: auto; font-size: 16px; color: #333; line-height: 1.5; flex: 1; }
-    .guide-body h4 { margin-bottom: 10px; color: #0078d7; font-size: 20px; }
-    .hint-box {
-      margin-top: 12px;
-      padding: 12px;
-      background: #fff8e1;
-      border-left: 5px solid #ffc107;
-      font-size: 14px;
-      display: none;
-    }
-    .guide-footer {
-      padding: 14px 18px;
-      background: #f3f3f3;
-      border-top: 1px solid #ddd;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .btn-row { display: flex; gap: 10px; }
-    .btn {
-      flex: 1;
-      padding: 12px;
-      border: none;
-      border-radius: 4px;
-      font-weight: bold;
-      cursor: pointer;
-      font-size: 15px;
-      text-align: center;
-    }
-    .btn-primary { background: #0078d7; color: white; }
-    .btn-primary:hover { background: #005a9e; }
-    .btn-secondary { background: #e1e1e1; color: #333; }
-    .btn-secondary:hover { background: #d0d0d0; }
-    .btn-retry { background: #ff9800; color: white; }
-    .btn-retry:hover { background: #e68a00; }
+        /* ================= MENÚ INICIO ================= */
+        #start-menu {
+            position: absolute;
+            bottom: 45px;
+            left: 0;
+            width: 280px;
+            background: rgba(30, 30, 30, 0.95);
+            color: white;
+            display: none;
+            flex-direction: column;
+            z-index: 1001;
+            padding: 10px 0;
+            box-shadow: 2px -2px 10px rgba(0,0,0,0.5);
+        }
+        .menu-item {
+            padding: 12px 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 15px;
+        }
+        .menu-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        .menu-item i {
+            width: 25px;
+            text-align: center;
+            font-size: 18px;
+        }
 
-    /* VENTANAS SIMULADAS GENERALES */
-    .window {
-      position: absolute;
-      top: 40px;
-      left: 40px;
-      width: 760px;
-      height: 500px;
-      background: white;
-      border: 1px solid #999;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-      display: none;
-      flex-direction: column;
-      z-index: 100;
-    }
-    .window-titlebar {
-      height: 36px;
-      background: #f0f0f0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 12px;
-      border-bottom: 1px solid #ccc;
-    }
-    .window-title { font-size: 14px; color: #333; display: flex; align-items: center; gap: 8px; font-weight: 500; }
-    .window-controls button {
-      width: 34px; height: 28px; border: none; background: transparent; cursor: pointer; font-size: 14px;
-    }
-    .window-controls button:hover { background: #e5e5e5; }
-    .window-controls button.close:hover { background: #e81123; color: white; }
-    .window-content { flex: 1; display: flex; overflow: hidden; padding: 15px; }
+        /* ================= TARJETA DE CAPACITACIÓN DIGITAL ================= */
+        #guide-card {
+            position: fixed;
+            right: 20px;
+            top: 20px;
+            width: 350px;
+            height: 85vh; /* Más alto para que entre el contenido cómodo */
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .guide-header {
+            background: #2b5797;
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+        }
+        .guide-body {
+            padding: 20px;
+            flex: 1;
+            overflow-y: auto;
+        }
+        .guide-footer {
+            padding: 15px;
+            background: #f1f1f1;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        .btn {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            color: white;
+            flex: 1;
+        }
+        .btn-verify { background: #2b5797; width: 100%; margin-top: 10px; }
+        .btn-retry { background: #e68a00; }
+        .btn-hint { background: #ccc; color: black; }
+        
+        /* El nuevo menú desplegable */
+        #exercise-select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 15px;
+            background: #f9f9f9;
+            cursor: pointer;
+        }
 
-    /* ESTE EQUIPO (EXACTO A LA FOTO) */
-    .explorer-sidebar {
-      width: 220px;
-      background: #f3f3f3;
-      border-right: 1px solid #e0e0e0;
-      padding: 12px;
-      font-size: 14px;
-      margin: -15px 15px -15px -15px;
-    }
-    .sidebar-section { margin-bottom: 18px; }
-    .sidebar-title { font-weight: bold; color: #666; font-size: 12px; text-transform: uppercase; margin-bottom: 6px; }
-    .sidebar-item {
-      padding: 8px 10px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      cursor: pointer;
-      border-radius: 4px;
-    }
-    .sidebar-item:hover { background: #e5e5e5; }
-    .sidebar-item.active { background: #cce8ff; font-weight: 500; }
+        /* ================= VENTANAS DE APLICACIONES ================= */
+        .app-window {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            /* Ancho dinámico para que NUNCA pise la tarjeta de la derecha (350px + margenes) */
+            width: calc(100vw - 420px); 
+            height: 80vh;
+            background: white;
+            border: 1px solid #0078D7;
+            box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.5);
+            z-index: 500;
+            display: none;
+            flex-direction: column;
+        }
+        .window-header {
+            background: white;
+            color: black;
+            border-bottom: 1px solid #ccc;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: sans-serif;
+        }
+        .window-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .close-btn {
+            cursor: pointer;
+            color: black;
+            font-weight: bold;
+            font-size: 16px;
+            padding: 5px 10px;
+        }
+        .close-btn:hover {
+            background: #e81123;
+            color: white;
+        }
+        .window-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: #f0f0f0;
+        }
 
-    .explorer-main { flex: 1; padding: 10px; overflow-y: auto; background: white; }
-    .explorer-group-title {
-      font-size: 14px; color: #0078d7; font-weight: bold; margin-bottom: 12px;
-      border-bottom: 1px solid #cce8ff; padding-bottom: 4px;
-    }
-    .explorer-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-      gap: 18px;
-      margin-bottom: 30px;
-    }
-    .folder-card {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 12px;
-      border: 1px solid transparent;
-      border-radius: 4px;
-      cursor: pointer;
-      text-align: center;
-      font-size: 13px;
-    }
-    .folder-card:hover { background: #e5f3ff; border-color: #99d1ff; }
-    .folder-card svg { width: 52px; height: 52px; margin-bottom: 6px; }
-
-    /* BARRA DE TAREAS & MENÚ INICIO */
-    #taskbar {
-      height: 42px;
-      background: rgba(19, 23, 28, 0.98);
-      display: flex;
-      align-items: center;
-      padding: 0 10px;
-      justify-content: space-between;
-      z-index: 10000;
-      position: relative;
-    }
-    .taskbar-left { display: flex; align-items: center; gap: 5px; height: 100%; }
-    .start-btn {
-      width: 48px; height: 100%; display: flex; align-items: center; justify-content: center;
-      cursor: pointer; transition: background 0.2s;
-    }
-    .start-btn:hover { background: rgba(255,255,255,0.15); }
-    .start-btn svg { width: 20px; height: 20px; fill: white; }
-    .taskbar-time { color: white; font-size: 13px; text-align: right; padding-right: 8px; }
-
-    #start-menu {
-      position: absolute;
-      bottom: 42px;
-      left: 0;
-      width: 320px;
-      height: 450px;
-      background: rgba(30, 30, 30, 0.97);
-      border-top-right-radius: 6px;
-      box-shadow: 4px -4px 20px rgba(0,0,0,0.5);
-      display: none;
-      flex-direction: row;
-      z-index: 99999;
-      color: white;
-    }
-    .start-sidebar {
-      width: 48px;
-      background: rgba(15, 15, 15, 0.5);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px 0;
-    }
-    .start-icon-btn {
-      width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
-      cursor: pointer; border-radius: 4px;
-    }
-    .start-icon-btn:hover { background: rgba(255,255,255,0.2); }
-    .start-apps-list { flex: 1; padding: 15px; overflow-y: auto; }
-    .start-app-item {
-      display: flex; align-items: center; gap: 12px; padding: 10px; cursor: pointer; border-radius: 4px; font-size: 14px;
-    }
-    .start-app-item:hover { background: rgba(255,255,255,0.1); }
-
-    .highlight-hint {
-      outline: 4px solid #ffc107 !important;
-      animation: pulse 1s infinite alternate;
-    }
-    @keyframes pulse {
-      from { box-shadow: 0 0 5px #ffc107; }
-      to { box-shadow: 0 0 22px #ffc107; }
-    }
-  </style>
+        /* Específico para el simulador de Correo */
+        .mail-toolbar {
+            background: #f3f2f1;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+            display: flex;
+            gap: 10px;
+        }
+        .mail-btn {
+            background: white;
+            border: 1px solid #ccc;
+            padding: 8px 15px;
+            cursor: pointer;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .mail-btn:hover {
+            background: #e1dfdd;
+        }
+    </style>
 </head>
 <body>
 
-  <!-- ESCRITORIO CON COLUMNA ORDENADA A LA IZQUIERDA -->
-  <div id="desktop">
-    <div class="icon-shortcut" id="icon-wordpad" onclick="openWindow('win-wordpad')" ondblclick="openWindow('win-wordpad')">
-      <svg viewBox="0 0 64 64">
-        <path fill="#2196F3" d="M10 6h44v52H10z"/>
-        <path fill="#FFF" d="M18 16h28v4H18zm0 8h28v4H18zm0 8h20v4H18zm0 8h28v4H18z"/>
-      </svg>
-      <span>WordPad</span>
-    </div>
-
-    <div class="icon-shortcut" id="icon-facturador" onclick="openWindow('win-facturador')" ondblclick="openWindow('win-facturador')">
-      <svg viewBox="0 0 64 64">
-        <rect x="12" y="8" width="40" height="48" rx="4" fill="#4CAF50"/>
-        <path fill="#FFF" d="M20 18h24v4H20zm0 8h24v4H20zm0 8h16v4H20zm0 8h24v4H20z"/>
-        <circle cx="42" cy="42" r="8" fill="#FFC107"/>
-      </svg>
-      <span>Facturador</span>
-    </div>
-
-    <div class="icon-shortcut" id="icon-este-equipo" onclick="openWindow('win-este-equipo')" ondblclick="openWindow('win-este-equipo')">
-      <svg viewBox="0 0 64 64">
-        <rect x="8" y="12" width="48" height="32" rx="3" fill="#0078D7"/>
-        <rect x="12" y="16" width="40" height="24" fill="#E3F2FD"/>
-        <path fill="#546E7A" d="M20 48h24v4H20zm-4 4h32v4H16z"/>
-      </svg>
-      <span>Este equipo</span>
-    </div>
-
-    <div class="icon-shortcut" id="icon-whatsapp" onclick="openWindow('win-whatsapp')" ondblclick="openWindow('win-whatsapp')">
-      <svg viewBox="0 0 64 64">
-        <circle cx="32" cy="32" r="26" fill="#25D366"/>
-        <path fill="#FFF" d="M32 14a18 18 0 0 0-15 28L14 50l8-3a18 18 0 1 0 10-33z"/>
-      </svg>
-      <span>WhatsApp</span>
-    </div>
-
-    <div class="icon-shortcut" id="icon-correo" onclick="openWindow('win-correo')" ondblclick="openWindow('win-correo')">
-      <svg viewBox="0 0 64 64">
-        <rect x="8" y="16" width="48" height="32" rx="4" fill="#D44638"/>
-        <path fill="#FFF" d="M12 20l20 14 20-14v24H12z"/>
-      </svg>
-      <span>Correo</span>
-    </div>
-  </div>
-
-  <!-- GUÍA DE EJERCICIOS (MÁS ANCHA, LARGA Y PROTEGIENDO LA BARRA DE TAREAS) -->
-  <div id="exercise-guide">
-    <div class="guide-header">
-      <span id="ex-title">Ejercicio 1 de 100</span>
-      <span style="font-size: 13px; opacity: 0.85;">Capacitación Digital</span>
-    </div>
-    <div class="guide-body">
-      <h4 id="ex-heading">Cargando...</h4>
-      <p id="ex-instruction">...</p>
-      <div id="hint-box" class="hint-box"></div>
-    </div>
-    <div class="guide-footer">
-      <div class="btn-row">
-        <button class="btn btn-secondary" onclick="showHint()">💡 Pista</button>
-        <button class="btn btn-retry" id="btn-retry" onclick="resetCurrentExercise()">🔄 Volver a hacer</button>
-      </div>
-      <div class="btn-row">
-        <button class="btn btn-primary" id="btn-verify" onclick="verifyExercise()">Verificar Ejercicio</button>
-        <button class="btn btn-primary" id="btn-next" onclick="nextExercise()" style="display:none; background:#4caf50;">Siguiente ➔</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- VENTANA: WORDPAD -->
-  <div class="window" id="win-wordpad">
-    <div class="window-titlebar">
-      <div class="window-title">📝 WordPad</div>
-      <div class="window-controls"><button onclick="closeWindow('win-wordpad')" class="close">✕</button></div>
-    </div>
-    <div class="window-content" style="flex-direction: column;">
-      <div style="border-bottom:1px solid #ccc; padding-bottom:8px; margin-bottom:10px;">
-        <button style="padding:4px 8px;"><b>N</b></button>
-        <button style="padding:4px 8px;"><i>K</i></button>
-        <button style="padding:4px 8px;"><u>S</u></button>
-      </div>
-      <textarea style="flex:1; width:100%; border:1px solid #ddd; padding:10px; font-size:16px;" placeholder="Escribí tu texto aquí..."></textarea>
-    </div>
-  </div>
-
-  <!-- VENTANA: FACTURADOR -->
-  <div class="window" id="win-facturador">
-    <div class="window-titlebar">
-      <div class="window-title">🧾 Facturador Electrónico</div>
-      <div class="window-controls"><button onclick="closeWindow('win-facturador')" class="close">✕</button></div>
-    </div>
-    <div class="window-content" style="flex-direction: column; gap:10px;">
-      <h3 style="color:#0078d7;">Emisión de Factura</h3>
-      <label>Cliente: <input type="text" placeholder="Nombre completo" style="width:100%; padding:6px;"></label>
-      <label>Monto ($): <input type="number" placeholder="0.00" style="width:100%; padding:6px;"></label>
-      <button onclick="alert('Factura emitida con éxito y guardada en Descargas')" style="padding:10px; background:#4CAF50; color:white; border:none; border-radius:4px; font-weight:bold; cursor:pointer;">Emitir y Guardar en Descargas</button>
-    </div>
-  </div>
-
-  <!-- VENTANA: ESTE EQUIPO -->
-  <div class="window" id="win-este-equipo">
-    <div class="window-titlebar">
-      <div class="window-title">
-        <svg width="18" height="18" viewBox="0 0 64 64"><rect x="8" y="12" width="48" height="32" fill="#0078D7"/><rect x="12" y="16" width="40" height="24" fill="#FFF"/></svg>
-        <span>Este equipo</span>
-      </div>
-      <div class="window-controls"><button onclick="closeWindow('win-este-equipo')" class="close">✕</button></div>
-    </div>
-    <div class="window-content">
-      <div class="explorer-sidebar">
-        <div class="sidebar-section">
-          <div class="sidebar-title">Favoritos</div>
-          <div class="sidebar-item" id="side-descargas" onclick="openFolder('Descargas')">📂 Descargas</div>
-          <div class="sidebar-item" onclick="openFolder('Escritorio')">🖥️ Escritorio</div>
-          <div class="sidebar-item">⏱️ Sitios recientes</div>
+    <!-- ÍCONOS DEL ESCRITORIO -->
+    <div id="desktop">
+        <div class="desktop-icon" onclick="openApp('wordpad')">
+            <i class="fas fa-file-word" style="color:#2b5797;"></i><br>WordPad
         </div>
-        <div class="sidebar-section">
-          <div class="sidebar-title">Este equipo</div>
-          <div class="sidebar-item active" onclick="openFolder('Raiz')">💻 Este equipo</div>
-          <div class="sidebar-item" onclick="openFolder('Descargas')">📂 Descargas</div>
-          <div class="sidebar-item" onclick="openFolder('Desktop')">🖥️ Desktop</div>
-          <div class="sidebar-item" onclick="openFolder('Documentos')">📄 Documentos</div>
-          <div class="sidebar-item" onclick="openFolder('Imagenes')">🖼️ Imágenes</div>
-          <div class="sidebar-item">🎵 Música</div>
-          <div class="sidebar-item">🎬 Videos</div>
-          <div class="sidebar-item">💽 Windows (C:)</div>
+        <div class="desktop-icon" onclick="openApp('facturador')">
+            <i class="fas fa-file-invoice-dollar" style="color:#28a745;"></i><br>Facturador
         </div>
-      </div>
-
-      <div class="explorer-main" id="explorer-view">
-        <div class="explorer-group-title">Carpetas (6)</div>
-        <div class="explorer-grid">
-          <div class="folder-card" onclick="openFolder('Descargas')">
-            <svg viewBox="0 0 64 64"><path fill="#FFC107" d="M10 12h18l6 6h20v34H10z"/></svg>
-            <span>Descargas</span>
-          </div>
-          <div class="folder-card" onclick="openFolder('Desktop')">
-            <svg viewBox="0 0 64 64"><path fill="#FFC107" d="M10 12h18l6 6h20v34H10z"/></svg>
-            <span>Desktop</span>
-          </div>
-          <div class="folder-card" onclick="openFolder('Documentos')">
-            <svg viewBox="0 0 64 64"><path fill="#FFC107" d="M10 12h18l6 6h20v34H10z"/></svg>
-            <span>Documentos</span>
-          </div>
-          <div class="folder-card" onclick="openFolder('Imagenes')">
-            <svg viewBox="0 0 64 64"><path fill="#FFC107" d="M10 12h18l6 6h20v34H10z"/></svg>
-            <span>Imágenes</span>
-          </div>
-          <div class="folder-card">
-            <svg viewBox="0 0 64 64"><path fill="#FFC107" d="M10 12h18l6 6h20v34H10z"/></svg>
-            <span>Música</span>
-          </div>
-          <div class="folder-card">
-            <svg viewBox="0 0 64 64"><path fill="#FFC107" d="M10 12h18l6 6h20v34H10z"/></svg>
-            <span>Videos</span>
-          </div>
+        <div class="desktop-icon" onclick="openApp('este-equipo')">
+            <i class="fas fa-desktop" style="color:#17a2b8;"></i><br>Este equipo
         </div>
-
-        <div class="explorer-group-title">Dispositivos y unidades (1)</div>
-        <div class="explorer-grid">
-          <div class="folder-card" style="width: 170px;">
-            <svg viewBox="0 0 64 64"><rect x="8" y="20" width="48" height="24" rx="3" fill="#78909C"/><circle cx="50" cy="32" r="2" fill="#00E676"/></svg>
-            <span>Windows (C:)</span>
-            <span style="font-size: 11px; color: #777;">2,52 GB libres de 23,0 GB</span>
-          </div>
+        <div class="desktop-icon" onclick="openApp('whatsapp')">
+            <i class="fab fa-whatsapp" style="color:#25D366;"></i><br>WhatsApp
         </div>
-      </div>
+        <div class="desktop-icon" onclick="openApp('correo')">
+            <i class="fas fa-envelope" style="color:#0078D7;"></i><br>Correo
+        </div>
     </div>
-  </div>
 
-  <!-- VENTANA: WHATSAPP -->
-  <div class="window" id="win-whatsapp">
-    <div class="window-titlebar">
-      <div class="window-title">💬 WhatsApp Web</div>
-      <div class="window-controls"><button onclick="closeWindow('win-whatsapp')" class="close">✕</button></div>
+    <!-- TARJETA DE CAPACITACIÓN (Guía a la derecha) -->
+    <div id="guide-card">
+        <div class="guide-header">
+            <span>Capacitación Digital</span>
+            <span id="exercise-counter">Ej. 1 de 100</span>
+        </div>
+        <div class="guide-body">
+            <!-- Menú desplegable para saltar de ejercicios -->
+            <select id="exercise-select" onchange="changeExercise(this.value)">
+                <option value="1">Ejercicio 1: Abrir Este equipo</option>
+                <option value="2">Ejercicio 2: Abrir WordPad</option>
+                <option value="40">Ejercicio 40: Uso del Facturador</option>
+                <option value="56">Ejercicio 56: Adjuntar archivo al Correo</option>
+                <option value="80">Ejercicio 80: Configuración de red</option>
+            </select>
+            
+            <div id="exercise-instructions">
+                <!-- Se llena dinámicamente con JS -->
+                <h3>Abrir 'Este equipo'</h3>
+                <p>Hacé clic en el ícono de <strong>Este equipo</strong> ubicado en el escritorio para abrir el Explorador de archivos.</p>
+            </div>
+        </div>
+        <div class="guide-footer">
+            <button class="btn btn-hint" onclick="showHint()"><i class="fas fa-lightbulb"></i> Pista</button>
+            <button class="btn btn-retry" onclick="resetExercise()"><i class="fas fa-undo"></i> Volver a hacer</button>
+        </div>
+        <div style="padding: 0 15px 15px 15px;">
+           <button class="btn btn-verify" onclick="verifyExercise()">Verificar Ejercicio</button>
+        </div>
     </div>
-    <div class="window-content" style="padding:0;">
-      <div style="width:200px; background:#f0f2f5; border-right:1px solid #ccc; padding:10px;">
-        <b>Chats</b>
-        <div style="padding:8px; background:#e9edef; border-radius:4px; margin-top:8px;">Juan Pérez</div>
-      </div>
-      <div style="flex:1; display:flex; flex-direction:column; justify-content:space-between; padding:15px;">
-        <div><b>Juan Pérez:</b> Hola, ¿me podés enviar la factura?</div>
-        <input type="text" placeholder="Escribí un mensaje o adjuntá un archivo..." style="padding:10px; border:1px solid #ccc; border-radius:4px;">
-      </div>
+
+    <!-- VENTANAS DE LAS APPS (Ocultas por defecto) -->
+    
+    <!-- Ventana: Este Equipo -->
+    <div id="window-este-equipo" class="app-window">
+        <div class="window-header">
+            <div class="window-title"><i class="fas fa-desktop" style="color:#17a2b8;"></i> Este equipo</div>
+            <div class="close-btn" onclick="closeApp('este-equipo')">✕</div>
+        </div>
+        <div class="window-content" style="display: flex; background: white;">
+            <!-- Barra lateral -->
+            <div style="width: 200px; border-right: 1px solid #ccc; padding-right: 10px;">
+                <p><i class="fas fa-star" style="color:#f39c12;"></i> Favoritos</p>
+                <p><i class="fas fa-desktop" style="color:#3498db;"></i> Escritorio</p>
+                <p><i class="fas fa-download" style="color:#3498db;"></i> Descargas</p>
+                <p><i class="fas fa-file-alt" style="color:#3498db;"></i> Documentos</p>
+            </div>
+            <!-- Contenido principal -->
+            <div style="flex: 1; padding-left: 20px;">
+                <h4>Carpetas</h4>
+                <div style="display: flex; gap: 30px; margin-bottom: 20px;">
+                    <div style="text-align: center;"><i class="fas fa-folder fa-3x" style="color: #F8D775;"></i><br>Imágenes</div>
+                    <div style="text-align: center;"><i class="fas fa-folder fa-3x" style="color: #F8D775;"></i><br>Música</div>
+                    <div style="text-align: center;"><i class="fas fa-folder fa-3x" style="color: #F8D775;"></i><br>Videos</div>
+                </div>
+                <h4>Dispositivos y unidades</h4>
+                <div><i class="fas fa-hdd fa-3x" style="color: #7f8c8d;"></i><br>Disco Local (C:)</div>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <!-- VENTANA: CORREO -->
-  <div class="window" id="win-correo">
-    <div class="window-titlebar">
-      <div class="window-title">✉️ Correo</div>
-      <div class="window-controls"><button onclick="closeWindow('win-correo')" class="close">✕</button></div>
+    <!-- Ventana: Correo (Con lógica de adjuntar) -->
+    <div id="window-correo" class="app-window">
+        <div class="window-header">
+            <div class="window-title"><i class="fas fa-envelope" style="color:#0078D7;"></i> Correo</div>
+            <div class="close-btn" onclick="closeApp('correo')">✕</div>
+        </div>
+        <div class="mail-toolbar">
+            <button class="mail-btn" onclick="alert('Abriendo plantilla de correo nuevo...')"><i class="fas fa-plus"></i> Correo nuevo</button>
+            <button class="mail-btn" onclick="simulateAttachment()"><i class="fas fa-paperclip"></i> Adjuntar</button>
+        </div>
+        <div class="window-content" style="background: white;">
+            <div style="border-bottom: 1px solid #ccc; padding-bottom: 10px; margin-bottom: 10px;">
+                <p style="margin: 5px 0;"><strong>De:</strong> alumno@capacitacion.com</p>
+                <p style="margin: 5px 0;"><strong>Para:</strong> <input type="text" style="width: 80%; border: none; outline: none;" placeholder="Escriba aquí la dirección de correo..."></p>
+                <p style="margin: 5px 0;"><strong>Asunto:</strong> <input type="text" style="width: 80%; border: none; outline: none;" placeholder="Agregar un asunto..."></p>
+            </div>
+            <textarea style="width: 100%; height: 250px; border: none; outline: none; resize: none; font-family: sans-serif;" placeholder="Escribe tu mensaje aquí..."></textarea>
+            
+            <!-- Acá aparece visualmente el archivo cuando se "adjunta" -->
+            <div id="attachment-display" style="margin-top: 15px; padding: 10px; background: #e8f4f8; border-radius: 5px; display: none; align-items: center; gap: 10px; width: fit-content;">
+                <i class="fas fa-file-pdf" style="color: #e74c3c; font-size: 24px;"></i>
+                <span id="attached-filename" style="font-weight: bold; color: #333;"></span>
+            </div>
+        </div>
     </div>
-    <div class="window-content" style="flex-direction:column; gap:10px;">
-      <button style="padding:8px 15px; background:#0078d7; color:white; border:none; border-radius:4px; align-self:flex-start;">✉️ Correo nuevo</button>
-      <input type="text" placeholder="Para:" style="padding:6px; border:1px solid #ccc;">
-      <input type="text" placeholder="Asunto:" style="padding:6px; border:1px solid #ccc;">
-      <textarea style="flex:1; padding:6px; border:1px solid #ccc;" placeholder="Mensaje..."></textarea>
+
+    <!-- BARRA DE TAREAS Y MENÚ INICIO -->
+    <div id="taskbar">
+        <div id="start-btn" onclick="toggleStartMenu()"><i class="fab fa-windows"></i></div>
     </div>
-  </div>
 
-  <!-- MENÚ INICIO DESPLEGABLE -->
-  <div id="start-menu">
-    <div class="start-sidebar">
-      <div class="start-icon-btn" title="Opciones de energía" onclick="actionPower()">🧅</div>
-      <div class="start-icon-btn" title="Usuario">👤</div>
+    <div id="start-menu">
+        <!-- Ícono de energía arreglado -->
+        <div class="menu-item" onclick="alert('Menú: Opciones de energía (Apagar/Reiniciar)')">
+            <i class="fas fa-power-off" style="color: #ccc;"></i> Inicio/Apagado
+        </div>
+        <hr style="border-color: #444; margin: 5px 0;">
+        
+        <div class="menu-item" onclick="openApp('wordpad')">
+            <i class="fas fa-file-word" style="color:#3498db;"></i> WordPad
+        </div>
+        <!-- Ícono de facturador arreglado -->
+        <div class="menu-item" onclick="openApp('facturador')">
+            <i class="fas fa-file-invoice-dollar" style="color:#2ecc71;"></i> Facturador
+        </div>
+        <div class="menu-item" onclick="openApp('este-equipo')">
+            <i class="fas fa-desktop" style="color:#1abc9c;"></i> Este equipo
+        </div>
+        <div class="menu-item" onclick="openApp('whatsapp')">
+            <i class="fab fa-whatsapp" style="color:#25D366;"></i> WhatsApp
+        </div>
+        <div class="menu-item" onclick="openApp('correo')">
+            <i class="fas fa-envelope" style="color:#e67e22;"></i> Correo
+        </div>
     </div>
-    <div class="start-apps-list">
-      <div style="font-size: 12px; color: #aaa; margin-bottom: 8px;">Aplicaciones</div>
-      <div class="start-app-item" onclick="openWindow('win-wordpad'); toggleStartMenu();">📝 WordPad</div>
-      <div class="start-app-item" onclick="openWindow('win-facturador'); toggleStartMenu();">🧾 Facturador</div>
-      <div class="start-app-item" onclick="openWindow('win-este-equipo'); toggleStartMenu();">💻 Este equipo</div>
-      <div class="start-app-item" onclick="openWindow('win-whatsapp'); toggleStartMenu();">💬 WhatsApp</div>
-      <div class="start-app-item" onclick="openWindow('win-correo'); toggleStartMenu();">✉️ Correo</div>
-    </div>
-  </div>
 
-  <!-- BARRA DE TAREAS -->
-  <div id="taskbar">
-    <div class="taskbar-left">
-      <div class="start-btn" id="start-btn" onclick="toggleStartMenu()">
-        <svg viewBox="0 0 88 88">
-          <path d="M0 12.402l35.687-4.86.016 34.423-35.67.203zm35.67 33.333l.032 34.503-35.67-4.891-.018-29.815zm4.673-38.932l47.657-6.803v41.314l-47.657.327zm47.657 39.516l-.014 41.228-47.643-6.708-.033-34.612z"/>
-        </svg>
-      </div>
-    </div>
-    <div class="taskbar-time" id="clock">12:00</div>
-  </div>
+    <!-- ================= SCRIPTS ================= -->
+    <script>
+        // Función para abrir/cerrar menú inicio
+        function toggleStartMenu() {
+            const menu = document.getElementById('start-menu');
+            menu.style.display = (menu.style.display === 'flex') ? 'none' : 'flex';
+        }
 
-  <script>
-    let currentExerciseIndex = 0;
-    let hintLevel = 0;
-    let currentFolderView = 'Raiz';
-    let isStartMenuOpen = false;
+        // Función para abrir aplicaciones y que no se superpongan visualmente de forma fea
+        function openApp(appId) {
+            const windowEl = document.getElementById('window-' + appId);
+            if(windowEl) {
+                // Cerramos las otras ventanas abiertas en esta demo
+                document.querySelectorAll('.app-window').forEach(w => w.style.display = 'none');
+                
+                // Mostramos la ventana correspondiente
+                windowEl.style.display = 'flex';
+                
+                // Cerramos el menú inicio si estaba abierto
+                document.getElementById('start-menu').style.display = 'none';
+            } else {
+                alert('La ventana de ' + appId + ' se abrirá aquí. (En construcción para la demo)');
+                document.getElementById('start-menu').style.display = 'none';
+            }
+        }
 
-    const exerciseBank = [
-      {
-        id: 1,
-        title: "Abrir 'Este equipo'",
-        instruction: "Hacé clic en el ícono de <b>Este equipo</b> ubicado en el escritorio para abrir el Explorador de archivos.",
-        hint1: "Buscá el ícono azul con forma de computadora a la izquierda.",
-        hint2Target: "icon-este-equipo",
-        validate: () => document.getElementById('win-este-equipo').style.display === 'flex'
-      },
-      {
-        id: 2,
-        title: "Usar el Menú de Inicio",
-        instruction: "Hacé clic en el <b>Botón de Inicio</b> (el logo de Windows abajo a la izquierda en la barra de tareas) para desplegar el menú principal.",
-        hint1: "Presioná el ícono de las 4 ventanas en la esquina inferior izquierda.",
-        hint2Target: "start-btn",
-        validate: () => isStartMenuOpen
-      },
-      {
-        id: 3,
-        title: "Navegar a la carpeta Descargas",
-        instruction: "Dentro de 'Este equipo', hacé clic en la carpeta <b>Descargas</b> para ver la lista de comprobantes guardados.",
-        hint1: "Hacé clic en 'Descargas' en el panel lateral o en el área central.",
-        hint2Target: "side-descargas",
-        validate: () => currentFolderView === 'Descargas'
-      },
-      {
-        id: 4,
-        title: "Buscar y seleccionar la Factura",
-        instruction: "Imaginá que descargaste una factura. Hacé clic en el archivo <b>Factura_Agosto_2026.pdf</b> para seleccionarlo.",
-        hint1: "Hacé clic sobre el nombre del archivo en la lista de Descargas.",
-        validate: () => window.selectedFile === 'Factura_Agosto_2026.pdf'
-      }
-    ];
+        function closeApp(appId) {
+            document.getElementById('window-' + appId).style.display = 'none';
+        }
 
-    function loadExercise(index) {
-      const ex = exerciseBank[index];
-      document.getElementById('ex-title').innerText = `Ejercicio ${ex.id} de 100`;
-      document.getElementById('ex-heading').innerText = ex.title;
-      document.getElementById('ex-instruction').innerHTML = ex.instruction;
-      
-      document.getElementById('hint-box').style.display = 'none';
-      document.getElementById('hint-box').innerText = '';
-      document.getElementById('btn-verify').style.display = 'inline-block';
-      document.getElementById('btn-next').style.display = 'none';
-      hintLevel = 0;
-      clearHighlights();
-    }
+        // Lógica del menú desplegable de ejercicios
+        function changeExercise(exerciseNum) {
+            document.getElementById('exercise-counter').innerText = 'Ej. ' + exerciseNum + ' de 100';
+            const instructions = document.getElementById('exercise-instructions');
+            
+            if (exerciseNum == "56") {
+                instructions.innerHTML = `
+                    <h3>Adjuntar un archivo al Correo</h3>
+                    <p>Vamos a enviarle un archivo adjunto a un familiar.</p>
+                    <ol style="padding-left: 20px; line-height: 1.6;">
+                        <li>Abrí la aplicación <strong>Correo</strong> (desde el Escritorio o Menú Inicio).</li>
+                        <li>En la barra superior de la ventana del correo, hacé clic en el botón <strong><i class="fas fa-paperclip"></i> Adjuntar</strong>.</li>
+                        <li>El sistema buscará y cargará tu archivo de forma automática.</li>
+                    </ol>`;
+            } else if (exerciseNum == "1") {
+                instructions.innerHTML = `
+                    <h3>Abrir 'Este equipo'</h3>
+                    <p>Hacé clic en el ícono de <strong>Este equipo</strong> ubicado en el escritorio para abrir el Explorador de archivos.</p>`;
+            } else {
+                instructions.innerHTML = `
+                    <h3>Ejercicio \${exerciseNum}</h3>
+                    <p>Consignas para el ejercicio \${exerciseNum}. Sigue los pasos en la pantalla de la izquierda.</p>`;
+            }
+        }
 
-    function verifyExercise() {
-      const ex = exerciseBank[currentExerciseIndex];
-      if (ex.validate()) {
-        document.getElementById('hint-box').style.display = 'block';
-        document.getElementById('hint-box').style.background = '#e8f5e9';
-        document.getElementById('hint-box').style.borderLeftColor = '#4caf50';
-        document.getElementById('hint-box').innerHTML = "<b>¡Excelente trabajo!</b> Resolviste la consigna a la perfección. Podés avanzar o hacer clic en 'Volver a hacer' para practicarlo de nuevo.";
-        document.getElementById('btn-verify').style.display = 'none';
-        document.getElementById('btn-next').style.display = 'inline-block';
-      } else {
-        document.getElementById('hint-box').style.display = 'block';
-        document.getElementById('hint-box').style.background = '#ffebee';
-        document.getElementById('hint-box').style.borderLeftColor = '#f44336';
-        document.getElementById('hint-box').innerHTML = "<b>Todavía no está completo.</b> Revisá la consigna y probá nuevamente.";
-      }
-    }
+        // Simulación de buscar y adjuntar el archivo que pediste
+        function simulateAttachment() {
+            const targetFile = "08740ab0-05cb-48b6-b920-945e2ebbbe80";
+            
+            // Simulamos un pequeño retraso de carga como si abriera la ventana de Windows
+            setTimeout(() => {
+                const displayArea = document.getElementById('attachment-display');
+                const filenameArea = document.getElementById('attached-filename');
+                
+                filenameArea.innerText = targetFile + ".pdf";
+                displayArea.style.display = 'flex';
+                
+                alert("¡Muy bien! Buscaste en Descargas y adjuntaste el archivo correctamente.");
+            }, 500);
+        }
 
-    function resetCurrentExercise() {
-      clearHighlights();
-      loadExercise(currentExerciseIndex);
-    }
-
-    function showHint() {
-      const ex = exerciseBank[currentExerciseIndex];
-      const hintBox = document.getElementById('hint-box');
-      hintBox.style.display = 'block';
-      hintBox.style.background = '#fff8e1';
-      hintBox.style.borderLeftColor = '#ffc107';
-
-      if (hintLevel === 0) {
-        hintBox.innerHTML = `💡 <b>Pista:</b> ${ex.hint1 || 'Atención a la opción resaltada en la pantalla.'}`;
-        hintLevel = 1;
-      } else if (hintLevel === 1 && ex.hint2Target) {
-        hintBox.innerHTML = `💡 <b>Pista visual:</b> Te remarcamos en amarillo el elemento exacto que tenés que tocar.`;
-        document.getElementById(ex.hint2Target)?.classList.add('highlight-hint');
-      }
-    }
-
-    function clearHighlights() {
-      document.querySelectorAll('.highlight-hint').forEach(el => el.classList.remove('highlight-hint'));
-    }
-
-    function nextExercise() {
-      if (currentExerciseIndex < exerciseBank.length - 1) {
-        currentExerciseIndex++;
-        loadExercise(currentExerciseIndex);
-      }
-    }
-
-    function toggleStartMenu() {
-      const menu = document.getElementById('start-menu');
-      isStartMenuOpen = menu.style.display === 'flex';
-      menu.style.display = isStartMenuOpen ? 'none' : 'flex';
-      isStartMenuOpen = !isStartMenuOpen;
-    }
-
-    function actionPower() {
-      alert("Simulación de apagado de sistema.");
-    }
-
-    function openWindow(id) {
-      document.getElementById(id).style.display = 'flex';
-    }
-
-    function closeWindow(id) {
-      document.getElementById(id).style.display = 'none';
-    }
-
-    function openFolder(folderName) {
-      currentFolderView = folderName;
-      const view = document.getElementById('explorer-view');
-      
-      if (folderName === 'Descargas') {
-        view.innerHTML = `
-          <div class="explorer-group-title">Archivos en Descargas (3)</div>
-          <table style="width:100%; font-size:14px; text-align:left; border-collapse:collapse;">
-            <thead>
-              <tr style="border-bottom:1px solid #ccc; color:#666;">
-                <th style="padding:6px;">Nombre</th>
-                <th>Fecha de modificación</th>
-                <th>Tipo</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr onclick="selectFile('Factura_Agosto_2026.pdf')" style="cursor:pointer;" class="file-row">
-                <td style="padding:10px;">📄 Factura_Agosto_2026.pdf</td>
-                <td>14/08/2026 10:15</td>
-                <td>Documento PDF</td>
-              </tr>
-              <tr onclick="selectFile('Comprobante_Julio.pdf')" style="cursor:pointer;" class="file-row">
-                <td style="padding:10px;">📄 Comprobante_Julio.pdf</td>
-                <td>02/07/2026 18:30</td>
-                <td>Documento PDF</td>
-              </tr>
-              <tr onclick="selectFile('Foto_Perfil.jpg')" style="cursor:pointer;" class="file-row">
-                <td style="padding:10px;">🖼️ Foto_Perfil.jpg</td>
-                <td>10/05/2026 14:20</td>
-                <td>Imagen JPG</td>
-              </tr>
-            </tbody>
-          </table>
-        `;
-      }
-    }
-
-    function selectFile(filename) {
-      window.selectedFile = filename;
-    }
-
-    setInterval(() => {
-      const d = new Date();
-      document.getElementById('clock').innerText = d.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-    }, 1000);
-
-    window.onload = () => loadExercise(0);
-  </script>
+        function verifyExercise() {
+            alert("Verificando... ¡Excelente trabajo! Pasando al siguiente ejercicio.");
+        }
+        
+        function resetExercise() {
+            // Limpia la pantalla del correo por si el usuario quiere volver a empezar
+            document.getElementById('attachment-display').style.display = 'none';
+            alert("Reiniciando el ejercicio actual. Las ventanas volvieron a su estado original.");
+        }
+        
+        function showHint() {
+            alert("Pista: Buscá la aplicación en los íconos grandes del Escritorio o hacé clic en el botón de Windows abajo a la izquierda.");
+        }
+    </script>
 </body>
 </html>
