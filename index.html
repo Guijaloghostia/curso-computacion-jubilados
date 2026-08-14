@@ -16,16 +16,18 @@
       flex-direction: column;
     }
 
-    /* ESCRITORIO Y GRID DE ÍCONOS */
+    /* ESCRITORIO CON ÍCONOS ALINEADOS EN COLUMNA A LA IZQUIERDA */
     #desktop {
       flex: 1;
       position: relative;
       padding: 20px;
-      display: grid;
-      grid-template-rows: repeat(auto-fill, 110px);
-      grid-auto-flow: column;
-      gap: 15px 20px;
-      width: calc(100% - 500px); /* Espacio reservado para la guía agrandada */
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      align-content: flex-start;
+      gap: 15px;
+      width: calc(100% - 520px); /* Reserva espacio para la guía ensanchada */
+      height: calc(100vh - 42px);
     }
 
     .icon-shortcut {
@@ -49,13 +51,13 @@
     .icon-shortcut svg, .icon-shortcut img { width: 48px; height: 48px; margin-bottom: 6px; }
     .icon-shortcut span { font-size: 14px; line-height: 1.2; word-break: break-word; font-weight: 500; }
 
-    /* GUÍA DE EJERCICIOS (MÁS GRANDE Y CÓMODA PARA LECTURA) */
+    /* GUÍA DE EJERCICIOS (MÁS ANCHA Y MÁS LARGA, PROTEGIENDO LA BARRA) */
     #exercise-guide {
       position: fixed;
       top: 15px;
       right: 15px;
-      width: 460px; /* Agrandada */
-      max-height: calc(100vh - 70px);
+      width: 480px; /* Mas ancha */
+      max-height: calc(100vh - 75px); /* No toca la barra de tareas */
       background: #ffffff;
       border: 2px solid #0078d7;
       box-shadow: 0 8px 24px rgba(0,0,0,0.3);
@@ -75,8 +77,8 @@
       justify-content: space-between;
       align-items: center;
     }
-    .guide-body { padding: 22px; overflow-y: auto; font-size: 16px; color: #333; line-height: 1.5; }
-    .guide-body h4 { margin-bottom: 10px; color: #0078d7; font-size: 19px; }
+    .guide-body { padding: 22px; overflow-y: auto; font-size: 16px; color: #333; line-height: 1.5; flex: 1; }
+    .guide-body h4 { margin-bottom: 10px; color: #0078d7; font-size: 20px; }
     .hint-box {
       margin-top: 12px;
       padding: 12px;
@@ -111,13 +113,13 @@
     .btn-retry { background: #ff9800; color: white; }
     .btn-retry:hover { background: #e68a00; }
 
-    /* VENTANAS SIMULADAS */
+    /* VENTANAS SIMULADAS GENERALES */
     .window {
       position: absolute;
       top: 40px;
       left: 40px;
-      width: 780px;
-      height: 520px;
+      width: 760px;
+      height: 500px;
       background: white;
       border: 1px solid #999;
       box-shadow: 0 10px 30px rgba(0,0,0,0.3);
@@ -140,7 +142,7 @@
     }
     .window-controls button:hover { background: #e5e5e5; }
     .window-controls button.close:hover { background: #e81123; color: white; }
-    .window-content { flex: 1; display: flex; overflow: hidden; }
+    .window-content { flex: 1; display: flex; overflow: hidden; padding: 15px; }
 
     /* ESTE EQUIPO (EXACTO A LA FOTO) */
     .explorer-sidebar {
@@ -149,6 +151,7 @@
       border-right: 1px solid #e0e0e0;
       padding: 12px;
       font-size: 14px;
+      margin: -15px 15px -15px -15px;
     }
     .sidebar-section { margin-bottom: 18px; }
     .sidebar-title { font-weight: bold; color: #666; font-size: 12px; text-transform: uppercase; margin-bottom: 6px; }
@@ -163,7 +166,7 @@
     .sidebar-item:hover { background: #e5e5e5; }
     .sidebar-item.active { background: #cce8ff; font-weight: 500; }
 
-    .explorer-main { flex: 1; padding: 20px; overflow-y: auto; background: white; }
+    .explorer-main { flex: 1; padding: 10px; overflow-y: auto; background: white; }
     .explorer-group-title {
       font-size: 14px; color: #0078d7; font-weight: bold; margin-bottom: 12px;
       border-bottom: 1px solid #cce8ff; padding-bottom: 4px;
@@ -186,7 +189,7 @@
       font-size: 13px;
     }
     .folder-card:hover { background: #e5f3ff; border-color: #99d1ff; }
-    .folder-card svg, .folder-card img { width: 52px; height: 52px; margin-bottom: 6px; }
+    .folder-card svg { width: 52px; height: 52px; margin-bottom: 6px; }
 
     /* BARRA DE TAREAS & MENÚ INICIO */
     #taskbar {
@@ -208,7 +211,6 @@
     .start-btn svg { width: 20px; height: 20px; fill: white; }
     .taskbar-time { color: white; font-size: 13px; text-align: right; padding-right: 8px; }
 
-    /* MENÚ INICIO DESPLEGABLE REALISTA */
     #start-menu {
       position: absolute;
       bottom: 42px;
@@ -237,23 +239,12 @@
       cursor: pointer; border-radius: 4px;
     }
     .start-icon-btn:hover { background: rgba(255,255,255,0.2); }
-    .start-apps-list {
-      flex: 1;
-      padding: 15px;
-      overflow-y: auto;
-    }
+    .start-apps-list { flex: 1; padding: 15px; overflow-y: auto; }
     .start-app-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 10px;
-      cursor: pointer;
-      border-radius: 4px;
-      font-size: 14px;
+      display: flex; align-items: center; gap: 12px; padding: 10px; cursor: pointer; border-radius: 4px; font-size: 14px;
     }
     .start-app-item:hover { background: rgba(255,255,255,0.1); }
 
-    /* HIGHLIGHT PISTA */
     .highlight-hint {
       outline: 4px solid #ffc107 !important;
       animation: pulse 1s infinite alternate;
@@ -266,10 +257,9 @@
 </head>
 <body>
 
-  <!-- ESCRITORIO CON LOS 5 ÍCONOS PRINCIPALES (SVG ESTABLES Y NATIVOS) -->
+  <!-- ESCRITORIO CON COLUMNA ORDENADA A LA IZQUIERDA -->
   <div id="desktop">
-    <!-- WORDPAD -->
-    <div class="icon-shortcut" id="icon-wordpad" onclick="openWindow('win-wordpad')">
+    <div class="icon-shortcut" id="icon-wordpad" onclick="openWindow('win-wordpad')" ondblclick="openWindow('win-wordpad')">
       <svg viewBox="0 0 64 64">
         <path fill="#2196F3" d="M10 6h44v52H10z"/>
         <path fill="#FFF" d="M18 16h28v4H18zm0 8h28v4H18zm0 8h20v4H18zm0 8h28v4H18z"/>
@@ -277,8 +267,7 @@
       <span>WordPad</span>
     </div>
 
-    <!-- FACTURADOR -->
-    <div class="icon-shortcut" id="icon-facturador" onclick="openWindow('win-facturador')">
+    <div class="icon-shortcut" id="icon-facturador" onclick="openWindow('win-facturador')" ondblclick="openWindow('win-facturador')">
       <svg viewBox="0 0 64 64">
         <rect x="12" y="8" width="40" height="48" rx="4" fill="#4CAF50"/>
         <path fill="#FFF" d="M20 18h24v4H20zm0 8h24v4H20zm0 8h16v4H20zm0 8h24v4H20z"/>
@@ -287,8 +276,7 @@
       <span>Facturador</span>
     </div>
 
-    <!-- ESTE EQUIPO (SISTEMA NATIVO DE WINDOWS) -->
-    <div class="icon-shortcut" id="icon-este-equipo" onclick="openWindow('win-este-equipo')">
+    <div class="icon-shortcut" id="icon-este-equipo" onclick="openWindow('win-este-equipo')" ondblclick="openWindow('win-este-equipo')">
       <svg viewBox="0 0 64 64">
         <rect x="8" y="12" width="48" height="32" rx="3" fill="#0078D7"/>
         <rect x="12" y="16" width="40" height="24" fill="#E3F2FD"/>
@@ -297,8 +285,7 @@
       <span>Este equipo</span>
     </div>
 
-    <!-- WHATSAPP -->
-    <div class="icon-shortcut" id="icon-whatsapp" onclick="openWindow('win-whatsapp')">
+    <div class="icon-shortcut" id="icon-whatsapp" onclick="openWindow('win-whatsapp')" ondblclick="openWindow('win-whatsapp')">
       <svg viewBox="0 0 64 64">
         <circle cx="32" cy="32" r="26" fill="#25D366"/>
         <path fill="#FFF" d="M32 14a18 18 0 0 0-15 28L14 50l8-3a18 18 0 1 0 10-33z"/>
@@ -306,8 +293,7 @@
       <span>WhatsApp</span>
     </div>
 
-    <!-- CORREO -->
-    <div class="icon-shortcut" id="icon-correo" onclick="openWindow('win-correo')">
+    <div class="icon-shortcut" id="icon-correo" onclick="openWindow('win-correo')" ondblclick="openWindow('win-correo')">
       <svg viewBox="0 0 64 64">
         <rect x="8" y="16" width="48" height="32" rx="4" fill="#D44638"/>
         <path fill="#FFF" d="M12 20l20 14 20-14v24H12z"/>
@@ -316,7 +302,7 @@
     </div>
   </div>
 
-  <!-- GUÍA DE EJERCICIOS (AGRANDADA, MÁS ESPACIOSA Y CON LETRA CLARA) -->
+  <!-- GUÍA DE EJERCICIOS (MÁS ANCHA, LARGA Y PROTEGIENDO LA BARRA DE TAREAS) -->
   <div id="exercise-guide">
     <div class="guide-header">
       <span id="ex-title">Ejercicio 1 de 100</span>
@@ -339,19 +325,46 @@
     </div>
   </div>
 
-  <!-- VENTANA SIMULADA: ESTE EQUIPO (EXACTA A TU FOTO) -->
+  <!-- VENTANA: WORDPAD -->
+  <div class="window" id="win-wordpad">
+    <div class="window-titlebar">
+      <div class="window-title">📝 WordPad</div>
+      <div class="window-controls"><button onclick="closeWindow('win-wordpad')" class="close">✕</button></div>
+    </div>
+    <div class="window-content" style="flex-direction: column;">
+      <div style="border-bottom:1px solid #ccc; padding-bottom:8px; margin-bottom:10px;">
+        <button style="padding:4px 8px;"><b>N</b></button>
+        <button style="padding:4px 8px;"><i>K</i></button>
+        <button style="padding:4px 8px;"><u>S</u></button>
+      </div>
+      <textarea style="flex:1; width:100%; border:1px solid #ddd; padding:10px; font-size:16px;" placeholder="Escribí tu texto aquí..."></textarea>
+    </div>
+  </div>
+
+  <!-- VENTANA: FACTURADOR -->
+  <div class="window" id="win-facturador">
+    <div class="window-titlebar">
+      <div class="window-title">🧾 Facturador Electrónico</div>
+      <div class="window-controls"><button onclick="closeWindow('win-facturador')" class="close">✕</button></div>
+    </div>
+    <div class="window-content" style="flex-direction: column; gap:10px;">
+      <h3 style="color:#0078d7;">Emisión de Factura</h3>
+      <label>Cliente: <input type="text" placeholder="Nombre completo" style="width:100%; padding:6px;"></label>
+      <label>Monto ($): <input type="number" placeholder="0.00" style="width:100%; padding:6px;"></label>
+      <button onclick="alert('Factura emitida con éxito y guardada en Descargas')" style="padding:10px; background:#4CAF50; color:white; border:none; border-radius:4px; font-weight:bold; cursor:pointer;">Emitir y Guardar en Descargas</button>
+    </div>
+  </div>
+
+  <!-- VENTANA: ESTE EQUIPO -->
   <div class="window" id="win-este-equipo">
     <div class="window-titlebar">
       <div class="window-title">
         <svg width="18" height="18" viewBox="0 0 64 64"><rect x="8" y="12" width="48" height="32" fill="#0078D7"/><rect x="12" y="16" width="40" height="24" fill="#FFF"/></svg>
         <span>Este equipo</span>
       </div>
-      <div class="window-controls">
-        <button onclick="closeWindow('win-este-equipo')" class="close">✕</button>
-      </div>
+      <div class="window-controls"><button onclick="closeWindow('win-este-equipo')" class="close">✕</button></div>
     </div>
     <div class="window-content">
-      <!-- PANEL LATERAL IZQUIERDO -->
       <div class="explorer-sidebar">
         <div class="sidebar-section">
           <div class="sidebar-title">Favoritos</div>
@@ -372,7 +385,6 @@
         </div>
       </div>
 
-      <!-- ÁREA PRINCIPAL -->
       <div class="explorer-main" id="explorer-view">
         <div class="explorer-group-title">Carpetas (6)</div>
         <div class="explorer-grid">
@@ -414,6 +426,38 @@
     </div>
   </div>
 
+  <!-- VENTANA: WHATSAPP -->
+  <div class="window" id="win-whatsapp">
+    <div class="window-titlebar">
+      <div class="window-title">💬 WhatsApp Web</div>
+      <div class="window-controls"><button onclick="closeWindow('win-whatsapp')" class="close">✕</button></div>
+    </div>
+    <div class="window-content" style="padding:0;">
+      <div style="width:200px; background:#f0f2f5; border-right:1px solid #ccc; padding:10px;">
+        <b>Chats</b>
+        <div style="padding:8px; background:#e9edef; border-radius:4px; margin-top:8px;">Juan Pérez</div>
+      </div>
+      <div style="flex:1; display:flex; flex-direction:column; justify-content:space-between; padding:15px;">
+        <div><b>Juan Pérez:</b> Hola, ¿me podés enviar la factura?</div>
+        <input type="text" placeholder="Escribí un mensaje o adjuntá un archivo..." style="padding:10px; border:1px solid #ccc; border-radius:4px;">
+      </div>
+    </div>
+  </div>
+
+  <!-- VENTANA: CORREO -->
+  <div class="window" id="win-correo">
+    <div class="window-titlebar">
+      <div class="window-title">✉️ Correo</div>
+      <div class="window-controls"><button onclick="closeWindow('win-correo')" class="close">✕</button></div>
+    </div>
+    <div class="window-content" style="flex-direction:column; gap:10px;">
+      <button style="padding:8px 15px; background:#0078d7; color:white; border:none; border-radius:4px; align-self:flex-start;">✉️ Correo nuevo</button>
+      <input type="text" placeholder="Para:" style="padding:6px; border:1px solid #ccc;">
+      <input type="text" placeholder="Asunto:" style="padding:6px; border:1px solid #ccc;">
+      <textarea style="flex:1; padding:6px; border:1px solid #ccc;" placeholder="Mensaje..."></textarea>
+    </div>
+  </div>
+
   <!-- MENÚ INICIO DESPLEGABLE -->
   <div id="start-menu">
     <div class="start-sidebar">
@@ -430,11 +474,10 @@
     </div>
   </div>
 
-  <!-- BARRA DE TAREAS CON LOGO REAL DE WINDOWS -->
+  <!-- BARRA DE TAREAS -->
   <div id="taskbar">
     <div class="taskbar-left">
       <div class="start-btn" id="start-btn" onclick="toggleStartMenu()">
-        <!-- LOGO NATIVO WINDOWS 10 -->
         <svg viewBox="0 0 88 88">
           <path d="M0 12.402l35.687-4.86.016 34.423-35.67.203zm35.67 33.333l.032 34.503-35.67-4.891-.018-29.815zm4.673-38.932l47.657-6.803v41.314l-47.657.327zm47.657 39.516l-.014 41.228-47.643-6.708-.033-34.612z"/>
         </svg>
@@ -444,13 +487,11 @@
   </div>
 
   <script>
-    // ESTADO GENERAL DE LA APLICACIÓN
     let currentExerciseIndex = 0;
     let hintLevel = 0;
     let currentFolderView = 'Raiz';
     let isStartMenuOpen = false;
 
-    // BANCO PROGRESIVO DE EJERCICIOS (CON FORMATO HTML CORREGIDO Y EJERCICIOS DE INICIO INCLUIDOS)
     const exerciseBank = [
       {
         id: 1,
@@ -483,10 +524,8 @@
         hint1: "Hacé clic sobre el nombre del archivo en la lista de Descargas.",
         validate: () => window.selectedFile === 'Factura_Agosto_2026.pdf'
       }
-      // ... Aquí se extienden progresivamente los 100 ejercicios
     ];
 
-    // CARGAR EJERCICIO
     function loadExercise(index) {
       const ex = exerciseBank[index];
       document.getElementById('ex-title').innerText = `Ejercicio ${ex.id} de 100`;
@@ -501,7 +540,6 @@
       clearHighlights();
     }
 
-    // VERIFICAR SOLUCIÓN
     function verifyExercise() {
       const ex = exerciseBank[currentExerciseIndex];
       if (ex.validate()) {
@@ -519,13 +557,11 @@
       }
     }
 
-    // REPETIR EJERCICIO
     function resetCurrentExercise() {
       clearHighlights();
       loadExercise(currentExerciseIndex);
     }
 
-    // PISTAS GRADUALES
     function showHint() {
       const ex = exerciseBank[currentExerciseIndex];
       const hintBox = document.getElementById('hint-box');
@@ -553,7 +589,6 @@
       }
     }
 
-    // MENÚ INICIO INTERACTIVO
     function toggleStartMenu() {
       const menu = document.getElementById('start-menu');
       isStartMenuOpen = menu.style.display === 'flex';
@@ -565,10 +600,10 @@
       alert("Simulación de apagado de sistema.");
     }
 
-    // VENTANAS
     function openWindow(id) {
       document.getElementById(id).style.display = 'flex';
     }
+
     function closeWindow(id) {
       document.getElementById(id).style.display = 'none';
     }
@@ -614,13 +649,11 @@
       window.selectedFile = filename;
     }
 
-    // RELOJ
     setInterval(() => {
       const d = new Date();
       document.getElementById('clock').innerText = d.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
     }, 1000);
 
-    // INICIALIZAR
     window.onload = () => loadExercise(0);
   </script>
 </body>
