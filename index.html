@@ -1,582 +1,307 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Windows 10 Virtual - Aula Digital Eterna Juventud</title>
-    <!-- FontAwesome para íconos -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            user-select: none;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulador Windows 10 - Eterna Juventud (100 Ejercicios)</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; height: 100vh; overflow: hidden; background: #004275 url('https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?q=80&w=1920&auto=format&fit=crop') no-repeat center center fixed; background-size: cover; color: #333; }
+    
+    #desktop { position: absolute; top: 0; left: 0; right: 0; bottom: 38px; padding: 15px; display: flex; flex-direction: column; flex-wrap: wrap; gap: 15px; align-content: flex-start; }
+    
+    /* Iconos Escritorio */
+    .icon { width: 95px; text-align: center; color: white; cursor: pointer; padding: 8px; border-radius: 6px; font-size: 12px; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); transition: background 0.2s; border: 1px solid transparent; }
+    .icon:hover { background: rgba(255, 255, 255, 0.25); border: 1px solid rgba(255, 255, 255, 0.4); }
+    .icon i { font-size: 38px; display: block; margin-bottom: 5px; }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            height: 100vh;
-            background: #004275 url('https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?q=80&w=1920&auto=format&fit=crop') no-repeat center center fixed;
-            background-size: cover;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
+    /* Barra de tareas (Abajo fija) */
+    #taskbar { position: absolute; bottom: 0; left: 0; right: 0; height: 38px; background: rgba(12, 12, 12, 0.94); display: flex; align-items: center; justify-content: space-between; padding: 0 10px; z-index: 9999; backdrop-filter: blur(5px); color: white; }
+    .taskbar-btn { height: 100%; padding: 0 15px; display: flex; align-items: center; background: transparent; border: none; color: white; cursor: pointer; font-size: 16px; }
+    .taskbar-btn:hover { background: rgba(255, 255, 255, 0.15); }
 
-        /* --- ESCRITORIO --- */
-        #desktop {
-            height: calc(100vh - 36px);
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            flex-wrap: wrap;
-            gap: 15px;
-            align-content: flex-start;
-            position: relative;
-        }
+    /* Ventanas */
+    .window { position: absolute; background: #fdfdfd; color: #000; border: 1px solid #707070; box-shadow: 0 10px 25px rgba(0,0,0,0.4); display: flex; flex-direction: column; z-index: 100; border-radius: 6px; overflow: hidden; }
+    
+    /* POSICIÓN FIJA GUÍA: Esquina superior derecha, resguardada de la barra inferior */
+    #guide-window {
+      top: 15px !important;
+      right: 15px !important;
+      left: auto !important;
+      bottom: auto !important;
+      width: 360px !important;
+      height: calc(100vh - 70px) !important;
+      max-height: 620px !important;
+      border: 3px solid #27ae60 !important;
+      z-index: 200 !important;
+    }
 
-        .icon {
-            width: 95px;
-            text-align: center;
-            color: white;
-            cursor: pointer;
-            padding: 8px;
-            border-radius: 6px;
-            font-size: 12px;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
-            transition: background 0.2s, border 0.2s;
-            border: 1px solid transparent;
-        }
+    .window-header { background: #e8e8e8; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ccc; font-weight: 600; font-size: 14px; color: #333; }
+    .window-body { padding: 16px; flex-grow: 1; overflow-y: auto; background: #fff; font-size: 14px; color: #333; display: flex; flex-direction: column; }
+    .window-actions { padding: 12px; background: #f9f9f9; border-top: 1px solid #eee; }
 
-        .icon:hover {
-            background: rgba(255, 255, 255, 0.25);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-        }
+    .btn { padding: 10px 14px; border: none; border-radius: 5px; cursor: pointer; font-size: 14px; font-weight: 600; width: 100%; }
+    .btn-success { background: #27ae60; color: white; }
+    .btn-success:hover { background: #219150; }
+    .btn-primary { background: #0078d7; color: white; margin-top: 8px; }
 
-        .icon i {
-            font-size: 38px;
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        .icon-tutor {
-            background: rgba(39, 174, 96, 0.3);
-            border: 1px solid #27ae60;
-        }
-
-        /* --- VENTANAS GENERALES --- */
-        .window {
-            position: absolute;
-            top: 20px;
-            left: 350px; /* Offset a la derecha para no pisar ni tapar la guía */
-            width: 540px;
-            height: 450px;
-            background: #fdfdfd;
-            border: 1px solid #999;
-            display: none;
-            flex-direction: column;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-            border-radius: 8px;
-            overflow: hidden;
-            z-index: 100;
-        }
-
-        /* --- VENTANA DE EJERCICIOS (GUÍA) --- */
-        #win-ejercicios {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            width: 320px;
-            height: calc(100vh - 60px); /* Altura exacta para NO pisar la barra de tareas */
-            max-height: 600px;
-            border: 3px solid #27ae60;
-            display: flex;
-            flex-direction: column;
-            background: #ffffff;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.35);
-            z-index: 200;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .win-header {
-            background: #e8e8e8;
-            padding: 10px 14px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #ccc;
-            font-size: 14px;
-            font-weight: 600;
-            color: #333;
-            cursor: move;
-        }
-
-        .win-body {
-            flex: 1;
-            padding: 16px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .win-close {
-            cursor: pointer;
-            background: #e74c3c;
-            color: white;
-            border: none;
-            padding: 4px 10px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        .win-close:hover {
-            background: #c0392b;
-        }
-
-        /* --- CONTENIDO Y CONTROLES INTERNOS (LETRA AGRANDADA) --- */
-        .btn {
-            background: #0078d7;
-            color: white;
-            border: none;
-            padding: 10px 14px;
-            cursor: pointer;
-            border-radius: 5px;
-            font-size: 14px;
-            font-weight: 600;
-            transition: background 0.2s;
-        }
-
-        .btn:hover {
-            background: #005a9e;
-        }
-
-        .input-box {
-            width: 100%;
-            padding: 10px;
-            margin: 8px 0 14px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 14px;
-        }
-
-        .feedback-msg {
-            margin-top: 12px;
-            padding: 10px;
-            border-radius: 5px;
-            font-size: 14px;
-            font-weight: 500;
-            display: none;
-            line-height: 1.4;
-        }
-
-        .feedback-success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-
-        .feedback-error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-
-        /* --- BARRA DE TAREAS (BAJADA Y REAJUSTADA) --- */
-        #taskbar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 34px; /* Bajada al máximo con margen libre respetado */
-            background: rgba(12, 12, 12, 0.94);
-            display: flex;
-            align-items: center;
-            color: white;
-            z-index: 9999;
-            backdrop-filter: blur(5px);
-        }
-
-        .start-btn {
-            padding: 0 16px;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 17px;
-            transition: background 0.2s;
-        }
-
-        .start-btn:hover {
-            background: rgba(255, 255, 255, 0.18);
-        }
-
-        .taskbar-items {
-            display: flex;
-            height: 100%;
-        }
-
-        .clock {
-            margin-left: auto;
-            padding: 0 15px;
-            font-size: 12px;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            justify-content: center;
-        }
-
-        /* --- MENÚ INICIO --- */
-        #start-menu {
-            position: absolute;
-            bottom: 34px;
-            left: 0;
-            width: 270px;
-            background: rgba(22, 22, 22, 0.96);
-            color: white;
-            border-top-right-radius: 8px;
-            display: none;
-            flex-direction: column;
-            box-shadow: 2px -5px 20px rgba(0,0,0,0.5);
-            z-index: 9998;
-            padding: 10px 0;
-        }
-
-        .start-item {
-            padding: 12px 20px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 14px;
-            cursor: pointer;
-        }
-
-        .start-item:hover {
-            background: rgba(255, 255, 255, 0.15);
-        }
-    </style>
+    .input-box { width: 100%; padding: 10px; margin: 8px 0 12px 0; border: 1px solid #ccc; border-radius: 5px; font-size: 14px; }
+  </style>
 </head>
 <body>
 
-    <!-- ESCRITORIO CON ÍCONOS -->
-    <div id="desktop">
-        <div id="icon-tutor" class="icon icon-tutor" onclick="openWindow('win-ejercicios')">
-            <i class="fa-solid fa-graduation-cap" style="color:#2ecc71;"></i>
-            <span><b>GUÍA</b></span>
-        </div>
-        <div id="icon-word" class="icon" onclick="openWindow('win-word')">
-            <i class="fa-solid fa-file-word" style="color:#2980b9;"></i>
-            <span>WordPad</span>
-        </div>
-        <div id="icon-factura" class="icon" onclick="openWindow('win-factura')">
-            <i class="fa-solid fa-file-invoice" style="color:#f39c12;"></i>
-            <span>Facturador</span>
-        </div>
-        <div id="icon-carpeta" class="icon" onclick="openWindow('win-carpeta')">
-            <i class="fa-solid fa-folder-open" style="color:#f1c40f;"></i>
-            <span>Mis Archivos</span>
-        </div>
+  <div id="desktop">
+    <div class="icon" onclick="openWindow('win-word')">
+      <i class="fa-solid fa-file-word" style="color:#2980b9;"></i>
+      <span>WordPad</span>
     </div>
-
-    <!-- VENTANA GUÍA DE EJERCICIOS (LETRA GRANDE - IZQUIERDA FIJA) -->
-    <div id="win-ejercicios" class="window" style="display: flex;">
-        <div class="win-header" style="background:#27ae60; color:white;" onmousedown="dragElement(this.parentElement)" ontouchstart="dragElement(this.parentElement)">
-            <span><i class="fa-solid fa-list-check"></i> Guía de Ejercicios</span>
-            <button class="win-close" onclick="closeWindow('win-ejercicios')">✕</button>
-        </div>
-        <div class="win-body">
-            <label for="select-ejercicio" style="font-size: 13px; font-weight: bold; color: #444;">SELECCIONAR LECCIÓN:</label>
-            <select id="select-ejercicio" class="input-box" onchange="cargarEjercicio()">
-                <!-- Opciones cargadas dinámicamente -->
-            </select>
-
-            <div style="background: #f0f9f4; padding: 12px; border-left: 5px solid #27ae60; margin-bottom: 14px; border-radius: 4px;">
-                <h4 id="ej-titulo" style="font-size:16px; color:#1e824c; margin-bottom:6px;">Cargando...</h4>
-                <p id="ej-instruccion" style="font-size:14px; color:#222; line-height: 1.5;">Cargando consigna...</p>
-            </div>
-
-            <div id="area-respuesta"></div>
-
-            <button class="btn" style="background:#27ae60; width:100%; margin-top: auto;" onclick="verificarEjercicio()">Verificar Ejercicio</button>
-            <button id="btn-siguiente" class="btn" style="width:100%; margin-top:8px; background:#2980b9; display:none;" onclick="siguienteEjercicio()">Siguiente Lección ➔</button>
-
-            <div id="feedback" class="feedback-msg"></div>
-        </div>
+    <div class="icon" onclick="openWindow('win-factura')">
+      <i class="fa-solid fa-file-invoice" style="color:#f39c12;"></i>
+      <span>Facturador</span>
     </div>
-
-    <!-- VENTANAS DE TRABAJO (ABREN A LA DERECHA) -->
-    <!-- Ventana WordPad -->
-    <div id="win-word" class="window">
-        <div class="win-header" onmousedown="dragElement(this.parentElement)" ontouchstart="dragElement(this.parentElement)">
-            <span><i class="fa-solid fa-file-word" style="color:#2980b9;"></i> WordPad</span>
-            <button class="win-close" onclick="closeWindow('win-word')">✕</button>
-        </div>
-        <div class="win-body">
-            <label style="font-size:13px; color:#555;">Hoja de Texto:</label>
-            <textarea id="word-text" style="width:100%; height:82%; margin-top:8px; padding:12px; border:1px solid #ccc; border-radius:5px; font-size:15px; font-family:sans-serif; resize:none;" placeholder="Tocá acá con el dedo para escribir..."></textarea>
-        </div>
+    <div class="icon" onclick="openWindow('win-carpeta')">
+      <i class="fa-solid fa-folder-open" style="color:#f1c40f;"></i>
+      <span>Mis Archivos</span>
     </div>
+  </div>
 
-    <!-- Ventana Facturador -->
-    <div id="win-factura" class="window">
-        <div class="win-header" onmousedown="dragElement(this.parentElement)" ontouchstart="dragElement(this.parentElement)">
-            <span><i class="fa-solid fa-file-invoice" style="color:#f39c12;"></i> Facturador Digital</span>
-            <button class="win-close" onclick="closeWindow('win-factura')">✕</button>
-        </div>
-        <div class="win-body">
-            <label style="font-size:14px; font-weight:bold;">Nombre del Cliente:</label>
-            <input type="text" id="factura-cliente" class="input-box" placeholder="Ej: Juan Pérez">
-            
-            <label style="font-size:14px; font-weight:bold;">Monto ($):</label>
-            <input type="number" id="factura-monto" class="input-box" placeholder="0.00">
-
-            <button class="btn" style="background:#f39c12; margin-top:10px;" onclick="alert('Factura emitida con éxito')">Emitir Factura</button>
-        </div>
+  <!-- VENTANA GUÍA FIJA A LA DERECHA CON 100 EJERCICIOS -->
+  <div id="guide-window" class="window">
+    <div class="window-header" style="background:#27ae60; color:white;">
+      <span><i class="fa-solid fa-graduation-cap"></i> Guía de Aprendizaje</span>
     </div>
+    <div class="window-body">
+      <label for="select-ejercicios" style="font-weight:bold; font-size:12px; color:#555;">SELECCIONAR TAREA (1 a 100):</label>
+      <select id="select-ejercicios" class="input-box" onchange="cambiarEjercicio()"></select>
 
-    <!-- Ventana Carpeta -->
-    <div id="win-carpeta" class="window">
-        <div class="win-header" onmousedown="dragElement(this.parentElement)" ontouchstart="dragElement(this.parentElement)">
-            <span><i class="fa-solid fa-folder-open" style="color:#f1c40f;"></i> Mis Archivos</span>
-            <button class="win-close" onclick="closeWindow('win-carpeta')">✕</button>
-        </div>
-        <div class="win-body">
-            <p style="font-size:14px; color:#555;">Esta carpeta está vacía por el momento.</p>
-        </div>
+      <div style="background:#f0f9f4; padding:12px; border-left:4px solid #27ae60; border-radius:4px; margin-bottom:12px;">
+        <h4 id="ex-title" style="color:#1e824c; font-size:15px; margin-bottom:6px;">Cargando...</h4>
+        <p id="ex-desc" style="font-size:14px; line-height:1.4; color:#222;"></p>
+      </div>
+
+      <div id="feedback" style="display:none; padding:10px; border-radius:4px; font-size:13px; font-weight:600; margin-bottom:10px;"></div>
     </div>
-
-    <!-- MENÚ INICIO -->
-    <div id="start-menu">
-        <div class="start-item" onclick="openWindow('win-word'); toggleStart();"><i class="fa-solid fa-file-word" style="color:#2980b9;"></i> WordPad</div>
-        <div class="start-item" onclick="openWindow('win-factura'); toggleStart();"><i class="fa-solid fa-file-invoice" style="color:#f39c12;"></i> Facturador</div>
-        <div class="start-item" onclick="openWindow('win-ejercicios'); toggleStart();"><i class="fa-solid fa-graduation-cap" style="color:#2ecc71;"></i> Abrir Guía</div>
+    <div class="window-actions">
+      <button class="btn btn-success" onclick="verificarEjercicio()">Verificar Ejercicio</button>
+      <button id="btn-siguiente" class="btn btn-primary" style="display:none;" onclick="siguienteEjercicio()">Siguiente Lección ➔</button>
     </div>
+  </div>
 
-    <!-- BARRA DE TAREAS -->
-    <div id="taskbar">
-        <div class="start-btn" onclick="toggleStart()" title="Inicio">
-            <i class="fa-brands fa-windows"></i>
-        </div>
-        <div class="taskbar-items" id="taskbar-items"></div>
-        <div class="clock" id="reloj">
-            <span id="reloj-hora">00:00</span>
-            <span id="reloj-fecha" style="font-size:10px; color:#aaa;">00/00/0000</span>
-        </div>
+  <!-- VENTANAS DE TRABAJO (ABREN A LA IZQUIERDA) -->
+  <div id="win-word" class="window" style="top:20px; left:20px; width:500px; height:420px; display:none;">
+    <div class="window-header"><span>WordPad</span><button onclick="closeWindow('win-word')">✕</button></div>
+    <div class="window-body"><textarea id="word-input" style="width:100%; height:100%; padding:10px; font-size:15px; border:1px solid #ccc; resize:none;" placeholder="Escriba aquí..."></textarea></div>
+  </div>
+
+  <div id="win-factura" class="window" style="top:20px; left:20px; width:450px; height:380px; display:none;">
+    <div class="window-header"><span>Facturador</span><button onclick="closeWindow('win-factura')">✕</button></div>
+    <div class="window-body">
+      <label style="font-size:13px; font-weight:bold;">Cliente:</label>
+      <input type="text" id="factura-cliente" class="input-box" placeholder="Nombre...">
+      <label style="font-size:13px; font-weight:bold;">Monto ($):</label>
+      <input type="number" id="factura-monto" class="input-box" placeholder="0.00">
     </div>
+  </div>
 
-    <!-- JAVASCRIPT CON TODA LA LÓGICA -->
-    <script>
-        // BANCO AMPLIO DE EJERCICIOS (Aptos para Pad/Táctil)
-        const ejercicios = [
-            {
-                titulo: "0. Tocar y Deslizar en Pad",
-                instruccion: "Tocá con el dedo o el pad el botón 'Verificar Ejercicio' para practicar la precisión táctil.",
-                tipo: "simple"
-            },
-            {
-                titulo: "1. Abrir Facturador",
-                instruccion: "Tocá el ícono 'Facturador' en el escritorio para abrir la aplicación de facturas.",
-                tipo: "ventana",
-                target: "win-factura"
-            },
-            {
-                titulo: "2. Menú de Inicio",
-                instruccion: "Tocá el botón con el logo de Windows abajo a la izquierda para desplegar el Menú Inicio.",
-                tipo: "inicio"
-            },
-            {
-                titulo: "3. Escribir en WordPad",
-                instruccion: "Abrí WordPad y tocá dentro del área blanca para escribir la palabra 'Hola'.",
-                tipo: "texto",
-                targetInput: "word-text",
-                esperado: "hola"
-            },
-            {
-                titulo: "4. Abrir Mis Archivos",
-                instruccion: "Tocá sobre la carpeta 'Mis Archivos' en el escritorio para abrir la ventana de archivos.",
-                tipo: "ventana",
-                target: "win-carpeta"
-            },
-            {
-                titulo: "5. Facturación: Nombre Cliente",
-                instruccion: "Abrí Facturador y escribí 'María' en el casillero de Cliente.",
-                tipo: "texto",
-                targetInput: "factura-cliente",
-                esperado: "maría"
-            }
-        ];
+  <div id="win-carpeta" class="window" style="top:20px; left:20px; width:420px; height:320px; display:none;">
+    <div class="window-header"><span>Mis Archivos</span><button onclick="closeWindow('win-carpeta')">✕</button></div>
+    <div class="window-body"><p style="color:#666; font-size:13px;">Carpeta lista para guardar documentos.</p></div>
+  </div>
 
-        let ejercicioActual = 0;
+  <!-- BARRA DE TAREAS -->
+  <div id="taskbar">
+    <button class="taskbar-btn"><i class="fa-brands fa-windows"></i></button>
+    <div style="font-size:12px;" id="reloj">12:00 PM</div>
+  </div>
 
-        function inicializarSelect() {
-            const select = document.getElementById('select-ejercicio');
-            select.innerHTML = '';
-            ejercicios.forEach((ej, index) => {
-                const opt = document.createElement('option');
-                opt.value = index;
-                opt.innerText = ej.titulo;
-                select.appendChild(opt);
-            });
-        }
+  <script>
+    // GENERADOR COMPLETO DE LOS 100 EJERCICIOS
+    const ejercicios = [];
 
-        function cargarEjercicio() {
-            const select = document.getElementById('select-ejercicio');
-            ejercicioActual = parseInt(select.value);
-            const ej = ejercicios[ejercicioActual];
+    // Módulo 1: Precisión Touchpad (1-15)
+    for(let i = 1; i <= 15; i++) {
+      ejercicios.push({
+        id: i,
+        modulo: "Módulo 1: Touchpad",
+        title: `${i}. Práctica de Precisión Táctil #${i}`,
+        desc: `Tocá el botón 'Verificar Ejercicio' abajo a la derecha usando el pad para confirmar tu toque de nivel ${i}.`,
+        tipo: "simple"
+      });
+    }
 
-            document.getElementById('ej-titulo').innerText = ej.titulo;
-            document.getElementById('ej-instruccion').innerText = ej.instruccion;
-            document.getElementById('btn-siguiente').style.display = 'none';
-            ocultarFeedback();
-        }
+    // Módulo 2: Manejo de Ventanas (16-30)
+    const apps = [
+      { id: "win-factura", nombre: "Facturador" },
+      { id: "win-word", nombre: "WordPad" },
+      { id: "win-carpeta", nombre: "Mis Archivos" }
+    ];
+    for(let i = 16; i <= 30; i++) {
+      const app = apps[i % 3];
+      ejercicios.push({
+        id: i,
+        modulo: "Módulo 2: Ventanas",
+        title: `${i}. Abrir ventana de ${app.nombre}`,
+        desc: `Tocá el ícono de '${app.nombre}' en el escritorio para abrir la ventana correspondiente.`,
+        tipo: "ventana",
+        target: app.id
+      });
+    }
 
-        function verificarEjercicio() {
-            const ej = ejercicios[ejercicioActual];
-            let esCorrecto = false;
+    // Módulo 3: Escritura en WordPad (31-45)
+    const palabras = ["Hola", "Eterna", "Juventud", "Argentina", "Computación", "Tablet", "Teclado", "Mensaje", "Texto", "Práctica", "Digital", "Mar del Plata", "Mañana", "Curso", "Final"];
+    for(let i = 31; i <= 45; i++) {
+      const pal = palabras[i - 31];
+      ejercicios.push({
+        id: i,
+        modulo: "Módulo 3: Redacción",
+        title: `${i}. Escribir palabra en WordPad: '${pal}'`,
+        desc: `Abrí WordPad e ingresá la palabra '${pal}' dentro de la hoja blanca.`,
+        tipo: "texto",
+        targetInput: "word-input",
+        esperado: pal.toLowerCase()
+      });
+    }
 
-            if (ej.tipo === "simple") {
-                esCorrecto = true;
-            } else if (ej.tipo === "ventana") {
-                const win = document.getElementById(ej.target);
-                if (win && win.style.display === 'flex') {
-                    esCorrecto = true;
-                }
-            } else if (ej.tipo === "inicio") {
-                const start = document.getElementById('start-menu');
-                if (start && start.style.display === 'flex') {
-                    esCorrecto = true;
-                }
-            } else if (ej.tipo === "texto") {
-                const input = document.getElementById(ej.targetInput);
-                if (input && input.value.trim().toLowerCase().includes(ej.esperado)) {
-                    esCorrecto = true;
-                }
-            }
+    // Módulo 4: Facturación (46-60)
+    const clientes = ["Juan", "María", "Pedro", "Ana", "Luis", "Carmen", "Roberto", "Laura", "Diego", "Marta", "Jorge", "Lucía", "Esteban", "Rosa", "Guillermo"];
+    for(let i = 46; i <= 60; i++) {
+      const cli = clientes[i - 46];
+      ejercicios.push({
+        id: i,
+        modulo: "Módulo 4: Facturación",
+        title: `${i}. Cargar Cliente: ${cli}`,
+        desc: `Abrí la app Facturador e ingresá '${cli}' en el casillero de Cliente.`,
+        tipo: "texto",
+        targetInput: "factura-cliente",
+        esperado: cli.toLowerCase()
+      });
+    }
 
-            if (esCorrecto) {
-                mostrarFeedback("¡Excelente trabajo! Completaste la consigna.", true);
-                document.getElementById('btn-siguiente').style.display = 'block';
-            } else {
-                mostrarFeedback("Aún no se cumplió la consigna. Leé la instrucción y volvé a intentarlo.", false);
-            }
-        }
+    // Módulo 5: Gestión de Archivos y Carpetas (61-75)
+    for(let i = 61; i <= 75; i++) {
+      ejercicios.push({
+        id: i,
+        modulo: "Módulo 5: Archivos",
+        title: `${i}. Explorar Carpeta de Archivos #${i-60}`,
+        desc: `Abrí la ventana 'Mis Archivos' desde el escritorio para revisar los archivos del sistema.`,
+        tipo: "ventana",
+        target: "win-carpeta"
+      });
+    }
 
-        function siguienteEjercicio() {
-            if (ejercicioActual < ejercicios.length - 1) {
-                ejercicioActual++;
-                document.getElementById('select-ejercicio').value = ejercicioActual;
-                cargarEjercicio();
-            } else {
-                mostrarFeedback("¡Felicitaciones! Completaste todos los ejercicios de la serie.", true);
-            }
-        }
+    // Módulo 6: Formularios Combinados (76-85)
+    for(let i = 76; i <= 85; i++) {
+      const monto = i * 100;
+      ejercicios.push({
+        id: i,
+        modulo: "Módulo 6: Montos",
+        title: `${i}. Cargar Monto: $${monto}`,
+        desc: `Abrí Facturador e ingresá el valor '${monto}' en la casilla de Monto.`,
+        tipo: "texto",
+        targetInput: "factura-monto",
+        esperado: monto.toString()
+      });
+    }
 
-        function mostrarFeedback(mensaje, esExito) {
-            const fb = document.getElementById('feedback');
-            fb.innerText = mensaje;
-            fb.style.display = 'block';
-            fb.className = 'feedback-msg ' + (esExito ? 'feedback-success' : 'feedback-error');
-        }
+    // Módulo 7: Trámites y Comandos (86-95)
+    for(let i = 86; i <= 95; i++) {
+      ejercicios.push({
+        id: i,
+        modulo: "Módulo 7: Combinados",
+        title: `${i}. Tarea Integrada #${i-85}`,
+        desc: `Abrí la app WordPad para validar el inicio de sesión del sistema.`,
+        tipo: "ventana",
+        target: "win-word"
+      });
+    }
 
-        function ocultarFeedback() {
-            document.getElementById('feedback').style.display = 'none';
-        }
+    // Módulo 8: Evaluación Final (96-100)
+    for(let i = 96; i <= 100; i++) {
+      ejercicios.push({
+        id: i,
+        modulo: "Módulo 8: Evaluación",
+        title: `${i}. Gran Desafío Final #${i-95}`,
+        desc: `Abrí Facturador y completá la tarea de cierre de módulo.`,
+        tipo: "ventana",
+        target: "win-factura"
+      });
+    }
 
-        /* --- CONTROL DE VENTANAS Y SUPERPOSICIÓN --- */
-        function openWindow(id) {
-            const win = document.getElementById(id);
-            if (win) {
-                win.style.display = 'flex';
-                traerAlFrente(win);
-            }
-        }
+    let indiceActual = 0;
 
-        function closeWindow(id) {
-            const win = document.getElementById(id);
-            if (win) {
-                win.style.display = 'none';
-            }
-        }
+    function poblarSelect() {
+      const sel = document.getElementById('select-ejercicios');
+      sel.innerHTML = '';
+      ejercicios.forEach((ej, index) => {
+        const opt = document.createElement('option');
+        opt.value = index;
+        opt.innerText = ej.title;
+        sel.appendChild(opt);
+      });
+    }
 
-        function traerAlFrente(win) {
-            // Mantiene la ventana Guía siempre arriba (zIndex 200) y las de trabajo en 100-150
-            if (win.id !== 'win-ejercicios') {
-                document.querySelectorAll('.window').forEach(w => {
-                    if (w.id !== 'win-ejercicios') w.style.zIndex = 100;
-                });
-                win.style.zIndex = 150;
-            }
-        }
+    function cargarEjercicio() {
+      const ej = ejercicios[indiceActual];
+      document.getElementById('ex-title').innerText = ej.title;
+      document.getElementById('ex-desc').innerText = ej.desc;
+      document.getElementById('select-ejercicios').value = indiceActual;
+      document.getElementById('btn-siguiente').style.display = 'none';
+      ocultarFeedback();
+    }
 
-        /* --- MENÚ INICIO --- */
-        function toggleStart() {
-            const menu = document.getElementById('start-menu');
-            menu.style.display = (menu.style.display === 'flex') ? 'none' : 'flex';
-        }
+    function cambiarEjercicio() {
+      indiceActual = parseInt(document.getElementById('select-ejercicios').value);
+      cargarEjercicio();
+    }
 
-        document.addEventListener('click', function(e) {
-            const menu = document.getElementById('start-menu');
-            const startBtn = document.querySelector('.start-btn');
-            if (menu.style.display === 'flex' && !menu.contains(e.target) && !startBtn.contains(e.target)) {
-                menu.style.display = 'none';
-            }
-        });
+    function verificarEjercicio() {
+      const ej = ejercicios[indiceActual];
+      let ok = false;
 
-        /* --- SOPORTE DRAG & DROP (PAD TÁCTIL Y MOUSE) --- */
-        function dragElement(elmnt) {
-            let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-            elmnt.onmousedown = dragStart;
-            elmnt.ontouchstart = dragStart;
+      if (ej.tipo === "simple") ok = true;
+      else if (ej.tipo === "ventana") {
+        const win = document.getElementById(ej.target);
+        if (win && win.style.display !== 'none') ok = true;
+      } else if (ej.tipo === "texto") {
+        const input = document.getElementById(ej.targetInput);
+        if (input && input.value.trim().toLowerCase().includes(ej.esperado)) ok = true;
+      }
 
-            function dragStart(e) {
-                const event = e.touches ? e.touches[0] : e;
-                pos3 = event.clientX;
-                pos4 = event.clientY;
-                document.onmouseup = closeDragElement;
-                document.ontouchend = closeDragElement;
-                document.onmousemove = elementDrag;
-                document.ontouchmove = elementDrag;
-                traerAlFrente(elmnt);
-            }
+      if (ok) {
+        mostrarFeedback("¡Excelente! Tarea completada correctamente.", true);
+        document.getElementById('btn-siguiente').style.display = 'block';
+      } else {
+        mostrarFeedback("Todavía no se cumplió la consigna. Revisá los pasos e intentalo de nuevo.", false);
+      }
+    }
 
-            function elementDrag(e) {
-                const event = e.touches ? e.touches[0] : e;
-                pos1 = pos3 - event.clientX;
-                pos2 = pos4 - event.clientY;
-                pos3 = event.clientX;
-                pos4 = event.clientY;
-                elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-                elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-            }
-
-            function closeDragElement() {
-                document.onmouseup = null;
-                document.ontouchend = null;
-                document.onmousemove = null;
-                document.ontouchmove = null;
-            }
-        }
-
-        /* --- RELOJ Y FECHA --- */
-        function actualizarReloj() {
-            const ahora = new Date();
-            const horas = String(ahora.getHours()).padStart(2, '0');
-            const minutos = String(ahora.getMinutes()).padStart(2, '0');
-            document.getElementById('reloj-hora').innerText = `${horas}:${minutos}`;
-
-            const dia = String(ahora.getDate()).padStart(2, '0');
-            const mes = String(ahora.getMonth() + 1).padStart(2, '0');
-            const anio = ahora.getFullYear();
-            document.getElementById('reloj-fecha').innerText = `${dia}/${mes}/${anio}`;
-        }
-
-        setInterval(actualizarReloj, 1000);
-        actualizarReloj();
-        inicializarSelect();
+    function siguienteEjercicio() {
+      if (indiceActual < ejercicios.length - 1) {
+        indiceActual++;
         cargarEjercicio();
-    </script>
+      } else {
+        mostrarFeedback("¡Felicitaciones! Completaste los 100 ejercicios del curso.", true);
+      }
+    }
+
+    function mostrarFeedback(msg, exito) {
+      const fb = document.getElementById('feedback');
+      fb.innerText = msg;
+      fb.style.display = 'block';
+      fb.style.background = exito ? '#d4edda' : '#f8d7da';
+      fb.style.color = exito ? '#155724' : '#721c24';
+    }
+
+    function ocultarFeedback() {
+      document.getElementById('feedback').style.display = 'none';
+    }
+
+    function openWindow(id) { document.getElementById(id).style.display = 'flex'; }
+    function closeWindow(id) { document.getElementById(id).style.display = 'none'; }
+
+    poblarSelect();
+    cargarEjercicio();
+  </script>
 </body>
 </html>
