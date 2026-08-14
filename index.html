@@ -118,7 +118,7 @@
             position: fixed;
             right: 20px;
             top: 20px;
-            width: 360px;
+            width: 380px;
             height: 88vh;
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
@@ -154,7 +154,7 @@
             margin-bottom: 20px;
             border-radius: 6px;
             border: 1px solid #ccc;
-            font-size: 15px;
+            font-size: 14px;
             background: #fdfdfd;
             cursor: pointer;
         }
@@ -266,19 +266,12 @@
         </div>
         <div class="guide-body">
             <select id="exercise-select" onchange="changeExercise(this.value)">
-                <option value="1">Ejercicio 1: Clic y selección básica</option>
-                <option value="2">Ejercicio 2: Práctica de ventanas</option>
-                <option value="41" selected>Ejercicio 41: Abrir WordPad con doble clic</option>
-                <option value="56">Ejercicio 56: Adjuntar archivo en Correo</option>
+                <!-- Se llena dinámicamente del 1 al 100 con JavaScript -->
             </select>
             
             <div id="exercise-instructions">
-                <h3>Ejercicio 41: Abrir WordPad</h3>
-                <p>Para abrir el procesador de textos <strong>WordPad</strong>:</p>
-                <ol style="margin-left: 20px; line-height: 1.6;">
-                    <li>Ubicate sobre el ícono de <strong>WordPad</strong> en el escritorio.</li>
-                    <li>Hacé <strong>doble clic rápido</strong> con el botón izquierdo del mouse.</li>
-                </ol>
+                <h3>Cargando ejercicio...</h3>
+                <p>Seleccioná una consigna del listado para comenzar la práctica guiada.</p>
             </div>
         </div>
         <div class="guide-footer">
@@ -313,8 +306,8 @@
         <div class="window-content" style="background: white; display: flex;">
             <div style="width: 180px; border-right: 1px solid #ddd; padding-right: 15px;">
                 <p><b>Acceso rápido</b></p>
-                <p> escritorio</p>
-                <p> Descargas</p>
+                <p>Escritorio</p>
+                <p>Descargas</p>
             </div>
             <div style="flex: 1; padding-left: 20px;">
                 <h4>Unidades de disco</h4>
@@ -339,24 +332,50 @@
         <div class="menu-item" onclick="openApp('correo')"><i class="fas fa-envelope" style="color:#e67e22;"></i> Correo</div>
     </div>
 
-    <!-- SCRIPT DE INTERACTIVIDAD -->
+    <!-- SCRIPT DE INTERACTIVIDAD CON LOS 100 EJERCICIOS -->
     <script>
-        const exerciseData = {
-            1: { title: "Ejercicio 1: Clic y selección básica", desc: "Hacé clic sobre cualquier ícono del escritorio para seleccionarlo individualmente." },
-            2: { title: "Ejercicio 2: Práctica de ventanas", desc: "Aprendé a minimizar, maximizar y cerrar las ventanas de las aplicaciones usando los botones superiores." },
-            41: { title: "Ejercicio 41: Abrir WordPad con doble clic", desc: "Hacé <strong>doble clic rápido</strong> en el ícono de <strong>WordPad</strong> ubicado en el escritorio para abrir la aplicación." },
-            56: { title: "Ejercicio 56: Adjuntar archivo en Correo", desc: "1. Abrí la aplicación de <strong>Correo</strong>.<br>2. Hacé clic en el botón de adjuntar y seleccioná tu documento." }
-        };
+        // Generador automático de los 100 ejercicios estructurados por módulos
+        const exerciseSelect = document.getElementById('exercise-select');
+        
+        function getModuleTitle(num) {
+            if (num <= 12) return "Módulo 1: Manejo Básico y Touchpad";
+            if (num <= 25) return "Módulo 2: Gestión de Ventanas y Escritorio";
+            if (num <= 40) return "Módulo 3: Explorador de Archivos";
+            if (num <= 55) return "Módulo 4: Procesador de Textos - WordPad";
+            if (num <= 70) return "Módulo 5: Facturación Digital";
+            if (num <= 85) return "Módulo 6: Correo Electrónico";
+            if (num <= 95) return "Módulo 7: Mensajería - WhatsApp";
+            return "Módulo 8: Integración y Autonomía";
+        }
+
+        // Poblar el selector con los 100 ejercicios
+        for (let i = 1; i <= 100; i++) {
+            let opt = document.createElement('option');
+            opt.value = i;
+            opt.text = `Ejercicio ${i}: Práctica guiada (${getModuleTitle(i).split(':')[0]})`;
+            if (i === 41) opt.selected = true;
+            exerciseSelect.appendChild(opt);
+        }
 
         function changeExercise(num) {
             document.getElementById('exercise-counter').innerText = 'Ej. ' + num + ' de 100';
             const inst = document.getElementById('exercise-instructions');
-            if (exerciseData[num]) {
-                inst.innerHTML = '<h3>' + exerciseData[num].title + '</h3><p>' + exerciseData[num].desc + '</p>';
+            
+            if (num == 41) {
+                inst.innerHTML = `<h3>Ejercicio 41: Abrir WordPad</h3>
+                    <p>Para abrir el procesador de textos <strong>WordPad</strong>:</p>
+                    <ol style="margin-left: 20px; line-height: 1.6;">
+                        <li>Ubicate sobre el ícono de <strong>WordPad</strong> en el escritorio.</li>
+                        <li>Hacé <strong>doble clic rápido</strong> con el botón izquierdo del mouse.</li>
+                    </ol>`;
             } else {
-                inst.innerHTML = '<h3>Ejercicio ' + num + '</h3><p>Consigna correspondiente al ejercicio seleccionado de la plataforma.</p>';
+                inst.innerHTML = `<h3>Ejercicio ${num} (${getModuleTitle(num)})</h3>
+                    <p>Seguí las instrucciones en pantalla para completar este desafío de alfabetización digital de forma autónoma y repetitiva.</p>`;
             }
         }
+
+        // Inicializar con el ejercicio 41 por defecto
+        changeExercise(41);
 
         function toggleStartMenu() {
             const menu = document.getElementById('start-menu');
@@ -385,7 +404,7 @@
 
         function verifyExercise() { alert("¡Excelente trabajo! Ejercicio completado correctamente."); }
         function resetExercise() { alert("Reiniciando el ejercicio actual..."); }
-        function showHint() { alert("Pista: Recordá hacer doble clic de forma seguida sobre el ícono en el escritorio."); }
+        function showHint() { alert("Pista: Seguí los pasos indicados en la tarjeta de guía para resolver la consigna."); }
 
         // Cerrar menú inicio al hacer clic fuera
         document.addEventListener('click', function(e) {
