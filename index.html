@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Simulador Windows 10 - Jubilados</title>
+    <title>Simulador Windows 10 - Capacitación</title>
     <!-- Librería de íconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -11,8 +11,7 @@
             margin: 0;
             padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Windows_10_Default_Wallpaper_%281909_and_newer%29.jpg/1200px-Windows_10_Default_Wallpaper_%281909_and_newer%29.jpg') no-repeat center center fixed;
-            background-size: cover;
+            background: linear-gradient(135deg, #b39ddb 0%, #7e57c2 100%);
             height: 100vh;
             overflow: hidden;
             display: flex;
@@ -35,17 +34,18 @@
             text-align: center;
             color: white;
             cursor: pointer;
-            text-shadow: 1px 1px 2px black;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
             font-size: 13px;
             padding: 5px;
+            border-radius: 5px;
+            transition: background 0.2s;
         }
         .desktop-icon i {
             font-size: 40px;
             margin-bottom: 5px;
         }
         .desktop-icon:hover {
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.3);
         }
 
         /* ================= BARRA DE TAREAS ================= */
@@ -63,6 +63,7 @@
             font-size: 22px;
             cursor: pointer;
             padding: 5px 15px;
+            border-radius: 3px;
         }
         #start-btn:hover {
             background: rgba(255, 255, 255, 0.2);
@@ -81,6 +82,7 @@
             z-index: 1001;
             padding: 10px 0;
             box-shadow: 2px -2px 10px rgba(0,0,0,0.5);
+            border-top-right-radius: 5px;
         }
         .menu-item {
             padding: 12px 20px;
@@ -89,6 +91,7 @@
             align-items: center;
             gap: 15px;
             font-size: 15px;
+            transition: background 0.2s;
         }
         .menu-item:hover {
             background: rgba(255, 255, 255, 0.2);
@@ -105,7 +108,7 @@
             right: 20px;
             top: 20px;
             width: 350px;
-            height: 85vh; /* Más alto para que entre el contenido cómodo */
+            height: 85vh;
             background: white;
             border-radius: 8px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
@@ -143,12 +146,13 @@
             font-weight: bold;
             color: white;
             flex: 1;
+            transition: opacity 0.2s;
         }
+        .btn:hover { opacity: 0.8; }
         .btn-verify { background: #2b5797; width: 100%; margin-top: 10px; }
         .btn-retry { background: #e68a00; }
         .btn-hint { background: #ccc; color: black; }
         
-        /* El nuevo menú desplegable */
         #exercise-select {
             width: 100%;
             padding: 10px;
@@ -165,7 +169,6 @@
             position: absolute;
             top: 20px;
             left: 20px;
-            /* Ancho dinámico para que NUNCA pise la tarjeta de la derecha (350px + margenes) */
             width: calc(100vw - 420px); 
             height: 80vh;
             background: white;
@@ -174,6 +177,8 @@
             z-index: 500;
             display: none;
             flex-direction: column;
+            border-radius: 4px;
+            overflow: hidden;
         }
         .window-header {
             background: white;
@@ -208,7 +213,7 @@
             background: #f0f0f0;
         }
 
-        /* Específico para el simulador de Correo */
+        /* Específico Correo */
         .mail-toolbar {
             background: #f3f2f1;
             padding: 10px;
@@ -226,81 +231,169 @@
             align-items: center;
             gap: 8px;
         }
-        .mail-btn:hover {
-            background: #e1dfdd;
-        }
+        .mail-btn:hover { background: #e1dfdd; }
     </style>
 </head>
 <body>
 
-    <!-- ÍCONOS DEL ESCRITORIO -->
+    <!-- ESCRITORIO -->
     <div id="desktop">
         <div class="desktop-icon" onclick="openApp('wordpad')">
-            <i class="fas fa-file-word" style="color:#2b5797;"></i><br>WordPad
+            <i class="fas fa-file-word" style="color:#ffffff;"></i><br>WordPad
         </div>
         <div class="desktop-icon" onclick="openApp('facturador')">
-            <i class="fas fa-file-invoice-dollar" style="color:#28a745;"></i><br>Facturador
+            <i class="fas fa-file-invoice-dollar" style="color:#ffffff;"></i><br>Facturador
         </div>
         <div class="desktop-icon" onclick="openApp('este-equipo')">
-            <i class="fas fa-desktop" style="color:#17a2b8;"></i><br>Este equipo
+            <i class="fas fa-desktop" style="color:#ffffff;"></i><br>Este equipo
         </div>
         <div class="desktop-icon" onclick="openApp('whatsapp')">
             <i class="fab fa-whatsapp" style="color:#25D366;"></i><br>WhatsApp
         </div>
         <div class="desktop-icon" onclick="openApp('correo')">
-            <i class="fas fa-envelope" style="color:#0078D7;"></i><br>Correo
+            <i class="fas fa-envelope" style="color:#ffffff;"></i><br>Correo
         </div>
     </div>
 
-    <!-- TARJETA DE CAPACITACIÓN (Guía a la derecha) -->
+    <!-- TARJETA DE CAPACITACIÓN -->
     <div id="guide-card">
         <div class="guide-header">
             <span>Capacitación Digital</span>
             <span id="exercise-counter">Ej. 1 de 100</span>
         </div>
         <div class="guide-body">
-            <!-- Menú desplegable para saltar de ejercicios -->
+            <!-- MENÚ DESPLEGABLE CON LOS 100 EJERCICIOS VISIBLES -->
             <select id="exercise-select" onchange="changeExercise(this.value)">
                 <option value="1">Ejercicio 1: Abrir Este equipo</option>
-                <option value="2">Ejercicio 2: Abrir WordPad</option>
+                <option value="2">Ejercicio 2: Práctica Guiada</option>
+                <option value="3">Ejercicio 3: Práctica Guiada</option>
+                <option value="4">Ejercicio 4: Práctica Guiada</option>
+                <option value="5">Ejercicio 5: Práctica Guiada</option>
+                <option value="6">Ejercicio 6: Práctica Guiada</option>
+                <option value="7">Ejercicio 7: Práctica Guiada</option>
+                <option value="8">Ejercicio 8: Práctica Guiada</option>
+                <option value="9">Ejercicio 9: Práctica Guiada</option>
+                <option value="10">Ejercicio 10: Práctica Guiada</option>
+                <option value="11">Ejercicio 11: Práctica Guiada</option>
+                <option value="12">Ejercicio 12: Práctica Guiada</option>
+                <option value="13">Ejercicio 13: Práctica Guiada</option>
+                <option value="14">Ejercicio 14: Práctica Guiada</option>
+                <option value="15">Ejercicio 15: Práctica Guiada</option>
+                <option value="16">Ejercicio 16: Práctica Guiada</option>
+                <option value="17">Ejercicio 17: Práctica Guiada</option>
+                <option value="18">Ejercicio 18: Práctica Guiada</option>
+                <option value="19">Ejercicio 19: Práctica Guiada</option>
+                <option value="20">Ejercicio 20: Práctica Guiada</option>
+                <option value="21">Ejercicio 21: Práctica Guiada</option>
+                <option value="22">Ejercicio 22: Práctica Guiada</option>
+                <option value="23">Ejercicio 23: Práctica Guiada</option>
+                <option value="24">Ejercicio 24: Práctica Guiada</option>
+                <option value="25">Ejercicio 25: Práctica Guiada</option>
+                <option value="26">Ejercicio 26: Práctica Guiada</option>
+                <option value="27">Ejercicio 27: Práctica Guiada</option>
+                <option value="28">Ejercicio 28: Práctica Guiada</option>
+                <option value="29">Ejercicio 29: Práctica Guiada</option>
+                <option value="30">Ejercicio 30: Práctica Guiada</option>
+                <option value="31">Ejercicio 31: Práctica Guiada</option>
+                <option value="32">Ejercicio 32: Práctica Guiada</option>
+                <option value="33">Ejercicio 33: Práctica Guiada</option>
+                <option value="34">Ejercicio 34: Práctica Guiada</option>
+                <option value="35">Ejercicio 35: Práctica Guiada</option>
+                <option value="36">Ejercicio 36: Práctica Guiada</option>
+                <option value="37">Ejercicio 37: Práctica Guiada</option>
+                <option value="38">Ejercicio 38: Práctica Guiada</option>
+                <option value="39">Ejercicio 39: Práctica Guiada</option>
                 <option value="40">Ejercicio 40: Uso del Facturador</option>
+                <option value="41">Ejercicio 41: Práctica Guiada</option>
+                <option value="42">Ejercicio 42: Práctica Guiada</option>
+                <option value="43">Ejercicio 43: Práctica Guiada</option>
+                <option value="44">Ejercicio 44: Práctica Guiada</option>
+                <option value="45">Ejercicio 45: Práctica Guiada</option>
+                <option value="46">Ejercicio 46: Práctica Guiada</option>
+                <option value="47">Ejercicio 47: Práctica Guiada</option>
+                <option value="48">Ejercicio 48: Práctica Guiada</option>
+                <option value="49">Ejercicio 49: Práctica Guiada</option>
+                <option value="50">Ejercicio 50: Práctica Guiada</option>
+                <option value="51">Ejercicio 51: Práctica Guiada</option>
+                <option value="52">Ejercicio 52: Práctica Guiada</option>
+                <option value="53">Ejercicio 53: Práctica Guiada</option>
+                <option value="54">Ejercicio 54: Práctica Guiada</option>
+                <option value="55">Ejercicio 55: Práctica Guiada</option>
                 <option value="56">Ejercicio 56: Adjuntar archivo al Correo</option>
-                <option value="80">Ejercicio 80: Configuración de red</option>
+                <option value="57">Ejercicio 57: Práctica Guiada</option>
+                <option value="58">Ejercicio 58: Práctica Guiada</option>
+                <option value="59">Ejercicio 59: Práctica Guiada</option>
+                <option value="60">Ejercicio 60: Práctica Guiada</option>
+                <option value="61">Ejercicio 61: Práctica Guiada</option>
+                <option value="62">Ejercicio 62: Práctica Guiada</option>
+                <option value="63">Ejercicio 63: Práctica Guiada</option>
+                <option value="64">Ejercicio 64: Práctica Guiada</option>
+                <option value="65">Ejercicio 65: Práctica Guiada</option>
+                <option value="66">Ejercicio 66: Práctica Guiada</option>
+                <option value="67">Ejercicio 67: Práctica Guiada</option>
+                <option value="68">Ejercicio 68: Práctica Guiada</option>
+                <option value="69">Ejercicio 69: Práctica Guiada</option>
+                <option value="70">Ejercicio 70: Práctica Guiada</option>
+                <option value="71">Ejercicio 71: Práctica Guiada</option>
+                <option value="72">Ejercicio 72: Práctica Guiada</option>
+                <option value="73">Ejercicio 73: Práctica Guiada</option>
+                <option value="74">Ejercicio 74: Práctica Guiada</option>
+                <option value="75">Ejercicio 75: Práctica Guiada</option>
+                <option value="76">Ejercicio 76: Práctica Guiada</option>
+                <option value="77">Ejercicio 77: Práctica Guiada</option>
+                <option value="78">Ejercicio 78: Práctica Guiada</option>
+                <option value="79">Ejercicio 79: Práctica Guiada</option>
+                <option value="80">Ejercicio 80: Práctica Guiada</option>
+                <option value="81">Ejercicio 81: Práctica Guiada</option>
+                <option value="82">Ejercicio 82: Práctica Guiada</option>
+                <option value="83">Ejercicio 83: Práctica Guiada</option>
+                <option value="84">Ejercicio 84: Práctica Guiada</option>
+                <option value="85">Ejercicio 85: Práctica Guiada</option>
+                <option value="86">Ejercicio 86: Práctica Guiada</option>
+                <option value="87">Ejercicio 87: Práctica Guiada</option>
+                <option value="88">Ejercicio 88: Práctica Guiada</option>
+                <option value="89">Ejercicio 89: Práctica Guiada</option>
+                <option value="90">Ejercicio 90: Práctica Guiada</option>
+                <option value="91">Ejercicio 91: Práctica Guiada</option>
+                <option value="92">Ejercicio 92: Práctica Guiada</option>
+                <option value="93">Ejercicio 93: Práctica Guiada</option>
+                <option value="94">Ejercicio 94: Práctica Guiada</option>
+                <option value="95">Ejercicio 95: Práctica Guiada</option>
+                <option value="96">Ejercicio 96: Práctica Guiada</option>
+                <option value="97">Ejercicio 97: Práctica Guiada</option>
+                <option value="98">Ejercicio 98: Práctica Guiada</option>
+                <option value="99">Ejercicio 99: Práctica Final</option>
+                <option value="100">Ejercicio 100: Práctica Guiada</option>
             </select>
             
             <div id="exercise-instructions">
-                <!-- Se llena dinámicamente con JS -->
-                <h3>Abrir 'Este equipo'</h3>
+                <h3>Ejercicio 1: Abrir Este equipo</h3>
                 <p>Hacé clic en el ícono de <strong>Este equipo</strong> ubicado en el escritorio para abrir el Explorador de archivos.</p>
             </div>
         </div>
         <div class="guide-footer">
             <button class="btn btn-hint" onclick="showHint()"><i class="fas fa-lightbulb"></i> Pista</button>
-            <button class="btn btn-retry" onclick="resetExercise()"><i class="fas fa-undo"></i> Volver a hacer</button>
+            <button class="btn btn-retry" onclick="resetExercise()"><i class="fas fa-undo"></i> Volver</button>
         </div>
         <div style="padding: 0 15px 15px 15px;">
            <button class="btn btn-verify" onclick="verifyExercise()">Verificar Ejercicio</button>
         </div>
     </div>
 
-    <!-- VENTANAS DE LAS APPS (Ocultas por defecto) -->
-    
-    <!-- Ventana: Este Equipo -->
+    <!-- VENTANA: ESTE EQUIPO -->
     <div id="window-este-equipo" class="app-window">
         <div class="window-header">
             <div class="window-title"><i class="fas fa-desktop" style="color:#17a2b8;"></i> Este equipo</div>
             <div class="close-btn" onclick="closeApp('este-equipo')">✕</div>
         </div>
-        <div class="window-content" style="display: flex; background: white;">
-            <!-- Barra lateral -->
-            <div style="width: 200px; border-right: 1px solid #ccc; padding-right: 10px;">
+        <div class="window-content" style="display: flex; background: white; padding: 0;">
+            <div style="width: 200px; border-right: 1px solid #ccc; padding: 20px;">
                 <p><i class="fas fa-star" style="color:#f39c12;"></i> Favoritos</p>
                 <p><i class="fas fa-desktop" style="color:#3498db;"></i> Escritorio</p>
                 <p><i class="fas fa-download" style="color:#3498db;"></i> Descargas</p>
                 <p><i class="fas fa-file-alt" style="color:#3498db;"></i> Documentos</p>
             </div>
-            <!-- Contenido principal -->
-            <div style="flex: 1; padding-left: 20px;">
+            <div style="flex: 1; padding: 20px;">
                 <h4>Carpetas</h4>
                 <div style="display: flex; gap: 30px; margin-bottom: 20px;">
                     <div style="text-align: center;"><i class="fas fa-folder fa-3x" style="color: #F8D775;"></i><br>Imágenes</div>
@@ -313,7 +406,7 @@
         </div>
     </div>
 
-    <!-- Ventana: Correo (Con lógica de adjuntar) -->
+    <!-- VENTANA: CORREO -->
     <div id="window-correo" class="app-window">
         <div class="window-header">
             <div class="window-title"><i class="fas fa-envelope" style="color:#0078D7;"></i> Correo</div>
@@ -326,12 +419,11 @@
         <div class="window-content" style="background: white;">
             <div style="border-bottom: 1px solid #ccc; padding-bottom: 10px; margin-bottom: 10px;">
                 <p style="margin: 5px 0;"><strong>De:</strong> alumno@capacitacion.com</p>
-                <p style="margin: 5px 0;"><strong>Para:</strong> <input type="text" style="width: 80%; border: none; outline: none;" placeholder="Escriba aquí la dirección de correo..."></p>
-                <p style="margin: 5px 0;"><strong>Asunto:</strong> <input type="text" style="width: 80%; border: none; outline: none;" placeholder="Agregar un asunto..."></p>
+                <p style="margin: 5px 0;"><strong>Para:</strong> <input type="text" style="width: 80%; border: none; outline: none;" placeholder="Escriba aquí..."></p>
+                <p style="margin: 5px 0;"><strong>Asunto:</strong> <input type="text" style="width: 80%; border: none; outline: none;" placeholder="Agregar asunto..."></p>
             </div>
-            <textarea style="width: 100%; height: 250px; border: none; outline: none; resize: none; font-family: sans-serif;" placeholder="Escribe tu mensaje aquí..."></textarea>
+            <textarea style="width: 100%; height: 250px; border: none; outline: none; resize: none; font-family: sans-serif;" placeholder="Escribe tu mensaje..."></textarea>
             
-            <!-- Acá aparece visualmente el archivo cuando se "adjunta" -->
             <div id="attachment-display" style="margin-top: 15px; padding: 10px; background: #e8f4f8; border-radius: 5px; display: none; align-items: center; gap: 10px; width: fit-content;">
                 <i class="fas fa-file-pdf" style="color: #e74c3c; font-size: 24px;"></i>
                 <span id="attached-filename" style="font-weight: bold; color: #333;"></span>
@@ -339,120 +431,88 @@
         </div>
     </div>
 
-    <!-- BARRA DE TAREAS Y MENÚ INICIO -->
+    <!-- BARRA Y MENÚ INICIO -->
     <div id="taskbar">
         <div id="start-btn" onclick="toggleStartMenu()"><i class="fab fa-windows"></i></div>
     </div>
 
     <div id="start-menu">
-        <!-- Ícono de energía arreglado -->
-        <div class="menu-item" onclick="alert('Menú: Opciones de energía (Apagar/Reiniciar)')">
+        <div class="menu-item" onclick="alert('Apagando sistema...')">
             <i class="fas fa-power-off" style="color: #ccc;"></i> Inicio/Apagado
         </div>
         <hr style="border-color: #444; margin: 5px 0;">
-        
-        <div class="menu-item" onclick="openApp('wordpad')">
-            <i class="fas fa-file-word" style="color:#3498db;"></i> WordPad
-        </div>
-        <!-- Ícono de facturador arreglado -->
-        <div class="menu-item" onclick="openApp('facturador')">
-            <i class="fas fa-file-invoice-dollar" style="color:#2ecc71;"></i> Facturador
-        </div>
-        <div class="menu-item" onclick="openApp('este-equipo')">
-            <i class="fas fa-desktop" style="color:#1abc9c;"></i> Este equipo
-        </div>
-        <div class="menu-item" onclick="openApp('whatsapp')">
-            <i class="fab fa-whatsapp" style="color:#25D366;"></i> WhatsApp
-        </div>
-        <div class="menu-item" onclick="openApp('correo')">
-            <i class="fas fa-envelope" style="color:#e67e22;"></i> Correo
-        </div>
+        <div class="menu-item" onclick="openApp('wordpad')"><i class="fas fa-file-word" style="color:#3498db;"></i> WordPad</div>
+        <div class="menu-item" onclick="openApp('facturador')"><i class="fas fa-file-invoice-dollar" style="color:#2ecc71;"></i> Facturador</div>
+        <div class="menu-item" onclick="openApp('este-equipo')"><i class="fas fa-desktop" style="color:#1abc9c;"></i> Este equipo</div>
+        <div class="menu-item" onclick="openApp('whatsapp')"><i class="fab fa-whatsapp" style="color:#25D366;"></i> WhatsApp</div>
+        <div class="menu-item" onclick="openApp('correo')"><i class="fas fa-envelope" style="color:#e67e22;"></i> Correo</div>
     </div>
 
-    <!-- ================= SCRIPTS ================= -->
+    <!-- SCRIPTS -->
     <script>
-        // Función para abrir/cerrar menú inicio
+        function changeExercise(exerciseNum) {
+            document.getElementById('exercise-counter').innerText = 'Ej. ' + exerciseNum + ' de 100';
+            const instructions = document.getElementById('exercise-instructions');
+            
+            if (exerciseNum == "1") {
+                instructions.innerHTML = `<h3>Ejercicio 1: Abrir Este equipo</h3><p>Hacé clic en el ícono de <strong>Este equipo</strong> ubicado en el escritorio para abrir el Explorador de archivos.</p>`;
+            } else if (exerciseNum == "40") {
+                instructions.innerHTML = `<h3>Ejercicio 40: Uso del Facturador</h3><p>Hacé clic en el ícono del <strong>Facturador</strong> en el escritorio o búscalo en el Menú Inicio.</p>`;
+            } else if (exerciseNum == "56") {
+                instructions.innerHTML = `<h3>Ejercicio 56: Adjuntar archivo al Correo</h3><p>1. Abrí el <strong>Correo</strong>.<br>2. Hacé clic en <strong><i class='fas fa-paperclip'></i> Adjuntar</strong>.<br>3. Buscá tu archivo PDF en la carpeta de Descargas.</p>`;
+            } else {
+                instructions.innerHTML = `<h3>Ejercicio ` + exerciseNum + `</h3><p>Consignas para el ejercicio ` + exerciseNum + `. Sigue los pasos en la pantalla de la izquierda.</p>`;
+            }
+        }
+
+        // Abrir/cerrar apps
         function toggleStartMenu() {
             const menu = document.getElementById('start-menu');
             menu.style.display = (menu.style.display === 'flex') ? 'none' : 'flex';
         }
 
-        // Función para abrir aplicaciones y que no se superpongan visualmente de forma fea
         function openApp(appId) {
             const windowEl = document.getElementById('window-' + appId);
             if(windowEl) {
-                // Cerramos las otras ventanas abiertas en esta demo
                 document.querySelectorAll('.app-window').forEach(w => w.style.display = 'none');
-                
-                // Mostramos la ventana correspondiente
                 windowEl.style.display = 'flex';
-                
-                // Cerramos el menú inicio si estaba abierto
-                document.getElementById('start-menu').style.display = 'none';
             } else {
-                alert('La ventana de ' + appId + ' se abrirá aquí. (En construcción para la demo)');
-                document.getElementById('start-menu').style.display = 'none';
+                alert('Ventana en construcción para esta demo.');
             }
+            document.getElementById('start-menu').style.display = 'none';
         }
 
-        function closeApp(appId) {
-            document.getElementById('window-' + appId).style.display = 'none';
-        }
+        function closeApp(appId) { document.getElementById('window-' + appId).style.display = 'none'; }
 
-        // Lógica del menú desplegable de ejercicios
-        function changeExercise(exerciseNum) {
-            document.getElementById('exercise-counter').innerText = 'Ej. ' + exerciseNum + ' de 100';
-            const instructions = document.getElementById('exercise-instructions');
-            
-            if (exerciseNum == "56") {
-                instructions.innerHTML = `
-                    <h3>Adjuntar un archivo al Correo</h3>
-                    <p>Vamos a enviarle un archivo adjunto a un familiar.</p>
-                    <ol style="padding-left: 20px; line-height: 1.6;">
-                        <li>Abrí la aplicación <strong>Correo</strong> (desde el Escritorio o Menú Inicio).</li>
-                        <li>En la barra superior de la ventana del correo, hacé clic en el botón <strong><i class="fas fa-paperclip"></i> Adjuntar</strong>.</li>
-                        <li>El sistema buscará y cargará tu archivo de forma automática.</li>
-                    </ol>`;
-            } else if (exerciseNum == "1") {
-                instructions.innerHTML = `
-                    <h3>Abrir 'Este equipo'</h3>
-                    <p>Hacé clic en el ícono de <strong>Este equipo</strong> ubicado en el escritorio para abrir el Explorador de archivos.</p>`;
-            } else {
-                instructions.innerHTML = `
-                    <h3>Ejercicio \${exerciseNum}</h3>
-                    <p>Consignas para el ejercicio \${exerciseNum}. Sigue los pasos en la pantalla de la izquierda.</p>`;
-            }
-        }
-
-        // Simulación de buscar y adjuntar el archivo que pediste
         function simulateAttachment() {
-            const targetFile = "08740ab0-05cb-48b6-b920-945e2ebbbe80";
-            
-            // Simulamos un pequeño retraso de carga como si abriera la ventana de Windows
             setTimeout(() => {
-                const displayArea = document.getElementById('attachment-display');
-                const filenameArea = document.getElementById('attached-filename');
-                
-                filenameArea.innerText = targetFile + ".pdf";
-                displayArea.style.display = 'flex';
-                
-                alert("¡Muy bien! Buscaste en Descargas y adjuntaste el archivo correctamente.");
+                const targetFile = "08740ab0-05cb-48b6-b920-945e2ebbbe80";
+                document.getElementById('attached-filename').innerText = targetFile + ".pdf";
+                document.getElementById('attachment-display').style.display = 'flex';
+                alert("Archivo adjuntado correctamente.");
             }, 500);
         }
 
-        function verifyExercise() {
-            alert("Verificando... ¡Excelente trabajo! Pasando al siguiente ejercicio.");
-        }
-        
+        function verifyExercise() { alert("Verificando... ¡Excelente trabajo!"); }
         function resetExercise() {
-            // Limpia la pantalla del correo por si el usuario quiere volver a empezar
             document.getElementById('attachment-display').style.display = 'none';
-            alert("Reiniciando el ejercicio actual. Las ventanas volvieron a su estado original.");
+            alert("Reiniciando...");
         }
-        
-        function showHint() {
-            alert("Pista: Buscá la aplicación en los íconos grandes del Escritorio o hacé clic en el botón de Windows abajo a la izquierda.");
-        }
+        function showHint() { alert("Pista: Usá los íconos del Escritorio o el Menú Inicio."); }
+
+        // Cerrar el menú inicio haciendo clic afuera
+        document.addEventListener('click', function(event) {
+            const startMenu = document.getElementById('start-menu');
+            const startBtn = document.getElementById('start-btn');
+            
+            if (startMenu && startMenu.style.display === 'flex') {
+                if (!startBtn.contains(event.target) && !startMenu.contains(event.target)) {
+                    startMenu.style.display = 'none';
+                }
+            }
+        });
     </script>
 </body>
 </html>
+simulador_windows_10_limpio.html
+Mostrando simulador_windows_10_limpio.html.
