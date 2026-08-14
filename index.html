@@ -266,12 +266,11 @@
         </div>
         <div class="guide-body">
             <select id="exercise-select" onchange="changeExercise(this.value)">
-                <!-- Se llena dinámicamente del 1 al 100 con JavaScript -->
+                <!-- Se llena dinámicamente -->
             </select>
             
             <div id="exercise-instructions">
-                <h3>Cargando ejercicio...</h3>
-                <p>Seleccioná una consigna del listado para comenzar la práctica guiada.</p>
+                <!-- Se carga dinámicamente -->
             </div>
         </div>
         <div class="guide-footer">
@@ -332,49 +331,120 @@
         <div class="menu-item" onclick="openApp('correo')"><i class="fas fa-envelope" style="color:#e67e22;"></i> Correo</div>
     </div>
 
-    <!-- SCRIPT DE INTERACTIVIDAD CON LOS 100 EJERCICIOS -->
+    <!-- SCRIPT CON CONTENIDO REAL PARA CADA UNO DE LOS 100 EJERCICIOS -->
     <script>
-        // Generador automático de los 100 ejercicios estructurados por módulos
         const exerciseSelect = document.getElementById('exercise-select');
-        
+
         function getModuleTitle(num) {
             if (num <= 12) return "Módulo 1: Manejo Básico y Touchpad";
-            if (num <= 25) return "Módulo 2: Gestión de Ventanas y Escritorio";
+            if (num <= 25) return "Módulo 2: Gestión de Ventanas";
             if (num <= 40) return "Módulo 3: Explorador de Archivos";
-            if (num <= 55) return "Módulo 4: Procesador de Textos - WordPad";
+            if (num <= 55) return "Módulo 4: Procesador WordPad";
             if (num <= 70) return "Módulo 5: Facturación Digital";
             if (num <= 85) return "Módulo 6: Correo Electrónico";
-            if (num <= 95) return "Módulo 7: Mensajería - WhatsApp";
-            return "Módulo 8: Integración y Autonomía";
+            if (num <= 95) return "Módulo 7: WhatsApp Web";
+            return "Módulo 8: Integración Total";
         }
 
-        // Poblar el selector con los 100 ejercicios
+        // Poblar el selector con títulos descriptivos
         for (let i = 1; i <= 100; i++) {
             let opt = document.createElement('option');
             opt.value = i;
-            opt.text = `Ejercicio ${i}: Práctica guiada (${getModuleTitle(i).split(':')[0]})`;
+            opt.text = `Ejercicio ${i}: Tarea práctica (${getModuleTitle(i).split(':')[0]})`;
             if (i === 41) opt.selected = true;
             exerciseSelect.appendChild(opt);
+        }
+
+        function getExerciseDetails(num) {
+            if (num >= 1 && num <= 12) {
+                return {
+                    title: `Ejercicio ${num}: Práctica de Clic y Touchpad`,
+                    steps: [
+                        "Ubica el puntero del mouse sobre la pantalla de forma estable.",
+                        "Realiza un <b>clic simple</b> sobre cualquier ícono del escritorio para seleccionarlo.",
+                        "Practica desplazar la vista utilizando el desplazamiento vertical del touchpad."
+                    ]
+                };
+            } else if (num >= 13 && num <= 25) {
+                return {
+                    title: `Ejercicio ${num}: Manipulación de Ventanas`,
+                    steps: [
+                        "Abre una aplicación desde el escritorio o el menú de inicio.",
+                        "Haz clic en el botón superior para <b>maximizar</b> la ventana.",
+                        "Haz clic en el botón de minimizar y luego restáurala a su tamaño original."
+                    ]
+                };
+            } else if (num >= 26 && num <= 40) {
+                return {
+                    title: `Ejercicio ${num}: Exploración y Carpetas`,
+                    steps: [
+                        "Abre la aplicación <b>Este equipo</b> haciendo doble clic.",
+                        "Navega entre los accesos rápidos del panel izquierdo.",
+                        "Identifica la unidad de disco local (C:) visualizada en la ventana."
+                    ]
+                };
+            } else if (num >= 41 && num <= 55) {
+                return {
+                    title: `Ejercicio ${num}: Uso de WordPad`,
+                    steps: [
+                        "Ubícate sobre el ícono de <b>WordPad</b> en el escritorio.",
+                        "Haz <b>doble clic rápido</b> con el botón izquierdo del mouse para abrirlo.",
+                        "Escribe un breve texto en el área de trabajo y verifica el resultado."
+                    ]
+                };
+            } else if (num >= 56 && num <= 70) {
+                return {
+                    title: `Ejercicio ${num}: Facturación Digital`,
+                    steps: [
+                        "Abre la aplicación del <b>Facturador</b> desde el escritorio.",
+                        "Ingresa los datos del cliente y el monto correspondiente en los campos habilitados.",
+                        "Valida los valores y presiona emitir comprobante."
+                    ]
+                };
+            } else if (num >= 71 && num <= 85) {
+                return {
+                    title: `Ejercicio ${num}: Gestión de Correo`,
+                    steps: [
+                        "Abre la aplicación de <b>Correo</b> desde el menú o acceso directo.",
+                        "Completa el campo de destinatario con una dirección simulada.",
+                        "Escribe el asunto y redacta un mensaje formal antes de simular el envío."
+                    ]
+                };
+            } else if (num >= 86 && num <= 95) {
+                return {
+                    title: `Ejercicio ${num}: Mensajería de Texto`,
+                    steps: [
+                        "Selecciona un contacto disponible en la agenda de la aplicación.",
+                        "Escribe un mensaje de saludo cotidiano en la barra de chat.",
+                        "Envía el mensaje utilizando el botón correspondiente."
+                    ]
+                };
+            } else {
+                return {
+                    title: `Ejercicio ${num}: Integración y Autonomía`,
+                    steps: [
+                        "Combina las herramientas aprendidas sin asistencia paso a paso.",
+                        "Abre el explorador, redacta un documento en WordPad y simula su transferencia.",
+                        "Verifica que el flujo completo de trabajo digital se realice con éxito."
+                    ]
+                };
+            }
         }
 
         function changeExercise(num) {
             document.getElementById('exercise-counter').innerText = 'Ej. ' + num + ' de 100';
             const inst = document.getElementById('exercise-instructions');
-            
-            if (num == 41) {
-                inst.innerHTML = `<h3>Ejercicio 41: Abrir WordPad</h3>
-                    <p>Para abrir el procesador de textos <strong>WordPad</strong>:</p>
-                    <ol style="margin-left: 20px; line-height: 1.6;">
-                        <li>Ubicate sobre el ícono de <strong>WordPad</strong> en el escritorio.</li>
-                        <li>Hacé <strong>doble clic rápido</strong> con el botón izquierdo del mouse.</li>
-                    </ol>`;
-            } else {
-                inst.innerHTML = `<h3>Ejercicio ${num} (${getModuleTitle(num)})</h3>
-                    <p>Seguí las instrucciones en pantalla para completar este desafío de alfabetización digital de forma autónoma y repetitiva.</p>`;
-            }
+            const data = getExerciseDetails(parseInt(num));
+
+            let html = `<h3>${data.title}</h3><p>Para completar este objetivo:</p><ol style="margin-left: 20px; line-height: 1.6;">`;
+            data.steps.forEach(step => {
+                html += `<li>${step}</li>`;
+            });
+            html += `</ol>`;
+            inst.innerHTML = html;
         }
 
-        // Inicializar con el ejercicio 41 por defecto
+        // Inicializar por defecto en el ejercicio 41
         changeExercise(41);
 
         function toggleStartMenu() {
@@ -404,9 +474,8 @@
 
         function verifyExercise() { alert("¡Excelente trabajo! Ejercicio completado correctamente."); }
         function resetExercise() { alert("Reiniciando el ejercicio actual..."); }
-        function showHint() { alert("Pista: Seguí los pasos indicados en la tarjeta de guía para resolver la consigna."); }
+        function showHint() { alert("Pista: Sigue atentamente cada uno de los pasos indicados en la tarjeta."); }
 
-        // Cerrar menú inicio al hacer clic fuera
         document.addEventListener('click', function(e) {
             const menu = document.getElementById('start-menu');
             const btn = document.getElementById('start-btn');
