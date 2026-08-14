@@ -22,14 +22,14 @@
       position: relative;
       padding: 20px;
       display: grid;
-      grid-template-rows: repeat(auto-fill, 100px);
+      grid-template-rows: repeat(auto-fill, 110px);
       grid-auto-flow: column;
       gap: 15px 20px;
-      width: calc(100% - 380px); /* Espacio reservado para la guía */
+      width: calc(100% - 500px); /* Espacio reservado para la guía agrandada */
     }
 
     .icon-shortcut {
-      width: 85px;
+      width: 95px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -46,15 +46,15 @@
       background: rgba(255, 255, 255, 0.2);
       border-color: rgba(255, 255, 255, 0.3);
     }
-    .icon-shortcut img { width: 44px; height: 44px; margin-bottom: 5px; }
-    .icon-shortcut span { font-size: 13px; line-height: 1.2; word-break: break-word; }
+    .icon-shortcut svg, .icon-shortcut img { width: 48px; height: 48px; margin-bottom: 6px; }
+    .icon-shortcut span { font-size: 14px; line-height: 1.2; word-break: break-word; font-weight: 500; }
 
-    /* GUÍA DE EJERCICIOS (VENTANA FIJA ARRIBA A LA DERECHA) */
+    /* GUÍA DE EJERCICIOS (MÁS GRANDE Y CÓMODA PARA LECTURA) */
     #exercise-guide {
       position: fixed;
       top: 15px;
       right: 15px;
-      width: 350px;
+      width: 460px; /* Agrandada */
       max-height: calc(100vh - 70px);
       background: #ffffff;
       border: 2px solid #0078d7;
@@ -68,40 +68,40 @@
     .guide-header {
       background: #0078d7;
       color: white;
-      padding: 12px 16px;
+      padding: 14px 18px;
       font-weight: bold;
-      font-size: 16px;
+      font-size: 18px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-    .guide-body { padding: 18px; overflow-y: auto; font-size: 15px; color: #333; line-height: 1.4; }
-    .guide-body h4 { margin-bottom: 8px; color: #0078d7; font-size: 17px; }
+    .guide-body { padding: 22px; overflow-y: auto; font-size: 16px; color: #333; line-height: 1.5; }
+    .guide-body h4 { margin-bottom: 10px; color: #0078d7; font-size: 19px; }
     .hint-box {
-      margin-top: 10px;
-      padding: 10px;
+      margin-top: 12px;
+      padding: 12px;
       background: #fff8e1;
-      border-left: 4px solid #ffc107;
-      font-size: 13px;
+      border-left: 5px solid #ffc107;
+      font-size: 14px;
       display: none;
     }
     .guide-footer {
-      padding: 12px 16px;
+      padding: 14px 18px;
       background: #f3f3f3;
       border-top: 1px solid #ddd;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
     }
-    .btn-row { display: flex; gap: 8px; }
+    .btn-row { display: flex; gap: 10px; }
     .btn {
       flex: 1;
-      padding: 10px;
+      padding: 12px;
       border: none;
       border-radius: 4px;
       font-weight: bold;
       cursor: pointer;
-      font-size: 14px;
+      font-size: 15px;
       text-align: center;
     }
     .btn-primary { background: #0078d7; color: white; }
@@ -114,10 +114,10 @@
     /* VENTANAS SIMULADAS */
     .window {
       position: absolute;
-      top: 50px;
-      left: 50px;
-      width: 750px;
-      height: 500px;
+      top: 40px;
+      left: 40px;
+      width: 780px;
+      height: 520px;
       background: white;
       border: 1px solid #999;
       box-shadow: 0 10px 30px rgba(0,0,0,0.3);
@@ -126,128 +126,201 @@
       z-index: 100;
     }
     .window-titlebar {
-      height: 32px;
+      height: 36px;
       background: #f0f0f0;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0 10px;
+      padding: 0 12px;
       border-bottom: 1px solid #ccc;
     }
-    .window-title { font-size: 13px; color: #333; display: flex; align-items: center; gap: 8px; }
+    .window-title { font-size: 14px; color: #333; display: flex; align-items: center; gap: 8px; font-weight: 500; }
     .window-controls button {
-      width: 30px; height: 24px; border: none; background: transparent; cursor: pointer;
+      width: 34px; height: 28px; border: none; background: transparent; cursor: pointer; font-size: 14px;
     }
     .window-controls button:hover { background: #e5e5e5; }
     .window-controls button.close:hover { background: #e81123; color: white; }
     .window-content { flex: 1; display: flex; overflow: hidden; }
 
-    /* ESTE EQUIPO (CALCADO A LA FOTO) */
+    /* ESTE EQUIPO (EXACTO A LA FOTO) */
     .explorer-sidebar {
-      width: 200px;
+      width: 220px;
       background: #f3f3f3;
       border-right: 1px solid #e0e0e0;
-      padding: 10px;
-      font-size: 13px;
+      padding: 12px;
+      font-size: 14px;
     }
-    .sidebar-section { margin-bottom: 15px; }
-    .sidebar-title { font-weight: bold; color: #666; font-size: 11px; text-transform: uppercase; margin-bottom: 5px; }
+    .sidebar-section { margin-bottom: 18px; }
+    .sidebar-title { font-weight: bold; color: #666; font-size: 12px; text-transform: uppercase; margin-bottom: 6px; }
     .sidebar-item {
-      padding: 6px 8px;
+      padding: 8px 10px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       cursor: pointer;
-      border-radius: 3px;
+      border-radius: 4px;
     }
     .sidebar-item:hover { background: #e5e5e5; }
-    .sidebar-item.active { background: #cce8ff; }
+    .sidebar-item.active { background: #cce8ff; font-weight: 500; }
 
-    .explorer-main { flex: 1; padding: 15px; overflow-y: auto; background: white; }
+    .explorer-main { flex: 1; padding: 20px; overflow-y: auto; background: white; }
     .explorer-group-title {
-      font-size: 13px; color: #0078d7; font-weight: bold; margin-bottom: 10px;
-      border-bottom: 1px solid #cce8ff; padding-bottom: 3px;
+      font-size: 14px; color: #0078d7; font-weight: bold; margin-bottom: 12px;
+      border-bottom: 1px solid #cce8ff; padding-bottom: 4px;
     }
     .explorer-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-      gap: 15px;
-      margin-bottom: 25px;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 18px;
+      margin-bottom: 30px;
     }
     .folder-card {
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 10px;
+      padding: 12px;
       border: 1px solid transparent;
       border-radius: 4px;
       cursor: pointer;
       text-align: center;
-      font-size: 12px;
+      font-size: 13px;
     }
     .folder-card:hover { background: #e5f3ff; border-color: #99d1ff; }
-    .folder-card img { width: 48px; height: 48px; margin-bottom: 5px; }
+    .folder-card svg, .folder-card img { width: 52px; height: 52px; margin-bottom: 6px; }
 
-    /* BARRA DE TAREAS */
+    /* BARRA DE TAREAS & MENÚ INICIO */
     #taskbar {
-      height: 40px;
-      background: rgba(19, 23, 28, 0.95);
+      height: 42px;
+      background: rgba(19, 23, 28, 0.98);
       display: flex;
       align-items: center;
       padding: 0 10px;
       justify-content: space-between;
       z-index: 10000;
+      position: relative;
     }
-    .taskbar-left { display: flex; align-items: center; gap: 5px; }
+    .taskbar-left { display: flex; align-items: center; gap: 5px; height: 100%; }
     .start-btn {
-      width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
-      cursor: pointer; color: white; font-size: 18px;
+      width: 48px; height: 100%; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: background 0.2s;
     }
-    .start-btn:hover { background: rgba(255,255,255,0.1); }
-    .taskbar-time { color: white; font-size: 12px; text-align: right; padding-right: 5px; }
+    .start-btn:hover { background: rgba(255,255,255,0.15); }
+    .start-btn svg { width: 20px; height: 20px; fill: white; }
+    .taskbar-time { color: white; font-size: 13px; text-align: right; padding-right: 8px; }
 
-    /* EFECTO HIGHLIGHT DE AYUDA */
+    /* MENÚ INICIO DESPLEGABLE REALISTA */
+    #start-menu {
+      position: absolute;
+      bottom: 42px;
+      left: 0;
+      width: 320px;
+      height: 450px;
+      background: rgba(30, 30, 30, 0.97);
+      border-top-right-radius: 6px;
+      box-shadow: 4px -4px 20px rgba(0,0,0,0.5);
+      display: none;
+      flex-direction: row;
+      z-index: 99999;
+      color: white;
+    }
+    .start-sidebar {
+      width: 48px;
+      background: rgba(15, 15, 15, 0.5);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+    }
+    .start-icon-btn {
+      width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; border-radius: 4px;
+    }
+    .start-icon-btn:hover { background: rgba(255,255,255,0.2); }
+    .start-apps-list {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+    }
+    .start-app-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    .start-app-item:hover { background: rgba(255,255,255,0.1); }
+
+    /* HIGHLIGHT PISTA */
     .highlight-hint {
-      outline: 3px solid #ffc107 !important;
+      outline: 4px solid #ffc107 !important;
       animation: pulse 1s infinite alternate;
     }
     @keyframes pulse {
       from { box-shadow: 0 0 5px #ffc107; }
-      to { box-shadow: 0 0 20px #ffc107; }
+      to { box-shadow: 0 0 22px #ffc107; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ESCRITORIO CON LOS 5 ÍCONOS PRINCIPALES -->
+  <!-- ESCRITORIO CON LOS 5 ÍCONOS PRINCIPALES (SVG ESTABLES Y NATIVOS) -->
   <div id="desktop">
-    <div class="icon-shortcut" onclick="openWindow('win-wordpad')">
-      <img src="https://cdn-icons-png.flaticon.com/512/3721/3721663.png" alt="WordPad">
+    <!-- WORDPAD -->
+    <div class="icon-shortcut" id="icon-wordpad" onclick="openWindow('win-wordpad')">
+      <svg viewBox="0 0 64 64">
+        <path fill="#2196F3" d="M10 6h44v52H10z"/>
+        <path fill="#FFF" d="M18 16h28v4H18zm0 8h28v4H18zm0 8h20v4H18zm0 8h28v4H18z"/>
+      </svg>
       <span>WordPad</span>
     </div>
-    <div class="icon-shortcut" onclick="openWindow('win-facturador')">
-      <img src="https://cdn-icons-png.flaticon.com/512/2921/2922506.png" alt="Facturador">
+
+    <!-- FACTURADOR -->
+    <div class="icon-shortcut" id="icon-facturador" onclick="openWindow('win-facturador')">
+      <svg viewBox="0 0 64 64">
+        <rect x="12" y="8" width="40" height="48" rx="4" fill="#4CAF50"/>
+        <path fill="#FFF" d="M20 18h24v4H20zm0 8h24v4H20zm0 8h16v4H20zm0 8h24v4H20z"/>
+        <circle cx="42" cy="42" r="8" fill="#FFC107"/>
+      </svg>
       <span>Facturador</span>
     </div>
+
+    <!-- ESTE EQUIPO (SISTEMA NATIVO DE WINDOWS) -->
     <div class="icon-shortcut" id="icon-este-equipo" onclick="openWindow('win-este-equipo')">
-      <img src="https://cdn-icons-png.flaticon.com/512/2885/2885416.png" alt="Este equipo">
+      <svg viewBox="0 0 64 64">
+        <rect x="8" y="12" width="48" height="32" rx="3" fill="#0078D7"/>
+        <rect x="12" y="16" width="40" height="24" fill="#E3F2FD"/>
+        <path fill="#546E7A" d="M20 48h24v4H20zm-4 4h32v4H16z"/>
+      </svg>
       <span>Este equipo</span>
     </div>
-    <div class="icon-shortcut" onclick="openWindow('win-whatsapp')">
-      <img src="https://cdn-icons-png.flaticon.com/512/3670/3670051.png" alt="WhatsApp">
+
+    <!-- WHATSAPP -->
+    <div class="icon-shortcut" id="icon-whatsapp" onclick="openWindow('win-whatsapp')">
+      <svg viewBox="0 0 64 64">
+        <circle cx="32" cy="32" r="26" fill="#25D366"/>
+        <path fill="#FFF" d="M32 14a18 18 0 0 0-15 28L14 50l8-3a18 18 0 1 0 10-33z"/>
+      </svg>
       <span>WhatsApp</span>
     </div>
-    <div class="icon-shortcut" onclick="openWindow('win-correo')">
-      <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="Correo">
+
+    <!-- CORREO -->
+    <div class="icon-shortcut" id="icon-correo" onclick="openWindow('win-correo')">
+      <svg viewBox="0 0 64 64">
+        <rect x="8" y="16" width="48" height="32" rx="4" fill="#D44638"/>
+        <path fill="#FFF" d="M12 20l20 14 20-14v24H12z"/>
+      </svg>
       <span>Correo</span>
     </div>
   </div>
 
-  <!-- VENTANA FIJA: GUÍA DE EJERCICIOS -->
+  <!-- GUÍA DE EJERCICIOS (AGRANDADA, MÁS ESPACIOSA Y CON LETRA CLARA) -->
   <div id="exercise-guide">
     <div class="guide-header">
       <span id="ex-title">Ejercicio 1 de 100</span>
-      <span style="font-size: 12px; opacity: 0.8;">Simulador Windows</span>
+      <span style="font-size: 13px; opacity: 0.85;">Capacitación Digital</span>
     </div>
     <div class="guide-body">
       <h4 id="ex-heading">Cargando...</h4>
@@ -266,11 +339,11 @@
     </div>
   </div>
 
-  <!-- VENTANA SIMULADA: ESTE EQUIPO (EXACTA A LA FOTO DE LA TABLET) -->
+  <!-- VENTANA SIMULADA: ESTE EQUIPO (EXACTA A TU FOTO) -->
   <div class="window" id="win-este-equipo">
     <div class="window-titlebar">
       <div class="window-title">
-        <img src="https://cdn-icons-png.flaticon.com/512/2885/2885416.png" width="16">
+        <svg width="18" height="18" viewBox="0 0 64 64"><rect x="8" y="12" width="48" height="32" fill="#0078D7"/><rect x="12" y="16" width="40" height="24" fill="#FFF"/></svg>
         <span>Este equipo</span>
       </div>
       <div class="window-controls">
@@ -304,47 +377,68 @@
         <div class="explorer-group-title">Carpetas (6)</div>
         <div class="explorer-grid">
           <div class="folder-card" onclick="openFolder('Descargas')">
-            <img src="https://cdn-icons-png.flaticon.com/512/716/716784.png" alt="Descargas">
+            <svg viewBox="0 0 64 64"><path fill="#FFC107" d="M10 12h18l6 6h20v34H10z"/></svg>
             <span>Descargas</span>
           </div>
           <div class="folder-card" onclick="openFolder('Desktop')">
-            <img src="https://cdn-icons-png.flaticon.com/512/3767/3767084.png" alt="Desktop">
+            <svg viewBox="0 0 64 64"><path fill="#FFC107" d="M10 12h18l6 6h20v34H10z"/></svg>
             <span>Desktop</span>
           </div>
           <div class="folder-card" onclick="openFolder('Documentos')">
-            <img src="https://cdn-icons-png.flaticon.com/512/3767/3767084.png" alt="Documentos">
+            <svg viewBox="0 0 64 64"><path fill="#FFC107" d="M10 12h18l6 6h20v34H10z"/></svg>
             <span>Documentos</span>
           </div>
           <div class="folder-card" onclick="openFolder('Imagenes')">
-            <img src="https://cdn-icons-png.flaticon.com/512/1375/1375106.png" alt="Imágenes">
+            <svg viewBox="0 0 64 64"><path fill="#FFC107" d="M10 12h18l6 6h20v34H10z"/></svg>
             <span>Imágenes</span>
           </div>
           <div class="folder-card">
-            <img src="https://cdn-icons-png.flaticon.com/512/3767/3767084.png" alt="Música">
+            <svg viewBox="0 0 64 64"><path fill="#FFC107" d="M10 12h18l6 6h20v34H10z"/></svg>
             <span>Música</span>
           </div>
           <div class="folder-card">
-            <img src="https://cdn-icons-png.flaticon.com/512/3767/3767084.png" alt="Videos">
+            <svg viewBox="0 0 64 64"><path fill="#FFC107" d="M10 12h18l6 6h20v34H10z"/></svg>
             <span>Videos</span>
           </div>
         </div>
 
         <div class="explorer-group-title">Dispositivos y unidades (1)</div>
         <div class="explorer-grid">
-          <div class="folder-card" style="width: 160px;">
-            <img src="https://cdn-icons-png.flaticon.com/512/2885/2885416.png" alt="Windows C:">
+          <div class="folder-card" style="width: 170px;">
+            <svg viewBox="0 0 64 64"><rect x="8" y="20" width="48" height="24" rx="3" fill="#78909C"/><circle cx="50" cy="32" r="2" fill="#00E676"/></svg>
             <span>Windows (C:)</span>
-            <span style="font-size: 10px; color: #888;">2,52 GB libres de 23,0 GB</span>
+            <span style="font-size: 11px; color: #777;">2,52 GB libres de 23,0 GB</span>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- BARRA DE TAREAS -->
+  <!-- MENÚ INICIO DESPLEGABLE -->
+  <div id="start-menu">
+    <div class="start-sidebar">
+      <div class="start-icon-btn" title="Opciones de energía" onclick="actionPower()">🧅</div>
+      <div class="start-icon-btn" title="Usuario">👤</div>
+    </div>
+    <div class="start-apps-list">
+      <div style="font-size: 12px; color: #aaa; margin-bottom: 8px;">Aplicaciones</div>
+      <div class="start-app-item" onclick="openWindow('win-wordpad'); toggleStartMenu();">📝 WordPad</div>
+      <div class="start-app-item" onclick="openWindow('win-facturador'); toggleStartMenu();">🧾 Facturador</div>
+      <div class="start-app-item" onclick="openWindow('win-este-equipo'); toggleStartMenu();">💻 Este equipo</div>
+      <div class="start-app-item" onclick="openWindow('win-whatsapp'); toggleStartMenu();">💬 WhatsApp</div>
+      <div class="start-app-item" onclick="openWindow('win-correo'); toggleStartMenu();">✉️ Correo</div>
+    </div>
+  </div>
+
+  <!-- BARRA DE TAREAS CON LOGO REAL DE WINDOWS -->
   <div id="taskbar">
     <div class="taskbar-left">
-      <div class="start-btn">🪟</div>
+      <div class="start-btn" id="start-btn" onclick="toggleStartMenu()">
+        <!-- LOGO NATIVO WINDOWS 10 -->
+        <svg viewBox="0 0 88 88">
+          <path d="M0 12.402l35.687-4.86.016 34.423-35.67.203zm35.67 33.333l.032 34.503-35.67-4.891-.018-29.815zm4.673-38.932l47.657-6.803v41.314l-47.657.327zm47.657 39.516l-.014 41.228-47.643-6.708-.033-34.612z"/>
+        </svg>
+      </div>
     </div>
     <div class="taskbar-time" id="clock">12:00</div>
   </div>
@@ -354,43 +448,51 @@
     let currentExerciseIndex = 0;
     let hintLevel = 0;
     let currentFolderView = 'Raiz';
+    let isStartMenuOpen = false;
 
-    // BANCO PROGRESIVO DE 100 EJERCICIOS (MUESTRA DE LA ESTRUCTURA COMPLETA)
+    // BANCO PROGRESIVO DE EJERCICIOS (CON FORMATO HTML CORREGIDO Y EJERCICIOS DE INICIO INCLUIDOS)
     const exerciseBank = [
       {
         id: 1,
         title: "Abrir 'Este equipo'",
-        instruction: "Hacé doble clic (o un toque firme) en el ícono de **Este equipo** ubicado en el escritorio para abrir el Explorador de archivos.",
-        hint1: "Buscá el ícono con forma de computadora en la pantalla.",
+        instruction: "Hacé clic en el ícono de <b>Este equipo</b> ubicado en el escritorio para abrir el Explorador de archivos.",
+        hint1: "Buscá el ícono azul con forma de computadora a la izquierda.",
         hint2Target: "icon-este-equipo",
         validate: () => document.getElementById('win-este-equipo').style.display === 'flex'
       },
       {
         id: 2,
+        title: "Usar el Menú de Inicio",
+        instruction: "Hacé clic en el <b>Botón de Inicio</b> (el logo de Windows abajo a la izquierda en la barra de tareas) para desplegar el menú principal.",
+        hint1: "Presioná el ícono de las 4 ventanas en la esquina inferior izquierda.",
+        hint2Target: "start-btn",
+        validate: () => isStartMenuOpen
+      },
+      {
+        id: 3,
         title: "Navegar a la carpeta Descargas",
-        instruction: "Dentro de 'Este equipo', hacé clic en la carpeta **Descargas** (en el área principal o en el panel lateral) para ver los archivos guardados.",
-        hint1: "Hacé clic en la carpeta amarilla que dice 'Descargas' o en el menú de la izquierda.",
+        instruction: "Dentro de 'Este equipo', hacé clic en la carpeta <b>Descargas</b> para ver la lista de comprobantes guardados.",
+        hint1: "Hacé clic en 'Descargas' en el panel lateral o en el área central.",
         hint2Target: "side-descargas",
         validate: () => currentFolderView === 'Descargas'
       },
       {
-        id: 3,
-        title: "Buscar y seleccionar el comprobante",
-        instruction: "Imaginá que descargaste una factura. Hacé clic en el archivo **Factura_Agosto_2026.pdf** para seleccionarlo.",
-        hint1: "Buscá en la lista de la derecha el archivo que tiene fecha de agosto.",
+        id: 4,
+        title: "Buscar y seleccionar la Factura",
+        instruction: "Imaginá que descargaste una factura. Hacé clic en el archivo <b>Factura_Agosto_2026.pdf</b> para seleccionarlo.",
+        hint1: "Hacé clic sobre el nombre del archivo en la lista de Descargas.",
         validate: () => window.selectedFile === 'Factura_Agosto_2026.pdf'
       }
-      // ... Aquí se extienden los 100 ejercicios hasta completar todos los módulos
+      // ... Aquí se extienden progresivamente los 100 ejercicios
     ];
 
-    // CARGAR EJERCICIO ACTUAL
+    // CARGAR EJERCICIO
     function loadExercise(index) {
       const ex = exerciseBank[index];
       document.getElementById('ex-title').innerText = `Ejercicio ${ex.id} de 100`;
       document.getElementById('ex-heading').innerText = ex.title;
       document.getElementById('ex-instruction').innerHTML = ex.instruction;
       
-      // Reset de interfaz de guía
       document.getElementById('hint-box').style.display = 'none';
       document.getElementById('hint-box').innerText = '';
       document.getElementById('btn-verify').style.display = 'inline-block';
@@ -406,18 +508,18 @@
         document.getElementById('hint-box').style.display = 'block';
         document.getElementById('hint-box').style.background = '#e8f5e9';
         document.getElementById('hint-box').style.borderLeftColor = '#4caf50';
-        document.getElementById('hint-box').innerHTML = "<b>¡Excelente trabajo!</b> Completaste la consigna correctamente. Podés avanzar o volver a repetirlo si querés repasar.";
+        document.getElementById('hint-box').innerHTML = "<b>¡Excelente trabajo!</b> Resolviste la consigna a la perfección. Podés avanzar o hacer clic en 'Volver a hacer' para practicarlo de nuevo.";
         document.getElementById('btn-verify').style.display = 'none';
         document.getElementById('btn-next').style.display = 'inline-block';
       } else {
         document.getElementById('hint-box').style.display = 'block';
         document.getElementById('hint-box').style.background = '#ffebee';
         document.getElementById('hint-box').style.borderLeftColor = '#f44336';
-        document.getElementById('hint-box').innerHTML = "<b>Todavía no está listo.</b> Revisá los pasos indicados y probá de nuevo.";
+        document.getElementById('hint-box').innerHTML = "<b>Todavía no está completo.</b> Revisá la consigna y probá nuevamente.";
       }
     }
 
-    // REPETIR EJERCICIO (SIEMPRE DISPONIBLE)
+    // REPETIR EJERCICIO
     function resetCurrentExercise() {
       clearHighlights();
       loadExercise(currentExerciseIndex);
@@ -432,10 +534,10 @@
       hintBox.style.borderLeftColor = '#ffc107';
 
       if (hintLevel === 0) {
-        hintBox.innerHTML = `💡 <b>Pista:</b> ${ex.hint1 || 'Leé atentamente el texto y buscá la opción resaltada en pantalla.'}`;
+        hintBox.innerHTML = `💡 <b>Pista:</b> ${ex.hint1 || 'Atención a la opción resaltada en la pantalla.'}`;
         hintLevel = 1;
       } else if (hintLevel === 1 && ex.hint2Target) {
-        hintBox.innerHTML = `💡 <b>Pista visual:</b> Te remarcamos en amarillo el elemento que tenés que presionar.`;
+        hintBox.innerHTML = `💡 <b>Pista visual:</b> Te remarcamos en amarillo el elemento exacto que tenés que tocar.`;
         document.getElementById(ex.hint2Target)?.classList.add('highlight-hint');
       }
     }
@@ -451,7 +553,19 @@
       }
     }
 
-    // SISTEMA DE VENTANAS Y NAVEGACIÓN
+    // MENÚ INICIO INTERACTIVO
+    function toggleStartMenu() {
+      const menu = document.getElementById('start-menu');
+      isStartMenuOpen = menu.style.display === 'flex';
+      menu.style.display = isStartMenuOpen ? 'none' : 'flex';
+      isStartMenuOpen = !isStartMenuOpen;
+    }
+
+    function actionPower() {
+      alert("Simulación de apagado de sistema.");
+    }
+
+    // VENTANAS
     function openWindow(id) {
       document.getElementById(id).style.display = 'flex';
     }
@@ -466,27 +580,27 @@
       if (folderName === 'Descargas') {
         view.innerHTML = `
           <div class="explorer-group-title">Archivos en Descargas (3)</div>
-          <table style="width:100%; font-size:13px; text-align:left; border-collapse:collapse;">
+          <table style="width:100%; font-size:14px; text-align:left; border-collapse:collapse;">
             <thead>
               <tr style="border-bottom:1px solid #ccc; color:#666;">
-                <th style="padding:5px;">Nombre</th>
+                <th style="padding:6px;">Nombre</th>
                 <th>Fecha de modificación</th>
                 <th>Tipo</th>
               </tr>
             </thead>
             <tbody>
               <tr onclick="selectFile('Factura_Agosto_2026.pdf')" style="cursor:pointer;" class="file-row">
-                <td style="padding:8px;">📄 Factura_Agosto_2026.pdf</td>
+                <td style="padding:10px;">📄 Factura_Agosto_2026.pdf</td>
                 <td>14/08/2026 10:15</td>
                 <td>Documento PDF</td>
               </tr>
               <tr onclick="selectFile('Comprobante_Julio.pdf')" style="cursor:pointer;" class="file-row">
-                <td style="padding:8px;">📄 Comprobante_Julio.pdf</td>
+                <td style="padding:10px;">📄 Comprobante_Julio.pdf</td>
                 <td>02/07/2026 18:30</td>
                 <td>Documento PDF</td>
               </tr>
               <tr onclick="selectFile('Foto_Perfil.jpg')" style="cursor:pointer;" class="file-row">
-                <td style="padding:8px;">🖼️ Foto_Perfil.jpg</td>
+                <td style="padding:10px;">🖼️ Foto_Perfil.jpg</td>
                 <td>10/05/2026 14:20</td>
                 <td>Imagen JPG</td>
               </tr>
@@ -498,10 +612,9 @@
 
     function selectFile(filename) {
       window.selectedFile = filename;
-      alert(`Seleccionaste: ${filename}`);
     }
 
-    // RELOJ BARRA DE TAREAS
+    // RELOJ
     setInterval(() => {
       const d = new Date();
       document.getElementById('clock').innerText = d.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
