@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulador Pedagógico Completo de Windows 10 - La Eterna Juventud</title>
+    <title>Simulador Windows 10 - Capacitación Digital para la Eterna Juventud</title>
     <style>
         * {
             box-sizing: border-box;
@@ -16,185 +16,145 @@
         body {
             height: 100vh;
             overflow: hidden;
-            background: #0078d7 linear-gradient(135deg, #1e5799 0%, #2989d8 50%, #207cca 51%, #7db9e8 100%);
+            background: radial-gradient(circle at center, #7b2c83 0%, #3e1248 70%, #210728 100%);
             display: flex;
             flex-direction: column;
         }
 
         #desktop {
             flex: 1;
-            padding: 15px;
+            position: relative;
+            padding: 20px;
+            display: flex;
+        }
+
+        .desktop-icons {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            width: 100px;
+        }
+
+        .icon-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            color: white;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        .icon-item:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .icon-box {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
+            font-size: 26px;
+            font-weight: bold;
+            color: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            margin-bottom: 6px;
         }
 
-        .win-window {
-            width: 1100px;
-            max-width: 98%;
-            height: 680px;
-            max-height: 95vh;
-            background-color: #f0f0f0;
-            border: 1px solid #005a9e;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        .icon-wordpad { background: #0078d7; }
+        .icon-facturador { background: #107c41; }
+        .icon-equipo { background: #00a4ef; }
+        .icon-correo { background: #d83b01; }
+
+        .icon-label {
+            font-size: 13px;
+            font-weight: 600;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+        }
+
+        .guide-card {
+            position: absolute;
+            right: 35px;
+            top: 25px;
+            width: 440px;
+            max-width: 90vw;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5);
             display: flex;
             flex-direction: column;
-            border-radius: 4px 4px 0 0;
+            overflow: hidden;
+            border: 1px solid #d0d0d0;
         }
 
-        .win-header {
-            background-color: #ffffff;
-            height: 42px;
+        .card-header {
+            background-color: #f3f3f3;
+            padding: 14px 18px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-left: 15px;
-            border-bottom: 1px solid #cccccc;
+            border-bottom: 1px solid #e0e0e0;
         }
 
-        .win-title {
-            font-size: 15px;
-            font-weight: 600;
-            color: #333333;
-        }
-
-        .win-controls {
-            display: flex;
-            height: 100%;
-        }
-
-        .win-btn {
-            width: 45px;
-            height: 100%;
-            border: none;
-            background: transparent;
+        .card-header-title {
             font-size: 16px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .win-btn:hover { background-color: #e5e5e5; }
-        .win-btn.close:hover { background-color: #e81123; color: white; }
-
-        .win-body {
-            flex: 1;
-            display: flex;
-            overflow: hidden;
-        }
-
-        /* Menú de Módulos (Izquierda) */
-        .sidebar {
-            width: 290px;
-            background-color: #e6e6e6;
-            border-right: 1px solid #cccccc;
-            display: flex;
-            flex-direction: column;
-            overflow-y: auto;
-        }
-
-        .sidebar-title {
-            padding: 12px 15px;
-            font-size: 14px;
             font-weight: bold;
             color: #005a9e;
-            background-color: #dcdcdc;
-            border-bottom: 1px solid #cccccc;
         }
 
-        .module-btn {
-            padding: 12px 15px;
-            border: none;
-            border-bottom: 1px solid #d0d0d0;
-            background: transparent;
-            text-align: left;
-            font-size: 14px;
-            color: #222222;
-            cursor: pointer;
-            line-height: 1.3;
-        }
-
-        .module-btn:hover { background-color: #d5e4f1; }
-        .module-btn.active { background-color: #0078d7; color: white; font-weight: bold; }
-
-        /* Submenú de Ejercicios del Módulo (Centro) */
-        .exercise-selector {
-            width: 260px;
-            background-color: #f7f7f7;
-            border-right: 1px solid #cccccc;
-            display: flex;
-            flex-direction: column;
-            overflow-y: auto;
-        }
-
-        .selector-header {
-            padding: 12px 15px;
+        .card-counter {
             font-size: 13px;
             font-weight: bold;
-            color: #444;
-            background-color: #ebebeb;
-            border-bottom: 1px solid #cccccc;
+            color: #333333;
+            background-color: #e5f1fb;
+            padding: 4px 10px;
+            border-radius: 12px;
+            border: 1px solid #0078d7;
         }
 
-        .item-btn {
-            padding: 10px 12px;
-            border: none;
-            border-bottom: 1px solid #e0e0e0;
-            background: transparent;
-            text-align: left;
-            font-size: 13px;
-            color: #333;
-            cursor: pointer;
-            line-height: 1.3;
-        }
-
-        .item-btn:hover { background-color: #e3f2fd; }
-        .item-btn.active { background-color: #2196f3; color: white; font-weight: bold; }
-
-        /* Área Principal de Ejecución de Ejercicios (Derecha) */
-        .content-area {
-            flex: 1;
-            padding: 25px;
-            background-color: #ffffff;
+        .card-body {
+            padding: 20px;
             display: flex;
             flex-direction: column;
-            overflow-y: auto;
+            gap: 16px;
         }
 
-        .exercise-header {
-            margin-bottom: 15px;
-            padding-bottom: 8px;
-            border-bottom: 2px solid #0078d7;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .select-exercise {
+            width: 100%;
+            padding: 10px 12px;
+            font-size: 14px;
+            border: 1px solid #cccccc;
+            border-radius: 6px;
+            background-color: #fcfcfc;
+            color: #222222;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .select-exercise:focus {
+            border-color: #0078d7;
+            box-shadow: 0 0 0 2px rgba(0,120,215,0.2);
         }
 
         .exercise-title {
             font-size: 18px;
-            color: #005a9e;
-        }
-
-        .badge-counter {
-            background-color: #0078d7;
-            color: white;
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 12px;
+            color: #111111;
             font-weight: bold;
+            line-height: 1.3;
         }
 
-        .guide-text {
-            font-size: 16px;
+        .instruction-box {
+            font-size: 15px;
+            color: #333333;
             line-height: 1.6;
-            color: #222222;
             background-color: #f8f9fa;
-            padding: 15px;
-            border-left: 5px solid #0078d7;
-            margin-bottom: 20px;
-            border-radius: 0 4px 4px 0;
+            padding: 14px;
+            border-radius: 6px;
+            border-left: 4px solid #0078d7;
         }
 
         .clarification {
@@ -203,35 +163,65 @@
             font-weight: 600;
         }
 
-        .interaction-box {
-            flex: 1;
-            border: 2px dashed #0078d7;
-            background-color: #f4f8fc;
+        .hint-box {
+            background-color: #fff9e6;
+            border: 1px solid #ffe0b2;
+            padding: 12px;
             border-radius: 6px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            text-align: center;
-            min-height: 200px;
+            font-size: 14px;
+            color: #7a5200;
+            display: none;
         }
 
-        .action-btn {
-            background-color: #107c41;
+        .card-actions-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .btn-secondary {
+            padding: 10px;
+            background-color: #6c757d;
             color: white;
             border: none;
-            padding: 14px 28px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .btn-secondary:hover { background-color: #5a6268; }
+
+        .btn-warning { background-color: #d97706; }
+        .btn-warning:hover { background-color: #b45309; }
+
+        .btn-primary {
+            width: 100%;
+            padding: 14px;
+            background-color: #0078d7;
+            color: white;
+            border: none;
+            border-radius: 6px;
             font-size: 16px;
             font-weight: bold;
-            border-radius: 4px;
             cursor: pointer;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
-        .action-btn:hover { background-color: #0b5a2f; }
+        .btn-primary:hover { background-color: #005a9e; }
 
-        /* Barra de Tareas Inferior */
+        .feedback-success {
+            padding: 12px;
+            background-color: #e6f4ea;
+            border: 1px solid #b7e1cd;
+            color: #137333;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+            display: none;
+        }
+
         #taskbar {
             height: 48px;
             background-color: #101010;
@@ -239,6 +229,7 @@
             justify-content: space-between;
             align-items: center;
             z-index: 1000;
+            border-top: 1px solid rgba(255,255,255,0.1);
         }
 
         .start-btn {
@@ -254,7 +245,7 @@
         }
 
         .start-btn:hover { background-color: #333333; }
-        
+
         .start-icon {
             width: 18px;
             height: 18px;
@@ -277,59 +268,53 @@
 <body>
 
     <div id="desktop">
-        <div class="win-window">
-            <div class="win-header">
-                <span class="win-title">Sistema de Aprendizaje Windows 10 - La Eterna Juventud (100 Ejercicios Interactivos)</span>
-                <div class="win-controls">
-                    <button class="win-btn" title="Minimizar (Guardar abajo)">&#8211;</button>
-                    <button class="win-btn" title="Maximizar (Agrandar pantalla)">&#9633;</button>
-                    <button class="win-btn close" title="Cerrar ventana">&#10005;</button>
-                </div>
+        <div class="desktop-icons">
+            <div class="icon-item" onclick="triggerIcon('WordPad')">
+                <div class="icon-box icon-wordpad">W</div>
+                <span class="icon-label">WordPad</span>
+            </div>
+            <div class="icon-item" onclick="triggerIcon('Facturador')">
+                <div class="icon-box icon-facturador">$</div>
+                <span class="icon-label">Facturador</span>
+            </div>
+            <div class="icon-item" onclick="triggerIcon('Este equipo')">
+                <div class="icon-box icon-equipo">💻</div>
+                <span class="icon-label">Este equipo</span>
+            </div>
+            <div class="icon-item" onclick="triggerIcon('Correo')">
+                <div class="icon-box icon-correo">✉</div>
+                <span class="icon-label">Correo</span>
+            </div>
+        </div>
+
+        <div class="guide-card">
+            <div class="card-header">
+                <span class="card-header-title">Capacitación Digital</span>
+                <span class="card-counter" id="card-counter">Ej. 1 de 100</span>
             </div>
 
-            <div class="win-body">
-                <!-- Columna 1: Módulos del Sistema -->
-                <div class="sidebar">
-                    <div class="sidebar-title">Módulos (8 Unidades)</div>
-                    <button class="module-btn active" onclick="selectModule(1)">Módulo 01: Panel Táctil (14)</button>
-                    <button class="module-btn" onclick="selectModule(2)">Módulo 02: Ventanas (13)</button>
-                    <button class="module-btn" onclick="selectModule(3)">Módulo 03: Archivos (14)</button>
-                    <button class="module-btn" onclick="selectModule(4)">Módulo 04: WordPad (13)</button>
-                    <button class="module-btn" onclick="selectModule(5)">Módulo 05: Facturador (15)</button>
-                    <button class="module-btn" onclick="selectModule(6)">Módulo 06: Correo (12)</button>
-                    <button class="module-btn" onclick="selectModule(7)">Módulo 07: Sistema (16)</button>
-                    <button class="module-btn" onclick="selectModule(8)">Módulo 08: Integración (3)</button>
+            <div class="card-body">
+                <select id="exercise-select" class="select-exercise" onchange="loadExercise(this.value)"></select>
+
+                <h3 class="exercise-title" id="ex-title">Cargando consigna...</h3>
+
+                <div class="instruction-box" id="ex-instruction"></div>
+
+                <div class="hint-box" id="hint-box"></div>
+
+                <div class="feedback-success" id="success-box"></div>
+
+                <div class="card-actions-row">
+                    <button class="btn-secondary" onclick="toggleHint()">💡 Pista</button>
+                    <button class="btn-secondary btn-warning" onclick="resetCurrent()">↺ Volver</button>
                 </div>
 
-                <!-- Columna 2: Lista de los 100 Ejercicios -->
-                <div class="exercise-selector">
-                    <div class="selector-header" id="list-header">Lista de Ejercicios</div>
-                    <div id="exercise-list">
-                        <!-- Generado por JavaScript -->
-                    </div>
-                </div>
-
-                <!-- Columna 3: Contenido y Ejecución del Ejercicio -->
-                <div class="content-area">
-                    <div class="exercise-header">
-                        <h2 class="exercise-title" id="ex-title">Seleccione un ejercicio</h2>
-                        <span class="badge-counter" id="ex-badge">Ejercicio 1 / 100</span>
-                    </div>
-
-                    <div class="guide-text" id="ex-guide">
-                        Cargando consigna...
-                    </div>
-
-                    <div class="interaction-box" id="ex-canvas">
-                        <!-- Área práctica -->
-                    </div>
-                </div>
+                <button class="btn-primary" onclick="verifyCurrent()">Verificar Ejercicio</button>
             </div>
         </div>
     </div>
 
-    <!-- Barra de tareas -->
-    <div id="taskbar" title="Barra de tareas (franja negra inferior)">
+    <div id="taskbar" title="Barra de tareas (franja negra ubicada en la parte inferior)">
         <button class="start-btn" title="Botón de Inicio (ventanita blanca en la esquina inferior izquierda)">
             <div class="start-icon">
                 <div class="start-square"></div>
@@ -338,181 +323,175 @@
                 <div class="start-square"></div>
             </div>
         </button>
-        <div class="system-tray" id="clock-display">
-            <!-- Hora actualizada -->
-        </div>
+        <div class="system-tray" id="clock-display"></div>
     </div>
 
     <script>
-        // BASE DE DATOS COMPLETA DE LOS 100 EJERCICIOS INDIVIDUALES
-        const allExercises = [
-            // MÓDULO 01 (1 al 14)
-            { id: 1, mod: 1, name: "01. Tap y Selección Única", title: "Ejercicio 01: Selección de un Elemento", guide: "Mueva el <strong>puntero</strong> <span class='clarification'>(la flechita blanca que sigue a su mano)</span> y toque una sola vez la opción para seleccionar un archivo.", btn: "Seleccionar Archivo de Texto", ok: "¡Muy bien! Ha seleccionado el elemento correctamente." },
-            { id: 2, mod: 1, name: "02. Doble Tap Táctil", title: "Ejercicio 02: Abrir con Doble Toque", guide: "Haga dos toques rápidos continuos sobre el icono para abrir la <strong>carpeta</strong> <span class='clarification'>(el dibujito de un folio amarillo)</span>.", btn: "Hacer Doble Clic para Abrir", ok: "¡Excelente! La carpeta se abrió con éxito." },
-            { id: 3, mod: 1, name: "03. Tap Prolongado", title: "Ejercicio 03: Desplegar Opciones Guardadas", guide: "Mantenga apoyado el dedo un segundo sobre la zona de trabajo para ver el <strong>Menú Contextual</strong> <span class='clarification'>(la lista de opciones adicionales)</span>.", btn: "Mantener Presionado 1 Segundo", ok: "¡Perfecto! Apareció el menú de opciones desplegables." },
-            { id: 4, mod: 1, name: "04. Arrastre de Elementos", title: "Ejercicio 04: Mover Cosas en Pantalla", guide: "Presione y desplace su dedo para arrastrar la foto desde el <strong>Escritorio</strong> <span class='clarification'>(la pantalla principal azul)</span> hacia la caja verde.", btn: "Arrastrar y Soltar Archivo", ok: "¡Muy bien! El archivo ha sido reubicado." },
-            { id: 5, mod: 1, name: "05. Desplazamiento Vertical", title: "Ejercicio 05: Subir y Bajar en una Página", guide: "Use dos dedos juntos para deslizar hacia abajo en la pantalla y recorrer un documento largo.", btn: "Deslizar Página Hacia Abajo", ok: "¡Correcto! Se ha desplazado por el texto." },
-            { id: 6, mod: 1, name: "06. Desplazamiento Horizontal", title: "Ejercicio 06: Recorrer Fotos de Costado", guide: "Deslice dos dedos hacia la derecha para pasar a la siguiente fotografía de su álbum.", btn: "Pasar a la Siguiente Foto", ok: "¡Estupendo! Ha avanzado a la siguiente foto." },
-            { id: 7, mod: 1, name: "07. Zoom Out (Pellizco)", title: "Ejercicio 07: Achicar una Fotografía", guide: "Junte dos dedos sobre la pantalla <span class='clarification'>(como dando un pellizquito suave)</span> para alejar la vista del plano.", btn: "Achicar Imagen (Zoom Out)", ok: "¡Excelente! La imagen se redujo de tamaño." },
-            { id: 8, mod: 1, name: "08. Zoom In (Ampliación)", title: "Ejercicio 08: Agrandar una Letra o Foto", guide: "Separe dos dedos sobre la imagen para hacer zoom y ver en detalle los nombres.", btn: "Agrandar Imagen (Zoom In)", ok: "¡Muy bien! La zona seleccionada se ha ampliado." },
-            { id: 9, mod: 1, name: "09. Vista de Tareas", title: "Ejercicio 09: Ver Programas Abiertos", guide: "Deslice tres dedos hacia arriba para activar la <strong>Vista de Tareas</strong> <span class='clarification'>(el modo que muestra todos sus trabajos en miniatura)</span>.", btn: "Mostrar Ventanas Abiertas", ok: "¡Correcto! Ahora puede ver todo lo que tiene abierto." },
-            { id: 10, mod: 1, name: "10. Mostrar Escritorio", title: "Ejercicio 10: Limpiar la Pantalla de Golpe", guide: "Deslice tres dedos hacia abajo para ocultar todas las ventanas abiertas y ver el <strong>Escritorio</strong> <span class='clarification'>(la pantalla limpia inicial)</span>.", btn: "Ocultar Todo y Ver Escritorio", ok: "¡Perfecto! Las ventanas se ocultaron abajo." },
-            { id: 11, mod: 1, name: "11. Conmutación de Apps", title: "Ejercicio 11: Alternar Entre Programas", guide: "Deslice tres dedos de lado a lado para pasar del programa de lectura al diario digital.", btn: "Cambiar de Aplicación", ok: "¡Estupendo! Ha cambiado de programa con fluidez." },
-            { id: 12, mod: 1, name: "12. Escritorios Virtuales", title: "Ejercicio 12: Cambiar de Mesas de Trabajo", guide: "Deslice cuatro dedos a la derecha para cambiar a un segundo <strong>Escritorio Virtual</strong> <span class='clarification'>(otra mesa limpia independiente)</span>.", btn: "Pasar al Escritorio 2", ok: "¡Muy bien! Se encuentra en el segundo espacio." },
-            { id: 13, mod: 1, name: "13. Centro de Actividades", title: "Ejercicio 13: Abrir Notificaciones", guide: "Deslice un dedo desde el borde derecho hacia el centro para abrir el <strong>Centro de Actividades</strong> <span class='clarification'>(el panel donde llegan avisos)</span>.", btn: "Abrir Panel de Avisos", ok: "¡Excelente! Desplegó los avisos del sistema." },
-            { id: 14, mod: 1, name: "14. Ajuste de Sensibilidad", title: "Ejercicio 14: Regular la Velocidad Táctil", guide: "Entre al menú para adaptar qué tan rápido responde el ratón táctil a su mano.", btn: "Guardar Sensibilidad Confortable", ok: "¡Ajuste guardado! El panel responderá a su ritmo." },
+        // BASE DE DATOS COMPLETA CON LOS 100 EJERCICIOS INDIVIDUALES
+        const exercises = [
+            // MÓDULO 1: PANEL TÁCTIL (1-14)
+            { id: 1, mod: "Módulo 1: Panel Táctil", title: "Ejercicio 1: Reconocimiento del puntero", text: "1. Mueva el dedo suavemente por la superficie del panel táctil.<br>2. Observe cómo se desplaza la flecha <span class='clarification'>(puntero)</span> libremente por la pantalla.", hint: "Desplace el dedo sin hacer fuerza sobre la superficie táctil.", ok: "¡Excelente! Puntero reconocido correctamente." },
+            { id: 2, mod: "Módulo 1: Panel Táctil", title: "Ejercicio 2: Doble toque para abrir", text: "1. Lleve la flecha sobre el icono <strong>WordPad</strong> <span class='clarification'>(el programa de escribir)</span>.<br>2. Dé dos toques rápidos seguidos para abrirlo.", hint: "Haga dos golpecitos rápidos sin mover el dedo del lugar.", ok: "¡Muy bien! Logró abrir el programa con doble toque." },
+            { id: 3, mod: "Módulo 1: Panel Táctil", title: "Ejercicio 3: Toque largo para opciones", text: "Mantenga apoyado su dedo durante 1 segundo en el centro de la pantalla para desplegar las opciones secundarias <span class='clarification'>(Menú contextual)</span>.", hint: "Deje el dedo fijo sin deslizarlo hasta que aparezca la lista.", ok: "¡Perfecto! Menú de opciones desplegado." },
+            { id: 4, mod: "Módulo 1: Panel Táctil", title: "Ejercicio 4: Arrastrar elementos", text: "Mantenga presionado un icono y arrástrelo a otra posición dentro del <strong>Escritorio</strong> <span class='clarification'>(la pantalla principal morada)</span>.", hint: "Presione y deslice el dedo al mismo tiempo.", ok: "¡Estupendo! Elemento reubicado en pantalla." },
+            { id: 5, mod: "Módulo 1: Panel Táctil", title: "Ejercicio 5: Subir y bajar página", text: "Use dos dedos juntos sobre la superficie para deslizar el texto hacia abajo.", hint: "Apoye dos dedos paralelos y muévalos en forma vertical.", ok: "¡Correcto! Desplazamiento vertical logrado." },
+            { id: 6, mod: "Módulo 1: Panel Táctil", title: "Ejercicio 6: Desplazamiento horizontal", text: "Deslice dos dedos hacia la derecha para pasar a la siguiente imagen de la galería.", hint: "Mueva dos dedos juntos hacia el costado.", ok: "¡Muy bien! Pasó a la siguiente foto." },
+            { id: 7, mod: "Módulo 1: Panel Táctil", title: "Ejercicio 7: Achicar imagen (Zoom Out)", text: "Junte dos dedos sobre la pantalla <span class='clarification'>(haciendo un pellizquito suave)</span> para achicar el tamaño de la foto.", hint: "Acerque la yema de sus dos dedos entre sí.", ok: "¡Imagen reducida correctamente!" },
+            { id: 8, mod: "Módulo 1: Panel Táctil", title: "Ejercicio 8: Agrandar imagen (Zoom In)", text: "Separe dos dedos sobre la pantalla para ampliar la vista de un detalle.", hint: "Aleje la yema de sus dos dedos entre sí.", ok: "¡Imagen ampliada con éxito!" },
+            { id: 9, mod: "Módulo 1: Panel Táctil", title: "Ejercicio 9: Ver programas abiertos", text: "Deslice tres dedos hacia arriba para activar la <strong>Vista de Tareas</strong> <span class='clarification'>(pantalla que muestra todo lo que está abierto)</span>.", hint: "Apoye tres dedos y deslícelos hacia la parte superior.", ok: "¡Excelente! Ahora ve todas sus ventanas." },
+            { id: 10, mod: "Módulo 1: Panel Táctil", title: "Ejercicio 10: Limpiar la pantalla", text: "Deslice tres dedos hacia abajo para ocultar las ventanas y ver el <strong>Escritorio</strong>.", hint: "Movimiento rápido con tres dedos hacia la parte inferior.", ok: "¡Pantalla despejada al instante!" },
+            { id: 11, mod: "Módulo 1: Panel Táctil", title: "Ejercicio 11: Cambiar de aplicación", text: "Deslice tres dedos hacia los costados para saltar de un programa a otro.", hint: "Deslice tres dedos en sentido horizontal.", ok: "¡Cambió de programa con fluidez!" },
+            { id: 12, mod: "Módulo 1: Panel Táctil", title: "Ejercicio 12: Cambiar de mesa de trabajo", text: "Deslice cuatro dedos a la derecha para pasar a su segundo <strong>Escritorio Virtual</strong>.", hint: "Movimiento suave utilizando cuatro dedos.", ok: "¡Pasó al segundo escritorio limpio!" },
+            { id: 13, mod: "Módulo 1: Panel Táctil", title: "Ejercicio 13: Centro de avisos", text: "Deslice un dedo desde el borde derecho hacia adentro para abrir las notificaciones.", hint: "Inicie el movimiento desde afuera del borde derecho.", ok: "¡Avisos del sistema desplegados!" },
+            { id: 14, mod: "Módulo 1: Panel Táctil", title: "Ejercicio 14: Regular velocidad del ratón", text: "Ajuste en la configuración la velocidad de la flecha para moverla a un ritmo más cómodo.", hint: "Seleccione una velocidad pausada y adecuada para su mano.", ok: "¡Velocidad adaptada a su comodidad!" },
 
-            // MÓDULO 02 (15 al 27)
-            { id: 15, mod: 2, name: "15. Control de Ventanas", title: "Ejercicio 15: Achicar y Agrandar Pantallas", guide: "Utilice los botones de la esquina superior derecha para achicar la ventana actual.", btn: "Minimizar Ventana", ok: "¡Muy bien! La ventana se guardó en la barra inferior." },
-            { id: 16, mod: 2, name: "16. Redimensionamiento", title: "Ejercicio 16: Cambiar Tamaño Manualmente", guide: "Lleve la flechita al borde de la ventana hasta que se convierta en una doble flecha y estire la esquina.", btn: "Estirar Borde de la Ventana", ok: "¡Logrado! El tamaño de la pantalla ha cambiado." },
-            { id: 17, mod: 2, name: "17. Snap Assist Lateral", title: "Ejercicio 17: Poner una Ventana a la Izquierda", guide: "Arrastre la ventana a la orilla izquierda para dejar libre la otra mitad de la pantalla.", btn: "Fijar a la Izquierda", ok: "¡Perfecto! La ventana ocupa la mitad exacta." },
-            { id: 18, mod: 2, name: "18. Pantalla Dividida", title: "Ejercicio 18: Trabajar con Dos Ventanas", guide: "Elija un segundo programa para rellenar la mitad derecha sobrante de su monitor.", btn: "Fijar Programa a la Derecha", ok: "¡Excelente! Tiene dos programas visibles a la vez." },
-            { id: 19, mod: 19, mod: 2, name: "19. Acoplamiento Cuadrantes", title: "Ejercicio 19: Cuatro Ventanas Juntas", guide: "Lleve una pequeña ventana a la esquina superior derecha para dividir la pantalla en cuatro partes.", btn: "Acomodar en una Esquina", ok: "¡Muy bien! Pantalla organizada en 4 esquinas." },
-            { id: 20, mod: 2, name: "20. Conmutación Alt+Tab", title: "Ejercicio 20: El Salto Rápido de Programa", guide: "Toque el botón simulador para alternar al instante entre su carta y el periódico.", btn: "Alternar Programa Rapidamente", ok: "¡Correcto! Ha pasado al programa anterior." },
-            { id: 21, mod: 2, name: "21. Aislamiento Aero Shake", title: "Ejercicio 21: Sacudir para Despejar", guide: "Tome la ventana de arriba y sacúdala suavemente para ocultar las aplicaciones que distraen atrás.", btn: "Sacudir Ventana Principal", ok: "¡Estupendo! Todas las ventanas de atrás se ocultaron." },
-            { id: 22, mod: 2, name: "22. Disposición en Cascada", title: "Ejercicio 22: Apilar Ventanas como Naipes", guide: "Ordene todas sus carpetas abiertas para que queden escalonadas una sobre otra.", btn: "Ordenar en Cascada", ok: "¡Listo! Sus cartas/documentos quedaron apilados." },
-            { id: 23, mod: 2, name: "23. Disposición Mosaico", title: "Ejercicio 23: Repartir Ventanas en Bloques", guide: "Acomode tres documentos en forma de bloques rectangulares para verlos todos.", btn: "Organizar en Mosaico", ok: "¡Excelente! Todo visible al mismo tiempo." },
-            { id: 24, mod: 2, name: "24. Anclaje a Barra", title: "Ejercicio 24: Dejar Atajo Abajo", guide: "Fije su programa favorito en la <strong>Barra de Tareas</strong> <span class='clarification'>(la franja negra de abajo)</span>.", btn: "Fijar Icono en la Franja Negra", ok: "¡Hecho! El programa estará siempre listo abajo." },
-            { id: 25, mod: 2, name: "25. Cierre Seguro (Alt+F4)", title: "Ejercicio 25: Cerrar una Aplicación", guide: "Oprima el botón con la cruz roja para cerrar la ventana cuando haya terminado su trabajo.", btn: "Cerrar Aplicación Actual", ok: "¡Programa cerrado de manera segura!" },
-            { id: 26, mod: 2, name: "26. Reordenamiento de Barra", title: "Ejercicio 26: Mover Iconos de Abajo", guide: "Arrastre el icono del reloj más a la izquierda dentro de la franja negra inferior.", btn: "Mover Icono a la Izquierda", ok: "¡Ubicación actualizada correctamente!" },
-            { id: 27, mod: 2, name: "27. Despeje Completo", title: "Ejercicio 27: Botón Rincón de Limpieza", guide: "Toque el último rincón de la derecha en la barra negra para guardar todo de un toque.", btn: "Tocar Rincón Inferior Derecho", ok: "¡Pantalla despejada al instante!" },
+            // MÓDULO 2: VENTANAS (15-27)
+            { id: 15, mod: "Módulo 2: Ventanas", title: "Ejercicio 15: Guardar ventana abajo", text: "Toque la rayita <strong>[–]</strong> arriba a la derecha para ocultar la ventana en la <strong>Barra de Tareas</strong> <span class='clarification'>(franja negra de abajo)</span>.", hint: "Es el primer botón a la izquierda de la cruz roja.", ok: "¡Ventana guardada en la barra inferior!" },
+            { id: 16, mod: "Módulo 2: Ventanas", title: "Ejercicio 16: Estirar borde de pantalla", text: "Lleve la flecha al borde de la ventana hasta ver la doble flecha y arrastre para agrandarla.", hint: "Busque el límite exacto del borde lateral.", ok: "¡Tamaño de pantalla ajustado!" },
+            { id: 17, mod: "Módulo 2: Ventanas", title: "Ejercicio 17: Acomodar a la izquierda", text: "Arrastre la ventana al borde izquierdo para fijarla exactamente en la mitad de la pantalla.", hint: "Empuje la ventana bien contra el extremo izquierdo.", ok: "¡Ventana fija en la mitad izquierda!" },
+            { id: 18, mod: "Módulo 2: Ventanas", title: "Ejercicio 18: Trabajar con dos ventanas", text: "Elija un segundo programa para ocupar la mitad derecha que quedó libre.", hint: "Haga clic en el programa secundario para dividir la pantalla.", ok: "¡Dos programas abiertos lado a lado!" },
+            { id: 19, mod: "Módulo 2: Ventanas", title: "Ejercicio 19: Cuatro ventanas juntas", text: "Lleve una ventana hacia una de las esquinas superiores para organizar cuatro trabajos a la vez.", hint: "Arrastre directo hacia la esquina superior derecha o izquierda.", ok: "¡Pantalla organizada en 4 partes!" },
+            { id: 20, mod: "Módulo 2: Ventanas", title: "Ejercicio 20: Salto rápido de programa", text: "Presione la combinación de teclas Alt + Tab para cambiar de ventana al instante.", hint: "Mantenga Alt y toque una vez la tecla Tabulador.", ok: "¡Salto de programa completado!" },
+            { id: 21, mod: "Módulo 2: Ventanas", title: "Ejercicio 21: Sacudir para despejar", text: "Tome la barra superior de la ventana activa y sacúdala suavemente para ocultar las demás.", hint: "Mantenga presionado el título arriba y mueva el ratón a los lados.", ok: "¡Fondo despejado sin distracciones!" },
+            { id: 22, mod: "Módulo 2: Ventanas", title: "Ejercicio 22: Apilar como cartas", text: "Ordene las ventanas abiertas en modo <strong>Cascada</strong> para ver sus títulos escalonados.", hint: "Haga clic derecho en la barra negra de abajo y elija 'Cascada'.", ok: "¡Documentos apilados prolijamente!" },
+            { id: 23, mod: "Módulo 2: Ventanas", title: "Ejercicio 23: Repartir en bloques", text: "Organice sus documentos en forma de mosaico para comparar datos fácilmente.", hint: "Seleccione 'Mostrar ventanas en paralelo'.", ok: "¡Mosaico de pantallas configurado!" },
+            { id: 24, mod: "Módulo 2: Ventanas", title: "Ejercicio 24: Dejar atajo abajo", text: "Fije el icono del <strong>Correo</strong> en la <strong>Barra de Tareas</strong> <span class='clarification'>(franja negra)</span>.", hint: "Toque con el botón derecho sobre el icono y elija 'Anclar'.", ok: "¡Atajo listo para usar siempre abajo!" },
+            { id: 25, mod: "Módulo 2: Ventanas", title: "Ejercicio 25: Cerrar programa con la cruz", text: "Toque la cruz roja <strong>[X]</strong> ubicada arriba a la derecha para cerrar el trabajo.", hint: "Está en la esquina superior derecha absoluta.", ok: "¡Programa cerrado correctamente!" },
+            { id: 26, mod: "Módulo 2: Ventanas", title: "Ejercicio 26: Reordenar la barra inferior", text: "Mueva el icono de un programa hacia la izquierda dentro de la franja negra inferior.", hint: "Arrastre el gráfico horizontalmente sin soltar.", ok: "¡Icono reubicado a su gusto!" },
+            { id: 27, mod: "Módulo 2: Ventanas", title: "Ejercicio 27: Rincón de limpieza", text: "Toque el último rincón derecho de la barra negra para ocultar todo de golpe.", hint: "Apunte al extremo inferior derecho junto a la hora.", ok: "¡Escritorio despejado completamente!" },
 
-            // MÓDULO 03 (28 al 41)
-            { id: 28, mod: 3, name: "28. Crear Carpeta Nueva", title: "Ejercicio 28: Guardador para sus Fotos", guide: "Cree una carpeta nueva llamada 'Recuerdos 2026' para tener ordenada la información.", btn: "Crear Carpeta 'Recuerdos 2026'", ok: "¡Carpeta creada y guardada con éxito!" },
-            { id: 29, mod: 3, name: "29. Renombrar Archivos", title: "Ejercicio 29: Cambiar Nombre a un Archivo", guide: "Seleccione un archivo sin nombre y escriba 'Receta de Cocina.txt'.", btn: "Guardar Nombre Nuevo", ok: "¡Nombre cambiado correctamente!" },
-            { id: 30, mod: 3, name: "30. Copiar y Pegar", title: "Ejercicio 30: Duplicar un Documento", guide: "Haga una copia idéntica de una nota guardada para no perder la original.", btn: "Copiar Archivo a Mis Documentos", ok: "¡Copia creada sin tocar la original!" },
-            { id: 31, mod: 3, name: "31. Modos de Vista", title: "Ejercicio 31: Ver Fotos Grandes", guide: "Cambie la vista de la carpeta para ver las imágenes en tamaño gigante en lugar de lista.", btn: "Cambiar a Iconos Grandes", ok: "¡Ahora puede ver las fotos con claridad!" },
-            { id: 32, mod: 3, name: "32. Ordenamiento por Fecha", title: "Ejercicio 32: Buscar por Fecha Reciente", guide: "Ordene sus papeles digitales para que lo último que escribió aparezca primero arriba.", btn: "Ordenar de Más Reciente a Viejo", ok: "¡Ordenado por fecha correctamente!" },
-            { id: 33, mod: 3, name: "33. Selección Continua", title: "Ejercicio 33: Marcar Muchas Fotos Juntas", guide: "Marque una hilera completa de 5 fotos seguidas para moverlas en grupo.", btn: "Marcar Grupo de Fotos", ok: "¡5 fotos marcadas para trabajar juntos!" },
-            { id: 34, mod: 3, name: "34. Selección Discontinua", title: "Ejercicio 34: Marcar Fotos Saltadas", guide: "Seleccione solamente la foto 1 y la foto 4, dejando las otras de lado.", btn: "Marcar Foto 1 y Foto 4", ok: "¡Fotos seleccionadas con precisión!" },
-            { id: 35, mod: 3, name: "35. Búsqueda por Lupa", title: "Ejercicio 35: Buscar una Receta Perdida", guide: "Escriba 'Tartas' en el buscador para que la computadora encuentre la receta.", btn: "Buscar 'Tartas' en la Carpeta", ok: "¡Encontrado! El archivo apareció en pantalla." },
-            { id: 36, mod: 3, name: "36. Anclaje a Acceso Rápido", title: "Ejercicio 36: Guardar Carpeta Favorita", guide: "Ponga su carpeta 'Trámites' en el menú lateral izquierdo para no buscarla más.", btn: "Fijar 'Trámites' en el Menú", ok: "¡Listo! Aparecerá siempre a la izquierda." },
-            { id: 37, mod: 3, name: "37. Compresión en Zip", title: "Ejercicio 37: Enpaquetar Todo en un Sobre", guide: "Junte 10 documentos en un solo archivo liviano llamado <strong>ZIP</strong> <span class='clarification'>(sobre digital comprimido)</span>.", btn: "Comprimir Archivos en Zip", ok: "¡Sobre digital creado correctamente!" },
-            { id: 38, mod: 3, name: "38. Extracción de Zip", title: "Ejercicio 38: Abrir un Sobre Comprimido", guide: "Extraiga y saque todos los papeles guardados dentro de una carpeta Zip recibida.", btn: "Descomprimir Sobre Digital", ok: "¡Papeles extraídos y listos para leer!" },
-            { id: 39, mod: 3, name: "39. Extensiones Visibles", title: "Ejercicio 39: Ver el Tipo de Archivo", guide: "Haga visible la terminación de sus archivos <span class='clarification'>(por ejemplo .JPG para fotos o .DOC para cartas)</span>.", btn: "Mostrar Extensiones (.txt, .jpg)", ok: "¡Ahora sabe exactamente qué es cada archivo!" },
-            { id: 40, mod: 3, name: "40. Papelera de Reciclaje", title: "Ejercicio 40: Tirar y Recuperar un Papel", guide: "Mueva un borrador a la <strong>Papelera</strong> <span class='clarification'>(el tacho de basura)</span> y luego recupérelo.", btn: "Tirar y Deshacer Basura", ok: "¡El archivo volvió a su sitio original!" },
-            { id: 41, mod: 3, name: "41. Borrado Definitivo", title: "Ejercicio 41: Vaciar la Basura", guide: "Elimine por completo los archivos viejos de la papelera para liberar espacio limpio.", btn: "Vaciar Tacho de Basura", ok: "¡Memoria liberada por completo!" },
+            // MÓDULO 3: ARCHIVOS Y CARPETAS (28-41)
+            { id: 28, mod: "Módulo 3: Archivos", title: "Ejercicio 28: Abrir explorador de carpetas", text: "Haga doble clic en el icono <strong>Este equipo</strong> para ver sus documentos almacenados.", hint: "El icono está en la parte izquierda del escritorio.", ok: "¡Carpeta principal abierta con éxito!" },
+            { id: 29, mod: "Módulo 3: Archivos", title: "Ejercicio 29: Crear una carpeta nueva", text: "Cree un cajón digital nuevo <span class='clarification'>(Carpeta)</span> para organizar sus fotos familiares.", hint: "Haga clic derecho en un lugar vacío y elija Nuevo -> Carpeta.", ok: "¡Carpeta nueva creada prolijamente!" },
+            { id: 30, mod: "Módulo 3: Archivos", title: "Ejercicio 30: Cambiar nombre a carpeta", text: "Renombre la carpeta creada poniéndole como título <strong>Mis Recetas</strong>.", hint: "Haga clic derecho sobre la carpeta y seleccione 'Cambiar nombre'.", ok: "¡Nombre actualizado correctamente!" },
+            { id: 31, mod: "Módulo 3: Archivos", title: "Ejercicio 31: Mover archivo a una carpeta", text: "Arrastre un documento guardado dentro de la carpeta <strong>Mis Recetas</strong>.", hint: "Presione sobre el archivo y llévelo encima de la carpeta.", ok: "¡Archivo guardado en su lugar!" },
+            { id: 32, mod: "Módulo 3: Archivos", title: "Ejercicio 32: Duplicar una foto (Copiar)", text: "Haga una copia de una foto para guardarla en otra carpeta sin borrar la original.", hint: "Use la opción Copiar y luego Pegar en la carpeta nueva.", ok: "¡Foto duplicada con éxito!" },
+            { id: 33, mod: "Módulo 3: Archivos", title: "Ejercicio 33: Seleccionar varios archivos", text: "Marque tres documentos a la vez trazando un recuadro con el ratón.", hint: "Haga clic en un espacio blanco y arrastre abarcando los tres archivos.", ok: "¡Tres archivos marcados juntos!" },
+            { id: 34, mod: "Módulo 3: Archivos", title: "Ejercicio 34: Tirar archivo no deseado", text: "Envíe un borrador viejo a la <strong>Papelera de Reciclaje</strong> <span class='clarification'>(el tacho de basura)</span>.", hint: "Haga clic derecho sobre el archivo y elija 'Eliminar'.", ok: "¡Documento enviado a la papelera!" },
+            { id: 35, mod: "Módulo 3: Archivos", title: "Ejercicio 35: Abrir la Papelera", text: "Abra la <strong>Papelera de Reciclaje</strong> para revisar los elementos tirados.", hint: "Busque el icono del tacho de basura en el escritorio.", ok: "¡Papelera abierta correctamente!" },
+            { id: 36, mod: "Módulo 3: Archivos", title: "Ejercicio 36: Recuperar archivo borrado", text: "Restaure un documento borrado por error para devolverlo a su lugar de origen.", hint: "Haga clic derecho en el archivo dentro de la papelera y elija 'Restaurar'.", ok: "¡Archivo rescatado y devuelto a su lugar!" },
+            { id: 37, mod: "Módulo 3: Archivos", title: "Ejercicio 37: Vaciar la papelera", text: "Limpie definitivamente el tacho de basura para recuperar espacio en el equipo.", hint: "Haga clic derecho sobre el tacho y elija 'Vaciar papelera'.", ok: "¡Papelera vaciada completamente!" },
+            { id: 38, mod: "Módulo 3: Archivos", title: "Ejercicio 38: Buscar un documento perdido", text: "Escriba 'Carta' en la casilla de búsqueda para encontrar un escrito rápidamente.", hint: "Use la lupa del explorador arriba a la derecha.", ok: "¡Documento encontrado al instante!" },
+            { id: 39, mod: "Módulo 3: Archivos", title: "Ejercicio 39: Ordenar archivos por fecha", text: "Ordene sus fotos para ver primero las que guardó recientemente.", hint: "Haga clic en el encabezado 'Fecha de modificación'.", ok: "¡Archivos ordenados cronológicamente!" },
+            { id: 40, mod: "Módulo 3: Archivos", title: "Ejercicio 40: Cambiar a vista de fotos grandes", text: "Cambie la vista para ver sus fotos en miniaturas grandes y claras.", hint: "Vaya al menú 'Vista' y elija 'Iconos muy grandes'.", ok: "¡Miniaturas ampliadas para ver bien!" },
+            { id: 41, mod: "Módulo 3: Archivos", title: "Ejercicio 41: Copiar archivos a pendrive", text: "Envíe una copia de sus documentos hacia la memoria externa <span class='clarification'>(Pendrive USB)</span>.", hint: "Haga clic derecho -> Enviar a -> Unidad USB.", ok: "¡Copia enviada al pendrive!" },
 
-            // MÓDULO 04 (42 al 54)
-            { id: 42, mod: 4, name: "42. Formato en WordPad", title: "Ejercicio 42: Agrandar la Letra", guide: "Abra el programa <strong>WordPad</strong> <span class='clarification'>(su cuaderno para redactar)</span> y ponga el título en letra grande.", btn: "Poner Letra Tamaño 20 y Negrita", ok: "¡El título resalta claro y legible!" },
-            { id: 43, mod: 4, name: "43. Alineación Centrada", title: "Ejercicio 43: Centrar el Título", guide: "Ponga el título justo en el medio de la hoja blanca para que parezca una carta formal.", btn: "Centrar Texto en la Hoja", ok: "¡El título quedó perfectamente centrado!" },
-            { id: 44, mod: 4, name: "44. Interlineado Cómodo", title: "Ejercicio 44: Separar Renglones", guide: "Sépare las líneas de texto para que la lectura sea descansada para la vista.", btn: "Separar Renglones (Espacio 1.5)", ok: "¡Texto cómodo y fácil de leer!" },
-            { id: 45, mod: 4, name: "45. Listas con Puntitos", title: "Ejercicio 45: Hacer Lista de Compras", guide: "Cree una lista numerada con los remedios o ingredientes que necesita comprar.", btn: "Crear Lista Numerada", ok: "¡Lista numerada prolija y clara!" },
-            { id: 46, mod: 4, name: "46. Inserción de Imágenes", title: "Ejercicio 46: Poner una Foto en su Carta", guide: "Inserte una imagen dentro de su texto impreso para regalársela a un familiar.", btn: "Poner Imagen en la Carta", ok: "¡Fotografía pegada en la hoja de texto!" },
-            { id: 47, mod: 4, name: "47. Dibujo Integrado", title: "Ejercicio 47: Hacer un Dibujo en la Nota", guide: "Abra la paleta de dibujo, haga un trazo sencillo y péguelo en la hoja escrita.", btn: "Insertar Dibujo a Mano", ok: "¡Dibujo guardado junto a su escrito!" },
-            { id: 48, mod: 4, name: "48. Fecha Automática", title: "Ejercicio 48: Poner Fecha de Hoy", guide: "Toque el botón de calendario para que la máquina escriba el día exacto de hoy.", btn: "Poner Fecha del Día de Hoy", ok: "¡Fecha estampada automáticamente!" },
-            { id: 49, mod: 4, name: "49. Buscar y Reemplazar", title: "Ejercicio 49: Corregir una Palabra Repetida", guide: "Cambie automáticamente la palabra 'Lunes' por 'Martes' en todo el texto largo.", btn: "Cambiar 'Lunes' por 'Martes'", ok: "¡Todas las palabras corregidas a la vez!" },
-            { id: 50, mod: 50, mod: 4, name: "50. Tabulaciones Prolijas", title: "Ejercicio 50: Columnas Ordenadas", guide: "Organice una tabla con nombres a la izquierda y precios a la derecha bien alineados.", btn: "Alinear Precios a la Derecha", ok: "¡Columnas alineadas impecables!" },
-            { id: 51, mod: 4, name: "51. Cortar y Pegar Texto", title: "Ejercicio 51: Mover un Párrafo", guide: "Mueva la despedida final de su carta para que quede bien abajo antes de la firma.", btn: "Mover Párrafo al Final", ok: "¡Párrafo reubicado en su lugar!" },
-            { id: 52, mod: 4, name: "52. Orientación Horizontal", title: "Ejercicio 52: Girar la Hoja", guide: "Cambie la hoja de vertical a acostada <span class='clarification'>(modo apaisado u horizontal)</span>.", btn: "Acostar Hoja (Horizontal)", ok: "¡Hoja ajustada para carteles anchos!" },
-            { id: 53, mod: 4, name: "53. Vista Previa Impresión", title: "Ejercicio 53: Revisar Antes de Imprimir", guide: "Mire cómo quedará la hoja terminada antes de gastar tinta de la impresora.", btn: "Ver Hoja Completa en Pantalla", ok: "¡Todo se ve ordenado para imprimir!" },
-            { id: 54, mod: 4, name: "54. Guardar Documento", title: "Ejercicio 54: Guardar la Carta", guide: "Guarde su documento con el nombre 'Carta para mi Hija.rtf' en la carpeta correcta.", btn: "Guardar Archivo en el Disco", ok: "¡Carta guardada a salvo para siempre!" },
+            // MÓDULO 4: WORDPAD / ESCRITURA (42-54)
+            { id: 42, mod: "Módulo 4: WordPad", title: "Ejercicio 42: Abrir hoja de texto", text: "Abra el programa <strong>WordPad</strong> para comenzar una hoja de escritura limpia.", hint: "Toque el icono azul con la letra W en el escritorio.", ok: "¡Hoja blanca lista para escribir!" },
+            { id: 43, mod: "Módulo 4: WordPad", title: "Ejercicio 43: Escribir en mayúsculas", text: "Escriba el título 'MEMORIAS DE VIDA' completamente en letras mayúsculas.", hint: "Active la tecla Bloq Mayús antes de escribir.", ok: "¡Título ingresado en mayúsculas!" },
+            { id: 44, mod: "Módulo 4: WordPad", title: "Ejercicio 44: Cambiar modelo de letra", text: "Seleccione el texto y cambie el tipo de letra a <strong>Arial</strong> para leer con más claridad.", hint: "Use el menú desplegable de fuentes arriba a la izquierda.", ok: "¡Tipo de letra cambiado a Arial!" },
+            { id: 45, mod: "Módulo 4: WordPad", title: "Ejercicio 45: Agrandar el tamaño del texto", text: "Aumente el tamaño de la letra a número 18 para verla más grande.", hint: "Seleccione el número de tamaño junto al modelo de letra.", ok: "¡Tamaño de letra agrandado a 18!" },
+            { id: 46, mod: "Módulo 4: WordPad", title: "Ejercicio 46: Resaltar en Negrita", text: "Aplique el estilo <strong>Negrita [N]</strong> al título para darle mayor fuerza visual.", hint: "Presione la letra N ubicada en la barra de herramientas.", ok: "¡Texto destacado en negrita!" },
+            { id: 47, mod: "Módulo 4: WordPad", title: "Ejercicio 47: Subrayar palabra importante", text: "Subraye la fecha principal de su escrito utilizando la opción <strong>[S]</strong>.", hint: "Seleccione la fecha y toque el botón con la S subrayada.", ok: "¡Palabra subrayada correctamente!" },
+            { id: 48, mod: "Módulo 4: WordPad", title: "Ejercicio 48: Cambiar el color de la letra", text: "Pinte el texto con color azul oscuro.", hint: "Toque el botón con la letra A que tiene una barra de color debajo.", ok: "¡Color de texto aplicado!" },
+            { id: 49, mod: "Módulo 4: WordPad", title: "Ejercicio 49: Centrar un título", text: "Alinee el título justo en el centro del ancho de la hoja.", hint: "Presione el botón de alineación central con rayitas en el medio.", ok: "¡Título centrado en la hoja!" },
+            { id: 50, mod: "Módulo 4: WordPad", title: "Ejercicio 50: Guardar el escrito en el equipo", text: "Guarde su carta en la computadora poniéndole de nombre 'Carta Personal'.", hint: "Haga clic en el disco azul o en Archivo -> Guardar como.", ok: "¡Documento guardado a salvo!" },
+            { id: 51, mod: "Módulo 4: WordPad", title: "Ejercicio 51: Abrir carta guardada", text: "Abra desde la memoria del equipo su archivo 'Carta Personal' para continuar escribiendo.", hint: "Menú Archivo -> Abrir -> Buscar Carta Personal.", ok: "¡Carta abierta para seguir trabajando!" },
+            { id: 52, mod: "Módulo 4: WordPad", title: "Ejercicio 52: Insertar una imagen", text: "Agregue una fotografía ilustrativa debajo del texto de su escrito.", hint: "Toque el botón 'Insertar imagen' en la barra superior.", ok: "¡Foto insertada dentro del documento!" },
+            { id: 53, mod: "Módulo 4: WordPad", title: "Ejercicio 53: Mandar a imprimir", text: "Configure la vista previa para imprimir su escrito en papel.", hint: "Menú Archivo -> Imprimir -> Vista previa.", ok: "¡Documento enviado a la impresora!" },
+            { id: 54, mod: "Módulo 4: WordPad", title: "Ejercicio 54: Cerrar guardando cambios", text: "Cierre el programa de escritura asegurándose de guardar los últimos retoque.", hint: "Toque la cruz y elija 'Guardar' si el sistema le consulta.", ok: "¡Cambios guardados y programa cerrado!" },
 
-            // MÓDULO 05 (55 al 69)
-            { id: 55, mod: 5, name: "55. Alta de Cliente", title: "Ejercicio 55: Registrar Comprador", guide: "Ingrese el Nombre y DNI del cliente en la ficha del <strong>Facturador Digital</strong>.", btn: "Guardar Datos de Juan Pérez", ok: "¡Cliente registrado en el sistema!" },
-            { id: 56, mod: 5, name: "56. Tipo de Comprobante", title: "Ejercicio 56: Elegir Factura B o C", guide: "Seleccione el tipo de recibo adecuado según la categoría de la venta realizada.", btn: "Seleccionar 'Factura C'", ok: "¡Comprobante tipo C preparado!" },
-            { id: 57, mod: 5, name: "57. Buscar Producto", title: "Ejercicio 57: Buscar Producto por Nombre", guide: "Busque el artículo 'Servicio de Consultoría' en la lista del catálogo comercial.", btn: "Buscar 'Servicio de Consultoría'", ok: "¡Artículo localizado correctamente!" },
-            { id: 58, mod: 5, name: "58. Inserción de Cantidades", title: "Ejercicio 58: Cargar Precios y Unidades", guide: "Ponga que vendió 2 unidades de producto a un valor de $1.000 pesos cada una.", btn: "Cargar 2 Unidades ($2.000 Total)", ok: "¡Cantidades y montos cargados!" },
-            { id: 59, mod: 5, name: "59. Descuento Específico", title: "Ejercicio 59: Hacer una Bonificación", guide: "Aplique un 10% de descuento de atención a un amigo jubilado sobre el total.", btn: "Aplicar 10% de Descuento", ok: "¡Descuento descontado de la suma final!" },
-            { id: 60, mod: 5, name: "60. Descuento Global", title: "Ejercicio 60: Rebaja sobre Compra Grande", guide: "Realice una atención especial en el importe final completo de la compra realizada.", btn: "Descontar $500 del Total", ok: "¡Rebaja general aplicada!" },
-            { id: 61, mod: 5, name: "61. Alícuota de IVA", title: "Ejercicio 61: Revisar Impuestos", guide: "Verifique que el cálculo de impuestos esté correctamente detallado en la fila.", btn: "Verificar IVA Consumidor Final", ok: "¡Impuesto verificado correctamente!" },
-            { id: 62, mod: 5, name: "62. Forma de Pago", title: "Ejercicio 62: Elegir Pago en Efectivo", guide: "Marque que la persona abonará con billetes en mano en el mostrador.", btn: "Marcar Pago: Efectivo", ok: "¡Método registrado como Efectivo!" },
-            { id: 63, mod: 5, name: "63. Cobro Mixto", title: "Ejercicio 63: Pagar con Tarjeta y Efectivo", guide: "Cargue la mitad de la cuenta en efectivo y la otra mitad con tarjeta de débito.", btn: "Dividir Pago: Mitad y Mitad", ok: "¡Cobro dividido procesado con éxito!" },
-            { id: 64, mod: 5, name: "64. Emisión de Factura", title: "Ejercicio 64: Confirmar la Factura", guide: "Toque el botón final para autorizar e imprimir el comprobante fiscal definitivo.", btn: "Emitir Factura Definitiva", ok: "¡Comprobante emitido con número oficial!" },
-            { id: 65, mod: 5, name: "65. Guardar Factura PDF", title: "Ejercicio 65: Convertir Factura a Papel Digital", guide: "Guarde una copia del recibo en formato <strong>PDF</strong> <span class='clarification'>(documento digital listo para enviar)</span>.", btn: "Guardar Factura como PDF", ok: "¡Documento PDF guardado en la carpeta!" },
-            { id: 66, mod: 5, name: "66. Guardar Borrador", title: "Ejercicio 66: Dejar la Venta en Espera", guide: "Guarde una boleta sin terminar mientras el cliente busca su billetera.", btn: "Pausar Venta en Borrador", ok: "¡Venta pausada lista para retomar!" },
-            { id: 67, mod: 5, name: "67. Historial de Ventas", title: "Ejercicio 67: Revisar Cobros del Mes", guide: "Consulte el registro histórico para ver cuánto cobró en la semana anterior.", btn: "Abrir Lista de Facturas Emitidas", ok: "¡Historial abierto en pantalla!" },
-            { id: 68, mod: 5, name: "68. Anular con Nota de Crédito", title: "Ejercicio 68: Devolver Dinero de una Venta", guide: "Haga una <strong>Nota de Crédito</strong> <span class='clarification'>(comprobante que anula una factura anterior)</span>.", btn: "Anular Factura por Devolución", ok: "¡Factura anulada formalmente!" },
-            { id: 69, mod: 5, name: "69. Cierre de Caja", title: "Ejercicio 69: Sumar el Total del Día", guide: "Realice el cálculo final de la jornada para saber cuánto efectivo ingresó hoy.", btn: "Hacer Cierre de Caja Diario", ok: "¡Cierre del día completado con éxito!" },
+            // MÓDULO 5: FACTURADOR / PLANILLAS (55-69)
+            { id: 55, mod: "Módulo 5: Facturador", title: "Ejercicio 55: Abrir planilla de cuentas", text: "Abra el programa <strong>Facturador</strong> <span class='clarification'>(icono verde de gastos)</span>.", hint: "Haga doble clic en el icono verde con el signo $.", ok: "¡Planilla de cuentas abierta!" },
+            { id: 56, mod: "Módulo 5: Facturador", title: "Ejercicio 56: Marcar un casillero", text: "Haga clic en el primer casillero de la tabla <span class='clarification'>(Celda)</span> para empezar.", hint: "Toque con el ratón el recuadro superior izquierdo.", ok: "¡Casillero marcado correctamente!" },
+            { id: 57, mod: "Módulo 5: Facturador", title: "Ejercicio 57: Anotar un gasto", text: "Escriba la palabra 'Luz' en el casillero de concepto de gastos.", hint: "Escriba con el teclado directo en el casillero seleccionado.", ok: "¡Concepto ingresado correctamente!" },
+            { id: 58, mod: "Módulo 5: Facturador", title: "Ejercicio 58: Anotar importe numérico", text: "Ingrese el valor numérico correspondiente al importe de la factura.", hint: "Use el teclado numérico a la derecha del teclado.", ok: "¡Importe registrado en la planilla!" },
+            { id: 59, mod: "Módulo 5: Facturador", title: "Ejercicio 59: Suma automática", text: "Sume dos gastos anotados presionando el botón de <strong>Autosuma [Σ]</strong>.", hint: "Busque el icono que parece una letra E mayúscula elegante.", ok: "¡Cálculo de suma realizado al instante!" },
+            { id: 60, mod: "Módulo 5: Facturador", title: "Ejercicio 60: Copiar fórmula de suma", text: "Estire la fórmula de la suma para que calcule el total de todo el mes.", hint: "Arrastre el cuadradito verde en la esquina de la celda.", ok: "¡Fórmula copiada a las demás filas!" },
+            { id: 61, mod: "Módulo 5: Facturador", title: "Ejercicio 61: Formato signo pesos ($)", text: "Agregue el signo pesos ($) y los centavos a sus números anotados.", hint: "Seleccione los números y toque el icono con el billete o $.", ok: "¡Números formateados en moneda!" },
+            { id: 62, mod: "Módulo 5: Facturador", title: "Ejercicio 62: Borrar valor equivocado", text: "Limpie el contenido de un casillero que contiene un error sin borrar el recuadro.", hint: "Toque la celda y presione la tecla Suprimir (Supr).", ok: "¡Casillero limpiado para corregir!" },
+            { id: 63, mod: "Módulo 5: Facturador", title: "Ejercicio 63: Insertar renglón nuevo", text: "Agregue un renglón nuevo entre dos gastos para anotar un servicio olvidado.", hint: "Clic derecho en el número de fila -> Insertar.", ok: "¡Renglón nuevo agregado en la tabla!" },
+            { id: 64, mod: "Módulo 5: Facturador", title: "Ejercicio 64: Anchar columna", text: "Agrande el ancho de la columna para que el texto largo entre sin cortarse.", hint: "Arrastre la línea que separa las letras de las columnas arriba.", ok: "¡Ancho de columna adaptado!" },
+            { id: 65, mod: "Módulo 5: Facturador", title: "Ejercicio 65: Pintar celda de color", text: "Pinte de color amarillo el casillero del total final para distinguirlo bien.", hint: "Use el icono del balde de pintura en la barra de herramientas.", ok: "¡Casillero destacado con color!" },
+            { id: 66, mod: "Módulo 5: Facturador", title: "Ejercicio 66: Poner bordes a la tabla", text: "Dibuje líneas negras alrededor de todos sus casilleros para armar una planilla prolija.", hint: "Seleccione la tabla y elija 'Todos los bordes'.", ok: "¡Líneas de tabla marcadas con claridad!" },
+            { id: 67, mod: "Módulo 5: Facturador", title: "Ejercicio 67: Ordenar gastos de mayor a menor", text: "Reordene la lista para ver arriba de todo el gasto más caro del mes.", hint: "Menú Datos -> Ordenar de Z a A (Mayor a Menor).", ok: "¡Gastos ordenados según importe!" },
+            { id: 68, mod: "Módulo 5: Facturador", title: "Ejercicio 68: Guardar la planilla de gastos", text: "Guarde la planilla en la computadora con el nombre 'Gastos Mensuales'.", hint: "Archivo -> Guardar como -> Gastos Mensuales.", ok: "¡Planilla guardada a salvo!" },
+            { id: 69, mod: "Módulo 5: Facturador", title: "Ejercicio 69: Imprimir resumen de gastos", text: "Prepare e imprima su resumen de cuentas para tenerlo guardado en papel.", hint: "Seleccione área de impresión y toque Imprimir.", ok: "¡Resumen enviado a la impresora!" },
 
-            // MÓDULO 06 (70 al 81)
-            { id: 70, mod: 6, name: "70. Abrir el Correo", title: "Ejercicio 70: Entrar a su Correo", guide: "Abra la aplicación <strong>Correo</strong> <span class='clarification'>(su buzón de cartas digitales)</span>.", btn: "Abrir Buzón de Cartas", ok: "¡Buzón abierto! Tiene mensajes guardados." },
-            { id: 71, mod: 6, name: "71. Redactar Mensaje", title: "Ejercicio 71: Escribir Carta Digital", guide: "Escriba la dirección de un amigo en la casilla <strong>Para</strong> y ponga el motivo en <strong>Asunto</strong>.", btn: "Preparar Mensaje Nuevo", ok: "¡Destinatario y asunto configurados!" },
-            { id: 72, mod: 6, name: "72. Enviar Foto Adjunta", title: "Ejercicio 72: Enganchar un Archivo", guide: "Toque el ganchito de bibliorato <span class='clarification'>(icono de clip)</span> para enviar una foto dentro del mensaje.", btn: "Adjuntar Foto Familiar", ok: "¡Foto enganchada al correo!" },
-            { id: 73, mod: 6, name: "73. Crear Firma Personal", title: "Ejercicio 73: Poner Firma Automática", guide: "Añada un saludo final con su nombre que aparezca solo en cada carta que mande.", btn: "Guardar Firma: 'Un abrazo, Guillermo'", ok: "¡Firma agregada al final de sus cartas!" },
-            { id: 74, mod: 6, name: "74. Marcar Importante", title: "Ejercicio 74: Poner Banderita Roja", guide: "Marque un mensaje de su médico con una bandera para recordarlo primero.", btn: "Marcar Mensaje con Banderita", ok: "¡Carta destacada como importante!" },
-            { id: 75, mod: 6, name: "75. Carpetas de Correo", title: "Ejercicio 75: Guardar Cartas en Archivo", guide: "Mueva el mensaje de la luz a la carpeta 'Servicios y Pagos'.", btn: "Mover Correo a 'Servicios'", ok: "¡Mensaje organizado en su lugar!" },
-            { id: 76, mod: 6, name: "76. Filtro de Correo", title: "Ejercicio 76: Acomodar Avisos Solos", guide: "Indíquele a la casilla que las cartas del banco vayan directo a una carpeta ordenada.", btn: "Crear Regla de Orden Automático", ok: "¡Los mensajes se guardarán solos!" },
-            { id: 77, mod: 6, name: "77. Buscar Mensaje Viejo", title: "Ejercicio 77: Buscar Carta del Año Pasado", guide: "Use la lupa para encontrar un correo donde le mandaron una receta de cocina.", btn: "Buscar 'Receta' en Correos Viejos", ok: "¡Mensaje localizado inmediatamente!" },
-            { id: 78, mod: 6, name: "78. Responder Correo", title: "Ejercicio 78: Contestarle a un Amigo", guide: "Toque la flecha de <strong>Responder</strong> para contestar la carta que le enviaron.", btn: "Escribir Respuesta Rápida", ok: "¡Respuesta enviada a su amigo!" },
-            { id: 79, mod: 6, name: "79. Guardar Contacto", title: "Ejercicio 79: Guardar Dirección de Amigos", guide: "Guarde el correo y nombre de su nieta en su agenda telefónica digital.", btn: "Guardar Nieta en Agenda", ok: "¡Contacto guardado para siempre!" },
-            { id: 80, mod: 6, name: "80. Enviar a Basura Spam", title: "Ejercicio 80: Rechar Correo Falso", guide: "Envíe una propaganda molesta a la carpeta de <strong>Spam</strong> <span class='clarification'>(correo basura no deseado)</span>.", btn: "Mover a Correo No Deseado", ok: "¡Publicidad bloqueada correctamente!" },
-            { id: 81, mod: 6, name: "81. Agendar Turno", title: "Ejercicio 81: Guardar Turno en Calendario", guide: "Pase el aviso del turno médico desde su correo hacia su almanaque digital.", btn: "Agendar Turno en el Almanaque", ok: "¡Recordatorio anotado en el calendario!" },
+            // MÓDULO 6: CORREO ELECTRÓNICO (70-81)
+            { id: 70, mod: "Módulo 6: Correo", title: "Ejercicio 70: Abrir el correo electrónico", text: "Toque el icono naranja <strong>Correo</strong> <span class='clarification'>(el sobrecito)</span> para ver sus mensajes.", hint: "Haga clic en el acceso directo del correo en la izquierda.", ok: "¡Bandeja de entrada abierta!" },
+            { id: 71, mod: "Módulo 6: Correo", title: "Ejercicio 71: Leer mensaje nuevo", text: "Haga clic sobre un correo sin abrir para leer su contenido completo en pantalla.", hint: "Toque el mensaje en la lista de la izquierda.", ok: "¡Mensaje abierto y listo para leer!" },
+            { id: 72, mod: "Módulo 6: Correo", title: "Ejercicio 72: Redactar mensaje nuevo", text: "Toque el botón <strong>Correo nuevo [+]</strong> para escribir una carta a un familiar.", hint: "Es el botón azul en la parte superior izquierda.", ok: "¡Hoja de correo nuevo desplegada!" },
+            { id: 73, mod: "Módulo 6: Correo", title: "Ejercicio 73: Escribir destinatario", text: "Ingrese la casilla de destino en el campo <strong>Para:</strong>.", hint: "Escriba la dirección de correo asegurándose de incluir el @.", ok: "¡Dirección de destino anotada!" },
+            { id: 74, mod: "Módulo 6: Correo", title: "Ejercicio 74: Anotar el Asunto", text: "Escriba 'Saludos y Fotos' en la casilla <strong>Asunto</strong> para que sepan de qué trata.", hint: "El asunto es el título breve del correo.", ok: "¡Asunto anotado correctamente!" },
+            { id: 75, mod: "Módulo 6: Correo", title: "Ejercicio 75: Adjuntar una foto", text: "Toque el ganchito clip <strong>[Adjuntar]</strong> para agregar una foto al mensaje.", hint: "Busque el icono del ganchito de abrochar papeles.", ok: "¡Fotografía enganchada al correo!" },
+            { id: 76, mod: "Módulo 6: Correo", title: "Ejercicio 76: Enviar el correo", text: "Presione el botón azul <strong>Enviar</strong> para despachar su mensaje por internet.", hint: "Toque el botón con la forma de un avioncito de papel o 'Enviar'.", ok: "¡Correo enviado con éxito!" },
+            { id: 77, mod: "Módulo 6: Correo", title: "Ejercicio 77: Responder un mensaje", text: "Toque la flecha de <strong>Responder</strong> para contestar un correo recibido.", hint: "La flechita apuntando a la izquierda sirve para responder.", ok: "¡Respuesta iniciada correctamente!" },
+            { id: 78, mod: "Módulo 6: Correo", title: "Ejercicio 78: Reenviar a otra persona", text: "Pase un correo interesante que recibió a otra persona utilizando <strong>Reenviar</strong>.", hint: "Toque la flechita que apunta hacia la derecha.", ok: "¡Correo listo para compartir!" },
+            { id: 79, mod: "Módulo 6: Correo", title: "Ejercicio 79: Borrar mensaje no deseado", text: "Elimine una publicidad no deseada enviándola al tacho de basura del correo.", hint: "Toque el icono del tachito de basura junto al correo.", ok: "¡Correo molesto eliminado!" },
+            { id: 80, mod: "Módulo 6: Correo", title: "Ejercicio 80: Buscar un correo viejo", text: "Busque un correo antiguo escribiendo el nombre del remitente en la lupa.", hint: "Escriba el nombre en la barra de búsqueda arriba.", ok: "¡Correo antiguo ubicado en la lista!" },
+            { id: 81, mod: "Módulo 6: Correo", title: "Ejercicio 81: Organizar en carpetas", text: "Cree una carpeta llamada <strong>Familia</strong> para archivar allí sus mensajes guardados.", hint: "Opciones de carpetas -> Crear carpeta nueva.", ok: "¡Mensaje archivado en su carpeta!" },
 
-            // MÓDULO 07 (82 al 97)
-            { id: 82, mod: 7, name: "82. Conexión Wi-Fi", title: "Ejercicio 82: Conectarse a Internet", guide: "Busque el nombre de la red de su casa e ingrese la clave en el panel de redes.", btn: "Conectar a Red 'Wi-Fi Casa'", ok: "¡La computadora está conectada a Internet!" },
-            { id: 83, mod: 7, name: "83. Conectar Impresora", title: "Ejercicio 83: Preparar la Impresora", guide: "Verifique que su impresora esté encendida y seleccionada como favorita.", btn: "Elegir Impresora Predeterminada", ok: "¡Impresora lista para imprimir!" },
-            { id: 84, mod: 7, name: "84. Agrandar Letras del Sistema", title: "Ejercicio 84: Ver las Letras Más Grandes", guide: "Aumente el tamaño global del texto para leer sin esfuerzo todos los menús.", btn: "Aumentar Tamaño de Letra a 125%", ok: "¡Las letras ahora son bien grandes!" },
-            { id: 85, mod: 7, name: "85. Regular el Sonido", title: "Ejercicio 85: Subir Volumen del Altavoz", guide: "Toque el parlantito en la franja negra de abajo y suba la barra para escuchar mejor.", btn: "Subir Volumen de la Música", ok: "¡Sonido ajustado con claridad!" },
-            { id: 86, mod: 7, name: "86. Actualizar Windows", title: "Ejercicio 86: Mantener Todo Seguro", guide: "Busque actualizaciones de seguridad para mantener la computadora protegida.", btn: "Buscar Actualizaciones de Windows", ok: "¡El sistema está actualizado y seguro!" },
-            { id: 87, mod: 7, name: "87. Panel de Control", title: "Ejercicio 87: Revisar Ajustes Generales", guide: "Abra el <strong>Panel de Control</strong> <span class='clarification'>(la caja de herramientas de la máquina)</span>.", btn: "Abrir Herramientas del Sistema", ok: "¡Caja de herramientas abierta!" },
-            { id: 88, mod: 7, name: "88. Cerrar Programa Trabado", title: "Ejercicio 88: Destrabar una Aplicación", guide: "Abra el Administrador para destrabar una ventana que se quedó congelada.", btn: "Cerrar Programa Trabado", ok: "¡La computadora volvió a responder bien!" },
-            { id: 89, mod: 7, name: "89. Ver Memoria Libre", title: "Ejercicio 89: Inspeccionar la Memoria", guide: "Consulte cuánta memoria y energía le queda a su equipo de trabajo.", btn: "Revisar Memoria Disponible", ok: "¡Memoria verificada en estado óptimo!" },
-            { id: 90, mod: 7, name: "90. Limpiar Disco Duro", title: "Ejercicio 90: Pasar el Escobillón Digital", guide: "Borre archivos temporales inservibles para dejar la computadora rápida.", btn: "Limpiar Basura del Disco", ok: "¡Espacio limpio y recuperado!" },
-            { id: 91, mod: 7, name: "91. Quitar Juego Viejo", title: "Ejercicio 91: Desinstalar lo que No Usa", guide: "Elimine un programa viejo que ocupa espacio de gusto para liberar memoria.", btn: "Quitar Programa que No Uso", ok: "¡Programa retirado correctamente!" },
-            { id: 92, mod: 7, name: "92. Ajustar la Pantalla", title: "Ejercicio 92: Configurar Reposo", guide: "Ordene que la pantalla se apague sola si usted se retira a tomar un té.", btn: "Apagar Pantalla a los 10 Minutos", ok: "¡Ahorro de energía configurado!" },
-            { id: 93, mod: 7, name: "93. Cambiar la Contraseña", title: "Ejercicio 93: Proteger la Entrada", guide: "Modifique su clave personal para encender la máquina con total privacidad.", btn: "Guardar Clave Nueva", ok: "¡Contraseña actualizada con éxito!" },
-            { id: 94, mod: 7, name: "94. Pasar el Antivirus", title: "Ejercicio 94: Revisar la Salud del Equipo", guide: "Active el <strong>Windows Defender</strong> <span class='clarification'>(el médico/antivirus de la máquina)</span>.", btn: "Analizar Equipo con Antivirus", ok: "¡Equipo libre de virus o riesgos!" },
-            { id: 95, mod: 7, name: "95. Punto de Restauración", title: "Ejercicio 95: Guardar Estado Seguro", guide: "Cree una foto de seguridad por si en el futuro toca algo sin querer.", btn: "Crear Copia de Seguridad Hoy", ok: "¡Punto de restauración guardado!" },
-            { id: 96, mod: 7, name: "96. Poner la Hora Correcta", title: "Ejercicio 96: Ajustar el Reloj", guide: "Asegúrese de que el reloj de la franja negra de abajo muestre la hora oficial.", btn: "Sincronizar Hora por Internet", ok: "¡Reloj puesto en la hora exacta!" },
-            { id: 97, mod: 7, name: "97. Usar la Lupa Digital", title: "Ejercicio 97: Usar la Lupa de Aumento", guide: "Encienda la <strong>Lupa</strong> <span class='clarification'>(herramienta para agrandar cualquier rincón)</span>.", btn: "Activar Lupa en Pantalla", ok: "¡Lupa activada! Puede agrandar lo que desee." },
+            // MÓDULO 7: CONFIGURACIÓN Y SISTEMA (82-97)
+            { id: 82, mod: "Módulo 7: Sistema", title: "Ejercicio 82: Abrir el Menú Inicio", text: "Toque la ventanita blanca ubicada en la esquina inferior izquierda <span class='clarification'>(Botón de Inicio)</span>.", hint: "Está en el primer rincón de la franja negra abajo.", ok: "¡Menú Inicio abierto con todas sus opciones!" },
+            { id: 83, mod: "Módulo 7: Sistema", title: "Ejercicio 83: Subir o bajar el sonido", text: "Ajuste el nivel del volumen tocando el altavoz junto a la hora abajo a la derecha.", hint: "Haga clic en el parlante y mueva la barra deslizante.", ok: "¡Volumen ajustado correctamente!" },
+            { id: 84, mod: "Módulo 7: Sistema", title: "Ejercicio 84: Conectarse a Wi-Fi", text: "Abra las conexiones de internet inalámbrico <span class='clarification'>(Wi-Fi)</span> para revisar la señal.", hint: "Toque el icono con forma de ondas de radio abajo a la derecha.", ok: "¡Red Wi-Fi revisada y conectada!" },
+            { id: 85, mod: "Módulo 7: Sistema", title: "Ejercicio 85: Regular brillo de pantalla", text: "Suba o baje la claridad de la pantalla para descansar la vista.", hint: "Ajuste la barra de brillo dentro del panel de avisos.", ok: "¡Brillo de pantalla ajustado a su gusto!" },
+            { id: 86, mod: "Módulo 7: Sistema", title: "Ejercicio 86: Cambiar fondo de pantalla", text: "Elija una imagen nueva para decorar la pantalla principal del equipo.", hint: "Clic derecho en el escritorio -> Personalizar -> Fondo.", ok: "¡Fondo de pantalla renovado!" },
+            { id: 87, mod: "Módulo 7: Sistema", title: "Ejercicio 87: Consultar el calendario", text: "Toque la fecha y hora en el rincón inferior derecho para ver el almanaque completo.", hint: "Haga clic directo donde muestra la hora.", ok: "¡Almanaque desplegado en pantalla!" },
+            { id: 88, mod: "Módulo 7: Sistema", title: "Ejercicio 88: Ver carga de batería", text: "Revise cuánta carga le queda a la batería de la computadora portátil.", hint: "Pase el puntero sobre la pilita en la franja negra abajo.", ok: "¡Carga de batería verificada!" },
+            { id: 89, mod: "Módulo 7: Sistema", title: "Ejercicio 89: Revisar espacio disponible", text: "Compruebe cuánto espacio libre le queda al disco para seguir guardando fotos.", hint: "Abra 'Este equipo' para consultar la barra de espacio.", ok: "¡Espacio de almacenamiento verificado!" },
+            { id: 90, mod: "Módulo 7: Sistema", title: "Ejercicio 90: Cambiar idioma de teclado", text: "Asegúrese de que el idioma del teclado esté configurado en <strong>ESP (Español)</strong>.", hint: "Verifique las tres letras ESP junto a la hora.", ok: "¡Teclado configurado en Español!" },
+            { id: 91, mod: "Módulo 7: Sistema", title: "Ejercicio 91: Activar Luz Nocturna", text: "Encienda la luz cálida para leer en entornos oscuros sin cansar los ojos.", hint: "Toque el botón 'Luz nocturna' en los avisos.", ok: "¡Luz nocturna suave activada!" },
+            { id: 92, mod: "Módulo 7: Sistema", title: "Ejercicio 92: Buscar actualizaciones", text: "Revise si el sistema tiene mejoras de seguridad pendientes <span class='clarification'>(Windows Update)</span>.", hint: "Configuración -> Actualización y seguridad.", ok: "¡Sistema actualizado y protegido!" },
+            { id: 93, mod: "Módulo 7: Sistema", title: "Ejercicio 93: Conectar auriculares Bluetooth", text: "Abra la lista de dispositivos inalámbricos para conectar sus auriculares sin cables.", hint: "Configuración -> Dispositivos -> Bluetooth.", ok: "¡Auriculares vinculados por Bluetooth!" },
+            { id: 94, mod: "Módulo 7: Sistema", title: "Ejercicio 94: Revisar la seguridad del equipo", text: "Compruebe que el escudo de protección <span class='clarification'>(Antivirus)</span> esté activo y verde.", hint: "Busque el escudito blanco en el rincón inferior derecho.", ok: "¡Seguridad del equipo bajo control!" },
+            { id: 95, mod: "Módulo 7: Sistema", title: "Ejercicio 95: Agrandar las letras del sistema", text: "Aumente el porcentaje de tamaño de las letras generales de la computadora.", hint: "Configuración -> Accesibilidad -> Tamaño de texto.", ok: "¡Letras generales del equipo agrandadas!" },
+            { id: 96, mod: "Módulo 7: Sistema", title: "Ejercicio 96: Bloquear pantalla por seguridad", text: "Bloquee la sesión al levantarse de la mesa presionando la tecla Windows + L.", hint: "Mantenga la tecla con la ventanita y toque la L.", ok: "¡Pantalla bloqueada a salvo de miradas!" },
+            { id: 97, mod: "Módulo 7: Sistema", title: "Ejercicio 97: Apagar la computadora", text: "Seleccione la opción correcta para apagar la máquina prolijamente sin desenchufar.", hint: "Inicio -> Apagar/Encender -> Apagar.", ok: "¡Procedimiento de apagado iniciado correctamente!" },
 
-            // MÓDULO 08 (98 al 100)
-            { id: 98, mod: 8, name: "98. Tarea Completa 1", title: "Ejercicio 98: Facturar, Guardar y Enviar", guide: "Realice el circuito entero: emita una factura digital, guárdela en su carpeta y mándela por correo.", btn: "Completar Circuito de Trabajo 1", ok: "¡Felicitaciones! Ha completado la tarea integral con éxito." },
-            { id: 99, mod: 8, name: "99. Tarea Completa 2", title: "Ejercicio 99: Organizar Fotos y Limpiar", guide: "Cree una carpeta nueva, ordene tres fotografías adentro y limpie la basura que sobra.", btn: "Completar Circuito de Trabajo 2", ok: "¡Estupendo! Organización y limpieza finalizadas." },
-            { id: 100, mod: 8, name: "100. Evaluación Final", title: "Ejercicio 100: Graduación Digital Autónoma", guide: "Demuestre el dominio de su computadora: ajuste el tamaño de letra, escriba una nota y guárdela sin ayuda.", btn: "¡Completar Evaluación Final!", ok: "¡FELICITACIONES! Ha completado exitosamente los 100 ejercicios del curso." }
+            // MÓDULO 8: INTEGRACIÓN Y REPASO FINAL (98-100)
+            { id: 98, mod: "Módulo 8: Integración", title: "Ejercicio 98: Repaso 1 - Carta completa", text: "Abra WordPad, escriba una nota, agrande el texto, póngalo en azul y guárdelo en su carpeta.", hint: "Combine los pasos de los Módulos 3 y 4 aprendidos.", ok: "¡Repaso 1 completado con destreza!" },
+            { id: 99, mod: "Módulo 8: Integración", title: "Ejercicio 99: Repaso 2 - Enviar trabajo", text: "Abra el Correo, adjunte el escrito recién guardado y envíelo a un familiar.", hint: "Combine la función de adjuntar con la bandeja de salida del Módulo 6.", ok: "¡Repaso 2 logrado con éxito total!" },
+            { id: 100, mod: "Módulo 8: Integración", title: "Ejercicio 100: Graduación Digital", text: "Organice sus dos ventanas abiertas lado a lado, limpie el escritorio y prepare el apagado.", hint: "¡Demuestre todo el dominio adquirido en este curso de 100 pasos!", ok: "¡FELICITACIONES! Ha completado los 100 ejercicios de Capacitación Digital." }
         ];
 
-        let currentActiveId = 1;
+        let currentExId = 1;
 
-        function selectModule(modNum) {
-            document.querySelectorAll('.module-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll('.module-btn')[modNum - 1].classList.add('active');
-
-            const filtered = allExercises.filter(ex => ex.mod === modNum);
-            const listContainer = document.getElementById('exercise-list');
-            listContainer.innerHTML = '';
-
-            document.getElementById('list-header').innerText = `Módulo 0${modNum} (${filtered.length} Ejercicios)`;
-
-            filtered.forEach((ex, idx) => {
-                const item = document.createElement('button');
-                item.className = `item-btn ${ex.id === currentActiveId ? 'active' : ''}`;
-                item.innerText = ex.name;
-                item.onclick = () => loadExercise(ex.id);
-                listContainer.appendChild(item);
+        function initDropdown() {
+            const select = document.getElementById('exercise-select');
+            select.innerHTML = '';
+            exercises.forEach(ex => {
+                const opt = document.createElement('option');
+                opt.value = ex.id;
+                opt.innerText = `Ej. ${ex.id}: ${ex.title.replace(`Ejercicio ${ex.id}: `, '')} (${ex.mod.split(':')[0]})`;
+                select.appendChild(opt);
             });
-
-            if (filtered.length > 0) {
-                loadExercise(filtered[0].id);
-            }
+            loadExercise(1);
         }
 
-        function loadExercise(exId) {
-            currentActiveId = exId;
-            const ex = allExercises.find(e => e.id === exId);
+        function loadExercise(id) {
+            currentExId = parseInt(id);
+            const ex = exercises.find(e => e.id === currentExId);
 
-            document.querySelectorAll('.item-btn').forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.innerText.includes(ex.name)) {
-                    btn.classList.add('active');
-                }
-            });
-
+            document.getElementById('exercise-select').value = currentExId;
+            document.getElementById('card-counter').innerText = `Ej. ${ex.id} de 100`;
             document.getElementById('ex-title').innerText = ex.title;
-            document.getElementById('ex-badge').innerText = `Ejercicio ${ex.id} / 100`;
-            document.getElementById('ex-guide').innerHTML = ex.guide;
+            document.getElementById('ex-instruction').innerHTML = ex.text;
 
-            document.getElementById('ex-canvas').innerHTML = `
-                <button class="action-btn" onclick="completeStep('${ex.ok}')">${ex.btn}</button>
-            `;
+            document.getElementById('hint-box').style.display = 'none';
+            document.getElementById('hint-box').innerText = ex.hint;
+            document.getElementById('success-box').style.display = 'none';
         }
 
-        function completeStep(okMsg) {
-            document.getElementById('ex-canvas').innerHTML = `
-                <div style="color: #107c41; font-size: 18px; font-weight: bold; margin-bottom: 12px;">&#10004; ${okMsg}</div>
-                <p style="font-size: 14px; color: #555;">¡Paso realizado correctamente! Puede elegir el siguiente ejercicio en la lista del centro.</p>
-            `;
+        function toggleHint() {
+            const box = document.getElementById('hint-box');
+            box.style.display = box.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function resetCurrent() {
+            loadExercise(currentExId);
+        }
+
+        function verifyCurrent() {
+            const ex = exercises.find(e => e.id === currentExId);
+            const successBox = document.getElementById('success-box');
+            successBox.innerText = `✔ ${ex.ok}`;
+            successBox.style.display = 'block';
+        }
+
+        function triggerIcon(name) {
+            alert(`Ha hecho clic en el acceso directo de: ${name}`);
         }
 
         function updateClock() {
@@ -524,7 +503,7 @@
 
         setInterval(updateClock, 1000);
         updateClock();
-        selectModule(1);
+        initDropdown();
     </script>
 </body>
 </html>
