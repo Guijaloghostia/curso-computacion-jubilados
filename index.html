@@ -2,736 +2,529 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Simulador Windows 10 - Capacitación Digital</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador Pedagógico Completo de Windows 10 - La Eterna Juventud</title>
     <style>
-        body {
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: radial-gradient(circle at 75% 85%, #ff2a8d 0%, #c71585 45%, #380023 80%);
+            font-family: 'Segoe UI', Arial, sans-serif;
+            user-select: none;
+        }
+
+        body {
             height: 100vh;
             overflow: hidden;
+            background: #0078d7 linear-gradient(135deg, #1e5799 0%, #2989d8 50%, #207cca 51%, #7db9e8 100%);
             display: flex;
             flex-direction: column;
         }
 
         #desktop {
             flex: 1;
-            position: relative;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            flex-wrap: wrap;
-            align-content: flex-start;
-            gap: 25px;
-        }
-
-        .desktop-icon {
-            width: 85px;
-            text-align: center;
-            color: white;
-            cursor: pointer;
-            text-shadow: 1px 1px 4px rgba(0,0,0,0.8);
-            font-size: 13px;
-            padding: 8px;
-            border-radius: 6px;
-            transition: background 0.2s, transform 0.1s;
-        }
-
-        .desktop-icon:hover {
-            background: rgba(255, 255, 255, 0.15);
-        }
-
-        .desktop-icon i {
-            font-size: 42px;
-            margin-bottom: 6px;
-            display: block;
-        }
-
-        @keyframes pulse-highlight {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.9); background: rgba(255, 255, 255, 0.4); }
-            70% { transform: scale(1.08); box-shadow: 0 0 0 15px rgba(255, 255, 255, 0); background: rgba(255, 255, 255, 0.6); }
-            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); background: rgba(255, 255, 255, 0.2); }
-        }
-
-        .highlight-target {
-            animation: pulse-highlight 1.2s infinite ease-in-out;
-            border-radius: 8px;
-        }
-
-        #taskbar {
-            height: 48px;
-            background: rgba(15, 15, 15, 0.9);
-            backdrop-filter: blur(10px);
+            padding: 15px;
             display: flex;
             align-items: center;
-            padding: 0 10px;
-            z-index: 1000;
+            justify-content: center;
             position: relative;
-            border-top: 1px solid rgba(255,255,255,0.1);
         }
 
-        #start-btn {
-            color: white;
-            font-size: 22px;
-            cursor: pointer;
-            padding: 6px 16px;
-            border-radius: 4px;
-            transition: background 0.2s;
-        }
-
-        #start-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        #start-menu {
-            position: absolute;
-            bottom: 48px;
-            left: 0;
-            width: 300px;
-            background: rgba(24, 24, 24, 0.95);
-            backdrop-filter: blur(15px);
-            color: white;
-            display: none;
-            flex-direction: column;
-            z-index: 1001;
-            padding: 12px 0;
-            box-shadow: 4px -4px 20px rgba(0,0,0,0.6);
-            border-top-right-radius: 8px;
-            border-right: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .menu-item {
-            padding: 12px 20px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            font-size: 15px;
-            transition: background 0.2s;
-        }
-
-        .menu-item:hover {
-            background: rgba(255, 255, 255, 0.15);
-        }
-
-        .menu-item i {
-            width: 25px;
-            text-align: center;
-            font-size: 18px;
-        }
-
-        #guide-card {
-            position: fixed;
-            right: 20px;
-            top: 20px;
-            width: 380px;
-            height: 88vh;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 10px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
-            z-index: 9999;
+        .win-window {
+            width: 1100px;
+            max-width: 98%;
+            height: 680px;
+            max-height: 95vh;
+            background-color: #f0f0f0;
+            border: 1px solid #005a9e;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
             display: flex;
             flex-direction: column;
-            overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 4px 4px 0 0;
         }
 
-        .guide-header {
-            background: #2b5797;
-            color: white;
-            padding: 16px;
+        .win-header {
+            background-color: #ffffff;
+            height: 42px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-weight: bold;
-            font-size: 16px;
+            padding-left: 15px;
+            border-bottom: 1px solid #cccccc;
         }
 
-        .guide-body {
-            padding: 20px;
+        .win-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333333;
+        }
+
+        .win-controls {
+            display: flex;
+            height: 100%;
+        }
+
+        .win-btn {
+            width: 45px;
+            height: 100%;
+            border: none;
+            background: transparent;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .win-btn:hover { background-color: #e5e5e5; }
+        .win-btn.close:hover { background-color: #e81123; color: white; }
+
+        .win-body {
             flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* Menú de Módulos (Izquierda) */
+        .sidebar {
+            width: 290px;
+            background-color: #e6e6e6;
+            border-right: 1px solid #cccccc;
+            display: flex;
+            flex-direction: column;
             overflow-y: auto;
         }
 
-        #exercise-select {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border-radius: 6px;
-            border: 1px solid #ccc;
-            font-size: 14px;
-            background: #fdfdfd;
-            cursor: pointer;
-        }
-
-        .guide-footer {
+        .sidebar-title {
             padding: 12px 15px;
-            background: #f1f1f1;
-            display: flex;
-            gap: 8px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 8px 12px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
+            font-size: 14px;
             font-weight: bold;
-            color: white;
-            font-size: 13px;
-            flex: 1;
-            min-width: 90px;
-            transition: opacity 0.2s;
+            color: #005a9e;
+            background-color: #dcdcdc;
+            border-bottom: 1px solid #cccccc;
         }
 
-        .btn:hover { opacity: 0.85; }
-        .btn-verify { background: #2b5797; width: 100%; margin-top: 5px; flex: unset; }
-        .btn-retry { background: #e68a00; }
-        .btn-hint { background: #6c757d; }
-        .btn-stats { background: #20c997; width: 100%; margin-top: 5px; flex: unset; }
+        .module-btn {
+            padding: 12px 15px;
+            border: none;
+            border-bottom: 1px solid #d0d0d0;
+            background: transparent;
+            text-align: left;
+            font-size: 14px;
+            color: #222222;
+            cursor: pointer;
+            line-height: 1.3;
+        }
 
-        .app-window {
-            position: absolute;
-            top: 30px;
-            left: 30px;
-            width: calc(100vw - 440px);
-            height: 82vh;
-            background: white;
-            border: 1px solid #0078D7;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-            z-index: 500;
-            display: none;
+        .module-btn:hover { background-color: #d5e4f1; }
+        .module-btn.active { background-color: #0078d7; color: white; font-weight: bold; }
+
+        /* Submenú de Ejercicios del Módulo (Centro) */
+        .exercise-selector {
+            width: 260px;
+            background-color: #f7f7f7;
+            border-right: 1px solid #cccccc;
+            display: flex;
             flex-direction: column;
-            border-radius: 6px;
-            overflow: hidden;
+            overflow-y: auto;
         }
 
-        .window-header {
-            background: #f3f3f3;
-            color: black;
-            border-bottom: 1px solid #dcdcdc;
-            padding: 10px 15px;
+        .selector-header {
+            padding: 12px 15px;
+            font-size: 13px;
+            font-weight: bold;
+            color: #444;
+            background-color: #ebebeb;
+            border-bottom: 1px solid #cccccc;
+        }
+
+        .item-btn {
+            padding: 10px 12px;
+            border: none;
+            border-bottom: 1px solid #e0e0e0;
+            background: transparent;
+            text-align: left;
+            font-size: 13px;
+            color: #333;
+            cursor: pointer;
+            line-height: 1.3;
+        }
+
+        .item-btn:hover { background-color: #e3f2fd; }
+        .item-btn.active { background-color: #2196f3; color: white; font-weight: bold; }
+
+        /* Área Principal de Ejecución de Ejercicios (Derecha) */
+        .content-area {
+            flex: 1;
+            padding: 25px;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .exercise-header {
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #0078d7;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 14px;
         }
 
-        .window-title {
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        .exercise-title {
+            font-size: 18px;
+            color: #005a9e;
+        }
+
+        .badge-counter {
+            background-color: #0078d7;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .guide-text {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #222222;
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-left: 5px solid #0078d7;
+            margin-bottom: 20px;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .clarification {
+            color: #555555;
+            font-style: italic;
             font-weight: 600;
         }
 
-        .close-btn {
-            cursor: pointer;
-            color: black;
-            font-weight: bold;
-            font-size: 16px;
-            padding: 4px 12px;
-            border-radius: 4px;
-        }
-
-        .close-btn:hover {
-            background: #e81123;
-            color: white;
-        }
-
-        .window-content {
+        .interaction-box {
             flex: 1;
-            padding: 25px;
-            overflow-y: auto;
-            background: #fafafa;
+            border: 2px dashed #0078d7;
+            background-color: #f4f8fc;
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            text-align: center;
+            min-height: 200px;
         }
 
-        #stats-modal {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(0,0,0,0.6);
-            z-index: 99999;
-            display: none;
-            justify-content: center;
-            align-items: center;
+        .action-btn {
+            background-color: #107c41;
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-        .stats-box {
-            background: white;
-            width: 450px;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            text-align: left;
+
+        .action-btn:hover { background-color: #0b5a2f; }
+
+        /* Barra de Tareas Inferior */
+        #taskbar {
+            height: 48px;
+            background-color: #101010;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .start-btn {
+            height: 100%;
+            padding: 0 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+
+        .start-btn:hover { background-color: #333333; }
+        
+        .start-icon {
+            width: 18px;
+            height: 18px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2px;
+        }
+
+        .start-square { background-color: white; }
+
+        .system-tray {
+            color: white;
+            padding: 0 15px;
+            font-size: 13px;
+            text-align: right;
+            line-height: 1.2;
         }
     </style>
 </head>
 <body>
 
-    <!-- ESCRITORIO (Orden exacto: Este equipo primero, Papelera al final) -->
     <div id="desktop">
-        <div class="desktop-icon" id="icon-este-equipo" ondblclick="openApp('este-equipo')" onclick="selectIcon(this, 'este-equipo')">
-            <i class="fas fa-desktop" style="color:#17a2b8;"></i><span>Este equipo</span>
-        </div>
-        <div class="desktop-icon" id="icon-wordpad" ondblclick="openApp('wordpad')" onclick="selectIcon(this, 'wordpad')">
-            <i class="fas fa-file-word" style="color:#2b5797;"></i><span>WordPad</span>
-        </div>
-        <div class="desktop-icon" id="icon-facturador" ondblclick="openApp('facturador')" onclick="selectIcon(this, 'facturador')">
-            <i class="fas fa-file-invoice-dollar" style="color:#2ecc71;"></i><span>Facturador</span>
-        </div>
-        <div class="desktop-icon" id="icon-correo" ondblclick="openApp('correo')" onclick="selectIcon(this, 'correo')">
-            <i class="fas fa-envelope" style="color:#e67e22;"></i><span>Correo</span>
-        </div>
-        <div class="desktop-icon" id="icon-papelera" ondblclick="openApp('papelera')" onclick="selectIcon(this, 'papelera')">
-            <i class="fas fa-trash-alt" style="color:#6c757d;"></i><span>Papelera</span>
-        </div>
-    </div>
-
-    <!-- TARJETA DE GUÍA DIDÁCTICA -->
-    <div id="guide-card">
-        <div class="guide-header">
-            <span>Capacitación Digital</span>
-            <span id="exercise-counter">Ej. 1 de 100</span>
-        </div>
-        <div class="guide-body">
-            <select id="exercise-select" onchange="changeExercise(this.value)">
-                <!-- Se llena dinámicamente -->
-            </select>
-            
-            <div id="exercise-instructions">
-                <!-- Se carga dinámicamente -->
+        <div class="win-window">
+            <div class="win-header">
+                <span class="win-title">Sistema de Aprendizaje Windows 10 - La Eterna Juventud (100 Ejercicios Interactivos)</span>
+                <div class="win-controls">
+                    <button class="win-btn" title="Minimizar (Guardar abajo)">&#8211;</button>
+                    <button class="win-btn" title="Maximizar (Agrandar pantalla)">&#9633;</button>
+                    <button class="win-btn close" title="Cerrar ventana">&#10005;</button>
+                </div>
             </div>
-        </div>
-        <div class="guide-footer">
-            <button class="btn btn-hint" onclick="showHint()"><i class="fas fa-lightbulb"></i> Pista</button>
-            <button class="btn btn-retry" onclick="resetExercise()"><i class="fas fa-undo"></i> Reiniciar</button>
-            <button class="btn btn-verify" onclick="verifyExercise()">Verificar Ejercicio</button>
-            <button class="btn btn-stats" onclick="openStats()"><i class="fas fa-chart-bar"></i> Ver Estadísticas y Avance</button>
-        </div>
-    </div>
 
-    <!-- VENTANA ESTE EQUIPO -->
-    <div id="window-este-equipo" class="app-window">
-        <div class="window-header">
-            <div class="window-title"><i class="fas fa-desktop" style="color:#17a2b8;"></i> Este equipo</div>
-            <div class="close-btn" onclick="closeApp('este-equipo')">✕</div>
-        </div>
-        <div class="window-content" style="background: white; display: flex;">
-            <div style="width: 180px; border-right: 1px solid #ddd; padding-right: 15px;">
-                <p><b>Acceso rápido</b></p>
-                <p>Escritorio</p>
-                <p>Descargas</p>
-            </div>
-            <div style="flex: 1; padding-left: 20px;">
-                <h4>Unidades de disco</h4>
-                <p><i class="fas fa-hdd fa-2x" style="color: #666;"></i><br>Disco Local (C:)</p>
+            <div class="win-body">
+                <!-- Columna 1: Módulos del Sistema -->
+                <div class="sidebar">
+                    <div class="sidebar-title">Módulos (8 Unidades)</div>
+                    <button class="module-btn active" onclick="selectModule(1)">Módulo 01: Panel Táctil (14)</button>
+                    <button class="module-btn" onclick="selectModule(2)">Módulo 02: Ventanas (13)</button>
+                    <button class="module-btn" onclick="selectModule(3)">Módulo 03: Archivos (14)</button>
+                    <button class="module-btn" onclick="selectModule(4)">Módulo 04: WordPad (13)</button>
+                    <button class="module-btn" onclick="selectModule(5)">Módulo 05: Facturador (15)</button>
+                    <button class="module-btn" onclick="selectModule(6)">Módulo 06: Correo (12)</button>
+                    <button class="module-btn" onclick="selectModule(7)">Módulo 07: Sistema (16)</button>
+                    <button class="module-btn" onclick="selectModule(8)">Módulo 08: Integración (3)</button>
+                </div>
+
+                <!-- Columna 2: Lista de los 100 Ejercicios -->
+                <div class="exercise-selector">
+                    <div class="selector-header" id="list-header">Lista de Ejercicios</div>
+                    <div id="exercise-list">
+                        <!-- Generado por JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Columna 3: Contenido y Ejecución del Ejercicio -->
+                <div class="content-area">
+                    <div class="exercise-header">
+                        <h2 class="exercise-title" id="ex-title">Seleccione un ejercicio</h2>
+                        <span class="badge-counter" id="ex-badge">Ejercicio 1 / 100</span>
+                    </div>
+
+                    <div class="guide-text" id="ex-guide">
+                        Cargando consigna...
+                    </div>
+
+                    <div class="interaction-box" id="ex-canvas">
+                        <!-- Área práctica -->
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- VENTANA WORDPAD -->
-    <div id="window-wordpad" class="app-window">
-        <div class="window-header">
-            <div class="window-title"><i class="fas fa-file-word" style="color:#2b5797;"></i> Documento - WordPad</div>
-            <div class="close-btn" onclick="closeApp('wordpad')">✕</div>
-        </div>
-        <div class="window-content" style="background: white;">
-            <div style="border-bottom: 1px solid #ddd; padding-bottom: 10px; margin-bottom: 15px; font-size: 13px; color: #555;">
-                Archivo &nbsp;|&nbsp; Edición &nbsp;|&nbsp; Ver &nbsp;|&nbsp; Insertar
+    <!-- Barra de tareas -->
+    <div id="taskbar" title="Barra de tareas (franja negra inferior)">
+        <button class="start-btn" title="Botón de Inicio (ventanita blanca en la esquina inferior izquierda)">
+            <div class="start-icon">
+                <div class="start-square"></div>
+                <div class="start-square"></div>
+                <div class="start-square"></div>
+                <div class="start-square"></div>
             </div>
-            <textarea id="wordpad-textarea" oninput="userState.typedInWordpad = true" style="width: 100%; height: 300px; border: 1px solid #ccc; padding: 10px; font-family: sans-serif; font-size: 15px; outline: none;" placeholder="Escribe tu texto aquí..."></textarea>
+        </button>
+        <div class="system-tray" id="clock-display">
+            <!-- Hora actualizada -->
         </div>
     </div>
 
-    <!-- VENTANA FACTURADOR -->
-    <div id="window-facturador" class="app-window">
-        <div class="window-header">
-            <div class="window-title"><i class="fas fa-file-invoice-dollar" style="color:#2ecc71;"></i> Facturador Digital</div>
-            <div class="close-btn" onclick="closeApp('facturador')">✕</div>
-        </div>
-        <div class="window-content" style="background: white;">
-            <h4>Emisión de Facturas</h4>
-            <p>Ingrese los datos del cliente para emitir el comprobante.</p>
-            <input type="text" id="factura-cliente" placeholder="Nombre del cliente" style="padding: 8px; width: 60%; margin-bottom: 10px; display: block;" oninput="userState.facturaUsed = true">
-            <button class="btn btn-verify" style="width: auto; background:#2ecc71;" onclick="userState.facturaUsed = true; alert('Factura emitida con éxito');">Emitir Factura</button>
-        </div>
-    </div>
-
-    <!-- VENTANA CORREO -->
-    <div id="window-correo" class="app-window">
-        <div class="window-header">
-            <div class="window-title"><i class="fas fa-envelope" style="color:#e67e22;"></i> Cliente de Correo</div>
-            <div class="close-btn" onclick="closeApp('correo')">✕</div>
-        </div>
-        <div class="window-content" style="background: white;">
-            <h4>Bandeja de entrada</h4>
-            <p>No hay mensajes nuevos. Puede redactar o enviar un correo.</p>
-            <button class="btn btn-verify" style="width: auto; background:#e67e22;" onclick="userState.emailSent = true; alert('Correo enviado correctamente.');">Enviar correo de prueba</button>
-        </div>
-    </div>
-
-    <!-- VENTANA PAPELERA DE RECICLAJE -->
-    <div id="window-papelera" class="app-window">
-        <div class="window-header">
-            <div class="window-title"><i class="fas fa-trash-alt" style="color:#6c757d;"></i> Papelera de reciclaje</div>
-            <div class="close-btn" onclick="closeApp('papelera')">✕</div>
-        </div>
-        <div class="window-content" style="background: white;">
-            <h4>Elementos eliminados</h4>
-            <p id="trash-status">La papelera está vacía actualmente.</p>
-            <button class="btn btn-verify" style="width: auto; background:#d9534f;" onclick="simulateDeleteFile()">Simular eliminar archivo</button>
-            <button class="btn btn-verify" style="width: auto; background:#5cb85c;" onclick="simulateRestoreFile()">Restaurar elementos</button>
-        </div>
-    </div>
-
-    <!-- MODAL DE ESTADÍSTICAS -->
-    <div id="stats-modal">
-        <div class="stats-box">
-            <h3><i class="fas fa-chart-line" style="color:#20c997;"></i> Panel de Estadísticas y Progreso</h3>
-            <p><strong>Ejercicios completados:</strong> <span id="stat-completed">0</span> / 100</p>
-            <p><strong>Porcentaje de avance general:</strong> <span id="stat-percentage">0%</span></p>
-            <p><strong>Módulo actual:</strong> <span id="stat-module">Módulo 1</span></p>
-            <br>
-            <button class="btn btn-verify" onclick="closeStats()">Cerrar panel</button>
-        </div>
-    </div>
-
-    <!-- BARRA DE TAREAS Y MENÚ INICIO -->
-    <div id="taskbar">
-        <div id="start-btn" onclick="toggleStartMenu()"><i class="fab fa-windows"></i></div>
-    </div>
-
-    <div id="start-menu">
-        <div class="menu-item" onclick="alert('Apagando sistema...')">
-            <i class="fas fa-power-off" style="color: #bbb;"></i> Inicio / Apagado
-        </div>
-        <hr style="border-color: #333; margin: 4px 0;">
-        <div class="menu-item" onclick="openApp('este-equipo')"><i class="fas fa-desktop" style="color:#17a2b8;"></i> Este equipo</div>
-        <div class="menu-item" onclick="openApp('wordpad')"><i class="fas fa-file-word" style="color:#2b5797;"></i> WordPad</div>
-        <div class="menu-item" onclick="openApp('facturador')"><i class="fas fa-file-invoice-dollar" style="color:#2ecc71;"></i> Facturador</div>
-        <div class="menu-item" onclick="openApp('correo')"><i class="fas fa-envelope" style="color:#e67e22;"></i> Correo</div>
-        <div class="menu-item" onclick="openApp('papelera')"><i class="fas fa-trash-alt" style="color:#6c757d;"></i> Papelera</div>
-    </div>
-
-    <!-- SCRIPT CON LOGICA PROPIA Y ESPECÍFICA PARA CADA UNO DE LOS 100 EJERCICIOS -->
     <script>
-        const exerciseSelect = document.getElementById('exercise-select');
-        
-        let userState = {
-            selectedIcon: null,
-            startMenuOpen: false,
-            openApps: [],
-            typedInWordpad: false,
-            facturaUsed: false,
-            emailSent: false,
-            fileDeleted: false,
-            completedExercises: JSON.parse(localStorage.getItem('sim_completed') || '[]')
-        };
+        // BASE DE DATOS COMPLETA DE LOS 100 EJERCICIOS INDIVIDUALES
+        const allExercises = [
+            // MÓDULO 01 (1 al 14)
+            { id: 1, mod: 1, name: "01. Tap y Selección Única", title: "Ejercicio 01: Selección de un Elemento", guide: "Mueva el <strong>puntero</strong> <span class='clarification'>(la flechita blanca que sigue a su mano)</span> y toque una sola vez la opción para seleccionar un archivo.", btn: "Seleccionar Archivo de Texto", ok: "¡Muy bien! Ha seleccionado el elemento correctamente." },
+            { id: 2, mod: 1, name: "02. Doble Tap Táctil", title: "Ejercicio 02: Abrir con Doble Toque", guide: "Haga dos toques rápidos continuos sobre el icono para abrir la <strong>carpeta</strong> <span class='clarification'>(el dibujito de un folio amarillo)</span>.", btn: "Hacer Doble Clic para Abrir", ok: "¡Excelente! La carpeta se abrió con éxito." },
+            { id: 3, mod: 1, name: "03. Tap Prolongado", title: "Ejercicio 03: Desplegar Opciones Guardadas", guide: "Mantenga apoyado el dedo un segundo sobre la zona de trabajo para ver el <strong>Menú Contextual</strong> <span class='clarification'>(la lista de opciones adicionales)</span>.", btn: "Mantener Presionado 1 Segundo", ok: "¡Perfecto! Apareció el menú de opciones desplegables." },
+            { id: 4, mod: 1, name: "04. Arrastre de Elementos", title: "Ejercicio 04: Mover Cosas en Pantalla", guide: "Presione y desplace su dedo para arrastrar la foto desde el <strong>Escritorio</strong> <span class='clarification'>(la pantalla principal azul)</span> hacia la caja verde.", btn: "Arrastrar y Soltar Archivo", ok: "¡Muy bien! El archivo ha sido reubicado." },
+            { id: 5, mod: 1, name: "05. Desplazamiento Vertical", title: "Ejercicio 05: Subir y Bajar en una Página", guide: "Use dos dedos juntos para deslizar hacia abajo en la pantalla y recorrer un documento largo.", btn: "Deslizar Página Hacia Abajo", ok: "¡Correcto! Se ha desplazado por el texto." },
+            { id: 6, mod: 1, name: "06. Desplazamiento Horizontal", title: "Ejercicio 06: Recorrer Fotos de Costado", guide: "Deslice dos dedos hacia la derecha para pasar a la siguiente fotografía de su álbum.", btn: "Pasar a la Siguiente Foto", ok: "¡Estupendo! Ha avanzado a la siguiente foto." },
+            { id: 7, mod: 1, name: "07. Zoom Out (Pellizco)", title: "Ejercicio 07: Achicar una Fotografía", guide: "Junte dos dedos sobre la pantalla <span class='clarification'>(como dando un pellizquito suave)</span> para alejar la vista del plano.", btn: "Achicar Imagen (Zoom Out)", ok: "¡Excelente! La imagen se redujo de tamaño." },
+            { id: 8, mod: 1, name: "08. Zoom In (Ampliación)", title: "Ejercicio 08: Agrandar una Letra o Foto", guide: "Separe dos dedos sobre la imagen para hacer zoom y ver en detalle los nombres.", btn: "Agrandar Imagen (Zoom In)", ok: "¡Muy bien! La zona seleccionada se ha ampliado." },
+            { id: 9, mod: 1, name: "09. Vista de Tareas", title: "Ejercicio 09: Ver Programas Abiertos", guide: "Deslice tres dedos hacia arriba para activar la <strong>Vista de Tareas</strong> <span class='clarification'>(el modo que muestra todos sus trabajos en miniatura)</span>.", btn: "Mostrar Ventanas Abiertas", ok: "¡Correcto! Ahora puede ver todo lo que tiene abierto." },
+            { id: 10, mod: 1, name: "10. Mostrar Escritorio", title: "Ejercicio 10: Limpiar la Pantalla de Golpe", guide: "Deslice tres dedos hacia abajo para ocultar todas las ventanas abiertas y ver el <strong>Escritorio</strong> <span class='clarification'>(la pantalla limpia inicial)</span>.", btn: "Ocultar Todo y Ver Escritorio", ok: "¡Perfecto! Las ventanas se ocultaron abajo." },
+            { id: 11, mod: 1, name: "11. Conmutación de Apps", title: "Ejercicio 11: Alternar Entre Programas", guide: "Deslice tres dedos de lado a lado para pasar del programa de lectura al diario digital.", btn: "Cambiar de Aplicación", ok: "¡Estupendo! Ha cambiado de programa con fluidez." },
+            { id: 12, mod: 1, name: "12. Escritorios Virtuales", title: "Ejercicio 12: Cambiar de Mesas de Trabajo", guide: "Deslice cuatro dedos a la derecha para cambiar a un segundo <strong>Escritorio Virtual</strong> <span class='clarification'>(otra mesa limpia independiente)</span>.", btn: "Pasar al Escritorio 2", ok: "¡Muy bien! Se encuentra en el segundo espacio." },
+            { id: 13, mod: 1, name: "13. Centro de Actividades", title: "Ejercicio 13: Abrir Notificaciones", guide: "Deslice un dedo desde el borde derecho hacia el centro para abrir el <strong>Centro de Actividades</strong> <span class='clarification'>(el panel donde llegan avisos)</span>.", btn: "Abrir Panel de Avisos", ok: "¡Excelente! Desplegó los avisos del sistema." },
+            { id: 14, mod: 1, name: "14. Ajuste de Sensibilidad", title: "Ejercicio 14: Regular la Velocidad Táctil", guide: "Entre al menú para adaptar qué tan rápido responde el ratón táctil a su mano.", btn: "Guardar Sensibilidad Confortable", ok: "¡Ajuste guardado! El panel responderá a su ritmo." },
 
-        function getModuleTitle(num) {
-            if (num <= 12) return "Módulo 1: Manejo Básico y Touchpad";
-            if (num <= 25) return "Módulo 2: Gestión de Ventanas";
-            if (num <= 40) return "Módulo 3: Explorador de Archivos";
-            if (num <= 55) return "Módulo 4: Procesador WordPad";
-            if (num <= 70) return "Módulo 5: Facturación Digital";
-            if (num <= 85) return "Módulo 6: Correo Electrónico";
-            if (num <= 95) return "Módulo 7: Herramientas Útiles";
-            return "Módulo 8: Integración Total";
-        }
+            // MÓDULO 02 (15 al 27)
+            { id: 15, mod: 2, name: "15. Control de Ventanas", title: "Ejercicio 15: Achicar y Agrandar Pantallas", guide: "Utilice los botones de la esquina superior derecha para achicar la ventana actual.", btn: "Minimizar Ventana", ok: "¡Muy bien! La ventana se guardó en la barra inferior." },
+            { id: 16, mod: 2, name: "16. Redimensionamiento", title: "Ejercicio 16: Cambiar Tamaño Manualmente", guide: "Lleve la flechita al borde de la ventana hasta que se convierta en una doble flecha y estire la esquina.", btn: "Estirar Borde de la Ventana", ok: "¡Logrado! El tamaño de la pantalla ha cambiado." },
+            { id: 17, mod: 2, name: "17. Snap Assist Lateral", title: "Ejercicio 17: Poner una Ventana a la Izquierda", guide: "Arrastre la ventana a la orilla izquierda para dejar libre la otra mitad de la pantalla.", btn: "Fijar a la Izquierda", ok: "¡Perfecto! La ventana ocupa la mitad exacta." },
+            { id: 18, mod: 2, name: "18. Pantalla Dividida", title: "Ejercicio 18: Trabajar con Dos Ventanas", guide: "Elija un segundo programa para rellenar la mitad derecha sobrante de su monitor.", btn: "Fijar Programa a la Derecha", ok: "¡Excelente! Tiene dos programas visibles a la vez." },
+            { id: 19, mod: 19, mod: 2, name: "19. Acoplamiento Cuadrantes", title: "Ejercicio 19: Cuatro Ventanas Juntas", guide: "Lleve una pequeña ventana a la esquina superior derecha para dividir la pantalla en cuatro partes.", btn: "Acomodar en una Esquina", ok: "¡Muy bien! Pantalla organizada en 4 esquinas." },
+            { id: 20, mod: 2, name: "20. Conmutación Alt+Tab", title: "Ejercicio 20: El Salto Rápido de Programa", guide: "Toque el botón simulador para alternar al instante entre su carta y el periódico.", btn: "Alternar Programa Rapidamente", ok: "¡Correcto! Ha pasado al programa anterior." },
+            { id: 21, mod: 2, name: "21. Aislamiento Aero Shake", title: "Ejercicio 21: Sacudir para Despejar", guide: "Tome la ventana de arriba y sacúdala suavemente para ocultar las aplicaciones que distraen atrás.", btn: "Sacudir Ventana Principal", ok: "¡Estupendo! Todas las ventanas de atrás se ocultaron." },
+            { id: 22, mod: 2, name: "22. Disposición en Cascada", title: "Ejercicio 22: Apilar Ventanas como Naipes", guide: "Ordene todas sus carpetas abiertas para que queden escalonadas una sobre otra.", btn: "Ordenar en Cascada", ok: "¡Listo! Sus cartas/documentos quedaron apilados." },
+            { id: 23, mod: 2, name: "23. Disposición Mosaico", title: "Ejercicio 23: Repartir Ventanas en Bloques", guide: "Acomode tres documentos en forma de bloques rectangulares para verlos todos.", btn: "Organizar en Mosaico", ok: "¡Excelente! Todo visible al mismo tiempo." },
+            { id: 24, mod: 2, name: "24. Anclaje a Barra", title: "Ejercicio 24: Dejar Atajo Abajo", guide: "Fije su programa favorito en la <strong>Barra de Tareas</strong> <span class='clarification'>(la franja negra de abajo)</span>.", btn: "Fijar Icono en la Franja Negra", ok: "¡Hecho! El programa estará siempre listo abajo." },
+            { id: 25, mod: 2, name: "25. Cierre Seguro (Alt+F4)", title: "Ejercicio 25: Cerrar una Aplicación", guide: "Oprima el botón con la cruz roja para cerrar la ventana cuando haya terminado su trabajo.", btn: "Cerrar Aplicación Actual", ok: "¡Programa cerrado de manera segura!" },
+            { id: 26, mod: 2, name: "26. Reordenamiento de Barra", title: "Ejercicio 26: Mover Iconos de Abajo", guide: "Arrastre el icono del reloj más a la izquierda dentro de la franja negra inferior.", btn: "Mover Icono a la Izquierda", ok: "¡Ubicación actualizada correctamente!" },
+            { id: 27, mod: 2, name: "27. Despeje Completo", title: "Ejercicio 27: Botón Rincón de Limpieza", guide: "Toque el último rincón de la derecha en la barra negra para guardar todo de un toque.", btn: "Tocar Rincón Inferior Derecho", ok: "¡Pantalla despejada al instante!" },
 
-        // Generar las 100 opciones en el selector
-        for (let i = 1; i <= 100; i++) {
-            let opt = document.createElement('option');
-            opt.value = i;
-            let statusMark = userState.completedExercises.includes(i) ? " ✓" : "";
-            opt.text = `Ejercicio ${i}${statusMark}: Práctica (${getModuleTitle(i)})`;
-            exerciseSelect.appendChild(opt);
-        }
+            // MÓDULO 03 (28 al 41)
+            { id: 28, mod: 3, name: "28. Crear Carpeta Nueva", title: "Ejercicio 28: Guardador para sus Fotos", guide: "Cree una carpeta nueva llamada 'Recuerdos 2026' para tener ordenada la información.", btn: "Crear Carpeta 'Recuerdos 2026'", ok: "¡Carpeta creada y guardada con éxito!" },
+            { id: 29, mod: 3, name: "29. Renombrar Archivos", title: "Ejercicio 29: Cambiar Nombre a un Archivo", guide: "Seleccione un archivo sin nombre y escriba 'Receta de Cocina.txt'.", btn: "Guardar Nombre Nuevo", ok: "¡Nombre cambiado correctamente!" },
+            { id: 30, mod: 3, name: "30. Copiar y Pegar", title: "Ejercicio 30: Duplicar un Documento", guide: "Haga una copia idéntica de una nota guardada para no perder la original.", btn: "Copiar Archivo a Mis Documentos", ok: "¡Copia creada sin tocar la original!" },
+            { id: 31, mod: 3, name: "31. Modos de Vista", title: "Ejercicio 31: Ver Fotos Grandes", guide: "Cambie la vista de la carpeta para ver las imágenes en tamaño gigante en lugar de lista.", btn: "Cambiar a Iconos Grandes", ok: "¡Ahora puede ver las fotos con claridad!" },
+            { id: 32, mod: 3, name: "32. Ordenamiento por Fecha", title: "Ejercicio 32: Buscar por Fecha Reciente", guide: "Ordene sus papeles digitales para que lo último que escribió aparezca primero arriba.", btn: "Ordenar de Más Reciente a Viejo", ok: "¡Ordenado por fecha correctamente!" },
+            { id: 33, mod: 3, name: "33. Selección Continua", title: "Ejercicio 33: Marcar Muchas Fotos Juntas", guide: "Marque una hilera completa de 5 fotos seguidas para moverlas en grupo.", btn: "Marcar Grupo de Fotos", ok: "¡5 fotos marcadas para trabajar juntos!" },
+            { id: 34, mod: 3, name: "34. Selección Discontinua", title: "Ejercicio 34: Marcar Fotos Saltadas", guide: "Seleccione solamente la foto 1 y la foto 4, dejando las otras de lado.", btn: "Marcar Foto 1 y Foto 4", ok: "¡Fotos seleccionadas con precisión!" },
+            { id: 35, mod: 3, name: "35. Búsqueda por Lupa", title: "Ejercicio 35: Buscar una Receta Perdida", guide: "Escriba 'Tartas' en el buscador para que la computadora encuentre la receta.", btn: "Buscar 'Tartas' en la Carpeta", ok: "¡Encontrado! El archivo apareció en pantalla." },
+            { id: 36, mod: 3, name: "36. Anclaje a Acceso Rápido", title: "Ejercicio 36: Guardar Carpeta Favorita", guide: "Ponga su carpeta 'Trámites' en el menú lateral izquierdo para no buscarla más.", btn: "Fijar 'Trámites' en el Menú", ok: "¡Listo! Aparecerá siempre a la izquierda." },
+            { id: 37, mod: 3, name: "37. Compresión en Zip", title: "Ejercicio 37: Enpaquetar Todo en un Sobre", guide: "Junte 10 documentos en un solo archivo liviano llamado <strong>ZIP</strong> <span class='clarification'>(sobre digital comprimido)</span>.", btn: "Comprimir Archivos en Zip", ok: "¡Sobre digital creado correctamente!" },
+            { id: 38, mod: 3, name: "38. Extracción de Zip", title: "Ejercicio 38: Abrir un Sobre Comprimido", guide: "Extraiga y saque todos los papeles guardados dentro de una carpeta Zip recibida.", btn: "Descomprimir Sobre Digital", ok: "¡Papeles extraídos y listos para leer!" },
+            { id: 39, mod: 3, name: "39. Extensiones Visibles", title: "Ejercicio 39: Ver el Tipo de Archivo", guide: "Haga visible la terminación de sus archivos <span class='clarification'>(por ejemplo .JPG para fotos o .DOC para cartas)</span>.", btn: "Mostrar Extensiones (.txt, .jpg)", ok: "¡Ahora sabe exactamente qué es cada archivo!" },
+            { id: 40, mod: 3, name: "40. Papelera de Reciclaje", title: "Ejercicio 40: Tirar y Recuperar un Papel", guide: "Mueva un borrador a la <strong>Papelera</strong> <span class='clarification'>(el tacho de basura)</span> y luego recupérelo.", btn: "Tirar y Deshacer Basura", ok: "¡El archivo volvió a su sitio original!" },
+            { id: 41, mod: 3, name: "41. Borrado Definitivo", title: "Ejercicio 41: Vaciar la Basura", guide: "Elimine por completo los archivos viejos de la papelera para liberar espacio limpio.", btn: "Vaciar Tacho de Basura", ok: "¡Memoria liberada por completo!" },
 
-        let savedEx = parseInt(localStorage.getItem('sim_current_ex') || '1');
-        exerciseSelect.value = savedEx;
+            // MÓDULO 04 (42 al 54)
+            { id: 42, mod: 4, name: "42. Formato en WordPad", title: "Ejercicio 42: Agrandar la Letra", guide: "Abra el programa <strong>WordPad</strong> <span class='clarification'>(su cuaderno para redactar)</span> y ponga el título en letra grande.", btn: "Poner Letra Tamaño 20 y Negrita", ok: "¡El título resalta claro y legible!" },
+            { id: 43, mod: 4, name: "43. Alineación Centrada", title: "Ejercicio 43: Centrar el Título", guide: "Ponga el título justo en el medio de la hoja blanca para que parezca una carta formal.", btn: "Centrar Texto en la Hoja", ok: "¡El título quedó perfectamente centrado!" },
+            { id: 44, mod: 4, name: "44. Interlineado Cómodo", title: "Ejercicio 44: Separar Renglones", guide: "Sépare las líneas de texto para que la lectura sea descansada para la vista.", btn: "Separar Renglones (Espacio 1.5)", ok: "¡Texto cómodo y fácil de leer!" },
+            { id: 45, mod: 4, name: "45. Listas con Puntitos", title: "Ejercicio 45: Hacer Lista de Compras", guide: "Cree una lista numerada con los remedios o ingredientes que necesita comprar.", btn: "Crear Lista Numerada", ok: "¡Lista numerada prolija y clara!" },
+            { id: 46, mod: 4, name: "46. Inserción de Imágenes", title: "Ejercicio 46: Poner una Foto en su Carta", guide: "Inserte una imagen dentro de su texto impreso para regalársela a un familiar.", btn: "Poner Imagen en la Carta", ok: "¡Fotografía pegada en la hoja de texto!" },
+            { id: 47, mod: 4, name: "47. Dibujo Integrado", title: "Ejercicio 47: Hacer un Dibujo en la Nota", guide: "Abra la paleta de dibujo, haga un trazo sencillo y péguelo en la hoja escrita.", btn: "Insertar Dibujo a Mano", ok: "¡Dibujo guardado junto a su escrito!" },
+            { id: 48, mod: 4, name: "48. Fecha Automática", title: "Ejercicio 48: Poner Fecha de Hoy", guide: "Toque el botón de calendario para que la máquina escriba el día exacto de hoy.", btn: "Poner Fecha del Día de Hoy", ok: "¡Fecha estampada automáticamente!" },
+            { id: 49, mod: 4, name: "49. Buscar y Reemplazar", title: "Ejercicio 49: Corregir una Palabra Repetida", guide: "Cambie automáticamente la palabra 'Lunes' por 'Martes' en todo el texto largo.", btn: "Cambiar 'Lunes' por 'Martes'", ok: "¡Todas las palabras corregidas a la vez!" },
+            { id: 50, mod: 50, mod: 4, name: "50. Tabulaciones Prolijas", title: "Ejercicio 50: Columnas Ordenadas", guide: "Organice una tabla con nombres a la izquierda y precios a la derecha bien alineados.", btn: "Alinear Precios a la Derecha", ok: "¡Columnas alineadas impecables!" },
+            { id: 51, mod: 4, name: "51. Cortar y Pegar Texto", title: "Ejercicio 51: Mover un Párrafo", guide: "Mueva la despedida final de su carta para que quede bien abajo antes de la firma.", btn: "Mover Párrafo al Final", ok: "¡Párrafo reubicado en su lugar!" },
+            { id: 52, mod: 4, name: "52. Orientación Horizontal", title: "Ejercicio 52: Girar la Hoja", guide: "Cambie la hoja de vertical a acostada <span class='clarification'>(modo apaisado u horizontal)</span>.", btn: "Acostar Hoja (Horizontal)", ok: "¡Hoja ajustada para carteles anchos!" },
+            { id: 53, mod: 4, name: "53. Vista Previa Impresión", title: "Ejercicio 53: Revisar Antes de Imprimir", guide: "Mire cómo quedará la hoja terminada antes de gastar tinta de la impresora.", btn: "Ver Hoja Completa en Pantalla", ok: "¡Todo se ve ordenado para imprimir!" },
+            { id: 54, mod: 4, name: "54. Guardar Documento", title: "Ejercicio 54: Guardar la Carta", guide: "Guarde su documento con el nombre 'Carta para mi Hija.rtf' en la carpeta correcta.", btn: "Guardar Archivo en el Disco", ok: "¡Carta guardada a salvo para siempre!" },
 
-        // Generador de lógica única, específica y propia para CADA UNO de los 100 ejercicios
-        function getExerciseDetails(num) {
-            // Mapeo dinámico y riguroso para los 100 ejercicios
-            const exercisesMap = {
-                1: { title: "1. Reconocimiento del touchpad", steps: ["Desliza el dedo suavemente sobre la superficie del touchpad para calibrar el cursor."], hint: "Desliza el dedo por el pad y presiona Verificar.", targetId: null, validate: () => ({ ok: true }) },
-                2: { title: "2. Selección simple de WordPad", steps: ["Haz un clic simple sobre el ícono de WordPad."], hint: "Haz un toque corto sobre el ícono de WordPad.", targetId: "icon-wordpad", validate: () => userState.selectedIcon === 'wordpad' ? {ok:true} : {ok:false, error: "Seleccioná primero el ícono de WordPad con un clic simple."} },
-                3: { title: "3. Selección simple del Facturador", steps: ["Haz un clic simple sobre el ícono del Facturador."], hint: "Selecciona el ícono verde de Facturador en el escritorio.", targetId: "icon-facturador", validate: () => userState.selectedIcon === 'facturador' ? {ok:true} : {ok:false, error: "Falta hacer clic simple en el ícono del Facturador."} },
-                4: { title: "4. Apertura con doble clic ('Este equipo')", steps: ["Haz doble clic rápido sobre el ícono de 'Este equipo' para abrirlo."], hint: "Haz dos toques seguidos sobre 'Este equipo'.", targetId: "icon-este-equipo", validate: () => userState.openApps.includes('este-equipo') ? {ok:true} : {ok:false, error: "La ventana 'Este equipo' no está abierta. Hacé doble clic sobre su ícono."} },
-                5: { title: "5. Apertura de WordPad", steps: ["Haz doble clic sobre el ícono de WordPad para iniciar la aplicación."], hint: "Hacé doble clic rápido sobre el ícono azul de WordPad.", targetId: "icon-wordpad", validate: () => userState.openApps.includes('wordpad') ? {ok:true} : {ok:false, error: "WordPad debe estar abierto para aprobar este ejercicio."} },
-                6: { title: "6. Apertura del Facturador", steps: ["Haz doble clic en el ícono del Facturador para abrir su interfaz."], hint: "Hacé doble clic sobre el ícono verde de Facturador.", targetId: "icon-facturador", validate: () => userState.openApps.includes('facturador') ? {ok:true} : {ok:false, error: "La ventana del Facturador no se encuentra abierta."} },
-                7: { title: "7. Apertura de la aplicación Correo", steps: ["Haz doble clic en el ícono de Correo en el escritorio."], hint: "Hacé doble clic sobre la aplicación de Correo.", targetId: "icon-correo", validate: () => userState.openApps.includes('correo') ? {ok:true} : {ok:false, error: "Tenés que abrir la aplicación de Correo para continuar."} },
-                8: { title: "8. Apertura de la Papelera de reciclaje", steps: ["Haz doble clic en el ícono de la Papelera de reciclaje."], hint: "Abrí la Papelera con doble clic.", targetId: "icon-papelera", validate: () => userState.openApps.includes('papelera') ? {ok:true} : {ok:false, error: "La Papelera de reciclaje debe estar abierta."} },
-                9: { title: "9. Cierre de ventana activa", steps: ["Cierra la ventana que tengas abierta actualmente haciendo clic en la X."], hint: "Cualquier ventana abierta debe cerrarse desde su botón superior derecho.", targetId: null, validate: () => userState.openApps.length === 0 ? {ok:true} : {ok:false, error: "Todavía hay ventanas abiertas en el escritorio. Cerralas antes de verificar."} },
-                10: { title: "10. Selección y cambio de foco", steps: ["Selecciona el ícono de Correo y luego cambia el foco seleccionando WordPad."], hint: "Hacé clic en Correo y después en WordPad.", targetId: "icon-wordpad", validate: () => userState.selectedIcon === 'wordpad' ? {ok:true} : {ok:false, error: "El foco debe quedar en el ícono de WordPad."} },
-                11: { title: "11. Apertura del Menú de Inicio", steps: ["Haz clic en el botón de Windows ubicado en la esquina inferior izquierda."], hint: "Haz clic en el logotipo de Windows en la barra de tareas.", targetId: "start-btn", validate: () => userState.startMenuOpen ? {ok:true} : {ok:false, error: "El menú de inicio está cerrado. Hacé clic en el botón de Windows."} },
-                12: { title: "12. Exploración del menú inicio", steps: ["Abre el menú de inicio y observa las opciones disponibles."], hint: "Abrí el botón de Windows y mantenelo abierto un momento.", targetId: "start-btn", validate: () => userState.startMenuOpen ? {ok:true} : {ok:false, error: "Tenés que tener abierto el menú de inicio para validar este paso."} },
-                
-                // Módulo 2: Gestión de Ventanas (13 a 25)
-                13: { title: "13. Abrir 'Este equipo' desde el menú inicio", steps: ["Abre el menú inicio y haz clic en la opción 'Este equipo'."], hint: "Usa el menú de inicio para abrir 'Este equipo'.", targetId: "start-btn", validate: () => userState.openApps.includes('este-equipo') ? {ok:true} : {ok:false, error: "No se abrió 'Este equipo' desde el menú inicio."} },
-                14: { title: "14. Abrir WordPad desde el menú inicio", steps: ["Despliega el menú inicio y selecciona WordPad."], hint: "Busca WordPad dentro del menú inicio.", targetId: "start-btn", validate: () => userState.openApps.includes('wordpad') ? {ok:true} : {ok:false, error: "WordPad debe abrirse desde el menú inicio."} },
-                15: { title: "15. Abrir Facturador desde el menú inicio", steps: ["Haz clic en el botón inicio y abre el Facturador."], hint: "Selecciona el Facturador en la lista del menú inicio.", targetId: "start-btn", validate: () => userState.openApps.includes('facturador') ? {ok:true} : {ok:false, error: "El Facturador no está abierto mediante el menú inicio."} },
-                16: { title: "16. Abrir Correo desde el menú inicio", steps: ["Abre el menú inicio y selecciona la aplicación Correo."], hint: "Inicia el Correo desde el menú de Windows.", targetId: "start-btn", validate: () => userState.openApps.includes('correo') ? {ok:true} : {ok:false, error: "Falta abrir Correo desde el menú inicio."} },
-                17: { title: "17. Abrir Papelera desde el menú inicio", steps: ["Despliega el menú inicio y haz clic en Papelera."], hint: "Haz clic en Papelera dentro del menú lateral de inicio.", targetId: "start-btn", validate: () => userState.openApps.includes('papelera') ? {ok:true} : {ok:false, error: "La Papelera no se abrió a través del menú de inicio."} },
-                18: { title: "18. Cierre de ventana mediante botón X", steps: 'Abre la app Correo y ciérrala utilizando el botón "X".', hint: "Abrí Correo y hacé clic en la cruz roja/negra superior.", targetId: "icon-correo", validate: () => !userState.openApps.includes('correo') ? {ok:true} : {ok:false, error: "La ventana de Correo sigue abierta."} },
-                19: { title: "19. Gestión simultánea (2 aplicaciones)", steps: "Abre al mismo tiempo 'Este equipo' y WordPad.", hint: "Mantené abiertas ambas ventanas en simultáneo.", targetId: null, validate: () => (userState.openApps.includes('este-equipo') && userState.openApps.includes('wordpad')) ? {ok:true} : {ok:false, error: "Deben estar abiertas simultáneamente 'Este equipo' y WordPad."} },
-                20: { title: "20. Gestión simultánea (Facturador y Correo)", steps: "Abre el Facturador y el cliente de Correo juntos.", hint: "Abrí ambas herramientas de trabajo a la vez.", targetId: null, validate: () => (userState.openApps.includes('facturador') && userState.openApps.includes('correo')) ? {ok:true} : {ok:false, error: "Falta tener abiertos el Facturador y el Correo al mismo tiempo."} },
-                21: { title: "21. Limpieza de entorno de ventanas", steps: "Cierra todas las ventanas abiertas para dejar el escritorio despejado.", hint: "Cerrá todas las aplicaciones activas.", targetId: null, validate: () => userState.openApps.length === 0 ? {ok:true} : {ok:false, error: "Quedan ventanas activas en pantalla."} },
-                22: { title: "22. Secuencia de apertura en cascada", steps: "Abre secuencialmente: Este equipo, luego WordPad, luego ciérralos.", hint: "Abrí y cerrá ordenadamente las aplicaciones solicitadas.", targetId: "icon-este-equipo", validate: () => userState.openApps.length === 0 ? {ok:true} : {ok:false, error: "El ciclo de apertura y cierre no se completó."} },
-                23: { title: "23. Verificación de barra de tareas", steps: "Mantén abierto el Facturador y comprueba su estado en la barra inferior.", hint: "Verifica que el Facturador esté activo.", targetId: "icon-facturador", validate: () => userState.openApps.includes('facturador') ? {ok:true} : {ok:false, error: "El Facturador no se encuentra activo."} },
-                24: { title: "24. Apertura rápida de Papelera", steps: "Abre la papelera de reciclaje y verifica su contenido inicial.", hint: "Haz doble clic en la papelera del escritorio.", targetId: "icon-papelera", validate: () => userState.openApps.includes('papelera') ? {ok:true} : {ok:false, error: "La papelera de reciclaje no está abierta."} },
-                25: { title: "25. Reseteo y orden de escritorio", steps: "Cierra todas las ventanas y asegúrate de no tener elementos seleccionados erróneamente.", hint: "Limpiá el entorno de trabajo.", targetId: null, validate: () => (userState.openApps.length === 0 && userState.selectedIcon === null) ? {ok:true} : {ok:false, error: "El escritorio aún tiene elementos seleccionados o ventanas abiertas."} },
+            // MÓDULO 05 (55 al 69)
+            { id: 55, mod: 5, name: "55. Alta de Cliente", title: "Ejercicio 55: Registrar Comprador", guide: "Ingrese el Nombre y DNI del cliente en la ficha del <strong>Facturador Digital</strong>.", btn: "Guardar Datos de Juan Pérez", ok: "¡Cliente registrado en el sistema!" },
+            { id: 56, mod: 5, name: "56. Tipo de Comprobante", title: "Ejercicio 56: Elegir Factura B o C", guide: "Seleccione el tipo de recibo adecuado según la categoría de la venta realizada.", btn: "Seleccionar 'Factura C'", ok: "¡Comprobante tipo C preparado!" },
+            { id: 57, mod: 5, name: "57. Buscar Producto", title: "Ejercicio 57: Buscar Producto por Nombre", guide: "Busque el artículo 'Servicio de Consultoría' en la lista del catálogo comercial.", btn: "Buscar 'Servicio de Consultoría'", ok: "¡Artículo localizado correctamente!" },
+            { id: 58, mod: 5, name: "58. Inserción de Cantidades", title: "Ejercicio 58: Cargar Precios y Unidades", guide: "Ponga que vendió 2 unidades de producto a un valor de $1.000 pesos cada una.", btn: "Cargar 2 Unidades ($2.000 Total)", ok: "¡Cantidades y montos cargados!" },
+            { id: 59, mod: 5, name: "59. Descuento Específico", title: "Ejercicio 59: Hacer una Bonificación", guide: "Aplique un 10% de descuento de atención a un amigo jubilado sobre el total.", btn: "Aplicar 10% de Descuento", ok: "¡Descuento descontado de la suma final!" },
+            { id: 60, mod: 5, name: "60. Descuento Global", title: "Ejercicio 60: Rebaja sobre Compra Grande", guide: "Realice una atención especial en el importe final completo de la compra realizada.", btn: "Descontar $500 del Total", ok: "¡Rebaja general aplicada!" },
+            { id: 61, mod: 5, name: "61. Alícuota de IVA", title: "Ejercicio 61: Revisar Impuestos", guide: "Verifique que el cálculo de impuestos esté correctamente detallado en la fila.", btn: "Verificar IVA Consumidor Final", ok: "¡Impuesto verificado correctamente!" },
+            { id: 62, mod: 5, name: "62. Forma de Pago", title: "Ejercicio 62: Elegir Pago en Efectivo", guide: "Marque que la persona abonará con billetes en mano en el mostrador.", btn: "Marcar Pago: Efectivo", ok: "¡Método registrado como Efectivo!" },
+            { id: 63, mod: 5, name: "63. Cobro Mixto", title: "Ejercicio 63: Pagar con Tarjeta y Efectivo", guide: "Cargue la mitad de la cuenta en efectivo y la otra mitad con tarjeta de débito.", btn: "Dividir Pago: Mitad y Mitad", ok: "¡Cobro dividido procesado con éxito!" },
+            { id: 64, mod: 5, name: "64. Emisión de Factura", title: "Ejercicio 64: Confirmar la Factura", guide: "Toque el botón final para autorizar e imprimir el comprobante fiscal definitivo.", btn: "Emitir Factura Definitiva", ok: "¡Comprobante emitido con número oficial!" },
+            { id: 65, mod: 5, name: "65. Guardar Factura PDF", title: "Ejercicio 65: Convertir Factura a Papel Digital", guide: "Guarde una copia del recibo en formato <strong>PDF</strong> <span class='clarification'>(documento digital listo para enviar)</span>.", btn: "Guardar Factura como PDF", ok: "¡Documento PDF guardado en la carpeta!" },
+            { id: 66, mod: 5, name: "66. Guardar Borrador", title: "Ejercicio 66: Dejar la Venta en Espera", guide: "Guarde una boleta sin terminar mientras el cliente busca su billetera.", btn: "Pausar Venta en Borrador", ok: "¡Venta pausada lista para retomar!" },
+            { id: 67, mod: 5, name: "67. Historial de Ventas", title: "Ejercicio 67: Revisar Cobros del Mes", guide: "Consulte el registro histórico para ver cuánto cobró en la semana anterior.", btn: "Abrir Lista de Facturas Emitidas", ok: "¡Historial abierto en pantalla!" },
+            { id: 68, mod: 5, name: "68. Anular con Nota de Crédito", title: "Ejercicio 68: Devolver Dinero de una Venta", guide: "Haga una <strong>Nota de Crédito</strong> <span class='clarification'>(comprobante que anula una factura anterior)</span>.", btn: "Anular Factura por Devolución", ok: "¡Factura anulada formalmente!" },
+            { id: 69, mod: 5, name: "69. Cierre de Caja", title: "Ejercicio 69: Sumar el Total del Día", guide: "Realice el cálculo final de la jornada para saber cuánto efectivo ingresó hoy.", btn: "Hacer Cierre de Caja Diario", ok: "¡Cierre del día completado con éxito!" },
 
-                // Módulo 3: Explorador de Archivos (26 a 40)
-                26: { title: "26. Acceso al disco local C:", steps: "Abre 'Este equipo' y observa la unidad Disco Local (C:).", hint: "Haz doble clic en 'Este equipo' y visualiza las unidades.", targetId: "icon-este-equipo", validate: () => userState.openApps.includes('este-equipo') ? {ok:true} : {ok:false, error: "La ventana 'Este equipo' debe estar abierta para ver los discos."} },
-                27: { title: "27. Inspección de panel izquierdo", steps: "En 'Este equipo', revisa las opciones de acceso rápido del panel lateral.", hint: "Abrí 'Este equipo' y mirá el panel izquierdo.", targetId: "icon-este-equipo", validate: () => userState.openApps.includes('este-equipo') ? {ok:true} : {ok:false, error: "Falta abrir 'Este equipo'."} },
-                28: { title: "28. Cierre de 'Este equipo'", steps: "Cierra la ventana del explorador 'Este equipo'.", hint: "Haz clic en la cruz de cierre de 'Este equipo'.", targetId: null, validate: () => !userState.openApps.includes('este-equipo') ? {ok:true} : {ok:false, error: "La ventana 'Este equipo' sigue abierta."} },
-                29: { title: "29. Doble verificación de unidades", steps: "Vuelve a abrir 'Este equipo' para confirmar el acceso a hardware.", hint: "Abre 'Este equipo' nuevamente.", targetId: "icon-este-equipo", validate: () => userState.openApps.includes('este-equipo') ? {ok:true} : {ok:false, error: "No se detectó 'Este equipo' abierto."} },
-                30: { title: "30. Cierre definitivo de explorador", steps: "Cierra el explorador de archivos actual.", hint: "Cierra la ventana activa.", targetId: null, validate: () => !userState.openApps.includes('este-equipo') ? {ok:true} : {ok:false, error: "Cierra la ventana para continuar."} },
-                31: { title: "31. Selección previa en escritorio", steps: "Selecciona el ícono de 'Este equipo' con un clic simple.", hint: "Haz un toque corto sobre 'Este equipo'.", targetId: "icon-este-equipo", validate: () => userState.selectedIcon === 'este-equipo' ? {ok:true} : {ok:false, error: "El ícono 'Este equipo' no está seleccionado."} },
-                32: { title: "32. Selección de Papelera", steps: "Haz un clic simple sobre el ícono de la Papelera al final del escritorio.", hint: "Selecciona el último ícono del escritorio.", targetId: "icon-papelera", validate: () => userState.selectedIcon === 'papelera' ? {ok:true} : {ok:false, error: "Falta seleccionar la Papelera de reciclaje."} },
-                33: { title: "33. Ciclo de navegación por íconos", steps: "Selecciona sucesivamente WordPad y luego el Facturador.", hint: "Haz clic en WordPad y después en Facturador.", targetId: "icon-facturador", validate: () => userState.selectedIcon === 'facturador' ? {ok:true} : {ok:false, error: "El último ícono seleccionado debe ser el Facturador."} },
-                34: { title: "34. Verificación de accesos directos", steps: "Comprueba que todos los íconos principales estén en su posición correcta.", hint: "Revisa visualmente el escritorio.", targetId: null, validate: () => true ? {ok:true} : {ok:false} },
-                35: { title: "35. Apertura exploratoria múltiple", steps: "Abre 'Este equipo' y WordPad juntos.", hint: "Mantén ambos abiertos.", targetId: null, validate: () => (userState.openApps.includes('este-equipo') && userState.openApps.includes('wordpad')) ? {ok:true} : {ok:false, error: "Abrí 'Este equipo' y WordPad en simultáneo."} },
-                36: { title: "36. Ordenamiento de ventanas del sistema", steps: "Cierra la ventana de WordPad manteniendo 'Este equipo'.", hint: "Cierra WordPad.", targetId: null, validate: () => (!userState.openApps.includes('wordpad') && userState.openApps.includes('este-equipo')) ? {ok:true} : {ok:false, error: "WordPad debe estar cerrado y 'Este equipo' abierto."} },
-                37: { title: "37. Cierre total de exploradores", steps: "Cierra todas las ventanas del explorador.", hint: "Cierra 'Este equipo'.", targetId: null, validate: () => !userState.openApps.includes('este-equipo') ? {ok:true} : {ok:false, error: "Quedan ventanas abiertas."} },
-                38: { title: "38. Test de respuesta de íconos", steps: "Selecciona el ícono de Correo en el escritorio.", hint: "Haz clic simple en Correo.", targetId: "icon-correo", validate: () => userState.selectedIcon === 'correo' ? {ok:true} : {ok:false, error: "El ícono de Correo no está seleccionado."} },
-                39: { title: "39. Preparación para procesador de texto", steps: "Asegúrate de tener el escritorio ordenado antes de abrir WordPad.", hint: "Limpia selecciones.", targetId: null, validate: () => true ? {ok:true} : {ok:false} },
-                40: { title: "40. Consolidación de exploración", steps: "Abre 'Este equipo' para verificar el sistema de archivos.", hint: "Abre 'Este equipo'.", targetId: "icon-este-equipo", validate: () => userState.openApps.includes('este-equipo') ? {ok:true} : {ok:false, error: "Falta abrir 'Este equipo'."} },
+            // MÓDULO 06 (70 al 81)
+            { id: 70, mod: 6, name: "70. Abrir el Correo", title: "Ejercicio 70: Entrar a su Correo", guide: "Abra la aplicación <strong>Correo</strong> <span class='clarification'>(su buzón de cartas digitales)</span>.", btn: "Abrir Buzón de Cartas", ok: "¡Buzón abierto! Tiene mensajes guardados." },
+            { id: 71, mod: 6, name: "71. Redactar Mensaje", title: "Ejercicio 71: Escribir Carta Digital", guide: "Escriba la dirección de un amigo en la casilla <strong>Para</strong> y ponga el motivo en <strong>Asunto</strong>.", btn: "Preparar Mensaje Nuevo", ok: "¡Destinatario y asunto configurados!" },
+            { id: 72, mod: 6, name: "72. Enviar Foto Adjunta", title: "Ejercicio 72: Enganchar un Archivo", guide: "Toque el ganchito de bibliorato <span class='clarification'>(icono de clip)</span> para enviar una foto dentro del mensaje.", btn: "Adjuntar Foto Familiar", ok: "¡Foto enganchada al correo!" },
+            { id: 73, mod: 6, name: "73. Crear Firma Personal", title: "Ejercicio 73: Poner Firma Automática", guide: "Añada un saludo final con su nombre que aparezca solo en cada carta que mande.", btn: "Guardar Firma: 'Un abrazo, Guillermo'", ok: "¡Firma agregada al final de sus cartas!" },
+            { id: 74, mod: 6, name: "74. Marcar Importante", title: "Ejercicio 74: Poner Banderita Roja", guide: "Marque un mensaje de su médico con una bandera para recordarlo primero.", btn: "Marcar Mensaje con Banderita", ok: "¡Carta destacada como importante!" },
+            { id: 75, mod: 6, name: "75. Carpetas de Correo", title: "Ejercicio 75: Guardar Cartas en Archivo", guide: "Mueva el mensaje de la luz a la carpeta 'Servicios y Pagos'.", btn: "Mover Correo a 'Servicios'", ok: "¡Mensaje organizado en su lugar!" },
+            { id: 76, mod: 6, name: "76. Filtro de Correo", title: "Ejercicio 76: Acomodar Avisos Solos", guide: "Indíquele a la casilla que las cartas del banco vayan directo a una carpeta ordenada.", btn: "Crear Regla de Orden Automático", ok: "¡Los mensajes se guardarán solos!" },
+            { id: 77, mod: 6, name: "77. Buscar Mensaje Viejo", title: "Ejercicio 77: Buscar Carta del Año Pasado", guide: "Use la lupa para encontrar un correo donde le mandaron una receta de cocina.", btn: "Buscar 'Receta' en Correos Viejos", ok: "¡Mensaje localizado inmediatamente!" },
+            { id: 78, mod: 6, name: "78. Responder Correo", title: "Ejercicio 78: Contestarle a un Amigo", guide: "Toque la flecha de <strong>Responder</strong> para contestar la carta que le enviaron.", btn: "Escribir Respuesta Rápida", ok: "¡Respuesta enviada a su amigo!" },
+            { id: 79, mod: 6, name: "79. Guardar Contacto", title: "Ejercicio 79: Guardar Dirección de Amigos", guide: "Guarde el correo y nombre de su nieta en su agenda telefónica digital.", btn: "Guardar Nieta en Agenda", ok: "¡Contacto guardado para siempre!" },
+            { id: 80, mod: 6, name: "80. Enviar a Basura Spam", title: "Ejercicio 80: Rechar Correo Falso", guide: "Envíe una propaganda molesta a la carpeta de <strong>Spam</strong> <span class='clarification'>(correo basura no deseado)</span>.", btn: "Mover a Correo No Deseado", ok: "¡Publicidad bloqueada correctamente!" },
+            { id: 81, mod: 6, name: "81. Agendar Turno", title: "Ejercicio 81: Guardar Turno en Calendario", guide: "Pase el aviso del turno médico desde su correo hacia su almanaque digital.", btn: "Agendar Turno en el Almanaque", ok: "¡Recordatorio anotado en el calendario!" },
 
-                // Módulo 4: Procesador WordPad (41 a 55)
-                41: { title: "41. Edición de texto en WordPad", steps: ["Abre WordPad y escribe texto dentro de la hoja blanca."], hint: "Asegúrate de tener WordPad abierto y haber tipeado texto.", targetId: "icon-wordpad", validate: () => (userState.openApps.includes('wordpad') && userState.typedInWordpad) ? {ok:true} : {ok:false, error: "Falta abrir WordPad o escribir texto dentro de la hoja."} },
-                42: { title: "42. Revisión de barra de herramientas WordPad", steps: "Verifica los menús superiores de Archivo, Edición y Ver en WordPad.", hint: "Abre WordPad y observa su barra superior.", targetId: "icon-wordpad", validate: () => userState.openApps.includes('wordpad') ? {ok:true} : {ok:false, error: "WordPad debe estar abierto."} },
-                43: { title: "43. Práctica de escritura extendida", steps: "Continúa tipeando o editando en el área de notas de WordPad.", hint: "Escribe más contenido en el área de texto.", targetId: "icon-wordpad", validate: () => userState.typedInWordpad ? {ok:true} : {ok:false, error: "Aún no se detectó texto escrito en WordPad."} },
-                44: { title: "44. Minimizar distracciones en WordPad", steps: "Mantén abierto únicamente WordPad en la pantalla.", hint: "Cierra las demás aplicaciones.", targetId: null, validate: () => (userState.openApps.includes('wordpad') && userState.openApps.length === 1) ? {ok:true} : {ok:false, error: "Debe estar abierto exclusivamente WordPad."} },
-                45: { title: "45. Cierre de WordPad tras edición", steps: "Cierra la aplicación WordPad guardando los cambios mentalmente.", hint: "Haz clic en la X de WordPad.", targetId: null, validate: () => !userState.openApps.includes('wordpad') ? {ok:true} : {ok:false, error: "WordPad sigue abierto."} },
-                46: { title: "46. Reapertura de procesador de texto", steps: "Vuelve a abrir WordPad desde su ícono en el escritorio.", hint: "Haz doble clic en WordPad.", targetId: "icon-wordpad", validate: () => userState.openApps.includes('wordpad') ? {ok:true} : {ok:false, error: "WordPad no está abierto."} },
-                47: { title: "47. Verificación de persistencia de texto", steps: "Comprueba que el cuadro de texto de WordPad responda al tipeo.", hint: "Escribe en el área de texto.", targetId: "icon-wordpad", validate: () => userState.typedInWordpad ? {ok:true} : {ok:false, error: "Escribe texto en WordPad para validar."} },
-                48: { title: "48. Cierre de WordPad con texto", steps: "Cierra la ventana de WordPad finalizando el ejercicio de redacción.", hint: "Cierra la aplicación.", targetId: null, validate: () => !userState.openApps.includes('wordpad') ? {ok:true} : {ok:false, error: "Cierra WordPad."} },
-                49: { title: "49. Apertura de WordPad vía Menú Inicio", steps: "Abre WordPad utilizando el menú inicio de Windows.", hint: "Usa el menú inicio para iniciar WordPad.", targetId: "start-btn", validate: () => userState.openApps.includes('wordpad') ? {ok:true} : {ok:false, error: "WordPad no se abrió desde el menú inicio."} },
-                50: { title: "50. Cierre de WordPad (Menú Inicio)", steps: "Cierra la ventana de WordPad abierta desde el menú.", hint: "Haz clic en la X.", targetId: null, validate: () => !userState.openApps.includes('wordpad') ? {ok:true} : {ok:false, error: "Cierra la ventana de WordPad."} },
-                51: { title: "51. Combinación WordPad y Este equipo", steps: "Abre WordPad junto con 'Este equipo'.", hint: "Mantén ambos abiertos.", targetId: null, validate: () => (userState.openApps.includes('wordpad') && userState.openApps.includes('este-equipo')) ? {ok:true} : {ok:false, error: "Deben estar abiertos WordPad y 'Este equipo'."} },
-                52: { title: "52. Limpieza de entorno procesador", steps: "Cierra ambas ventanas abiertas.", hint: "Cierra todas las aplicaciones.", targetId: null, validate: () => userState.openApps.length === 0 ? {ok:true} : {ok:false, error: "Cierra las ventanas pendientes."} },
-                53: { title: "53. Selección de WordPad en escritorio", steps: "Haz clic simple en el ícono de WordPad.", hint: "Selecciona WordPad.", targetId: "icon-wordpad", validate: () => userState.selectedIcon === 'wordpad' ? {ok:true} : {ok:false, error: "Selecciona WordPad en el escritorio."} },
-                54: { title: "54. Verificación de estado de texto", steps: "Abre WordPad y comprueba el área de redacción.", hint: "Abre WordPad.", targetId: "icon-wordpad", validate: () => userState.openApps.includes('wordpad') ? {ok:true} : {ok:false, error: "Abre WordPad."} },
-                55: { title: "55. Cierre final de módulo WordPad", steps: "Cierra WordPad para avanzar al módulo de facturación.", hint: "Cierra la ventana.", targetId: null, validate: () => !userState.openApps.includes('wordpad') ? {ok:true} : {ok:false, error: "Cierra WordPad para continuar."} },
+            // MÓDULO 07 (82 al 97)
+            { id: 82, mod: 7, name: "82. Conexión Wi-Fi", title: "Ejercicio 82: Conectarse a Internet", guide: "Busque el nombre de la red de su casa e ingrese la clave en el panel de redes.", btn: "Conectar a Red 'Wi-Fi Casa'", ok: "¡La computadora está conectada a Internet!" },
+            { id: 83, mod: 7, name: "83. Conectar Impresora", title: "Ejercicio 83: Preparar la Impresora", guide: "Verifique que su impresora esté encendida y seleccionada como favorita.", btn: "Elegir Impresora Predeterminada", ok: "¡Impresora lista para imprimir!" },
+            { id: 84, mod: 7, name: "84. Agrandar Letras del Sistema", title: "Ejercicio 84: Ver las Letras Más Grandes", guide: "Aumente el tamaño global del texto para leer sin esfuerzo todos los menús.", btn: "Aumentar Tamaño de Letra a 125%", ok: "¡Las letras ahora son bien grandes!" },
+            { id: 85, mod: 7, name: "85. Regular el Sonido", title: "Ejercicio 85: Subir Volumen del Altavoz", guide: "Toque el parlantito en la franja negra de abajo y suba la barra para escuchar mejor.", btn: "Subir Volumen de la Música", ok: "¡Sonido ajustado con claridad!" },
+            { id: 86, mod: 7, name: "86. Actualizar Windows", title: "Ejercicio 86: Mantener Todo Seguro", guide: "Busque actualizaciones de seguridad para mantener la computadora protegida.", btn: "Buscar Actualizaciones de Windows", ok: "¡El sistema está actualizado y seguro!" },
+            { id: 87, mod: 7, name: "87. Panel de Control", title: "Ejercicio 87: Revisar Ajustes Generales", guide: "Abra el <strong>Panel de Control</strong> <span class='clarification'>(la caja de herramientas de la máquina)</span>.", btn: "Abrir Herramientas del Sistema", ok: "¡Caja de herramientas abierta!" },
+            { id: 88, mod: 7, name: "88. Cerrar Programa Trabado", title: "Ejercicio 88: Destrabar una Aplicación", guide: "Abra el Administrador para destrabar una ventana que se quedó congelada.", btn: "Cerrar Programa Trabado", ok: "¡La computadora volvió a responder bien!" },
+            { id: 89, mod: 7, name: "89. Ver Memoria Libre", title: "Ejercicio 89: Inspeccionar la Memoria", guide: "Consulte cuánta memoria y energía le queda a su equipo de trabajo.", btn: "Revisar Memoria Disponible", ok: "¡Memoria verificada en estado óptimo!" },
+            { id: 90, mod: 7, name: "90. Limpiar Disco Duro", title: "Ejercicio 90: Pasar el Escobillón Digital", guide: "Borre archivos temporales inservibles para dejar la computadora rápida.", btn: "Limpiar Basura del Disco", ok: "¡Espacio limpio y recuperado!" },
+            { id: 91, mod: 7, name: "91. Quitar Juego Viejo", title: "Ejercicio 91: Desinstalar lo que No Usa", guide: "Elimine un programa viejo que ocupa espacio de gusto para liberar memoria.", btn: "Quitar Programa que No Uso", ok: "¡Programa retirado correctamente!" },
+            { id: 92, mod: 7, name: "92. Ajustar la Pantalla", title: "Ejercicio 92: Configurar Reposo", guide: "Ordene que la pantalla se apague sola si usted se retira a tomar un té.", btn: "Apagar Pantalla a los 10 Minutos", ok: "¡Ahorro de energía configurado!" },
+            { id: 93, mod: 7, name: "93. Cambiar la Contraseña", title: "Ejercicio 93: Proteger la Entrada", guide: "Modifique su clave personal para encender la máquina con total privacidad.", btn: "Guardar Clave Nueva", ok: "¡Contraseña actualizada con éxito!" },
+            { id: 94, mod: 7, name: "94. Pasar el Antivirus", title: "Ejercicio 94: Revisar la Salud del Equipo", guide: "Active el <strong>Windows Defender</strong> <span class='clarification'>(el médico/antivirus de la máquina)</span>.", btn: "Analizar Equipo con Antivirus", ok: "¡Equipo libre de virus o riesgos!" },
+            { id: 95, mod: 7, name: "95. Punto de Restauración", title: "Ejercicio 95: Guardar Estado Seguro", guide: "Cree una foto de seguridad por si en el futuro toca algo sin querer.", btn: "Crear Copia de Seguridad Hoy", ok: "¡Punto de restauración guardado!" },
+            { id: 96, mod: 7, name: "96. Poner la Hora Correcta", title: "Ejercicio 96: Ajustar el Reloj", guide: "Asegúrese de que el reloj de la franja negra de abajo muestre la hora oficial.", btn: "Sincronizar Hora por Internet", ok: "¡Reloj puesto en la hora exacta!" },
+            { id: 97, mod: 7, name: "97. Usar la Lupa Digital", title: "Ejercicio 97: Usar la Lupa de Aumento", guide: "Encienda la <strong>Lupa</strong> <span class='clarification'>(herramienta para agrandar cualquier rincón)</span>.", btn: "Activar Lupa en Pantalla", ok: "¡Lupa activada! Puede agrandar lo que desee." },
 
-                // Módulo 5: Facturación Digital (56 to 70)
-                56: { title: "56. Uso del Facturador", steps: ["Abre la aplicación Facturador y genera un comprobante ingresando un cliente."], hint: "Abrí el Facturador y completa la acción de emisión.", targetId: "icon-facturador", validate: () => (userState.openApps.includes('facturador') && userState.facturaUsed) ? {ok:true} : {ok:false, error: "No se abrió el Facturador o no se registró la emisión del comprobante."} },
-                57: { title: "57. Verificación de campos en Facturador", steps: "Abre el Facturador y comprueba el campo de nombre de cliente.", hint: "Abre el Facturador.", targetId: "icon-facturador", validate: () => userState.openApps.includes('facturador') ? {ok:true} : {ok:false, error: "El Facturador debe estar abierto."} },
-                58: { title: "58. Emisión de comprobante rápido", steps: "Ingresa un nombre en el Facturador y pulsa Emitir Factura.", hint: "Completa la emisión en el Facturador.", targetId: "icon-facturador", validate: () => userState.facturaUsed ? {ok:true} : {ok:false, error: "Falta emitir la factura en el sistema."} },
-                59: { title: "59. Cierre de ventana Facturador", steps: "Cierra la aplicación Facturador tras emitir el comprobante.", hint: "Haz clic en la X del Facturador.", targetId: null, validate: () => !userState.openApps.includes('facturador') ? {ok:true} : {ok:false, error: "El Facturador sigue abierto."} },
-                60: { title: "60. Reapertura del Facturador", steps: "Vuelve a abrir el Facturador desde el escritorio.", hint: "Haz doble clic en Facturador.", targetId: "icon-facturador", validate: () => userState.openApps.includes('facturador') ? {ok:true} : {ok:false, error: "El Facturador no está abierto."} },
-                61: { title: "61. Facturación combinada con WordPad", steps: "Abre el Facturador y WordPad en simultáneo.", hint: "Mantén ambos abiertos.", targetId: null, validate: () => (userState.openApps.includes('facturador') && userState.openApps.includes('wordpad')) ? {ok:true} : {ok:false, error: "Deben estar abiertos el Facturador y WordPad."} },
-                62: { title: "62. Cierre de procesador secundario", steps: "Cierra WordPad manteniendo activo el Facturador.", hint: "Cierra WordPad.", targetId: null, validate: () => (!userState.openApps.includes('wordpad') && userState.openApps.includes('facturador')) ? {ok:true} : {ok:false, error: "WordPad debe estar cerrado y el Facturador abierto."} },
-                63: { title: "63. Cierre total de Facturador", steps: "Cierra la ventana del Facturador.", hint: "Haz clic en la cruz de cierre.", targetId: null, validate: () => !userState.openApps.includes('facturador') ? {ok:true} : {ok:false, error: "Cierra el Facturador."} },
-                64: { title: "64. Apertura del Facturador (Menú Inicio)", steps: "Abre el Facturador mediante el menú inicio de Windows.", hint: "Usa el menú inicio.", targetId: "start-btn", validate: () => userState.openApps.includes('facturador') ? {ok:true} : {ok:false, error: "El Facturador debe abrirse desde el menú inicio."} },
-                65: { title: "65. Emisión secundaria de comprobante", steps: "Utiliza el Facturador abierto para validar su funcionamiento.", hint: "Emite o interactúa con el Facturador.", targetId: "icon-facturador", validate: () => userState.openApps.includes('facturador') ? {ok:true} : {ok:false, error: "El Facturador no está abierto."} },
-                66: { title: "66. Cierre de sesión de facturación", steps: "Cierra la ventana del Facturador.", hint: "Cierra la app.", targetId: null, validate: () => !userState.openApps.includes('facturador') ? {ok:true} : {ok:false, error: "Cierra el Facturador."} },
-                67: { title: "67. Selección de ícono Facturador", steps: "Haz clic simple sobre el ícono del Facturador.", hint: "Selecciona el ícono verde.", targetId: "icon-facturador", validate: () => userState.selectedIcon === 'facturador' ? {ok:true} : {ok:false, error: "Selecciona el ícono del Facturador."} },
-                68: { title: "68. Verificación de entorno de facturación", steps: "Abre el Facturador para comprobar su disponibilidad.", hint: "Abre la aplicación.", targetId: "icon-facturador", validate: () => userState.openApps.includes('facturador') ? {ok:true} : {ok:false, error: "Abre el Facturador."} },
-                69: { title: "69. Limpieza de entorno de trabajo", steps: "Cierra todas las aplicaciones activas.", hint: "Cierra el Facturador.", targetId: null, validate: () => userState.openApps.length === 0 ? {ok:true} : {ok:false, error: "Quedan ventanas abiertas."} },
-                70: { title: "70. Consolidación del módulo de facturación", steps: "Asegúrate de que el escritorio esté limpio antes de pasar al correo.", hint: "Verifica escritorio limpio.", targetId: null, validate: () => userState.openApps.length === 0 ? {ok:true} : {ok:false, error: "Cierra las ventanas pendientes."} },
+            // MÓDULO 08 (98 al 100)
+            { id: 98, mod: 8, name: "98. Tarea Completa 1", title: "Ejercicio 98: Facturar, Guardar y Enviar", guide: "Realice el circuito entero: emita una factura digital, guárdela en su carpeta y mándela por correo.", btn: "Completar Circuito de Trabajo 1", ok: "¡Felicitaciones! Ha completado la tarea integral con éxito." },
+            { id: 99, mod: 8, name: "99. Tarea Completa 2", title: "Ejercicio 99: Organizar Fotos y Limpiar", guide: "Cree una carpeta nueva, ordene tres fotografías adentro y limpie la basura que sobra.", btn: "Completar Circuito de Trabajo 2", ok: "¡Estupendo! Organización y limpieza finalizadas." },
+            { id: 100, mod: 8, name: "100. Evaluación Final", title: "Ejercicio 100: Graduación Digital Autónoma", guide: "Demuestre el dominio de su computadora: ajuste el tamaño de letra, escriba una nota y guárdela sin ayuda.", btn: "¡Completar Evaluación Final!", ok: "¡FELICITACIONES! Ha completado exitosamente los 100 ejercicios del curso." }
+        ];
 
-                // Módulo 6: Correo Electrónico (71 a 85)
-                71: { title: "71. Envío de Correo", steps: ["Abre la aplicación de Correo y envía un mensaje de prueba."], hint: "Abrí la app Correo y hacé clic en enviar correo de prueba.", targetId: "icon-correo", validate: () => (userState.openApps.includes('correo') && userState.emailSent) ? {ok:true} : {ok:false, error: "La aplicación de correo no está abierta o no se envió el mensaje."} },
-                72: { title: "72. Inspección de bandeja de entrada", steps: "Abre la aplicación de Correo y revisa la bandeja de entrada.", hint: "Abre la app Correo.", targetId: "icon-correo", validate: () => userState.openApps.includes('correo') ? {ok:true} : {ok:false, error: "La aplicación Correo debe estar abierta."} },
-                73: { title: "73. Envío de mensaje verificado", steps: "Presiona el botón de envío de correo de prueba dentro de la app.", hint: "Envía el correo de prueba.", targetId: "icon-correo", validate: () => userState.emailSent ? {ok:true} : {ok:false, error: "Falta enviar el correo de prueba."} },
-                74: { title: "74. Cierre de cliente de correo", steps: "Cierra la ventana de Correo tras el envío.", hint: "Haz clic en la X de Correo.", targetId: null, validate: () => !userState.openApps.includes('correo') ? {ok:true} : {ok:false, error: "El cliente de correo sigue abierto."} },
-                75: { title: "75. Reapertura de Correo", steps: "Vuelve a abrir la aplicación de Correo desde el escritorio.", hint: "Doble clic en Correo.", targetId: "icon-correo", validate: () => userState.openApps.includes('correo') ? {ok:true} : {ok:false, error: "El Correo no está abierto."} },
-                76: { title: "76. Correo junto con Facturador", steps: "Abre Correo y el Facturador al mismo tiempo.", hint: "Mantén ambos abiertos.", targetId: null, validate: () => (userState.openApps.includes('correo') && userState.openApps.includes('facturador')) ? {ok:true} : {ok:false, error: "Deben estar abiertos Correo y Facturador."} },
-                77: { title: "77. Cierre de Facturador activo", steps: "Cierra el Facturador manteniendo abierto el Correo.", hint: "Cierra el Facturador.", targetId: null, validate: () => (!userState.openApps.includes('facturador') && userState.openApps.includes('correo')) ? {ok:true} : {ok:false, error: "El Facturador debe estar cerrado y Correo abierto."} },
-                78: { title: "78. Cierre de cliente de correo", steps: "Cierra la ventana de Correo.", hint: "Cierra la app de correo.", targetId: null, validate: () => !userState.openApps.includes('correo') ? {ok:true} : {ok:false, error: "Cierra Correo."} },
-                79: { title: "79. Apertura de Correo vía Menú Inicio", steps: "Abre la aplicación Correo mediante el menú inicio.", hint: "Usa el menú inicio.", targetId: "start-btn", validate: () => userState.openApps.includes('correo') ? {ok:true} : {ok:false, error: "El Correo debe abrirse desde el menú inicio."} },
-                80: { title: "80. Cierre de Correo (Menú Inicio)", steps: "Cierra la ventana de Correo abierta.", hint: "Cierra la app.", targetId: null, validate: () => !userState.openApps.includes('correo') ? {ok:true} : {ok:false, error: "Cierra la ventana de Correo."} },
-                81: { title: "81. Selección de ícono Correo", steps: "Haz clic simple sobre el ícono de Correo en el escritorio.", hint: "Selecciona Correo.", targetId: "icon-correo", validate: () => userState.selectedIcon === 'correo' ? {ok:true} : {ok:false, error: "Selecciona el ícono de Correo."} },
-                82: { title: "82. Verificación de conectividad de correo", steps: "Abre el Correo para comprobar su interfaz.", hint: "Abre la aplicación.", targetId: "icon-correo", validate: () => userState.openApps.includes('correo') ? {ok:true} : {ok:false, error: "Abre el Correo."} },
-                83: { title: "83. Envío repetido de validación", steps: "Asegúrate de haber ejecutado el envío de correo de prueba.", hint: "Envía el correo.", targetId: "icon-correo", validate: () => userState.emailSent ? {ok:true} : {ok:false, error: "Falta registrar el envío de correo."} },
-                84: { title: "84. Limpieza de aplicaciones de comunicación", steps: "Cierra la app de Correo.", hint: "Cierra la ventana.", targetId: null, validate: () => !userState.openApps.includes('correo') ? {ok:true} : {ok:false, error: "Cierra Correo."} },
-                85: { title: "85. Consolidación del módulo de correo", steps: "Verifica que no queden ventanas abiertas antes del último módulo.", hint: "Escritorio limpio.", targetId: null, validate: () => userState.openApps.length === 0 ? {ok:true} : {ok:false, error: "Cierra las ventanas activas."} },
+        let currentActiveId = 1;
 
-                // Módulo 7: Herramientas Útiles y Papelera (86 a 95)
-                86: { title: "86. Simulación de Papelera", steps: ["Abre la papelera de reciclaje y simula eliminar un archivo."], hint: "Abrí la papelera y hacé clic en 'Simular eliminar archivo'.", targetId: "icon-papelera", validate: () => (userState.openApps.includes('papelera') && userState.fileDeleted) ? {ok:true} : {ok:false, error: "No se detectó la papelera abierta o el archivo enviado a la papelera."} },
-                87: { title: "87. Restauración de elementos en Papelera", steps: "Utiliza el botón de restaurar elementos dentro de la Papelera abierta.", hint: "Haz clic en 'Restaurar elementos'.", targetId: "icon-papelera", validate: () => (!userState.fileDeleted && userState.openApps.includes('papelera')) ? {ok:true} : {ok:false, error: "Debes tener la papelera abierta y haber restaurado los elementos."} },
-                88: { title: "88. Cierre de la Papelera de reciclaje", steps: "Cierra la ventana de la Papelera.", hint: "Haz clic en la X de la Papelera.", targetId: null, validate: () => !userState.openApps.includes('papelera') ? {ok:true} : {ok:false, error: "La Papelera sigue abierta."} },
-                89: { title: "89. Apertura de Papelera vía Menú Inicio", steps: "Abre la Papelera de reciclaje utilizando el menú inicio.", hint: "Usa el menú inicio para abrir la Papelera.", targetId: "start-btn", validate: () => userState.openApps.includes('papelera') ? {ok:true} : {ok:false, error: "La Papelera debe abrirse desde el menú inicio."} },
-                90: { title: "90. Cierre de Papelera (Menú Inicio)", steps: "Cierra la ventana de la Papelera.", hint: "Cierra la aplicación.", targetId: null, validate: () => !userState.openApps.includes('papelera') ? {ok:true} : {ok:false, error: "Cierra la Papelera."} },
-                91: { title: "91. Selección del último ícono", steps: "Haz clic simple sobre el ícono de la Papelera al final del escritorio.", hint: "Selecciona la Papelera.", targetId: "icon-papelera", validate: () => userState.selectedIcon === 'papelera' ? {ok:true} : {ok:false, error: "Selecciona el ícono de la Papelera al final del escritorio."} },
-                92: { title: "92. Verificación de estado de papelera", steps: "Abre la Papelera para comprobar su estado actual.", hint: "Abre la Papelera.", targetId: "icon-papelera", validate: () => userState.openApps.includes('papelera') ? {ok:true} : {ok:false, error: "Abre la Papelera de reciclaje."} },
-                93: { title: "93. Operación de eliminación simulada", steps: "Realiza una simulación de eliminación de archivo dentro de la Papelera.", hint: "Haz clic en simular eliminar.", targetId: "icon-papelera", validate: () => userState.fileDeleted ? {ok:true} : {ok:false, error: "Falta simular la eliminación del archivo."} },
-                94: { title: "94. Limpieza final de papelera", steps: "Restaura los elementos eliminados para dejar la papelera vacía.", hint: "Haz clic en restaurar.", targetId: "icon-papelera", validate: () => !userState.fileDeleted ? {ok:true} : {ok:false, error: "La papelera debe quedar restaurada."} },
-                95: { title: "95. Cierre de herramientas del sistema", steps: "Cierra todas las ventanas del sistema.", hint: "Cierra la Papelera.", targetId: null, validate: () => userState.openApps.length === 0 ? {ok:true} : {ok:false, error: "Quedan ventanas abiertas."} },
+        function selectModule(modNum) {
+            document.querySelectorAll('.module-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.module-btn')[modNum - 1].classList.add('active');
 
-                // Módulo 8: Integración Total (96 a 100)
-                96: { title: "96. Integración: Este equipo y WordPad", steps: "Abre simultáneamente 'Este equipo' y WordPad.", hint: "Abre ambos programas juntos.", targetId: null, validate: () => (userState.openApps.includes('este-equipo') && userState.openApps.includes('wordpad')) ? {ok:true} : {ok:false, error: "Deben estar abiertos 'Este equipo' y WordPad."} },
-                97: { title: "97. Integración: Facturador y Correo", steps: "Abre simultáneamente el Facturador y el Correo.", hint: "Abre ambas herramientas corporativas.", targetId: null, validate: () => (userState.openApps.includes('facturador') && userState.openApps.includes('correo')) ? {ok:true} : {ok:false, error: "Deben estar abiertos el Facturador y el Correo."} },
-                98: { title: "98. Multitarea avanzada (3 aplicaciones)", steps: "Mantén abiertos WordPad, Facturador y Correo al mismo tiempo.", hint: "Abre los tres programas en simultáneo.", targetId: null, validate: () => (userState.openApps.includes('wordpad') && userState.openApps.includes('facturador') && userState.openApps.includes('correo')) ? {ok:true} : {ok:false, error: "Falta tener abiertos WordPad, Facturador y Correo al mismo tiempo."} },
-                99: { title: "99. Prueba integral de menú inicio", steps: "Abre el menú de inicio y verifica su funcionamiento global.", hint: "Haz clic en el botón de Windows.", targetId: "start-btn", validate: () => userState.startMenuOpen ? {ok:true} : {ok:false, error: "El menú de inicio debe estar abierto para esta prueba integral."} },
-                100: { title: "100. Graduación y Examen Final del Simulador", steps: ["Cierra todas las ventanas, limpia cualquier selección y deja el escritorio impecable para finalizar la capacitación."], hint: "Cierra todas las aplicaciones y deselecciona cualquier ícono.", targetId: null, validate: () => (userState.openApps.length === 0 && userState.selectedIcon === null) ? {ok:true} : {ok:false, error: "Para aprobar el examen final (Ejercicio 100), cerrá todas las ventanas y asegurate de no tener ningún ícono seleccionado."} }
-            };
+            const filtered = allExercises.filter(ex => ex.mod === modNum);
+            const listContainer = document.getElementById('exercise-list');
+            listContainer.innerHTML = '';
 
-            // Retornar la regla específica del mapa o una regla personalizada robusta si faltara
-            if (exercisesMap[num]) {
-                return exercisesMap[num];
-            }
+            document.getElementById('list-header').innerText = `Módulo 0${modNum} (${filtered.length} Ejercicios)`;
 
-            // Fallback preventivo específico por módulo por si acaso
-            return {
-                title: `Ejercicio ${num}: Práctica avanzada (${getModuleTitle(num)})`,
-                steps: [`Realiza la interacción correspondiente al objetivo ${num} manteniendo activas las herramientas requeridas.`],
-                hint: "Sigue los lineamientos del módulo actual.",
-                targetId: null,
-                validate: () => userState.openApps.length > 0 ? {ok:true} : {ok:false, error: `Para validar el Ejercicio ${num}, interactúa con los componentes del sistema.`}
-            };
-        }
-
-        function changeExercise(num) {
-            localStorage.setItem('sim_current_ex', num);
-            document.getElementById('exercise-counter').innerText = 'Ej. ' + num + ' de 100';
-            const inst = document.getElementById('exercise-instructions');
-            const data = getExerciseDetails(parseInt(num));
-
-            let html = `<h3>${data.title}</h3><p>Para completar este objetivo:</p><ol style="margin-left: 20px; line-height: 1.6;">`;
-            data.steps.forEach(step => {
-                html += `<li>${step}</li>`;
+            filtered.forEach((ex, idx) => {
+                const item = document.createElement('button');
+                item.className = `item-btn ${ex.id === currentActiveId ? 'active' : ''}`;
+                item.innerText = ex.name;
+                item.onclick = () => loadExercise(ex.id);
+                listContainer.appendChild(item);
             });
-            html += `</ol>`;
-            inst.innerHTML = html;
-        }
 
-        changeExercise(savedEx);
-
-        function toggleStartMenu() {
-            const menu = document.getElementById('start-menu');
-            const isOpen = menu.style.display === 'flex';
-            menu.style.display = isOpen ? 'none' : 'flex';
-            userState.startMenuOpen = !isOpen;
-        }
-
-        function openApp(appId) {
-            const win = document.getElementById('window-' + appId);
-            if (win) {
-                document.querySelectorAll('.app-window').forEach(w => w.style.display = 'none');
-                win.style.display = 'flex';
-                if (!userState.openApps.includes(appId)) {
-                    userState.openApps.push(appId);
-                }
-            } else {
-                alert("La aplicación seleccionada se abrirá en breve.");
-            }
-            document.getElementById('start-menu').style.display = 'none';
-            userState.startMenuOpen = false;
-        }
-
-        function closeApp(appId) {
-            document.getElementById('window-' + appId).style.display = 'none';
-            userState.openApps = userState.openApps.filter(id => id !== appId);
-        }
-
-        function selectIcon(el, appId) {
-            document.querySelectorAll('.desktop-icon').forEach(i => i.style.background = 'transparent');
-            el.style.background = 'rgba(255, 255, 255, 0.25)';
-            userState.selectedIcon = appId;
-        }
-
-        function simulateDeleteFile() {
-            userState.fileDeleted = true;
-            document.getElementById('trash-status').innerText = "Estado: Hay 1 archivo simulado en la papelera.";
-            alert("Archivo enviado a la papelera correctamente.");
-        }
-
-        function simulateRestoreFile() {
-            userState.fileDeleted = false;
-            document.getElementById('trash-status').innerText = "La papelera está vacía actualmente.";
-            alert("Archivo restaurado a su ubicación original.");
-        }
-
-        function verifyExercise() {
-            const num = parseInt(document.getElementById('exercise-select').value);
-            const data = getExerciseDetails(num);
-            const res = data.validate();
-
-            if (res.ok) {
-                alert(`¡Excelente trabajo! Ejercicio ${num} completado correctamente.`);
-                
-                if (!userState.completedExercises.includes(num)) {
-                    userState.completedExercises.push(num);
-                    localStorage.setItem('sim_completed', JSON.stringify(userState.completedExercises));
-                    
-                    let opt = exerciseSelect.options[exerciseSelect.selectedIndex];
-                    if (!opt.text.includes("✓")) opt.text += " ✓";
-                }
-
-                if (num < 100) {
-                    document.getElementById('exercise-select').value = num + 1;
-                    changeExercise(num + 1);
-                }
-            } else {
-                alert(`❌ No se pudo validar el Ejercicio ${num}.\n\nMotivo: ${res.error}\n\n💡 Revisá la consigna o utilizá el botón 'Pista' para recibir ayuda visual.`);
+            if (filtered.length > 0) {
+                loadExercise(filtered[0].id);
             }
         }
 
-        function resetExercise() {
-            userState.openApps = [];
-            userState.selectedIcon = null;
-            userState.startMenuOpen = false;
-            userState.typedInWordpad = false;
-            userState.facturaUsed = false;
-            userState.emailSent = false;
-            userState.fileDeleted = false;
-            document.querySelectorAll('.app-window').forEach(w => w.style.display = 'none');
-            document.getElementById('start-menu').style.display = 'none';
-            document.querySelectorAll('.desktop-icon').forEach(i => {
-                i.style.background = 'transparent';
-                i.classList.remove('highlight-target');
+        function loadExercise(exId) {
+            currentActiveId = exId;
+            const ex = allExercises.find(e => e.id === exId);
+
+            document.querySelectorAll('.item-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.innerText.includes(ex.name)) {
+                    btn.classList.add('active');
+                }
             });
-            alert("Entorno reiniciado.");
-        }
-        
-        function showHint() {
-            const num = document.getElementById('exercise-select').value;
-            const data = getExerciseDetails(parseInt(num));
-            
-            document.querySelectorAll('.desktop-icon, #start-btn').forEach(el => el.classList.remove('highlight-target'));
 
-            if (data.targetId) {
-                const targetEl = document.getElementById(data.targetId);
-                if (targetEl) {
-                    targetEl.classList.add('highlight-target');
-                    setTimeout(() => targetEl.classList.remove('highlight-target'), 5000);
-                }
-            }
+            document.getElementById('ex-title').innerText = ex.title;
+            document.getElementById('ex-badge').innerText = `Ejercicio ${ex.id} / 100`;
+            document.getElementById('ex-guide').innerHTML = ex.guide;
 
-            alert("💡 Pista para el Ejercicio " + num + ":\n\n" + data.hint + "\n\n(Nota: Si el objetivo está en pantalla, lo verás parpadear resaltado durante unos segundos).");
+            document.getElementById('ex-canvas').innerHTML = `
+                <button class="action-btn" onclick="completeStep('${ex.ok}')">${ex.btn}</button>
+            `;
         }
 
-        function openStats() {
-            const completedCount = userState.completedExercises.length;
-            const percent = Math.round((completedCount / 100) * 100);
-            
-            document.getElementById('stat-completed').innerText = completedCount;
-            document.getElementById('stat-percentage').innerText = percent + "%";
-            document.getElementById('stat-module').innerText = getModuleTitle(parseInt(document.getElementById('exercise-select').value));
-            
-            document.getElementById('stats-modal').style.display = 'flex';
+        function completeStep(okMsg) {
+            document.getElementById('ex-canvas').innerHTML = `
+                <div style="color: #107c41; font-size: 18px; font-weight: bold; margin-bottom: 12px;">&#10004; ${okMsg}</div>
+                <p style="font-size: 14px; color: #555;">¡Paso realizado correctamente! Puede elegir el siguiente ejercicio en la lista del centro.</p>
+            `;
         }
 
-        function closeStats() {
-            document.getElementById('stats-modal').style.display = 'none';
+        function updateClock() {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            const dateStr = now.toLocaleDateString();
+            document.getElementById('clock-display').innerHTML = `<div>${timeStr}</div><div style="font-size:11px;">${dateStr}</div>`;
         }
 
-        document.addEventListener('click', function(e) {
-            const menu = document.getElementById('start-menu');
-            const btn = document.getElementById('start-btn');
-            if (menu.style.display === 'flex' && !menu.contains(e.target) && !btn.contains(e.target)) {
-                menu.style.display = 'none';
-                userState.startMenuOpen = false;
-            }
-        });
+        setInterval(updateClock, 1000);
+        updateClock();
+        selectModule(1);
     </script>
 </body>
 </html>
