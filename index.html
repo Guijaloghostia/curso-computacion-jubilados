@@ -1,460 +1,416 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulador Windows 10 - Eterna Juventud (100 Ejercicios Interactivos)</title>
-    <style>
-        :root {
-            --win-bg: #0063b1;
-            --taskbar-bg: #1f1f1f;
-            --panel-bg: #2b2b2b;
-            --accent: #0078d7;
-            --success: #107c41;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulador de Capacitación Digital - 100 Ejercicios Completos</title>
+  <style>
+    :root {
+      --bg-header: #1e293b;
+      --bg-sidebar: #111827;
+      --bg-desktop: #1e3a8a;
+      --taskbar-bg: rgba(15, 23, 42, 0.95);
+      --accent-blue: #0284c7;
+      --accent-green: #22c55e;
+      --text-light: #f8fafc;
+      --window-bg: #ffffff;
+    }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            user-select: none;
-        }
+    * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
 
-        body {
-            display: flex;
-            height: 100vh;
-            overflow: hidden;
-            background-color: #000;
-            color: #fff;
-        }
+    body { display: flex; flex-direction: column; height: 100vh; overflow: hidden; background-color: #000; }
 
-        /* PANEL LATERAL DE EJERCICIOS */
-        #exercisePanel {
-            width: 400px;
-            background-color: var(--panel-bg);
-            border-right: 2px solid #3f3f3f;
-            display: flex;
-            flex-direction: column;
-            padding: 20px;
-            gap: 15px;
-            box-shadow: 4px 0 10px rgba(0, 0, 0, 0.5);
-            z-index: 100;
-        }
+    /* LAYOUT PRINCIPAL */
+    .app-container { display: flex; flex: 1; height: 100vh; }
 
-        .panel-header h1 {
-            font-size: 1.2rem;
-            color: #00a4ef;
-            margin-bottom: 5px;
-        }
+    /* PANEL LATERAL DE CAPACITACIÓN DIGITAL */
+    aside {
+      width: 360px;
+      background: var(--bg-sidebar);
+      color: var(--text-light);
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+      border-right: 1px solid #334155;
+      box-shadow: 4px 0 15px rgba(0,0,0,0.5);
+      z-index: 100;
+    }
 
-        select {
-            width: 100%;
-            padding: 10px;
-            background: #3f3f3f;
-            color: #fff;
-            border: 1px solid #555;
-            border-radius: 4px;
-            font-size: 0.9rem;
-            cursor: pointer;
-        }
+    .brand-title {
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: #38bdf8;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-        .exercise-card {
-            background: #1f1f1f;
-            border-radius: 6px;
-            padding: 15px;
-            border-left: 4px solid var(--accent);
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            overflow-y: auto;
-        }
+    .exercise-select-box {
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 6px;
+      background: #1e293b;
+      color: white;
+      border: 1px solid #475569;
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+      cursor: pointer;
+    }
 
-        .badge-module {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            background: #3a3a3a;
-            padding: 3px 8px;
-            border-radius: 3px;
-            width: fit-content;
-            color: #aaa;
-        }
+    .module-badge {
+      background: #334155;
+      color: #38bdf8;
+      font-size: 0.75rem;
+      font-weight: bold;
+      padding: 4px 8px;
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 10px;
+      width: fit-content;
+      text-transform: uppercase;
+    }
 
-        .exercise-title {
-            font-size: 1.1rem;
-            color: #fff;
-        }
+    .exercise-card {
+      background: #1e293b;
+      border-radius: 8px;
+      padding: 16px;
+      border: 1px solid #334155;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
 
-        .exercise-text {
-            font-size: 0.95rem;
-            line-height: 1.4;
-            color: #ddd;
-        }
+    .exercise-card h2 { font-size: 1.15rem; color: #f8fafc; line-height: 1.3; }
 
-        .clarification {
-            color: #9cdcfcfe;
-            font-style: italic;
-        }
+    .context-box {
+      background: rgba(2, 132, 199, 0.15);
+      border-left: 4px solid #0284c7;
+      padding: 8px 12px;
+      font-size: 0.85rem;
+      color: #bae6fd;
+      border-radius: 0 4px 4px 0;
+      font-weight: 500;
+    }
 
-        .hint-box {
-            background: #2d2d00;
-            border: 1px solid #808000;
-            padding: 10px;
-            border-radius: 4px;
-            font-size: 0.85rem;
-            color: #ffff80;
-        }
+    .instruction-text { font-size: 0.95rem; line-height: 1.45; color: #cbd5e1; }
 
-        .ok-box {
-            background: var(--success);
-            color: white;
-            padding: 12px;
-            border-radius: 4px;
-            font-weight: bold;
-            text-align: center;
-            animation: popIn 0.3s ease;
-        }
+    .hint-btn {
+      background: rgba(234, 179, 8, 0.1);
+      border: 1px solid #eab308;
+      color: #fde047;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.85rem;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.2s;
+    }
+    .hint-btn:hover { background: rgba(234, 179, 8, 0.2); }
 
-        .hidden { display: none !important; }
+    .hint-text {
+      font-size: 0.82rem;
+      color: #fef08a;
+      background: #422006;
+      padding: 10px;
+      border-radius: 6px;
+      display: none;
+      line-height: 1.35;
+      border: 1px solid #713f12;
+    }
 
-        .nav-buttons {
-            display: flex;
-            gap: 10px;
-        }
+    .feedback-box {
+      padding: 12px;
+      border-radius: 6px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 0.9rem;
+      display: none;
+    }
+    .feedback-box.success { background: #15803d; color: #f0fdf4; display: block; border: 1px solid #22c55e; }
 
-        .btn {
-            flex: 1;
-            padding: 10px;
-            border: none;
-            border-radius: 4px;
-            background: var(--accent);
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
+    .nav-buttons { display: flex; gap: 10px; margin-top: auto; padding-top: 15px; }
+    .nav-buttons button {
+      flex: 1;
+      padding: 10px;
+      border-radius: 6px;
+      border: none;
+      background: #0284c7;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: background 0.2s;
+    }
+    .nav-buttons button:hover { background: #0369a1; }
 
-        .btn:disabled {
-            background: #444;
-            cursor: not-allowed;
-        }
+    /* ENTORNO SIMULADOR (DESKTOP) */
+    main {
+      flex: 1;
+      position: relative;
+      background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
 
-        /* ENTORNO SIMULADOR WINDOWS 10 */
-        #simulator {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            background: var(--win-bg) url('https://picsum.photos/id/1018/1200/800') center/cover no-repeat;
-        }
+    .desktop-area {
+      flex: 1;
+      position: relative;
+      padding: 25px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, 90px);
+      grid-auto-rows: 95px;
+      gap: 15px;
+      align-content: start;
+      justify-items: center;
+      background: radial-gradient(circle at 70% 30%, rgba(56, 189, 248, 0.15), transparent 60%),
+                  linear-gradient(to bottom, #1e40af, #0f172a);
+    }
 
-        #desktop {
-            flex-grow: 1;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            flex-wrap: wrap;
-            align-content: flex-start;
-            gap: 20px;
-            position: relative;
-        }
+    .desktop-icon {
+      width: 85px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      cursor: pointer;
+      padding: 8px 4px;
+      border-radius: 6px;
+      transition: background 0.2s, border 0.2s;
+      border: 1px solid transparent;
+    }
+    .desktop-icon:hover { background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.2); }
+    .desktop-icon.selected { background: rgba(255, 255, 255, 0.25); border: 1px solid rgba(255, 255, 255, 0.4); }
+    .desktop-icon svg { width: 42px; height: 42px; filter: drop-shadow(0px 3px 5px rgba(0,0,0,0.5)); }
+    .desktop-icon span { font-size: 0.78rem; margin-top: 6px; text-shadow: 1px 1px 3px rgba(0,0,0,0.9); line-height: 1.1; font-weight: 500; }
 
-        .desktop-icon {
-            width: 85px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            gap: 5px;
-            padding: 8px;
-            border-radius: 4px;
-            cursor: pointer;
-            border: 1px solid transparent;
-        }
+    /* VENTANAS SIMULADAS */
+    .window {
+      position: absolute; top: 50px; left: 120px; width: 560px; height: 380px;
+      background: var(--window-bg); border-radius: 8px;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.6); border: 1px solid #475569;
+      display: none; flex-direction: column; z-index: 10; overflow: hidden;
+    }
+    .window.active { display: flex; }
 
-        .desktop-icon:hover {
-            background: rgba(255, 255, 255, 0.15);
-            border-color: rgba(255, 255, 255, 0.3);
-        }
+    .window-header {
+      height: 38px; background: #f1f5f9; border-bottom: 1px solid #cbd5e1;
+      display: flex; align-items: center; justify-content: space-between; padding: 0 12px; cursor: move;
+    }
+    .window-title { font-size: 0.88rem; font-weight: 600; color: #334155; display: flex; align-items: center; gap: 8px; }
+    .window-controls { display: flex; gap: 8px; }
+    .win-btn { width: 12px; height: 12px; border-radius: 50%; border: none; cursor: pointer; }
+    .win-btn.close { background: #ef4444; }
+    .win-btn.min { background: #f59e0b; }
+    .win-btn.max { background: #10b981; }
 
-        .desktop-icon img {
-            width: 40px;
-            height: 40px;
-            pointer-events: none;
-        }
+    .window-body { flex: 1; padding: 16px; overflow-y: auto; color: #1e293b; background: #fafafa; }
 
-        .desktop-icon span {
-            font-size: 0.8rem;
-            text-shadow: 1px 1px 2px #000;
-        }
+    /* BARRA DE TAREAS */
+    .taskbar {
+      height: 48px; background: var(--taskbar-bg); backdrop-filter: blur(12px);
+      display: flex; align-items: center; justify-content: space-between; padding: 0 12px;
+      border-top: 1px solid rgba(255,255,255,0.1); z-index: 500;
+    }
+    .taskbar-left, .taskbar-right { display: flex; align-items: center; gap: 10px; }
+    
+    .start-btn {
+      display: flex; align-items: center; justify-content: center; width: 40px; height: 36px;
+      border-radius: 6px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+      cursor: pointer; transition: background 0.2s;
+    }
+    .start-btn:hover { background: rgba(255,255,255,0.25); }
 
-        /* VENTANAS SIMULADAS */
-        .window {
-            position: absolute;
-            width: 480px;
-            height: 320px;
-            background: #ffffff;
-            color: #000;
-            border-radius: 6px 6px 0 0;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-            display: flex;
-            flex-direction: column;
-            top: 80px;
-            left: 80px;
-            overflow: hidden;
-            border: 1px solid #777;
-        }
+    .clock { color: white; font-size: 0.78rem; text-align: right; font-weight: 500; cursor: pointer; }
 
-        .window-header {
-            background: #eee;
-            padding: 8px 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #ccc;
-            cursor: move;
-        }
+    /* MENÚ INICIO Y CONTEXTUAL */
+    .start-menu {
+      position: absolute; bottom: 55px; left: 10px; width: 280px; background: #1e293b;
+      border: 1px solid #475569; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+      display: none; flex-direction: column; padding: 10px; z-index: 600; color: white;
+    }
+    .start-menu.active { display: flex; }
+    .start-item { padding: 10px 12px; border-radius: 6px; font-size: 0.88rem; cursor: pointer; display: flex; align-items: center; gap: 10px; }
+    .start-item:hover { background: #334155; }
 
-        .window-title {
-            font-size: 0.85rem;
-            font-weight: bold;
-            color: #333;
-        }
+    .context-menu {
+      position: absolute; width: 170px; background: #ffffff; border: 1px solid #cbd5e1;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.2); border-radius: 6px; display: none;
+      flex-direction: column; padding: 5px 0; z-index: 700;
+    }
+    .context-item { padding: 8px 14px; font-size: 0.82rem; color: #334155; cursor: pointer; }
+    .context-item:hover { background: #f1f5f9; color: #0284c7; font-weight: 600; }
 
-        .window-controls {
-            display: flex;
-            gap: 5px;
-        }
-
-        .win-btn {
-            width: 25px;
-            height: 20px;
-            border: none;
-            background: transparent;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .win-btn-close:hover {
-            background: #e81123;
-            color: white;
-        }
-
-        .window-toolbar {
-            display: flex;
-            gap: 5px;
-            padding: 5px;
-            background: #f4f4f4;
-            border-bottom: 1px solid #ddd;
-            flex-wrap: wrap;
-        }
-
-        .tool-btn {
-            padding: 3px 8px;
-            font-size: 0.75rem;
-            background: #fff;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-            cursor: pointer;
-        }
-
-        .window-body {
-            flex-grow: 1;
-            padding: 10px;
-            background: #fff;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .window-body textarea, .window-body input {
-            width: 100%;
-            border: 1px solid #ccc;
-            padding: 8px;
-            outline: none;
-        }
-
-        .window-body textarea {
-            flex-grow: 1;
-            resize: none;
-        }
-
-        /* BARRA DE TAREAS */
-        #taskbar {
-            height: 40px;
-            background: var(--taskbar-bg);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 10px;
-            z-index: 10;
-        }
-
-        .taskbar-left {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .start-btn {
-            background: transparent;
-            border: none;
-            color: white;
-            padding: 8px 12px;
-            font-size: 1.1rem;
-            cursor: pointer;
-        }
-
-        .start-btn:hover { background: rgba(255,255,255,0.1); }
-
-        .system-tray {
-            display: flex;
-            gap: 12px;
-            font-size: 0.8rem;
-            align-items: center;
-        }
-
-        /* MENÚ CONTEXTUAL */
-        .context-menu {
-            position: absolute;
-            background: #2b2b2b;
-            border: 1px solid #444;
-            width: 180px;
-            border-radius: 4px;
-            box-shadow: 2px 2px 10px rgba(0,0,0,0.5);
-            z-index: 200;
-        }
-
-        .context-menu-item {
-            padding: 8px 12px;
-            font-size: 0.85rem;
-            cursor: pointer;
-        }
-
-        .context-menu-item:hover { background: var(--accent); }
-
-        @keyframes popIn {
-            from { transform: scale(0.9); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-    </style>
+    .form-group { margin-bottom: 12px; }
+    .form-group label { display: block; font-size: 0.8rem; font-weight: bold; margin-bottom: 5px; color: #475569; }
+    .form-group input, .form-group textarea { width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 0.88rem; outline: none; }
+    .form-group input:focus, .form-group textarea:focus { border-color: #0284c7; }
+    .btn-action { background: #0284c7; color: white; border: none; padding: 8px 14px; border-radius: 4px; cursor: pointer; font-size: 0.85rem; font-weight: 600; }
+    .btn-action:hover { background: #0369a1; }
+  </style>
 </head>
-<body>
+<body onclick="handleGlobalClick(event)">
 
-    <!-- PANEL DE CONTROL Y GUÍA DE EJERCICIOS -->
-    <div id="exercisePanel">
-        <div class="panel-header">
-            <h1>Capacitación Digital</h1>
-            <p style="font-size: 0.8rem; color: #aaa;">Plataforma Eterna Juventud</p>
+  <div class="app-container">
+    <aside>
+      <div class="brand-title">Capacitación Digital</div>
+      <select id="exerciseSelect" class="exercise-select-box" onchange="jumpToExercise(parseInt(this.value))"></select>
+
+      <div class="exercise-card">
+        <div id="moduleBadge" class="module-badge">Módulo 1</div>
+        <h2 id="exTitle">Cargando ejercicio...</h2>
+        <div id="exContext" class="context-box">📍 Ubicación inicial: Escritorio principal</div>
+        <div id="exInstruction" class="instruction-text">Cargando consigna...</div>
+        
+        <button class="hint-btn" onclick="toggleHint()">💡 Pista: Ver ayuda paso a paso</button>
+        <div id="hintText" class="hint-text"></div>
+        <div id="feedbackBox" class="feedback-box">¡Correcto! Avanzando al siguiente paso...</div>
+      </div>
+
+      <div class="nav-buttons">
+        <button onclick="prevExercise()">Anterior</button>
+        <button onclick="nextExercise()">Siguiente</button>
+      </div>
+    </aside>
+
+    <main id="desktopArea" class="desktop-area" oncontextmenu="handleDesktopContext(event)">
+      <!-- ICONOS EN ESCRITORIO -->
+      <div class="desktop-icon" id="icon-wordpad" onclick="handleAction('icon-wordpad', 'click', event)" ondblclick="handleAction('icon-wordpad', 'dblclick', event); openWindow('win-wordpad');">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        <span>WordPad</span>
+      </div>
+
+      <div class="desktop-icon" id="icon-facturador" onclick="handleAction('icon-facturador', 'click', event)" ondblclick="handleAction('icon-facturador', 'dblclick', event); openWindow('win-facturador');">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg>
+        <span>Facturador</span>
+      </div>
+
+      <div class="desktop-icon" id="icon-pc" onclick="handleAction('icon-pc', 'click', event)" ondblclick="handleAction('icon-pc', 'dblclick', event); openWindow('win-pc');" oncontextmenu="handleAction('icon-pc', 'contextmenu', event); showContextMenu(event, 'pc');">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        <span>Este equipo</span>
+      </div>
+
+      <div class="desktop-icon" id="icon-trash" onclick="handleAction('icon-trash', 'click', event)" oncontextmenu="handleAction('icon-trash', 'contextmenu', event); showContextMenu(event, 'trash');">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+        <span>Papelera</span>
+      </div>
+
+      <div class="desktop-icon" id="icon-mail" onclick="handleAction('icon-mail', 'click', event)" ondblclick="handleAction('icon-mail', 'dblclick', event); openWindow('win-mail');">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#facc15" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <span>Correo</span>
+      </div>
+
+      <!-- VENTANAS SIMULADAS -->
+      <div class="window" id="win-wordpad">
+        <div class="window-header" onclick="handleAction('win-wordpad-header', 'click', event)">
+          <div class="window-title">📝 Documento sin título - WordPad</div>
+          <div class="window-controls">
+            <button class="win-btn min" id="wordpad-min" onclick="handleAction('wordpad-min', 'click', event); closeWindow('win-wordpad');"></button>
+            <button class="win-btn max" id="wordpad-max" onclick="handleAction('wordpad-max', 'click', event);"></button>
+            <button class="win-btn close" id="wordpad-close" onclick="closeWindow('win-wordpad'); handleAction('wordpad-close', 'click', event);"></button>
+          </div>
         </div>
-
-        <select id="exerciseSelector"></select>
-
-        <div class="exercise-card">
-            <span id="exerciseModule" class="badge-module">Módulo 1</span>
-            <h2 id="exerciseTitle" class="exercise-title">Título del ejercicio</h2>
-            <p id="exerciseText" class="exercise-text">Consigna...</p>
-            <div id="exerciseHint" class="hint-box">Pista...</div>
-            <div id="exerciseOk" class="ok-box hidden">¡Excelente!</div>
+        <div class="window-body">
+          <textarea id="wordpad-text" style="width:100%; height:75%; padding:10px; border: 1px solid #ccc; border-radius: 4px;" placeholder="Empiece a escribir su documento aquí..." onclick="handleAction('wordpad-text-click', 'click', event)" oninput="handleAction('wordpad-text', 'input', event)"></textarea>
+          <button class="btn-action" id="wordpad-save" style="margin-top:10px;" onclick="handleAction('wordpad-save', 'click', event)">Guardar Documento</button>
         </div>
+      </div>
 
-        <div class="nav-buttons">
-            <button id="prevBtn" class="btn" onclick="prevExercise()">Anterior</button>
-            <button id="nextBtn" class="btn" onclick="nextExercise()">Siguiente</button>
+      <div class="window" id="win-facturador">
+        <div class="window-header">
+          <div class="window-title">📊 Sistema Facturador Digital</div>
+          <div class="window-controls">
+            <button class="win-btn min" id="fac-min" onclick="handleAction('fac-min', 'click', event); closeWindow('win-facturador');"></button>
+            <button class="win-btn close" id="fac-close" onclick="closeWindow('win-facturador'); handleAction('fac-close', 'click', event);"></button>
+          </div>
         </div>
-    </div>
-
-    <!-- ENTORNO SIMULADO WINDOWS 10 -->
-    <div id="simulator">
-        <div id="desktop" onmousedown="triggerAction('drag', 'desktop')">
-            <div id="icon-wordpad" class="desktop-icon" draggable="true" ondragend="triggerAction('drag', 'desktop-icon')">
-                <img src="https://img.icons8.com/color/48/wordpad.png" alt="WordPad">
-                <span>WordPad</span>
-            </div>
-            <div id="icon-facturador" class="desktop-icon" draggable="true" ondragend="triggerAction('drag', 'desktop-icon')">
-                <img src="https://img.icons8.com/color/48/ms-excel.png" alt="Facturador">
-                <span>Facturador</span>
-            </div>
-            <div id="icon-computer" class="desktop-icon" draggable="true" ondragend="triggerAction('drag', 'desktop-icon')">
-                <img src="https://img.icons8.com/color/48/display.png" alt="Este equipo">
-                <span>Este equipo</span>
-            </div>
-            <div id="icon-trash" class="desktop-icon" draggable="true" ondragend="triggerAction('drag', 'icon-trash')">
-                <img src="https://img.icons8.com/color/48/full-trash.png" alt="Papelera">
-                <span>Papelera</span>
-            </div>
-            <div id="icon-folder" class="desktop-icon hidden" id="createdFolder">
-                <img src="https://img.icons8.com/color/48/folder-invoices.png" alt="Mis Recetas">
-                <span id="folder-name">Mis Recetas</span>
-            </div>
+        <div class="window-body">
+          <div class="form-group">
+            <label>Nombre del Cliente:</label>
+            <input type="text" id="fac-client" placeholder="Ej: Juan Pérez" onclick="handleAction('fac-client-click', 'click', event)" oninput="handleAction('fac-client', 'input', event)">
+          </div>
+          <div class="form-group">
+            <label>Monto Total ($):</label>
+            <input type="number" id="fac-amount" placeholder="Ej: 2500" onclick="handleAction('fac-amount-click', 'click', event)" oninput="handleAction('fac-amount', 'input', event)">
+          </div>
+          <button class="btn-action" id="fac-emit" onclick="handleAction('fac-emit', 'click', event)">Emitir Comprobante</button>
         </div>
+      </div>
 
-        <!-- VENTANA SIMULADA GENERAL -->
-        <div id="appWindow" class="window hidden">
-            <div id="window-header" class="window-header" onmousedown="triggerAction('drag', 'window-header')">
-                <span id="winTitle" class="window-title">Programa</span>
-                <div class="window-controls">
-                    <button id="btn-minimize" class="win-btn win-btn-minimize" onclick="triggerAction('click', 'btn-minimize')">–</button>
-                    <button id="btn-close" class="win-btn win-btn-close" onclick="closeWindow()">X</button>
-                </div>
-            </div>
-            <div id="window-toolbar" class="window-toolbar">
-                <button id="btn-font" class="tool-btn" onclick="triggerAction('click', 'btn-font')">Fuente: Arial</button>
-                <button id="btn-size" class="tool-btn" onclick="triggerAction('click', 'btn-size')">Tamaño: 18</button>
-                <button id="btn-bold" class="tool-btn" onclick="triggerAction('click', 'btn-bold')"><b>N</b></button>
-                <button id="btn-underline" class="tool-btn" onclick="triggerAction('click', 'btn-underline')"><u>S</u></button>
-                <button id="btn-color" class="tool-btn" onclick="triggerAction('click', 'btn-color')">Color Azul</button>
-                <button id="btn-center" class="tool-btn" onclick="triggerAction('click', 'btn-center')">Centrar</button>
-                <button id="btn-save" class="tool-btn" onclick="triggerAction('click', 'btn-save')">Guardar</button>
-                <button id="btn-open" class="tool-btn" onclick="triggerAction('click', 'btn-open')">Abrir</button>
-                <button id="btn-img" class="tool-btn" onclick="triggerAction('click', 'btn-img')">Imagen</button>
-                <button id="btn-print" class="tool-btn" onclick="triggerAction('click', 'btn-print')">Imprimir</button>
-                <button id="btn-sum" class="tool-btn" onclick="triggerAction('click', 'btn-sum')">Σ Suma</button>
-                <button id="btn-currency" class="tool-btn" onclick="triggerAction('click', 'btn-currency')">$ Moneda</button>
-                <button id="btn-colorfill" class="tool-btn" onclick="triggerAction('click', 'btn-colorfill')">🎨 Color</button>
-                <button id="btn-borders" class="tool-btn" onclick="triggerAction('click', 'btn-borders')">🔲 Bordes</button>
-                <button id="btn-restore" class="tool-btn" onclick="triggerAction('click', 'btn-restore')">Restaurar</button>
-            </div>
-            <div class="window-body">
-                <input type="text" id="search-input" placeholder="Buscar documento..." oninput="triggerAction('input', 'search-input')" class="hidden">
-                <textarea id="winEditor" placeholder="Escriba aquí su documento..." oninput="triggerAction('input', 'winEditor')"></textarea>
-                <div id="facturadorGrid" class="hidden" style="display:grid; grid-template-columns: 1fr 1fr; gap:5px;">
-                    <input type="text" id="cell-1" placeholder="Concepto (ej. Luz)" oninput="triggerAction('input', 'cell-1')" onclick="triggerAction('click', 'cell-1')">
-                    <input type="text" id="cell-2" placeholder="Importe ($)" oninput="triggerAction('input', 'cell-2')">
-                </div>
-            </div>
+      <div class="window" id="win-mail">
+        <div class="window-header">
+          <div class="window-title">✉️ Correo Electrónico</div>
+          <div class="window-controls">
+            <button class="win-btn min" id="mail-min" onclick="handleAction('mail-min', 'click', event); closeWindow('win-mail');"></button>
+            <button class="win-btn close" id="mail-close" onclick="closeWindow('win-mail'); handleAction('mail-close', 'click', event);"></button>
+          </div>
         </div>
-
-        <!-- BARRA DE TAREAS -->
-        <div id="taskbar" oncontextmenu="e.preventDefault(); triggerAction('contextmenu', 'taskbar')">
-            <div class="taskbar-left">
-                <button id="btn-start-menu" class="start-btn" onclick="triggerAction('click', 'btn-start-menu')">🪟</button>
-                <div id="icon-mail" class="desktop-icon" style="flex-direction:row; width:auto; padding:3px 8px;" onclick="triggerAction('click', 'icon-mail')" oncontextmenu="e.preventDefault(); triggerAction('contextmenu', 'icon-mail')">
-                    <img src="https://img.icons8.com/color/24/gmail-new.png" alt="Correo">
-                    <span style="font-size:0.75rem">Correo</span>
-                </div>
-            </div>
-            <div id="system-tray" class="system-tray" onmousemove="triggerAction('mousemove', 'system-tray')" onclick="triggerAction('click', 'system-tray')">
-                <span id="btn-lang" style="cursor:pointer;" onclick="triggerAction('click', 'btn-lang')">ESP</span>
-                <span id="btn-volume" style="cursor:pointer;" onclick="triggerAction('click', 'btn-volume')">🔊</span>
-                <span id="btn-wifi" style="cursor:pointer;" onclick="triggerAction('click', 'btn-wifi')">📶</span>
-                <span id="clock" style="cursor:pointer;" onclick="triggerAction('click', 'clock')">12:00</span>
-                <span id="btn-showdesktop" style="border-left:1px solid #555; padding-left:5px; cursor:pointer;" onclick="triggerAction('click', 'btn-showdesktop')">|</span>
-            </div>
+        <div class="window-body">
+          <div class="form-group">
+            <label>Para:</label>
+            <input type="email" id="mail-to" placeholder="ejemplo@correo.com" onclick="handleAction('mail-to-click', 'click', event)" oninput="handleAction('mail-to', 'input', event)">
+          </div>
+          <div class="form-group">
+            <label>Asunto:</label>
+            <input type="text" id="mail-subject" placeholder="Escriba el asunto" onclick="handleAction('mail-subject-click', 'click', event)" oninput="handleAction('mail-subject', 'input', event)">
+          </div>
+          <button class="btn-action" id="mail-send" onclick="handleAction('mail-send', 'click', event)">Enviar Correo</button>
         </div>
+      </div>
 
-        <!-- MENÚ CONTEXTUAL -->
-        <div id="contextMenu" class="context-menu hidden">
-            <div class="context-menu-item" onclick="triggerAction('click', 'menu-view')">Ver (Iconos grandes)</div>
-            <div class="context-menu-item" onclick="triggerAction('click', 'menu-sort')">Ordenar por fecha</div>
-            <div class="context-menu-item" onclick="createNewFolder(); triggerAction('create-folder', 'desktop');">Nueva Carpeta</div>
-            <div class="context-menu-item" onclick="triggerAction('contextmenu', 'icon-trash')">Vaciar papelera</div>
-            <div class="context-menu-item" onclick="triggerAction('contextmenu', 'taskbar')">Cascada / Paralelo</div>
+      <div class="window" id="win-pc">
+        <div class="window-header">
+          <div class="window-title">💻 Propiedades del Sistema - Este Equipo</div>
+          <div class="window-controls">
+            <button class="win-btn close" id="pc-close" onclick="closeWindow('win-pc'); handleAction('pc-close', 'click', event);"></button>
+          </div>
         </div>
-    </div>
+        <div class="window-body">
+          <p><strong>Procesador:</strong> Intel Core i5 / Simulador Educativo</p>
+          <p style="margin-top:8px;"><strong>Memoria RAM:</strong> 8.00 GB</p>
+          <p style="margin-top:8px;"><strong>Sistema Operativo:</strong> Capacitación Digital OS 64 bits</p>
+          <p style="margin-top:8px;"><strong>Estado:</strong> Funcionando correctamente</p>
+          <button class="btn-action" id="pc-btn-close" style="margin-top:20px;" onclick="closeWindow('win-pc'); handleAction('pc-close-btn', 'click', event);">Cerrar Información</button>
+        </div>
+      </div>
 
-   <script>
+      <!-- MENÚ INICIO -->
+      <div class="start-menu" id="startMenu">
+        <div class="start-item" id="start-wordpad" onclick="openWindow('win-wordpad'); toggleStartMenu(); handleAction('start-wordpad', 'click', event);">📝 WordPad</div>
+        <div class="start-item" id="start-facturador" onclick="openWindow('win-facturador'); toggleStartMenu(); handleAction('start-facturador', 'click', event);">📊 Facturador</div>
+        <div class="start-item" id="start-mail" onclick="openWindow('win-mail'); toggleStartMenu(); handleAction('start-mail', 'click', event);">✉️ Correo</div>
+        <div class="start-item" id="start-power" onclick="handleAction('start-power', 'click', event); toggleStartMenu();" style="color:#f87171;">⚡ Apagar Sistema</div>
+      </div>
+
+      <!-- MENÚ CONTEXTUAL -->
+      <div class="context-menu" id="contextMenu">
+        <div class="context-item" id="ctx-open" onclick="handleAction('ctx-open', 'click', event); hideContextMenu();">Abrir</div>
+        <div class="context-item" id="ctx-empty-trash" onclick="handleAction('ctx-empty-trash', 'click', event); hideContextMenu();">Vaciar Papelera</div>
+        <div class="context-item" id="ctx-new-folder" onclick="handleAction('ctx-new-folder', 'click', event); hideContextMenu();">Nuevo -> Carpeta</div>
+        <div class="context-item" id="ctx-props" onclick="handleAction('ctx-props', 'click', event); hideContextMenu(); openWindow('win-pc');">Propiedades</div>
+      </div>
+    </main>
+
+    <footer class="taskbar" id="taskbar" onclick="handleAction('taskbar', 'click', event)">
+      <div class="taskbar-left">
+        <div class="start-btn" id="startBtn" onclick="toggleStartMenu(); handleAction('startBtn', 'click', event); event.stopPropagation();">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="#38bdf8"><path d="M3 3h8v8H3zm10 0h8v8h-8zM3 13h8v8H3zm10 0h8v8h-8z"/></svg>
+        </div>
+      </div>
+      <div class="taskbar-right">
+        <div class="clock" id="clockDisplay" onclick="handleAction('clockDisplay', 'click', event); event.stopPropagation();">10:00 AM</div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
     // MATRIZ COMPLETA DE LOS 100 EJERCICIOS DEFINIDOS INDIVIDUALMENTE
     const exercises = [
       // MÓDULO 1
@@ -573,174 +529,100 @@
       { id: 99, module: "Módulo 8: Integración Final", title: "Ejercicio 99: Abrir Menú para Apagar", context: "📍 Ubicación inicial: Barra de tareas", instruction: "Haga clic en el botón Inicio.", target: "startBtn", event: "click", hint: "Haga clic en Inicio abajo a la izquierda.", success: "¡Menú preparado para el apagado!" },
       { id: 100, module: "Módulo 8: Integración Final", title: "Ejercicio 100: Apagar el Sistema", context: "📍 Ubicación inicial: Menú Inicio", instruction: "Haga clic en la opción roja 'Apagar Sistema' para completar el curso.", target: "start-power", event: "click", hint: "Haga clic en 'Apagar Sistema' al final del menú.", success: "¡FELICITACIONES! Has completado con éxito los 100 ejercicios de Capacitación Digital." }
     ];
-        let currentExId = 1;
 
-        // INICIALIZACIÓN Y NAVEGACIÓN
-        function initDropdown() {
-            const selector = document.getElementById("exerciseSelector");
-            selector.innerHTML = "";
-            exercises.forEach((ex) => {
-                const option = document.createElement("option");
-                option.value = ex.id;
-                option.textContent = `${ex.id}. ${ex.title}`;
-                selector.appendChild(option);
-            });
+    let currentExIndex = 0;
 
-            selector.addEventListener("change", (e) => {
-                loadExercise(parseInt(e.target.value, 10));
-            });
+    function initApp() {
+      populateSelect();
+      loadExercise(0);
+      updateClock();
+      setInterval(updateClock, 1000);
+    }
 
-            loadExercise(currentExId);
-        }
+    function populateSelect() {
+      const select = document.getElementById('exerciseSelect');
+      select.innerHTML = '';
+      exercises.forEach((ex, idx) => {
+        let opt = document.createElement('option');
+        opt.value = idx;
+        opt.textContent = `${ex.title}`;
+        select.appendChild(opt);
+      });
+    }
 
-        function loadExercise(id) {
-            const exercise = exercises.find((ex) => ex.id === id) || exercises[0];
-            currentExId = exercise.id;
+    function loadExercise(index) {
+      currentExIndex = index;
+      const ex = exercises[index];
+      
+      document.getElementById('moduleBadge').textContent = ex.module;
+      document.getElementById('exTitle').textContent = ex.title;
+      document.getElementById('exContext').textContent = ex.context;
+      document.getElementById('exInstruction').textContent = ex.instruction;
+      document.getElementById('hintText').textContent = ex.hint;
+      document.getElementById('hintText').style.display = 'none';
+      document.getElementById('feedbackBox').style.display = 'none';
+      document.getElementById('exerciseSelect').value = index;
+    }
 
-            document.getElementById("exerciseSelector").value = currentExId;
-            document.getElementById("exerciseModule").innerText = exercise.mod;
-            document.getElementById("exerciseTitle").innerText = exercise.title;
-            document.getElementById("exerciseText").innerHTML = exercise.text;
-            document.getElementById("exerciseHint").innerText = "💡 Pista: " + exercise.hint;
-            
-            const okEl = document.getElementById("exerciseOk");
-            okEl.innerText = exercise.ok;
-            okEl.classList.add("hidden");
+    function jumpToExercise(index) { loadExercise(index); }
+    function prevExercise() { if (currentExIndex > 0) loadExercise(currentExIndex - 1); }
+    function nextExercise() { if (currentExIndex < exercises.length - 1) loadExercise(currentExIndex + 1); }
 
-            document.getElementById("prevBtn").disabled = (currentExId === 1);
-            document.getElementById("nextBtn").disabled = (currentExId === exercises[exercises.length - 1].id);
+    function toggleHint() {
+      const h = document.getElementById('hintText');
+      h.style.display = h.style.display === 'block' ? 'none' : 'block';
+    }
 
-            // Ajuste visual según la app requerida por el ejercicio
-            if (exercise.mod.includes("Facturador")) {
-                document.getElementById('winEditor').classList.add('hidden');
-                document.getElementById('facturadorGrid').classList.remove('hidden');
-                document.getElementById('search-input').classList.add('hidden');
-            } else if (exercise.id === 38 || exercise.id === 80) {
-                document.getElementById('search-input').classList.remove('hidden');
-                document.getElementById('winEditor').classList.add('hidden');
-                document.getElementById('facturadorGrid').classList.add('hidden');
-            } else {
-                document.getElementById('winEditor').classList.remove('hidden');
-                document.getElementById('facturadorGrid').classList.add('hidden');
-                document.getElementById('search-input').classList.add('hidden');
-            }
-        }
+    function handleAction(targetId, eventType, event) {
+      if (event) event.stopPropagation();
 
-        function nextExercise() {
-            const currentIndex = exercises.findIndex(ex => ex.id === currentExId);
-            if (currentIndex < exercises.length - 1) {
-                loadExercise(exercises[currentIndex + 1].id);
-            }
-        }
+      const ex = exercises[currentExIndex];
+      if (ex.target === targetId && (ex.event || 'click') === eventType) {
+        const fb = document.getElementById('feedbackBox');
+        fb.className = "feedback-box success";
+        fb.textContent = ex.success;
+        fb.style.display = 'block';
 
-        function prevExercise() {
-            const currentIndex = exercises.findIndex(ex => ex.id === currentExId);
-            if (currentIndex > 0) {
-                loadExercise(exercises[currentIndex - 1].id);
-            }
-        }
+        setTimeout(() => {
+          if (currentExIndex < exercises.length - 1) {
+            nextExercise();
+          }
+        }, 1300);
+      }
+    }
 
-        function completeExercise() {
-            const okEl = document.getElementById("exerciseOk");
-            if (okEl) okEl.classList.remove("hidden");
-        }
+    function handleGlobalClick(e) { hideContextMenu(); }
 
-        // MOTOR GENERAL DE ACCIONES INTERACTIVAS
-        function triggerAction(type, targetId) {
-            const currentEx = exercises.find(ex => ex.id === currentExId);
-            
-            if (type === 'click' && targetId !== 'desktop') {
-                document.getElementById('contextMenu').classList.add('hidden');
-            }
+    function handleDesktopContext(e) {
+      e.preventDefault();
+      handleAction('desktopArea', 'contextmenu', e);
+      showContextMenu(e, 'desktop');
+    }
 
-            if (currentEx && currentEx.trigger) {
-                const matchType = (currentEx.trigger.type === type);
-                const matchTarget = (currentEx.trigger.target === targetId || currentEx.trigger.target === 'desktop');
-                
-                if (matchType && matchTarget) {
-                    completeExercise();
-                }
-            }
-        }
+    function openWindow(id) { document.getElementById(id).classList.add('active'); }
+    function closeWindow(id) { document.getElementById(id).classList.remove('active'); }
+    function toggleStartMenu() { document.getElementById('startMenu').classList.toggle('active'); }
 
-        function openWindow(title) {
-            const win = document.getElementById('appWindow');
-            document.getElementById('winTitle').innerText = title;
-            win.classList.remove('hidden');
-        }
+    function showContextMenu(e, type) {
+      e.preventDefault();
+      e.stopPropagation();
+      const cm = document.getElementById('contextMenu');
+      cm.style.top = `${e.clientY}px`;
+      cm.style.left = `${e.clientX}px`;
+      cm.style.display = 'flex';
+    }
 
-        function closeWindow() {
-            document.getElementById('appWindow').classList.add('hidden');
-            triggerAction('click', 'btn-close');
-        }
+    function hideContextMenu() {
+      const cm = document.getElementById('contextMenu');
+      if (cm) cm.style.display = 'none';
+    }
 
-        function createNewFolder() {
-            const folder = document.getElementById('createdFolder');
-            if (folder) folder.classList.remove('hidden');
-        }
+    function updateClock() {
+      const now = new Date();
+      document.getElementById('clockDisplay').textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    }
 
-        // CONTROL DE EVENTOS EN EL ENTORNO
-        document.addEventListener('DOMContentLoaded', () => {
-            initDropdown();
-
-            setInterval(() => {
-                const now = new Date();
-                document.getElementById('clock').innerText = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-            }, 1000);
-
-            // Iconos del escritorio
-            document.getElementById('icon-wordpad').addEventListener('dblclick', () => {
-                openWindow('WordPad');
-                triggerAction('dblclick', 'icon-wordpad');
-            });
-
-            document.getElementById('icon-facturador').addEventListener('dblclick', () => {
-                openWindow('Facturador');
-                triggerAction('dblclick', 'icon-facturador');
-            });
-
-            document.getElementById('icon-computer').addEventListener('dblclick', () => {
-                openWindow('Este Equipo');
-                triggerAction('dblclick', 'icon-computer');
-            });
-
-            document.getElementById('icon-trash').addEventListener('dblclick', () => {
-                openWindow('Papelera de Reciclaje');
-                triggerAction('dblclick', 'icon-trash');
-            });
-
-            // Menú contextual en el escritorio
-            const desktop = document.getElementById('desktop');
-            desktop.addEventListener('contextmenu', (e) => {
-                e.preventDefault();
-                const cm = document.getElementById('contextMenu');
-                cm.style.top = `${e.clientY}px`;
-                cm.style.left = `${e.clientX}px`;
-                cm.classList.remove('hidden');
-                triggerAction('contextmenu', 'desktop');
-            });
-
-            desktop.addEventListener('mousemove', () => {
-                triggerAction('mousemove', 'desktop');
-            });
-
-            desktop.addEventListener('wheel', () => {
-                triggerAction('wheel', 'desktop');
-            });
-
-            // Captura de combinaciones de teclado
-            document.addEventListener('keydown', (e) => {
-                if (e.altKey && e.key === 'Tab') {
-                    triggerAction('keydown', 'alttab');
-                }
-                if (e.key === 'Delete') {
-                    triggerAction('keydown', 'delete');
-                }
-                if (e.key === 'l' || e.key === 'L') {
-                    triggerAction('keydown', 'winl');
-                }
-            });
-        });
-    </script>
+    window.onload = initApp;
+  </script>
 </body>
 </html>
