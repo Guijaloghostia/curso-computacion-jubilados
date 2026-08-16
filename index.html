@@ -2,14 +2,14 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Simulador Windows 10 - Capacitación Digital Pro</title>
+    <title>Simulador Windows 10 - Capacitación Digital</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         body {
             margin: 0;
             padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: radial-gradient(circle at 75% 85%, #ff2a8d 0%, #c71585 45%, #380023 80%);
+            background: radial-gradient(circle at 0% 0%, #ba68c8 0%, #9c27b0 40%, #6a1b9a 80%, #380023 100%);
             height: 100vh;
             overflow: hidden;
             display: flex;
@@ -299,7 +299,7 @@
     <!-- TARJETA DE GUÍA DIDÁCTICA -->
     <div id="guide-card">
         <div class="guide-header">
-            <span>Capacitación Digital Pro</span>
+            <span>Capacitación Digital</span>
             <span id="exercise-counter">Ej. 1 de 100</span>
         </div>
         <div class="guide-body">
@@ -399,7 +399,6 @@
     <script>
         const exerciseSelect = document.getElementById('exercise-select');
         
-        // Estado del usuario y memoria local
         let userState = {
             selectedIcon: null,
             startMenuOpen: false,
@@ -420,7 +419,6 @@
             return "Módulo 8: Integración Total";
         }
 
-        // Poblar selector
         for (let i = 1; i <= 100; i++) {
             let opt = document.createElement('option');
             opt.value = i;
@@ -429,7 +427,6 @@
             exerciseSelect.appendChild(opt);
         }
 
-        // Cargar último ejercicio guardado en localStorage o por defecto 1
         let savedEx = parseInt(localStorage.getItem('sim_current_ex') || '1');
         exerciseSelect.value = savedEx;
 
@@ -502,7 +499,6 @@
                 }
             };
 
-            // Validación genérica estricta por defecto
             return {
                 title: `Ejercicio ${num}: Práctica guiada avanzada`,
                 steps: ["Realiza la acción requerida y mantén la ventana abierta si corresponde."],
@@ -573,7 +569,6 @@
             alert("Archivo restaurado a su ubicación original.");
         }
 
-        // Verificación con mensajes de error detallados
         function verifyExercise() {
             const num = parseInt(document.getElementById('exercise-select').value);
             const data = getExerciseDetails(num);
@@ -582,23 +577,19 @@
             if (res.ok) {
                 alert(`¡Excelente trabajo! Ejercicio ${num} completado correctamente.`);
                 
-                // Guardar en progreso completado
                 if (!userState.completedExercises.includes(num)) {
                     userState.completedExercises.push(num);
                     localStorage.setItem('sim_completed', JSON.stringify(userState.completedExercises));
                     
-                    // Actualizar opción en el selector visualmente
                     let opt = exerciseSelect.options[exerciseSelect.selectedIndex];
                     if (!opt.text.includes("✓")) opt.text += " ✓";
                 }
 
-                // Pasar al siguiente ejercicio automáticamente
                 if (num < 100) {
                     document.getElementById('exercise-select').value = num + 1;
                     changeExercise(num + 1);
                 }
             } else {
-                // Mensaje de error detallado
                 alert(`❌ No se pudo validar el Ejercicio ${num}.\n\nMotivo: ${res.error}\n\n💡 Revisá la consigna o utilizá el botón 'Pista' para recibir ayuda visual.`);
             }
         }
@@ -618,26 +609,23 @@
             alert("Entorno reiniciado.");
         }
         
-        // Pista con ayuda visual contextual (parpadeo en el elemento correcto)
         function showHint() {
             const num = document.getElementById('exercise-select').value;
             const data = getExerciseDetails(parseInt(num));
             
-            // Remover resaltados previos
             document.querySelectorAll('.desktop-icon, #start-btn').forEach(el => el.classList.remove('highlight-target'));
 
             if (data.targetId) {
                 const targetEl = document.getElementById(data.targetId);
                 if (targetEl) {
                     targetEl.classList.add('highlight-target');
-                    setTimeout(() => targetEl.classList.remove('highlight-target'), 5000); // Se apaga a los 5 seg
+                    setTimeout(() => targetEl.classList.remove('highlight-target'), 5000);
                 }
             }
 
             alert("💡 Pista para el Ejercicio " + num + ":\n\n" + data.hint + "\n\n(Nota: Si el objetivo está en pantalla, lo verás parpadear resaltado durante unos segundos).");
         }
 
-        // Panel de Estadísticas
         function openStats() {
             const completedCount = userState.completedExercises.length;
             const percent = Math.round((completedCount / 100) * 100);
