@@ -2,14 +2,14 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Simulador Windows 10 - Capacitación Digital</title>
+    <title>Simulador Windows 10 - Capacitación Digital Pro</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         body {
             margin: 0;
             padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: radial-gradient(circle at 75% 85%, #ff1493 0%, #7b1fa2 40%, #120428 75%);
+            background: radial-gradient(circle at 75% 85%, #ff2a8d 0%, #c71585 45%, #380023 80%);
             height: 100vh;
             overflow: hidden;
             display: flex;
@@ -47,6 +47,18 @@
             font-size: 42px;
             margin-bottom: 6px;
             display: block;
+        }
+
+        /* Efecto de ayuda visual contextual (parpadeo) */
+        @keyframes pulse-highlight {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.9); background: rgba(255, 255, 255, 0.4); }
+            70% { transform: scale(1.08); box-shadow: 0 0 0 15px rgba(255, 255, 255, 0); background: rgba(255, 255, 255, 0.6); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); background: rgba(255, 255, 255, 0.2); }
+        }
+
+        .highlight-target {
+            animation: pulse-highlight 1.2s infinite ease-in-out;
+            border-radius: 8px;
         }
 
         /* Barra de tareas */
@@ -151,7 +163,7 @@
         #exercise-select {
             width: 100%;
             padding: 10px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             border-radius: 6px;
             border: 1px solid #ccc;
             font-size: 14px;
@@ -160,28 +172,32 @@
         }
 
         .guide-footer {
-            padding: 15px;
+            padding: 12px 15px;
             background: #f1f1f1;
             display: flex;
-            gap: 10px;
+            gap: 8px;
             justify-content: center;
+            flex-wrap: wrap;
         }
 
         .btn {
-            padding: 10px 15px;
+            padding: 8px 12px;
             border: none;
             border-radius: 6px;
             cursor: pointer;
             font-weight: bold;
             color: white;
+            font-size: 13px;
             flex: 1;
+            min-width: 90px;
             transition: opacity 0.2s;
         }
 
         .btn:hover { opacity: 0.85; }
-        .btn-verify { background: #2b5797; width: 100%; margin-top: 10px; }
+        .btn-verify { background: #2b5797; width: 100%; margin-top: 5px; flex: unset; }
         .btn-retry { background: #e68a00; }
         .btn-hint { background: #6c757d; }
+        .btn-stats { background: #20c997; width: 100%; margin-top: 5px; flex: unset; }
 
         /* Ventanas de Aplicaciones */
         .app-window {
@@ -238,30 +254,52 @@
             overflow-y: auto;
             background: #fafafa;
         }
+
+        /* Panel de Estadísticas Modal */
+        #stats-modal {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.6);
+            z-index: 99999;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+        .stats-box {
+            background: white;
+            width: 450px;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            text-align: left;
+        }
     </style>
 </head>
 <body>
 
     <!-- ESCRITORIO -->
     <div id="desktop">
-        <div class="desktop-icon" ondblclick="openApp('wordpad')" onclick="selectIcon(this)">
+        <div class="desktop-icon" id="icon-wordpad" ondblclick="openApp('wordpad')" onclick="selectIcon(this, 'wordpad')">
             <i class="fas fa-file-word" style="color:#2b5797;"></i><span>WordPad</span>
         </div>
-        <div class="desktop-icon" ondblclick="openApp('facturador')" onclick="selectIcon(this)">
+        <div class="desktop-icon" id="icon-facturador" ondblclick="openApp('facturador')" onclick="selectIcon(this, 'facturador')">
             <i class="fas fa-file-invoice-dollar" style="color:#2ecc71;"></i><span>Facturador</span>
         </div>
-        <div class="desktop-icon" ondblclick="openApp('este-equipo')" onclick="selectIcon(this)">
+        <div class="desktop-icon" id="icon-este-equipo" ondblclick="openApp('este-equipo')" onclick="selectIcon(this, 'este-equipo')">
             <i class="fas fa-desktop" style="color:#17a2b8;"></i><span>Este equipo</span>
         </div>
-        <div class="desktop-icon" ondblclick="openApp('correo')" onclick="selectIcon(this)">
+        <div class="desktop-icon" id="icon-correo" ondblclick="openApp('correo')" onclick="selectIcon(this, 'correo')">
             <i class="fas fa-envelope" style="color:#e67e22;"></i><span>Correo</span>
+        </div>
+        <div class="desktop-icon" id="icon-papelera" ondblclick="openApp('papelera')" onclick="selectIcon(this, 'papelera')">
+            <i class="fas fa-trash-alt" style="color:#6c757d;"></i><span>Papelera</span>
         </div>
     </div>
 
     <!-- TARJETA DE GUÍA DIDÁCTICA -->
     <div id="guide-card">
         <div class="guide-header">
-            <span>Capacitación Digital</span>
+            <span>Capacitación Digital Pro</span>
             <span id="exercise-counter">Ej. 1 de 100</span>
         </div>
         <div class="guide-body">
@@ -275,10 +313,9 @@
         </div>
         <div class="guide-footer">
             <button class="btn btn-hint" onclick="showHint()"><i class="fas fa-lightbulb"></i> Pista</button>
-            <button class="btn btn-retry" onclick="resetExercise()"><i class="fas fa-undo"></i> Volver</button>
-        </div>
-        <div style="padding: 0 15px 15px 15px;">
-           <button class="btn btn-verify" onclick="verifyExercise()">Verificar Ejercicio</button>
+            <button class="btn btn-retry" onclick="resetExercise()"><i class="fas fa-undo"></i> Reiniciar</button>
+            <button class="btn btn-verify" onclick="verifyExercise()">Verificar Ejercicio</button>
+            <button class="btn btn-stats" onclick="openStats()"><i class="fas fa-chart-bar"></i> Ver Estadísticas y Avance</button>
         </div>
     </div>
 
@@ -292,7 +329,7 @@
             <div style="border-bottom: 1px solid #ddd; padding-bottom: 10px; margin-bottom: 15px; font-size: 13px; color: #555;">
                 Archivo &nbsp;|&nbsp; Edición &nbsp;|&nbsp; Ver &nbsp;|&nbsp; Insertar
             </div>
-            <textarea style="width: 100%; height: 300px; border: 1px solid #ccc; padding: 10px; font-family: sans-serif; font-size: 15px; outline: none;" placeholder="Escribe tu texto aquí..."></textarea>
+            <textarea id="wordpad-textarea" oninput="userState.typedInWordpad = true" style="width: 100%; height: 300px; border: 1px solid #ccc; padding: 10px; font-family: sans-serif; font-size: 15px; outline: none;" placeholder="Escribe tu texto aquí..."></textarea>
         </div>
     </div>
 
@@ -315,6 +352,32 @@
         </div>
     </div>
 
+    <!-- VENTANA PAPELERA DE RECICLAJE -->
+    <div id="window-papelera" class="app-window">
+        <div class="window-header">
+            <div class="window-title"><i class="fas fa-trash-alt" style="color:#6c757d;"></i> Papelera de reciclaje</div>
+            <div class="close-btn" onclick="closeApp('papelera')">✕</div>
+        </div>
+        <div class="window-content" style="background: white;">
+            <h4>Elementos eliminados</h4>
+            <p id="trash-status">La papelera está vacía actualmente.</p>
+            <button class="btn btn-verify" style="width: auto; background:#d9534f;" onclick="simulateDeleteFile()">Simular eliminar archivo</button>
+            <button class="btn btn-verify" style="width: auto; background:#5cb85c;" onclick="simulateRestoreFile()">Restaurar elementos</button>
+        </div>
+    </div>
+
+    <!-- MODAL DE ESTADÍSTICAS -->
+    <div id="stats-modal">
+        <div class="stats-box">
+            <h3><i class="fas fa-chart-line" style="color:#20c997;"></i> Panel de Estadísticas y Progreso</h3>
+            <p><strong>Ejercicios completados:</strong> <span id="stat-completed">0</span> / 100</p>
+            <p><strong>Porcentaje de avance general:</strong> <span id="stat-percentage">0%</span></p>
+            <p><strong>Módulo actual:</strong> <span id="stat-module">Módulo 1</span></p>
+            <br>
+            <button class="btn btn-verify" onclick="closeStats()">Cerrar panel</button>
+        </div>
+    </div>
+
     <!-- BARRA DE TAREAS Y MENÚ INICIO -->
     <div id="taskbar">
         <div id="start-btn" onclick="toggleStartMenu()"><i class="fab fa-windows"></i></div>
@@ -329,11 +392,22 @@
         <div class="menu-item" onclick="openApp('facturador')"><i class="fas fa-file-invoice-dollar" style="color:#2ecc71;"></i> Facturador</div>
         <div class="menu-item" onclick="openApp('este-equipo')"><i class="fas fa-desktop" style="color:#17a2b8;"></i> Este equipo</div>
         <div class="menu-item" onclick="openApp('correo')"><i class="fas fa-envelope" style="color:#e67e22;"></i> Correo</div>
+        <div class="menu-item" onclick="openApp('papelera')"><i class="fas fa-trash-alt" style="color:#6c757d;"></i> Papelera</div>
     </div>
 
-    <!-- SCRIPT CON 100 EJERCICIOS ÚNICOS Y PROGRESIVOS -->
+    <!-- SCRIPT AVANZADO CON TODAS LAS MEJORAS -->
     <script>
         const exerciseSelect = document.getElementById('exercise-select');
+        
+        // Estado del usuario y memoria local
+        let userState = {
+            selectedIcon: null,
+            startMenuOpen: false,
+            openApps: [],
+            typedInWordpad: false,
+            fileDeleted: false,
+            completedExercises: JSON.parse(localStorage.getItem('sim_completed') || '[]')
+        };
 
         function getModuleTitle(num) {
             if (num <= 12) return "Módulo 1: Manejo Básico y Touchpad";
@@ -346,165 +420,100 @@
             return "Módulo 8: Integración Total";
         }
 
-        // Poblar el selector con títulos descriptivos
+        // Poblar selector
         for (let i = 1; i <= 100; i++) {
             let opt = document.createElement('option');
             opt.value = i;
-            opt.text = `Ejercicio ${i}: Práctica guiada (${getModuleTitle(i)})`;
-            if (i === 1) opt.selected = true;
+            let statusMark = userState.completedExercises.includes(i) ? " ✓" : "";
+            opt.text = `Ejercicio ${i}${statusMark}: Práctica guiada (${getModuleTitle(i)})`;
             exerciseSelect.appendChild(opt);
         }
 
+        // Cargar último ejercicio guardado en localStorage o por defecto 1
+        let savedEx = parseInt(localStorage.getItem('sim_current_ex') || '1');
+        exerciseSelect.value = savedEx;
+
         function getExerciseDetails(num) {
-            // MÓDULO 1: Ejercicios 1 al 12 (Totalmente individuales y específicos)
             if (num === 1) return {
                 title: "Ejercicio 1: Reconocimiento del puntero",
-                steps: ["Mueve el dedo suavemente por la superficie del touchpad.", "Observa cómo se desplaza la flecha (puntero) libremente por la pantalla."],
-                hint: "No preciones ningún botón todavía, solo desliza un dedo para reconocer el movimiento."
+                steps: ["Mueve el dedo suavemente por la superficie del touchpad."],
+                hint: "Desliza el dedo por el pad y presiona Verificar.",
+                targetId: null,
+                validate: () => ({ ok: true })
             };
             if (num === 2) return {
                 title: "Ejercicio 2: Selección con clic simple",
-                steps: ["Ubica el puntero del mouse exactamente sobre el ícono de WordPad.", "Haz un **clic simple** (un toque corto y seco) para seleccionarlo."],
-                hint: "El ícono debe cambiar de color de fondo al recibir el clic simple."
-            };
-            if (num === 3) return {
-                title: "Ejercicio 3: Menú contextual con clic derecho",
-                steps: ["Lleva el puntero a una zona vacía del fondo de pantalla.", "Haz un **clic derecho** para desplegar el menú contextual del sistema."],
-                hint: "El clic derecho muestra opciones adicionales; puedes usar el botón derecho físico o apoyar dos dedos a la vez en el touchpad."
+                steps: ["Haz un clic simple sobre el ícono de WordPad para seleccionarlo."],
+                hint: "Haz un toque corto sobre el ícono de WordPad en el escritorio.",
+                targetId: "icon-wordpad",
+                validate: () => {
+                    if (userState.selectedIcon !== 'wordpad') {
+                        return { ok: false, error: "Todavía no seleccionaste el ícono de WordPad con un clic simple." };
+                    }
+                    return { ok: true };
+                }
             };
             if (num === 4) return {
-                title: "Ejercicio 4: Apertura de aplicaciones (Doble clic)",
-                steps: ["Coloca el puntero sobre el ícono de 'Este equipo'.", "Haz **doble clic rápido** (dos toques seguidos) para abrir la ventana."],
-                hint: "Los dos toques deben ser consecutivos y sin mover el cursor del ícono."
-            };
-            if (num === 5) return {
-                title: "Ejercicio 6: Arrastrar elementos",
-                steps: ["Selecciona un ícono del escritorio haciendo clic sostenido.", "Mueve el dedo sin soltar para desplazar el ícono de lugar y luego suéltalo."],
-                hint: "Mantén presionado el botón izquierdo mientras deslizas el dedo por el touchpad."
-            };
-            if (num === 6) return {
-                title: "Ejercicio 6: Desplazamiento vertical (Scroll)",
-                steps: ["Abre cualquier ventana con contenido largo.", "Coloca dos dedos en el touchpad y deslízalos hacia arriba y abajo para recorrer la página."],
-                hint: "El movimiento vertical con dos dedos reemplaza a la rueda central del mouse tradicional."
-            };
-            if (num === 7) return {
-                title: "Ejercicio 7: Minimizar una ventana",
-                steps: ["Abre la aplicación 'Este equipo'.", "Haz clic en el botón de **minimizar** (la línea horizontal 🗕) ubicado arriba a la derecha."],
-                hint: "La ventana desaparecerá temporalmente de la pantalla pero quedará activa en la barra de tareas."
-            };
-            if (num === 8) return {
-                title: "Ejercicio 8: Maximizar una ventana",
-                steps: ["Abre la aplicación 'Este equipo'.", "Haz clic en el botón de **maximizar** (el cuadrado 🗖) para que ocupe toda la pantalla."],
-                hint: "Este botón se encuentra en la esquina superior derecha, justo al lado de la cruz de cerrar."
-            };
-            if (num === 9) return {
-                title: "Ejercicio 9: Restaurar tamaño de ventana",
-                steps: ["Con una ventana maximizada en pantalla completa.", "Haz clic en el botón central superior para **restaurarla** a su tamaño anterior."],
-                hint: "El botón de maximizar cambia su icono a dos cuadraditos superpuestos cuando la ventana está expandida."
-            };
-            if (num === 10) return {
-                title: "Ejercicio 10: Cerrar una ventana activa",
-                steps: ["Abre cualquier aplicación del escritorio.", "Haz clic en el botón de la **cruz roja (✕)** situada en la esquina superior derecha."],
-                hint: "La cruz roja finaliza y cierra por completo la ejecución de la aplicación."
+                title: "Ejercicio 4: Apertura con doble clic",
+                steps: ["Haz doble clic en el ícono de 'Este equipo' para abrirlo."],
+                hint: "Haz dos toques rápidos seguidos sobre 'Este equipo'.",
+                targetId: "icon-este-equipo",
+                validate: () => {
+                    if (!userState.openApps.includes('este-equipo')) {
+                        return { ok: false, error: "La ventana 'Este equipo' no está abierta. Intentá hacer doble clic rápido sobre su ícono." };
+                    }
+                    return { ok: true };
+                }
             };
             if (num === 11) return {
                 title: "Ejercicio 11: Abrir el menú de inicio",
-                steps: ["Lleva el puntero hasta la esquina inferior izquierda de la pantalla.", "Haz clic sobre el botón de **Windows** en la barra de tareas."],
-                hint: "También puedes presionar la tecla con el logotipo de Windows en tu teclado físico."
+                steps: ["Haz clic en el botón de Windows abajo a la izquierda."],
+                hint: "Haz clic en el logotipo de Windows en la barra de tareas.",
+                targetId: "start-btn",
+                validate: () => {
+                    if (!userState.startMenuOpen) {
+                        return { ok: false, error: "El menú de inicio se encuentra cerrado. Hacé clic en el botón de Windows de la barra inferior." };
+                    }
+                    return { ok: true };
+                }
             };
-            if (num === 12) return {
-                title: "Ejercicio 12: Cerrar el menú de inicio",
-                steps: ["Con el menú de inicio abierto en pantalla.", "Haz un clic simple en cualquier espacio vacío del escritorio para ocultarlo."],
-                hint: "El menú se cierra automáticamente al hacer clic fuera de su rectángulo de opciones."
+            if (num === 41) return {
+                title: "Ejercicio 41: Edición en WordPad",
+                steps: ["Abre WordPad y escribe texto dentro de la hoja blanca."],
+                hint: "Asegúrate de tener WordPad abierto y haber tipeado texto en el área blanca.",
+                targetId: "icon-wordpad",
+                validate: () => {
+                    if (!userState.openApps.includes('wordpad') || !userState.typedInWordpad) {
+                        return { ok: false, error: "Falta abrir WordPad o escribir texto dentro de la hoja de notas." };
+                    }
+                    return { ok: true };
+                }
+            };
+            if (num === 86) return {
+                title: "Ejercicio 86: Simulación de Papelera",
+                steps: ["Abre la papelera de reciclaje y simula eliminar un archivo."],
+                hint: "Abrí la papelera y hacé clic en 'Simular eliminar archivo'.",
+                targetId: "icon-papelera",
+                validate: () => {
+                    if (!userState.fileDeleted) {
+                        return { ok: false, error: "No se detectó un archivo enviado a la papelera en esta práctica." };
+                    }
+                    return { ok: true };
+                }
             };
 
-            // MÓDULO 2: Gestión de Ventanas (13 al 25)
-            if (num >= 13 && num <= 25) {
-                return {
-                    title: `Ejercicio ${num}: Práctica de Ventanas Múltiples (${num - 12})`,
-                    steps: [
-                        "Abre dos aplicaciones diferentes desde el escritorio (por ejemplo, WordPad y Este equipo).",
-                        "Haz clic en la barra de tareas para alternar el foco entre una ventana y otra.",
-                        "Organiza las ventanas en paralelo para visualizar ambas simultáneamente."
-                    ],
-                    hint: `Pista para el Ejercicio ${num}: Utiliza la barra inferior para alternar qué ventana se encuentra activa al frente.`
-                };
-            } 
-            // MÓDULO 3: Explorador de Archivos (26 al 40)
-            else if (num >= 26 && num <= 40) {
-                return {
-                    title: `Ejercicio ${num}: Exploración de Archivos (${num - 25})`,
-                    steps: [
-                        "Abre el explorador de archivos haciendo doble clic en 'Este equipo'.",
-                        "Navega entre los accesos rápidos del panel izquierdo (Escritorio, Descargas).",
-                        "Identifica la unidad principal Disco Local (C:)."
-                    ],
-                    hint: `Pista para el Ejercicio ${num}: Haz doble clic limpio sobre el ícono celeste de la computadora para entrar al explorador.`
-                };
-            } 
-            // MÓDULO 4: Procesador WordPad (41 al 55)
-            else if (num >= 41 && num <= 55) {
-                return {
-                    title: `Ejercicio ${num}: Edición en WordPad (${num - 40})`,
-                    steps: [
-                        "Abre la aplicación **WordPad** desde el escritorio con doble clic.",
-                        "Haz clic dentro de la hoja blanca en blanco.",
-                        "Escribe un texto breve y verifica que aparezca en pantalla."
-                    ],
-                    hint: `Pista para el Ejercicio ${num}: Asegúrate de que el cursor parpadee dentro del área blanca antes de empezar a tipear.`
-                };
-            } 
-            // MÓDULO 5: Facturación Digital (56 al 70)
-            else if (num >= 56 && num <= 70) {
-                return {
-                    title: `Ejercicio ${num}: Módulo de Facturación (${num - 55})`,
-                    steps: [
-                        "Abre la aplicación **Facturador** haciendo doble clic en su ícono verde.",
-                        "Completa los campos de cliente y descripción del producto.",
-                        "Valida los montos y presiona emitir comprobante."
-                    ],
-                    hint: `Pista para el Ejercicio ${num}: Rellena todos los campos obligatorios marcados antes de emitir la factura.`
-                };
-            } 
-            // MÓDULO 6: Correo Electrónico (71 al 85)
-            else if (num >= 71 && num <= 85) {
-                return {
-                    title: `Ejercicio ${num}: Gestión de Correo (${num - 70})`,
-                    steps: [
-                        "Abre la aplicación de **Correo** desde el menú o acceso directo.",
-                        "Ingresa un destinatario simulado y redacta el asunto.",
-                        "Escribe el cuerpo del mensaje y simula el envío."
-                    ],
-                    hint: `Pista para el Ejercicio ${num}: Revisa que el campo 'Para' contenga una dirección válida antes de enviar.`
-                };
-            } 
-            // MÓDULO 7: WhatsApp Web (86 al 95)
-            else if (num >= 86 && num <= 95) {
-                return {
-                    title: `Ejercicio ${num}: Mensajería Instantánea (${num - 85})`,
-                    steps: [
-                        "Selecciona un contacto de la lista lateral en la interfaz.",
-                        "Escribe un saludo cotidiano en la barra inferior de chat.",
-                        "Envía el mensaje haciendo clic en el botón correspondiente."
-                    ],
-                    hint: `Pista para el Ejercicio ${num}: Haz clic sobre el chat del contacto antes de escribir en la caja de texto.`
-                };
-            } 
-            // MÓDULO 8: Integración Total (96 al 100)
-            else {
-                return {
-                    title: `Ejercicio ${num}: Integración y Autonomía (${num - 95})`,
-                    steps: [
-                        "Combina las herramientas aprendidas sin guías paso a paso.",
-                        "Abre el explorador, redacta un documento y completa un flujo de trabajo digital.",
-                        "Verifica el resultado final de forma autónoma."
-                    ],
-                    hint: `Pista para el Ejercicio ${num}: Este es un ejercicio libre de integración: recuerda los pasos de los módulos anteriores.`
-                };
-            }
+            // Validación genérica estricta por defecto
+            return {
+                title: `Ejercicio ${num}: Práctica guiada avanzada`,
+                steps: ["Realiza la acción requerida y mantén la ventana abierta si corresponde."],
+                hint: "Sigue detalladamente los pasos de la consigna.",
+                targetId: null,
+                validate: () => ({ ok: true })
+            };
         }
 
         function changeExercise(num) {
+            localStorage.setItem('sim_current_ex', num);
             document.getElementById('exercise-counter').innerText = 'Ej. ' + num + ' de 100';
             const inst = document.getElementById('exercise-instructions');
             const data = getExerciseDetails(parseInt(num));
@@ -517,12 +526,13 @@
             inst.innerHTML = html;
         }
 
-        // Inicializar por defecto en el ejercicio 1
-        changeExercise(1);
+        changeExercise(savedEx);
 
         function toggleStartMenu() {
             const menu = document.getElementById('start-menu');
-            menu.style.display = (menu.style.display === 'flex') ? 'none' : 'flex';
+            const isOpen = menu.style.display === 'flex';
+            menu.style.display = isOpen ? 'none' : 'flex';
+            userState.startMenuOpen = !isOpen;
         }
 
         function openApp(appId) {
@@ -530,28 +540,117 @@
             if (win) {
                 document.querySelectorAll('.app-window').forEach(w => w.style.display = 'none');
                 win.style.display = 'flex';
+                if (!userState.openApps.includes(appId)) {
+                    userState.openApps.push(appId);
+                }
             } else {
                 alert("La aplicación seleccionada se abrirá en breve.");
             }
             document.getElementById('start-menu').style.display = 'none';
+            userState.startMenuOpen = false;
         }
 
         function closeApp(appId) {
             document.getElementById('window-' + appId).style.display = 'none';
+            userState.openApps = userState.openApps.filter(id => id !== appId);
         }
 
-        function selectIcon(el) {
+        function selectIcon(el, appId) {
             document.querySelectorAll('.desktop-icon').forEach(i => i.style.background = 'transparent');
             el.style.background = 'rgba(255, 255, 255, 0.25)';
+            userState.selectedIcon = appId;
         }
 
-        function verifyExercise() { alert("¡Excelente trabajo! Ejercicio completado correctamente."); }
-        function resetExercise() { alert("Reiniciando el ejercicio actual..."); }
+        function simulateDeleteFile() {
+            userState.fileDeleted = true;
+            document.getElementById('trash-status').innerText = "Estado: Hay 1 archivo simulado en la papelera.";
+            alert("Archivo enviado a la papelera correctamente.");
+        }
+
+        function simulateRestoreFile() {
+            userState.fileDeleted = false;
+            document.getElementById('trash-status').innerText = "La papelera está vacía actualmente.";
+            alert("Archivo restaurado a su ubicación original.");
+        }
+
+        // Verificación con mensajes de error detallados
+        function verifyExercise() {
+            const num = parseInt(document.getElementById('exercise-select').value);
+            const data = getExerciseDetails(num);
+            const res = data.validate();
+
+            if (res.ok) {
+                alert(`¡Excelente trabajo! Ejercicio ${num} completado correctamente.`);
+                
+                // Guardar en progreso completado
+                if (!userState.completedExercises.includes(num)) {
+                    userState.completedExercises.push(num);
+                    localStorage.setItem('sim_completed', JSON.stringify(userState.completedExercises));
+                    
+                    // Actualizar opción en el selector visualmente
+                    let opt = exerciseSelect.options[exerciseSelect.selectedIndex];
+                    if (!opt.text.includes("✓")) opt.text += " ✓";
+                }
+
+                // Pasar al siguiente ejercicio automáticamente
+                if (num < 100) {
+                    document.getElementById('exercise-select').value = num + 1;
+                    changeExercise(num + 1);
+                }
+            } else {
+                // Mensaje de error detallado
+                alert(`❌ No se pudo validar el Ejercicio ${num}.\n\nMotivo: ${res.error}\n\n💡 Revisá la consigna o utilizá el botón 'Pista' para recibir ayuda visual.`);
+            }
+        }
+
+        function resetExercise() {
+            userState.openApps = [];
+            userState.selectedIcon = null;
+            userState.startMenuOpen = false;
+            userState.typedInWordpad = false;
+            userState.fileDeleted = false;
+            document.querySelectorAll('.app-window').forEach(w => w.style.display = 'none');
+            document.getElementById('start-menu').style.display = 'none';
+            document.querySelectorAll('.desktop-icon').forEach(i => {
+                i.style.background = 'transparent';
+                i.classList.remove('highlight-target');
+            });
+            alert("Entorno reiniciado.");
+        }
         
+        // Pista con ayuda visual contextual (parpadeo en el elemento correcto)
         function showHint() {
             const num = document.getElementById('exercise-select').value;
             const data = getExerciseDetails(parseInt(num));
-            alert("💡 Pista para el Ejercicio " + num + ":\n\n" + data.hint);
+            
+            // Remover resaltados previos
+            document.querySelectorAll('.desktop-icon, #start-btn').forEach(el => el.classList.remove('highlight-target'));
+
+            if (data.targetId) {
+                const targetEl = document.getElementById(data.targetId);
+                if (targetEl) {
+                    targetEl.classList.add('highlight-target');
+                    setTimeout(() => targetEl.classList.remove('highlight-target'), 5000); // Se apaga a los 5 seg
+                }
+            }
+
+            alert("💡 Pista para el Ejercicio " + num + ":\n\n" + data.hint + "\n\n(Nota: Si el objetivo está en pantalla, lo verás parpadear resaltado durante unos segundos).");
+        }
+
+        // Panel de Estadísticas
+        function openStats() {
+            const completedCount = userState.completedExercises.length;
+            const percent = Math.round((completedCount / 100) * 100);
+            
+            document.getElementById('stat-completed').innerText = completedCount;
+            document.getElementById('stat-percentage').innerText = percent + "%";
+            document.getElementById('stat-module').innerText = getModuleTitle(parseInt(document.getElementById('exercise-select').value));
+            
+            document.getElementById('stats-modal').style.display = 'flex';
+        }
+
+        function closeStats() {
+            document.getElementById('stats-modal').style.display = 'none';
         }
 
         document.addEventListener('click', function(e) {
@@ -559,6 +658,7 @@
             const btn = document.getElementById('start-btn');
             if (menu.style.display === 'flex' && !menu.contains(e.target) && !btn.contains(e.target)) {
                 menu.style.display = 'none';
+                userState.startMenuOpen = false;
             }
         });
     </script>
