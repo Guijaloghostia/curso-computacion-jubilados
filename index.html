@@ -3,626 +3,629 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Simulador de Capacitación Digital - 100 Ejercicios Completos</title>
+  <title>Capacitación Digital - Simulador Educativo</title>
   <style>
-    :root {
-      --bg-header: #1e293b;
-      --bg-sidebar: #111827;
-      --bg-desktop: #1e3a8a;
-      --taskbar-bg: rgba(15, 23, 42, 0.95);
-      --accent-blue: #0284c7;
-      --accent-green: #22c55e;
-      --text-light: #f8fafc;
-      --window-bg: #ffffff;
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body {
+      display: flex;
+      height: 100vh;
+      background-color: #0d1117;
+      color: #ffffff;
+      overflow: hidden;
+      user-select: none;
+    }
 
-    body { display: flex; flex-direction: column; height: 100vh; overflow: hidden; background-color: #000; }
+    .app-container {
+      display: flex;
+      width: 100%;
+      height: 100%;
+    }
 
-    /* LAYOUT PRINCIPAL */
-    .app-container { display: flex; flex: 1; height: 100vh; }
-
-    /* PANEL LATERAL DE CAPACITACIÓN DIGITAL */
-    aside {
-      width: 360px;
-      background: var(--bg-sidebar);
-      color: var(--text-light);
+    /* Panel Izquierdo: Capacitación Digital */
+    .sidebar {
+      width: 350px;
+      background-color: #0b132b;
+      padding: 20px;
       display: flex;
       flex-direction: column;
-      padding: 20px;
-      border-right: 1px solid #334155;
-      box-shadow: 4px 0 15px rgba(0,0,0,0.5);
-      z-index: 100;
+      justify-content: space-between;
+      border-right: 2px solid #1c2541;
+      z-index: 20;
     }
 
-    .brand-title {
-      font-size: 1.4rem;
-      font-weight: bold;
-      color: #38bdf8;
+    .sidebar-header h2 {
+      font-size: 1.3rem;
+      color: #00b4d8;
       margin-bottom: 15px;
+    }
+
+    .exercise-select {
+      width: 100%;
+      padding: 10px;
+      background: #1c2541;
+      color: #fff;
+      border: 1px solid #3a506b;
+      border-radius: 6px;
+      margin-bottom: 15px;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+
+    .badge-module {
+      display: inline-block;
+      background-color: #0077b6;
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: bold;
+      padding: 4px 8px;
+      border-radius: 4px;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+
+    .exercise-title {
+      font-size: 1.1rem;
+      margin-bottom: 12px;
+      color: #ffffff;
+    }
+
+    .instruction-card {
+      background-color: #1c2541;
+      border-left: 4px solid #00b4d8;
+      padding: 10px;
+      border-radius: 4px;
+      margin-bottom: 12px;
+      font-size: 0.85rem;
+    }
+
+    .instruction-text {
+      font-size: 0.9rem;
+      line-height: 1.4;
+      margin-bottom: 15px;
+      color: #e0e1dd;
+    }
+
+    .hint-btn {
+      width: 100%;
+      background: rgba(255, 183, 3, 0.15);
+      border: 1px solid #ffb703;
+      color: #ffb703;
+      padding: 8px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      text-align: left;
+      font-size: 0.85rem;
+      margin-bottom: 10px;
+    }
+
+    .hint-box {
+      display: none;
+      background: rgba(255, 183, 3, 0.1);
+      border: 1px dashed #ffb703;
+      padding: 10px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      color: #ffb703;
+      margin-bottom: 15px;
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-nav {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      background-color: #00b4d8;
+      color: #000000;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .btn-nav:disabled {
+      background-color: #3a506b;
+      color: #8d99ae;
+      cursor: not-allowed;
+    }
+
+    /* Panel Derecho: Escritorio de Windows */
+    .desktop-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+    }
+
+    .desktop-workspace {
+      flex: 1;
+      position: relative;
+      padding: 15px;
+    }
+
+    /* Iconos Alineados Verticalmente */
+    .desktop-icons {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      width: 90px;
+    }
+
+    .desktop-icon {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      color: #ffffff;
+      font-size: 0.75rem;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.9);
+      cursor: pointer;
+      padding: 6px;
+      border-radius: 4px;
+      border: 1px solid transparent;
+    }
+
+    .desktop-icon:hover {
+      background-color: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .desktop-icon.selected {
+      background-color: rgba(0, 180, 216, 0.3);
+      border: 1px solid #00b4d8;
+    }
+
+    .desktop-icon img {
+      width: 38px;
+      height: 38px;
+      margin-bottom: 4px;
+    }
+
+    /* Ventanas */
+    .window {
+      position: absolute;
+      top: 45%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 440px;
+      background-color: #ffffff;
+      color: #333333;
+      border-radius: 6px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      overflow: hidden;
+      display: none;
+      z-index: 10;
+    }
+
+    .window-header {
+      background-color: #f0f0f0;
+      padding: 6px 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #dddddd;
+    }
+
+    .window-title {
+      font-size: 0.8rem;
+      color: #333333;
+      font-weight: 600;
+    }
+
+    .btn-close {
+      background: transparent;
+      border: none;
+      font-size: 1rem;
+      font-weight: bold;
+      color: #555555;
+      cursor: pointer;
+      padding: 2px 8px;
+      border-radius: 3px;
+    }
+
+    .btn-close:hover {
+      background-color: #e81123;
+      color: #ffffff;
+    }
+
+    .window-body {
+      padding: 15px;
+      font-size: 0.85rem;
+      line-height: 1.6;
+    }
+
+    /* Menú Inicio */
+    .start-menu {
+      position: absolute;
+      bottom: 45px;
+      left: 0;
+      width: 250px;
+      background-color: rgba(15, 23, 42, 0.95);
+      border-top-right-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 10px;
+      display: none;
+      z-index: 15;
+    }
+
+    .start-item {
+      padding: 8px 12px;
+      color: #fff;
+      font-size: 0.85rem;
+      cursor: pointer;
+      border-radius: 4px;
       display: flex;
       align-items: center;
       gap: 10px;
     }
 
-    .exercise-select-box {
-      width: 100%;
-      padding: 8px 10px;
-      border-radius: 6px;
-      background: #1e293b;
-      color: white;
-      border: 1px solid #475569;
-      font-size: 0.9rem;
-      margin-bottom: 20px;
-      cursor: pointer;
+    .start-item:hover {
+      background-color: #00b4d8;
+      color: #000;
     }
 
-    .module-badge {
-      background: #334155;
-      color: #38bdf8;
-      font-size: 0.75rem;
-      font-weight: bold;
-      padding: 4px 8px;
-      border-radius: 4px;
-      display: inline-block;
-      margin-bottom: 10px;
-      width: fit-content;
-      text-transform: uppercase;
-    }
-
-    .exercise-card {
-      background: #1e293b;
-      border-radius: 8px;
-      padding: 16px;
-      border: 1px solid #334155;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .exercise-card h2 { font-size: 1.15rem; color: #f8fafc; line-height: 1.3; }
-
-    .context-box {
-      background: rgba(2, 132, 199, 0.15);
-      border-left: 4px solid #0284c7;
-      padding: 8px 12px;
-      font-size: 0.85rem;
-      color: #bae6fd;
-      border-radius: 0 4px 4px 0;
-      font-weight: 500;
-    }
-
-    .instruction-text { font-size: 0.95rem; line-height: 1.45; color: #cbd5e1; }
-
-    .hint-btn {
-      background: rgba(234, 179, 8, 0.1);
-      border: 1px solid #eab308;
-      color: #fde047;
-      padding: 8px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 0.85rem;
-      text-align: left;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      transition: background 0.2s;
-    }
-    .hint-btn:hover { background: rgba(234, 179, 8, 0.2); }
-
-    .hint-text {
-      font-size: 0.82rem;
-      color: #fef08a;
-      background: #422006;
-      padding: 10px;
-      border-radius: 6px;
-      display: none;
-      line-height: 1.35;
-      border: 1px solid #713f12;
-    }
-
-    .feedback-box {
-      padding: 12px;
-      border-radius: 6px;
-      text-align: center;
-      font-weight: bold;
-      font-size: 0.9rem;
-      display: none;
-    }
-    .feedback-box.success { background: #15803d; color: #f0fdf4; display: block; border: 1px solid #22c55e; }
-
-    .nav-buttons { display: flex; gap: 10px; margin-top: auto; padding-top: 15px; }
-    .nav-buttons button {
-      flex: 1;
-      padding: 10px;
-      border-radius: 6px;
-      border: none;
-      background: #0284c7;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-      font-size: 0.9rem;
-      transition: background 0.2s;
-    }
-    .nav-buttons button:hover { background: #0369a1; }
-
-    /* ENTORNO SIMULADOR (DESKTOP) */
-    main {
-      flex: 1;
-      position: relative;
-      background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .desktop-area {
-      flex: 1;
-      position: relative;
-      padding: 25px;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, 90px);
-      grid-auto-rows: 95px;
-      gap: 15px;
-      align-content: start;
-      justify-items: center;
-      background: radial-gradient(circle at 70% 30%, rgba(56, 189, 248, 0.15), transparent 60%),
-                  linear-gradient(to bottom, #1e40af, #0f172a);
-    }
-
-    .desktop-icon {
-      width: 85px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      color: white;
-      cursor: pointer;
-      padding: 8px 4px;
-      border-radius: 6px;
-      transition: background 0.2s, border 0.2s;
-      border: 1px solid transparent;
-    }
-    .desktop-icon:hover { background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.2); }
-    .desktop-icon.selected { background: rgba(255, 255, 255, 0.25); border: 1px solid rgba(255, 255, 255, 0.4); }
-    .desktop-icon svg { width: 42px; height: 42px; filter: drop-shadow(0px 3px 5px rgba(0,0,0,0.5)); }
-    .desktop-icon span { font-size: 0.78rem; margin-top: 6px; text-shadow: 1px 1px 3px rgba(0,0,0,0.9); line-height: 1.1; font-weight: 500; }
-
-    /* VENTANAS SIMULADAS */
-    .window {
-      position: absolute; top: 50px; left: 120px; width: 560px; height: 380px;
-      background: var(--window-bg); border-radius: 8px;
-      box-shadow: 0 15px 30px rgba(0,0,0,0.6); border: 1px solid #475569;
-      display: none; flex-direction: column; z-index: 10; overflow: hidden;
-    }
-    .window.active { display: flex; }
-
-    .window-header {
-      height: 38px; background: #f1f5f9; border-bottom: 1px solid #cbd5e1;
-      display: flex; align-items: center; justify-content: space-between; padding: 0 12px; cursor: move;
-    }
-    .window-title { font-size: 0.88rem; font-weight: 600; color: #334155; display: flex; align-items: center; gap: 8px; }
-    .window-controls { display: flex; gap: 8px; }
-    .win-btn { width: 12px; height: 12px; border-radius: 50%; border: none; cursor: pointer; }
-    .win-btn.close { background: #ef4444; }
-    .win-btn.min { background: #f59e0b; }
-    .win-btn.max { background: #10b981; }
-
-    .window-body { flex: 1; padding: 16px; overflow-y: auto; color: #1e293b; background: #fafafa; }
-
-    /* BARRA DE TAREAS */
+    /* Barra de Tareas */
     .taskbar {
-      height: 48px; background: var(--taskbar-bg); backdrop-filter: blur(12px);
-      display: flex; align-items: center; justify-content: space-between; padding: 0 12px;
-      border-top: 1px solid rgba(255,255,255,0.1); z-index: 500;
+      height: 45px;
+      background-color: rgba(15, 23, 42, 0.9);
+      backdrop-filter: blur(8px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      z-index: 20;
     }
-    .taskbar-left, .taskbar-right { display: flex; align-items: center; gap: 10px; }
-    
+
     .start-btn {
-      display: flex; align-items: center; justify-content: center; width: 40px; height: 36px;
-      border-radius: 6px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
-      cursor: pointer; transition: background 0.2s;
+      background: transparent;
+      border: none;
+      color: #00b4d8;
+      font-size: 1.2rem;
+      cursor: pointer;
+      padding: 5px 10px;
+      border-radius: 4px;
     }
-    .start-btn:hover { background: rgba(255,255,255,0.25); }
 
-    .clock { color: white; font-size: 0.78rem; text-align: right; font-weight: 500; cursor: pointer; }
-
-    /* MENÚ INICIO Y CONTEXTUAL */
-    .start-menu {
-      position: absolute; bottom: 55px; left: 10px; width: 280px; background: #1e293b;
-      border: 1px solid #475569; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.6);
-      display: none; flex-direction: column; padding: 10px; z-index: 600; color: white;
+    .start-btn:hover {
+      background-color: rgba(255, 255, 255, 0.1);
     }
-    .start-menu.active { display: flex; }
-    .start-item { padding: 10px 12px; border-radius: 6px; font-size: 0.88rem; cursor: pointer; display: flex; align-items: center; gap: 10px; }
-    .start-item:hover { background: #334155; }
 
-    .context-menu {
-      position: absolute; width: 170px; background: #ffffff; border: 1px solid #cbd5e1;
-      box-shadow: 0 6px 16px rgba(0,0,0,0.2); border-radius: 6px; display: none;
-      flex-direction: column; padding: 5px 0; z-index: 700;
+    .taskbar-clock {
+      font-size: 0.75rem;
+      text-align: right;
+      color: #ffffff;
     }
-    .context-item { padding: 8px 14px; font-size: 0.82rem; color: #334155; cursor: pointer; }
-    .context-item:hover { background: #f1f5f9; color: #0284c7; font-weight: 600; }
-
-    .form-group { margin-bottom: 12px; }
-    .form-group label { display: block; font-size: 0.8rem; font-weight: bold; margin-bottom: 5px; color: #475569; }
-    .form-group input, .form-group textarea { width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 0.88rem; outline: none; }
-    .form-group input:focus, .form-group textarea:focus { border-color: #0284c7; }
-    .btn-action { background: #0284c7; color: white; border: none; padding: 8px 14px; border-radius: 4px; cursor: pointer; font-size: 0.85rem; font-weight: 600; }
-    .btn-action:hover { background: #0369a1; }
   </style>
 </head>
-<body onclick="handleGlobalClick(event)">
+<body>
 
   <div class="app-container">
-    <aside>
-      <div class="brand-title">Capacitación Digital</div>
-      <select id="exerciseSelect" class="exercise-select-box" onchange="jumpToExercise(parseInt(this.value))"></select>
+    <aside class="sidebar">
+      <div class="sidebar-top">
+        <div class="sidebar-header">
+          <h2>Capacitación Digital</h2>
+        </div>
 
-      <div class="exercise-card">
-        <div id="moduleBadge" class="module-badge">Módulo 1</div>
-        <h2 id="exTitle">Cargando ejercicio...</h2>
-        <div id="exContext" class="context-box">📍 Ubicación inicial: Escritorio principal</div>
-        <div id="exInstruction" class="instruction-text">Cargando consigna...</div>
+        <select id="exercise-select" class="exercise-select" onchange="selectExercise(this.value)"></select>
+
+        <span id="badge-module" class="badge-module">Módulo 1</span>
+        <h3 id="exercise-title" class="exercise-title">Ejercicio 1</h3>
+        
+        <div class="instruction-card">
+          📌 <span id="location-text">Ubicación inicial: Escritorio principal</span>
+        </div>
+        
+        <p id="instruction-text" class="instruction-text">Cargando consigna...</p>
         
         <button class="hint-btn" onclick="toggleHint()">💡 Pista: Ver ayuda paso a paso</button>
-        <div id="hintText" class="hint-text"></div>
-        <div id="feedbackBox" class="feedback-box">¡Correcto! Avanzando al siguiente paso...</div>
+        <div id="hint-box" class="hint-box"></div>
       </div>
 
       <div class="nav-buttons">
-        <button onclick="prevExercise()">Anterior</button>
-        <button onclick="nextExercise()">Siguiente</button>
+        <button id="btn-prev" class="btn-nav" onclick="navigate(-1)">Anterior</button>
+        <button id="btn-next" class="btn-nav" onclick="navigate(1)">Siguiente</button>
       </div>
     </aside>
 
-    <main id="desktopArea" class="desktop-area" oncontextmenu="handleDesktopContext(event)">
-      <!-- ICONOS EN ESCRITORIO -->
-      <div class="desktop-icon" id="icon-wordpad" onclick="handleAction('icon-wordpad', 'click', event)" ondblclick="handleAction('icon-wordpad', 'dblclick', event); openWindow('win-wordpad');">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-        <span>WordPad</span>
-      </div>
-
-      <div class="desktop-icon" id="icon-facturador" onclick="handleAction('icon-facturador', 'click', event)" ondblclick="handleAction('icon-facturador', 'dblclick', event); openWindow('win-facturador');">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg>
-        <span>Facturador</span>
-      </div>
-
-      <div class="desktop-icon" id="icon-pc" onclick="handleAction('icon-pc', 'click', event)" ondblclick="handleAction('icon-pc', 'dblclick', event); openWindow('win-pc');" oncontextmenu="handleAction('icon-pc', 'contextmenu', event); showContextMenu(event, 'pc');">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-        <span>Este equipo</span>
-      </div>
-
-      <div class="desktop-icon" id="icon-trash" onclick="handleAction('icon-trash', 'click', event)" oncontextmenu="handleAction('icon-trash', 'contextmenu', event); showContextMenu(event, 'trash');">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-        <span>Papelera</span>
-      </div>
-
-      <div class="desktop-icon" id="icon-mail" onclick="handleAction('icon-mail', 'click', event)" ondblclick="handleAction('icon-mail', 'dblclick', event); openWindow('win-mail');">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#facc15" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        <span>Correo</span>
-      </div>
-
-      <!-- VENTANAS SIMULADAS -->
-      <div class="window" id="win-wordpad">
-        <div class="window-header" onclick="handleAction('win-wordpad-header', 'click', event)">
-          <div class="window-title">📝 Documento sin título - WordPad</div>
-          <div class="window-controls">
-            <button class="win-btn min" id="wordpad-min" onclick="handleAction('wordpad-min', 'click', event); closeWindow('win-wordpad');"></button>
-            <button class="win-btn max" id="wordpad-max" onclick="handleAction('wordpad-max', 'click', event);"></button>
-            <button class="win-btn close" id="wordpad-close" onclick="closeWindow('win-wordpad'); handleAction('wordpad-close', 'click', event);"></button>
+    <main class="desktop-container" onclick="handleDesktopClick(event)">
+      <div class="desktop-workspace">
+        
+        <div class="desktop-icons">
+          <div class="desktop-icon" id="icon-este-equipo" onclick="handleIconClick(event, 'este-equipo')" ondblclick="handleIconDblClick('este-equipo')">
+            <img src="https://img.icons8.com/fluent/48/display.png" alt="Este Equipo">
+            <span>Este Equipo</span>
+          </div>
+          <div class="desktop-icon" id="icon-wordpad" onclick="handleIconClick(event, 'wordpad')" ondblclick="handleIconDblClick('wordpad')">
+            <img src="https://img.icons8.com/color/48/wordpad.png" alt="WordPad">
+            <span>WordPad</span>
+          </div>
+          <div class="desktop-icon" id="icon-facturador" onclick="handleIconClick(event, 'facturador')" ondblclick="handleIconDblClick('facturador')">
+            <img src="https://img.icons8.com/color/48/calculator.png" alt="Facturador">
+            <span>Facturador</span>
+          </div>
+          <div class="desktop-icon" id="icon-correo" onclick="handleIconClick(event, 'correo')" ondblclick="handleIconDblClick('correo')">
+            <img src="https://img.icons8.com/color/48/gmail-new.png" alt="Correo">
+            <span>Correo</span>
           </div>
         </div>
-        <div class="window-body">
-          <textarea id="wordpad-text" style="width:100%; height:75%; padding:10px; border: 1px solid #ccc; border-radius: 4px;" placeholder="Empiece a escribir su documento aquí..." onclick="handleAction('wordpad-text-click', 'click', event)" oninput="handleAction('wordpad-text', 'input', event)"></textarea>
-          <button class="btn-action" id="wordpad-save" style="margin-top:10px;" onclick="handleAction('wordpad-save', 'click', event)">Guardar Documento</button>
+
+        <div class="window" id="app-window">
+          <div class="window-header">
+            <span class="window-title" id="window-title">Ventana</span>
+            <button class="btn-close" onclick="closeAppWindow()" title="Cerrar">[X]</button>
+          </div>
+          <div class="window-body" id="window-body">
+            Contenido de la aplicación...
+          </div>
         </div>
+
+        <div class="start-menu" id="start-menu">
+          <div class="start-item" onclick="handleStartItem('wordpad')">📝 WordPad</div>
+          <div class="start-item" onclick="handleStartItem('facturador')">🧮 Facturador</div>
+          <div class="start-item" onclick="handleStartItem('correo')">✉️ Correo</div>
+          <div class="start-item" onclick="handleStartItem('este-equipo')">💻 Este Equipo</div>
+        </div>
+
       </div>
 
-      <div class="window" id="win-facturador">
-        <div class="window-header">
-          <div class="window-title">📊 Sistema Facturador Digital</div>
-          <div class="window-controls">
-            <button class="win-btn min" id="fac-min" onclick="handleAction('fac-min', 'click', event); closeWindow('win-facturador');"></button>
-            <button class="win-btn close" id="fac-close" onclick="closeWindow('win-facturador'); handleAction('fac-close', 'click', event);"></button>
-          </div>
+      <footer class="taskbar">
+        <div class="taskbar-left">
+          <button class="start-btn" id="start-btn" onclick="toggleStartMenu(event)">⊞</button>
         </div>
-        <div class="window-body">
-          <div class="form-group">
-            <label>Nombre del Cliente:</label>
-            <input type="text" id="fac-client" placeholder="Ej: Juan Pérez" onclick="handleAction('fac-client-click', 'click', event)" oninput="handleAction('fac-client', 'input', event)">
-          </div>
-          <div class="form-group">
-            <label>Monto Total ($):</label>
-            <input type="number" id="fac-amount" placeholder="Ej: 2500" onclick="handleAction('fac-amount-click', 'click', event)" oninput="handleAction('fac-amount', 'input', event)">
-          </div>
-          <button class="btn-action" id="fac-emit" onclick="handleAction('fac-emit', 'click', event)">Emitir Comprobante</button>
+        <div class="taskbar-clock">
+          <div id="clock-time">20:47</div>
+          <div id="clock-date">16/08/2026</div>
         </div>
-      </div>
-
-      <div class="window" id="win-mail">
-        <div class="window-header">
-          <div class="window-title">✉️ Correo Electrónico</div>
-          <div class="window-controls">
-            <button class="win-btn min" id="mail-min" onclick="handleAction('mail-min', 'click', event); closeWindow('win-mail');"></button>
-            <button class="win-btn close" id="mail-close" onclick="closeWindow('win-mail'); handleAction('mail-close', 'click', event);"></button>
-          </div>
-        </div>
-        <div class="window-body">
-          <div class="form-group">
-            <label>Para:</label>
-            <input type="email" id="mail-to" placeholder="ejemplo@correo.com" onclick="handleAction('mail-to-click', 'click', event)" oninput="handleAction('mail-to', 'input', event)">
-          </div>
-          <div class="form-group">
-            <label>Asunto:</label>
-            <input type="text" id="mail-subject" placeholder="Escriba el asunto" onclick="handleAction('mail-subject-click', 'click', event)" oninput="handleAction('mail-subject', 'input', event)">
-          </div>
-          <button class="btn-action" id="mail-send" onclick="handleAction('mail-send', 'click', event)">Enviar Correo</button>
-        </div>
-      </div>
-
-      <div class="window" id="win-pc">
-        <div class="window-header">
-          <div class="window-title">💻 Propiedades del Sistema - Este Equipo</div>
-          <div class="window-controls">
-            <button class="win-btn close" id="pc-close" onclick="closeWindow('win-pc'); handleAction('pc-close', 'click', event);"></button>
-          </div>
-        </div>
-        <div class="window-body">
-          <p><strong>Procesador:</strong> Intel Core i5 / Simulador Educativo</p>
-          <p style="margin-top:8px;"><strong>Memoria RAM:</strong> 8.00 GB</p>
-          <p style="margin-top:8px;"><strong>Sistema Operativo:</strong> Capacitación Digital OS 64 bits</p>
-          <p style="margin-top:8px;"><strong>Estado:</strong> Funcionando correctamente</p>
-          <button class="btn-action" id="pc-btn-close" style="margin-top:20px;" onclick="closeWindow('win-pc'); handleAction('pc-close-btn', 'click', event);">Cerrar Información</button>
-        </div>
-      </div>
-
-      <!-- MENÚ INICIO -->
-      <div class="start-menu" id="startMenu">
-        <div class="start-item" id="start-wordpad" onclick="openWindow('win-wordpad'); toggleStartMenu(); handleAction('start-wordpad', 'click', event);">📝 WordPad</div>
-        <div class="start-item" id="start-facturador" onclick="openWindow('win-facturador'); toggleStartMenu(); handleAction('start-facturador', 'click', event);">📊 Facturador</div>
-        <div class="start-item" id="start-mail" onclick="openWindow('win-mail'); toggleStartMenu(); handleAction('start-mail', 'click', event);">✉️ Correo</div>
-        <div class="start-item" id="start-power" onclick="handleAction('start-power', 'click', event); toggleStartMenu();" style="color:#f87171;">⚡ Apagar Sistema</div>
-      </div>
-
-      <!-- MENÚ CONTEXTUAL -->
-      <div class="context-menu" id="contextMenu">
-        <div class="context-item" id="ctx-open" onclick="handleAction('ctx-open', 'click', event); hideContextMenu();">Abrir</div>
-        <div class="context-item" id="ctx-empty-trash" onclick="handleAction('ctx-empty-trash', 'click', event); hideContextMenu();">Vaciar Papelera</div>
-        <div class="context-item" id="ctx-new-folder" onclick="handleAction('ctx-new-folder', 'click', event); hideContextMenu();">Nuevo -> Carpeta</div>
-        <div class="context-item" id="ctx-props" onclick="handleAction('ctx-props', 'click', event); hideContextMenu(); openWindow('win-pc');">Propiedades</div>
-      </div>
+      </footer>
     </main>
-
-    <footer class="taskbar" id="taskbar" onclick="handleAction('taskbar', 'click', event)">
-      <div class="taskbar-left">
-        <div class="start-btn" id="startBtn" onclick="toggleStartMenu(); handleAction('startBtn', 'click', event); event.stopPropagation();">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="#38bdf8"><path d="M3 3h8v8H3zm10 0h8v8h-8zM3 13h8v8H3zm10 0h8v8h-8z"/></svg>
-        </div>
-      </div>
-      <div class="taskbar-right">
-        <div class="clock" id="clockDisplay" onclick="handleAction('clockDisplay', 'click', event); event.stopPropagation();">10:00 AM</div>
-      </div>
-    </footer>
   </div>
 
   <script>
     // MATRIZ COMPLETA DE LOS 100 EJERCICIOS DEFINIDOS INDIVIDUALMENTE
     const exercises = [
       // MÓDULO 1
-      { id: 1, module: "Módulo 1: Panel Táctil", title: "Ejercicio 1: Selección Individual", context: "📍 Ubicación inicial: Escritorio principal", instruction: "Haga un solo clic izquierdo sobre el icono 'Este equipo' para seleccionarlo.", target: "icon-pc", event: "click", hint: "Presione una sola vez el botón izquierdo sobre la computadora.", success: "¡Perfecto! El icono quedó seleccionado correctamente." },
-      { id: 2, module: "Módulo 1: Panel Táctil", title: "Ejercicio 2: Apertura por Doble Clic", context: "📍 Ubicación inicial: Escritorio principal", instruction: "Haga doble clic rápido sobre el icono 'Este equipo' para abrirlo.", target: "icon-pc", event: "dblclick", hint: "Realice dos clics rápidos seguidos sobre el icono de Este equipo.", success: "¡Excelente! Se logró la apertura por doble clic." },
-      { id: 3, module: "Módulo 1: Panel Táctil", title: "Ejercicio 3: Menú Contextual", context: "📍 Ubicación inicial: Escritorio principal", instruction: "Haga clic derecho sobre el icono 'Papelera' para desplegar sus opciones.", target: "icon-trash", event: "contextmenu", hint: "Oprima el botón derecho del mouse sobre el cesto de residuos.", success: "¡Muy bien! Desplegó el menú contextual." },
-      { id: 4, module: "Módulo 1: Panel Táctil", title: "Ejercicio 4: Abrir Menú Inicio", context: "📍 Ubicación inicial: Barra de tareas", instruction: "Haga clic sobre el botón Inicio en la esquina inferior izquierda.", target: "startBtn", event: "click", hint: "Haga clic en el icono con 4 cuadrados azules en la barra inferior.", success: "¡Genial! El menú Inicio está desplegado." },
-      { id: 5, module: "Módulo 1: Panel Táctil", title: "Ejercicio 5: Selección de WordPad", context: "📍 Ubicación inicial: Escritorio principal", instruction: "Haga un clic izquierdo sobre el icono 'WordPad'.", target: "icon-wordpad", event: "click", hint: "Un solo clic izquierdo sobre la hoja azul de WordPad.", success: "¡Correcto! Icono de WordPad marcado." },
-      { id: 6, module: "Módulo 1: Panel Táctil", title: "Ejercicio 6: Abrir WordPad", context: "📍 Ubicación inicial: Escritorio principal", instruction: "Abra la aplicación WordPad haciendo doble clic sobre su icono.", target: "icon-wordpad", event: "dblclick", hint: "Dos clics rápidos consecutivos sobre el acceso de WordPad.", success: "¡Estupendo! Ventana de WordPad abierta." },
-      { id: 7, module: "Módulo 1: Panel Táctil", title: "Ejercicio 7: Selección de Facturador", context: "📍 Ubicación inicial: Escritorio principal", instruction: "Haga un clic izquierdo sobre el icono 'Facturador' para resaltarlo.", target: "icon-facturador", event: "click", hint: "Un clic sobre el icono verde del Facturador.", success: "¡Bien hecho! Facturador seleccionado." },
-      { id: 8, module: "Módulo 1: Panel Táctil", title: "Ejercicio 8: Abrir Facturador", context: "📍 Ubicación inicial: Escritorio principal", instruction: "Ejecute el Facturador mediante un doble clic sobre su icono.", target: "icon-facturador", event: "dblclick", hint: "Dos clics firmes y seguidos sobre el acceso directo verde.", success: "¡Excelente! Sistema Facturador activo." },
-      { id: 9, module: "Módulo 1: Panel Táctil", title: "Ejercicio 9: Selección de Correo", context: "📍 Ubicación inicial: Escritorio principal", instruction: "Haga un clic sobre el icono 'Correo' para enfocar la aplicación.", target: "icon-mail", event: "click", hint: "Un clic izquierdo sobre el sobre amarillo.", success: "¡Muy bien! Icono de Correo enfocado." },
-      { id: 10, module: "Módulo 1: Panel Táctil", title: "Ejercicio 10: Abrir Correo", context: "📍 Ubicación inicial: Escritorio principal", instruction: "Abre el cliente de correo realizando doble clic sobre el icono 'Correo'.", target: "icon-mail", event: "dblclick", hint: "Dos clics sobre el icono del sobre en el escritorio.", success: "¡Correcto! Aplicación de Correo lista." },
-      { id: 11, module: "Módulo 1: Panel Táctil", title: "Ejercicio 11: Desplegar Menú Inicio", context: "📍 Ubicación inicial: Barra de tareas", instruction: "Oprima el botón Inicio para desplegar la lista de programas.", target: "startBtn", event: "click", hint: "Haga clic en el botón de la esquina inferior izquierda.", success: "¡Perfecto! Menú Inicio listo." },
-      { id: 12, module: "Módulo 1: Panel Táctil", title: "Ejercicio 12: Iniciar WordPad desde Inicio", context: "📍 Ubicación inicial: Menú Inicio", instruction: "En el menú desplegado, haga clic sobre la opción 'WordPad'.", target: "start-wordpad", event: "click", hint: "Haga clic sobre el texto de WordPad dentro del menú desplegado.", success: "¡Excelente! WordPad iniciado desde el Menú Inicio." },
+      { id: 1, module: "Módulo 1: Panel Táctil", title: "Ejercicio 1: Selección Individual", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Haga clic sobre el ícono de WordPad para seleccionarlo.", hint: "Haga un solo clic con el botón izquierdo sobre WordPad.", targetAction: "click-wordpad" },
+      { id: 2, module: "Módulo 1: Panel Táctil", title: "Ejercicio 2: Apertura por Doble Clic", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Abra la aplicación WordPad haciendo doble clic sobre su ícono.", hint: "Realice dos clics rápidos consecutivos sobre el ícono de WordPad.", targetAction: "dblclick-wordpad" },
+      { id: 3, module: "Módulo 1: Panel Táctil", title: "Ejercicio 3: Menú Contextual", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Despliegue el menú de inicio desde la barra de tareas.", hint: "Haga clic en el botón de inicio (⊞) en la esquina inferior izquierda.", targetAction: "click-start" },
+      { id: 4, module: "Módulo 1: Panel Táctil", title: "Ejercicio 4: Abrir Menú Inicio", context: "📌 Ubicación inicial: Barra de tareas", instruction: "Haga clic sobre el botón Inicio para ver los programas disponibles.", hint: "Presione el botón con el ícono de Windows en la barra de tareas.", targetAction: "click-start" },
+      { id: 5, module: "Módulo 1: Panel Táctil", title: "Ejercicio 5: Selección de WordPad", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Seleccione el ícono WordPad.", hint: "Haga clic una vez sobre el ícono WordPad.", targetAction: "click-wordpad" },
+      { id: 6, module: "Módulo 1: Panel Táctil", title: "Ejercicio 6: Abrir WordPad", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Abra WordPad desde el escritorio.", hint: "Haga doble clic en WordPad.", targetAction: "dblclick-wordpad" },
+      { id: 7, module: "Módulo 1: Panel Táctil", title: "Ejercicio 7: Selección de Facturador", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Seleccione el ícono Facturador.", hint: "Haga un clic sobre el ícono de Facturador.", targetAction: "click-facturador" },
+      { id: 8, module: "Módulo 1: Panel Táctil", title: "Ejercicio 8: Abrir Facturador", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Abra el programa Facturador.", hint: "Haga doble clic sobre Facturador.", targetAction: "dblclick-facturador" },
+      { id: 9, module: "Módulo 1: Panel Táctil", title: "Ejercicio 9: Selección de Correo", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Seleccione el ícono de Correo.", hint: "Haga clic sobre la aplicación Correo.", targetAction: "click-correo" },
+      { id: 10, module: "Módulo 1: Panel Táctil", title: "Ejercicio 10: Abrir Correo", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Abra la aplicación Correo.", hint: "Haga doble clic sobre el ícono de Correo.", targetAction: "dblclick-correo" },
+      { id: 11, module: "Módulo 1: Panel Táctil", title: "Ejercicio 11: Desplegar Menú Inicio", context: "📌 Ubicación inicial: Barra de tareas", instruction: "Despliegue el Menú Inicio.", hint: "Haga clic en la esquina inferior izquierda.", targetAction: "click-start" },
+      { id: 12, module: "Módulo 1: Panel Táctil", title: "Ejercicio 12: Iniciar WordPad desde Inicio", context: "📌 Ubicación inicial: Menú Inicio", instruction: "Abra el Menú Inicio e inicie WordPad.", hint: "Abra Inicio y luego haga clic en WordPad.", targetAction: "start-wordpad" },
 
       // MÓDULO 2
-      { id: 13, module: "Módulo 2: Manejo de Ventanas", title: "Ejercicio 13: Minimizar WordPad", context: "📍 Ubicación inicial: Ventana de WordPad abierta", instruction: "Haga clic en el botón amarillo (-) de minimizar en la ventana de WordPad.", target: "wordpad-min", event: "click", hint: "Es el botón circular del centro en los controles superiores de la ventana.", success: "¡Muy bien! La ventana se ha minimizado." },
-      { id: 14, module: "Módulo 2: Manejo de Ventanas", title: "Ejercicio 14: Maximizar WordPad", context: "📍 Ubicación inicial: Ventana de WordPad abierta", instruction: "Haga clic en el botón verde (+) para maximizar la ventana de WordPad.", target: "wordpad-max", event: "click", hint: "Oprima el círculo verde en la esquina superior derecha de la ventana.", success: "¡Correcto! Ventana maximizada." },
-      { id: 15, module: "Módulo 2: Manejo de Ventanas", title: "Ejercicio 15: Cerrar WordPad", context: "📍 Ubicación inicial: Ventana de WordPad abierta", instruction: "Haga clic en el botón rojo [X] para cerrar la ventana de WordPad.", target: "wordpad-close", event: "click", hint: "Oprima el botón circular rojo de la ventana.", success: "¡Estupendo! Ventana cerrada." },
-      { id: 16, module: "Módulo 2: Manejo de Ventanas", title: "Ejercicio 16: Abrir Facturador", context: "📍 Ubicación inicial: Escritorio principal", instruction: "Haga doble clic en el icono 'Facturador' para abrir su ventana.", target: "icon-facturador", event: "dblclick", hint: "Dos clics seguidos en el icono verde.", success: "¡Ventana del Facturador abierta!" },
-      { id: 17, module: "Módulo 2: Manejo de Ventanas", title: "Ejercicio 17: Minimizar Facturador", context: "📍 Ubicación inicial: Ventana del Facturador abierta", instruction: "Minimice la ventana del Facturador haciendo clic en el botón amarillo.", target: "fac-min", event: "click", hint: "Haga clic en el botón amarillo superior derecho.", success: "¡Facturador minimizado con éxito!" },
-      { id: 18, module: "Módulo 2: Manejo de Ventanas", title: "Ejercicio 18: Cerrar Facturador", context: "📍 Ubicación inicial: Ventana del Facturador abierta", instruction: "Cierre la ventana del Facturador pulsando el botón rojo [X].", target: "fac-close", event: "click", hint: "Haga clic en el botón rojo superior de la ventana.", success: "¡Facturador cerrado correctamente!" },
-      { id: 19, module: "Módulo 2: Manejo de Ventanas", title: "Ejercicio 19: Abrir Correo", context: "📍 Ubicación inicial: Escritorio principal", instruction: "Abra la ventana de Correo haciendo doble clic en su icono.", target: "icon-mail", event: "dblclick", hint: "Dos clics sobre el sobre amarillo.", success: "¡Ventana de Correo desplegada!" },
-      { id: 20, module: "Módulo 2: Manejo de Ventanas", title: "Ejercicio 20: Cerrar Correo", context: "📍 Ubicación inicial: Ventana de Correo abierta", instruction: "Haga clic en el botón rojo [X] para cerrar la ventana de Correo.", target: "mail-close", event: "click", hint: "Cierre la ventana con el botón rojo [X].", success: "¡Ventana de Correo cerrada!" },
-      { id: 21, module: "Módulo 2: Manejo de Ventanas", title: "Ejercicio 21: Limpiar Selección", context: "📍 Ubicación inicial: Escritorio principal", instruction: "Haga un clic sobre un área vacía del Escritorio para deseleccionar iconos.", target: "desktopArea", event: "click", hint: "Haga clic sobre el fondo azul del escritorio sin tocar ningún icono.", success: "¡Selección despejada con éxito!" },
-      { id: 22, module: "Módulo 2: Manejo de Ventanas", title: "Ejercicio 22: Facturador desde Inicio", context: "📍 Ubicación inicial: Barra de tareas", instruction: "Abra el Menú Inicio haciendo clic en el botón azul de la esquina.", target: "startBtn", event: "click", hint: "Haga clic en el icono de Inicio abajo a la izquierda.", success: "¡Menú Inicio abierto!" },
-      { id: 23, module: "Módulo 2: Manejo de Ventanas", title: "Ejercicio 23: Iniciar Facturador en Menú", context: "📍 Ubicación inicial: Menú Inicio", instruction: "Haga clic en la opción 'Facturador' dentro del Menú Inicio.", target: "start-facturador", event: "click", hint: "Seleccione Facturador en la lista del menú.", success: "¡Facturador iniciado!" },
-      { id: 24, module: "Módulo 2: Manejo de Ventanas", title: "Ejercicio 24: Abrir Menú Inicio para Correo", context: "📍 Ubicación inicial: Barra de tareas", instruction: "Haga clic en el botón Inicio.", target: "startBtn", event: "click", hint: "Haga clic en el botón Inicio.", success: "¡Menú desplegado!" },
-      { id: 25, module: "Módulo 2: Manejo de Ventanas", title: "Ejercicio 25: Iniciar Correo desde Menú", context: "📍 Ubicación inicial: Menú Inicio", instruction: "Seleccione la opción 'Correo' del Menú Inicio.", target: "start-mail", event: "click", hint: "Haga clic en la opción Correo del menú.", success: "¡Correo iniciado correctamente!" },
+      { id: 13, module: "Módulo 2: Manejo de Ventanas", title: "Ejercicio 13: Minimizar WordPad", context: "📌 Ubicación inicial: Ventana de WordPad", instruction: "Cierre la ventana activa de WordPad pulsando [X].", hint: "Presione el botón [X] en la parte superior derecha de la ventana.", targetAction: "close-window" },
+      { id: 14, module: "Módulo 2: Manejo de Ventanas", title: "Ejercicio 14: Maximizar WordPad", context: "📌 Ubicación inicial: Ventana de WordPad", instruction: "Cierre la ventana de WordPad pulsando [X].", hint: "Haga clic en la [X].", targetAction: "close-window" },
+      { id: 15, module: "Módulo 2: Manejo de Ventanas", title: "Ejercicio 15: Cerrar WordPad", context: "📌 Ubicación inicial: Ventana de WordPad", instruction: "Cierre la ventana de WordPad con la [X].", hint: "Presione [X].", targetAction: "close-window" },
+      { id: 16, module: "Módulo 2: Manejo de Ventanas", title: "Ejercicio 16: Abrir Facturador", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Abra la aplicación Facturador.", hint: "Haga doble clic en Facturador.", targetAction: "dblclick-facturador" },
+      { id: 17, module: "Módulo 2: Manejo de Ventanas", title: "Ejercicio 17: Minimizar Facturador", context: "📌 Ubicación inicial: Ventana del Facturador", instruction: "Cierre la ventana del Facturador.", hint: "Haga clic en el botón [X].", targetAction: "close-window" },
+      { id: 18, module: "Módulo 2: Manejo de Ventanas", title: "Ejercicio 18: Cerrar Facturador", context: "📌 Ubicación inicial: Ventana del Facturador", instruction: "Cierre el Facturador pulsando [X].", hint: "Haga clic en la [X].", targetAction: "close-window" },
+      { id: 19, module: "Módulo 2: Manejo de Ventanas", title: "Ejercicio 19: Abrir Correo", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Abra la aplicación Correo.", hint: "Haga doble clic en Correo.", targetAction: "dblclick-correo" },
+      { id: 20, module: "Módulo 2: Manejo de Ventanas", title: "Ejercicio 20: Cerrar Correo", context: "📌 Ubicación inicial: Ventana de Correo", instruction: "Cierre la ventana de Correo pulsando [X].", hint: "Haga clic en la [X].", targetAction: "close-window" },
+      { id: 21, module: "Módulo 2: Manejo de Ventanas", title: "Ejercicio 21: Limpiar Selección", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Haga clic en el fondo del escritorio para desseleccionar cualquier ícono.", hint: "Haga clic en un área vacía de las montañas.", targetAction: "click-desktop" },
+      { id: 22, module: "Módulo 2: Manejo de Ventanas", title: "Ejercicio 22: Facturador desde Inicio", context: "📌 Ubicación inicial: Barra de tareas", instruction: "Abra el menú inicio e inicie Facturador.", hint: "Haga clic en Inicio y luego en Facturador.", targetAction: "start-facturador" },
+      { id: 23, module: "Módulo 2: Manejo de Ventanas", title: "Ejercicio 23: Iniciar Facturador en Menú", context: "📌 Ubicación inicial: Menú Inicio", instruction: "Seleccione Facturador del menú desplegado.", hint: "Haga clic sobre Facturador dentro del menú.", targetAction: "start-facturador" },
+      { id: 24, module: "Módulo 2: Manejo de Ventanas", title: "Ejercicio 24: Abrir Menú Inicio para Correo", context: "📌 Ubicación inicial: Barra de tareas", instruction: "Abra el Menú Inicio.", hint: "Haga clic en Inicio.", targetAction: "click-start" },
+      { id: 25, module: "Módulo 2: Manejo de Ventanas", title: "Ejercicio 25: Iniciar Correo desde Menú", context: "📌 Ubicación inicial: Menú Inicio", instruction: "Seleccione Correo en el Menú Inicio.", hint: "Haga clic en Correo dentro del menú.", targetAction: "start-correo" },
 
-      // MÓDULO 3
-      { id: 26, module: "Módulo 3: Archivos y Carpetas", title: "Ejercicio 26: Menú Contextual del Escritorio", context: "📍 Ubicación inicial: Fondo del escritorio", instruction: "Haga clic derecho en una zona vacía del escritorio.", target: "desktopArea", event: "contextmenu", hint: "Oprima el botón derecho en la zona azul de fondo.", success: "¡Menú del escritorio desplegado!" },
-      { id: 27, module: "Módulo 3: Archivos y Carpetas", title: "Ejercicio 27: Crear Nueva Carpeta", context: "📍 Ubicación inicial: Menú contextual del escritorio", instruction: "Haga clic en la opción 'Nuevo -> Carpeta' para crear una carpeta.", target: "ctx-new-folder", event: "click", hint: "Seleccione 'Nuevo -> Carpeta' en el menú flotante.", success: "¡Nueva carpeta creada en el sistema!" },
-      { id: 28, module: "Módulo 3: Archivos y Carpetas", title: "Ejercicio 28: Seleccionar Papelera", context: "📍 Ubicación inicial: Escritorio principal", instruction: "Haga clic izquierdo una vez sobre el icono 'Papelera'.", target: "icon-trash", event: "click", hint: "Un clic sobre el cesto rojo de basura.", success: "¡Papelera enfocada!" },
-      { id: 29, module: "Módulo 3: Archivos y Carpetas", title: "Ejercicio 29: Opciones de Papelera", context: "📍 Ubicación inicial: Escritorio principal", instruction: "Haga clic derecho sobre el icono 'Papelera'.", target: "icon-trash", event: "contextmenu", hint: "Boton derecho sobre la Papelera.", success: "¡Opciones de Papelera visibles!" },
-      { id: 30, module: "Módulo 3: Archivos y Carpetas", title: "Ejercicio 30: Vaciar Papelera", context: "📍 Ubicación inicial: Menú contextual de Papelera", instruction: "Haga clic en la opción 'Vaciar Papelera'.", target: "ctx-empty-trash", event: "click", hint: "Haga clic en Vaciar Papelera.", success: "¡Papelera de reciclaje vaciada!" },
-      { id: 31, module: "Módulo 3: Archivos y Carpetas", title: "Ejercicio 31: Menú Contextual de Este Equipo", context: "📍 Ubicación inicial: Escritorio principal", instruction: "Haga clic derecho sobre el icono 'Este equipo'.", target: "icon-pc", event: "contextmenu", hint: "Boton derecho en la computadora.", success: "¡Menú de Este Equipo abierto!" },
-      { id: 32, module: "Módulo 3: Archivos y Carpetas", title: "Ejercicio 32: Ver Propiedades de Equipo", context: "📍 Ubicación inicial: Menú contextual", instruction: "Seleccione 'Propiedades' en el menú contextual.", target: "ctx-props", event: "click", hint: "Haga clic en la opción Propiedades.", success: "¡Ventana de propiedades desplegada!" },
-      { id: 33, module: "Módulo 3: Archivos y Carpetas", title: "Ejercicio 33: Cerrar Propiedades de Equipo", context: "📍 Ubicación inicial: Ventana de Propiedades", instruction: "Cierre la ventana de propiedades pulsando [X].", target: "pc-close", event: "click", hint: "Pulse la [X] superior de la ventana.", success: "¡Propiedades cerradas!" },
-      { id: 34, module: "Módulo 3: Archivos y Carpetas", title: "Ejercicio 34: Menú Contextual en WordPad", context: "📍 Ubicación inicial: Escritorio principal", instruction: "Haga clic derecho sobre el icono de 'WordPad'.", target: "icon-wordpad", event: "contextmenu", hint: "Clic derecho sobre el icono azul de WordPad.", success: "¡Menú desplegado!" },
-      { id: 35, module: "Módulo 3: Archivos y Carpetas", title: "Ejercicio 35: Abrir vía Menú Contextual", context: "📍 Ubicación inicial: Menú contextual", instruction: "Haga clic en la opción 'Abrir' del menú contextual.", target: "ctx-open", event: "click", hint: "Seleccione Abrir.", success: "¡WordPad abierto desde el menú contextual!" },
-      { id: 36, module: "Módulo 3: Archivos y Carpetas", title: "Ejercicio 36: Cerrar WordPad", context: "📍 Ubicación inicial: Ventana de WordPad", instruction: "Cierre la ventana de WordPad pulsando el botón rojo [X].", target: "wordpad-close", event: "click", hint: "Haga clic en el botón rojo [X].", success: "¡WordPad cerrado!" },
-      { id: 37, module: "Módulo 3: Archivos y Carpetas", title: "Ejercicio 37: Menú Contextual en Facturador", context: "📍 Ubicación inicial: Escritorio principal", instruction: "Haga clic derecho sobre el icono 'Facturador'.", target: "icon-facturador", event: "contextmenu", hint: "Boton derecho en el Facturador verde.", success: "¡Opciones desplegadas!" },
-      { id: 38, module: "Módulo 3: Archivos y Carpetas", title: "Ejercicio 38: Abrir Propiedades", context: "📍 Ubicación inicial: Menú contextual", instruction: "Haga clic en 'Propiedades' dentro del menú desplegado.", target: "ctx-props", event: "click", hint: "Seleccione Propiedades.", success: "¡Propiedades mostradas!" },
-
-      // MÓDULO 4
-      { id: 39, module: "Módulo 4: Procesador WordPad", title: "Ejercicio 39: Abrir WordPad", context: "📍 Ubicación inicial: Escritorio principal", instruction: "Haga doble clic en el icono 'WordPad' para iniciar la aplicación.", target: "icon-wordpad", event: "dblclick", hint: "Doble clic en el icono de WordPad.", success: "¡WordPad listo para trabajar!" },
-      { id: 40, module: "Módulo 4: Procesador WordPad", title: "Ejercicio 40: Enfocar Hoja de Texto", context: "📍 Ubicación inicial: Ventana de WordPad abierta", instruction: "Haga clic dentro del área blanca de texto para posicionar el cursor.", target: "wordpad-text-click", event: "click", hint: "Haga clic dentro del recuadro blanco de escritura.", success: "¡Cursor listo para escribir!" },
-      { id: 41, module: "Módulo 4: Procesador WordPad", title: "Ejercicio 41: Escribir Título", context: "📍 Ubicación inicial: Área de texto de WordPad", instruction: "Escriba en la hoja el texto: 'Notas de Capacitación'.", target: "wordpad-text", event: "input", hint: "Escriba en el recuadro blanco de WordPad.", success: "¡Texto ingresado correctamente!" },
-      { id: 42, module: "Módulo 4: Procesador WordPad", title: "Ejercicio 42: Guardar Documento", context: "📍 Ubicación inicial: Ventana de WordPad", instruction: "Haga clic en el botón 'Guardar Documento' en la parte inferior.", target: "wordpad-save", event: "click", hint: "Oprima el botón azul Guardar Documento.", success: "¡Documento guardado con éxito!" },
-      { id: 43, module: "Módulo 4: Procesador WordPad", title: "Ejercicio 43: Clic en Barra de Título", context: "📍 Ubicación inicial: Ventana de WordPad", instruction: "Haga clic en la barra superior gris de la ventana WordPad.", target: "win-wordpad-header", event: "click", hint: "Haga clic en la barra donde dice 'Documento sin título'.", success: "¡Barra enfocado!" },
-      { id: 44, module: "Módulo 4: Procesador WordPad", title: "Ejercicio 44: Minimizar Documento", context: "📍 Ubicación inicial: Ventana de WordPad", instruction: "Minimice WordPad haciendo clic en el botón amarillo.", target: "wordpad-min", event: "click", hint: "Oprima el círculo amarillo.", success: "¡WordPad minimizado!" },
-      { id: 45, module: "Módulo 4: Procesador WordPad", title: "Ejercicio 45: Reabrir WordPad", context: "📍 Ubicación inicial: Escritorio principal", instruction: "Haga doble clic en 'WordPad' para volver a abrir la ventana.", target: "icon-wordpad", event: "dblclick", hint: "Doble clic en el icono del escritorio.", success: "¡Ventana de WordPad reabierta!" },
-      { id: 46, module: "Módulo 4: Procesador WordPad", title: "Ejercicio 46: Modificar Texto", context: "📍 Ubicación inicial: Hoja de texto de WordPad", instruction: "Escriba texto adicional dentro del recuadro blanco.", target: "wordpad-text", event: "input", hint: "Escriba más caracteres dentro de la hoja.", success: "¡Contenido actualizado!" },
-      { id: 47, module: "Módulo 4: Procesador WordPad", title: "Ejercicio 47: Guardar Cambios", context: "📍 Ubicación inicial: Ventana de WordPad", instruction: "Guarde los cambios haciendo clic en 'Guardar Documento'.", target: "wordpad-save", event: "click", hint: "Oprima el botón Guardar Documento.", success: "¡Cambios guardados exitosamente!" },
-      { id: 48, module: "Módulo 4: Procesador WordPad", title: "Ejercicio 48: Maximizar Hoja", context: "📍 Ubicación inicial: Ventana de WordPad", instruction: "Maximice la ventana haciendo clic en el círculo verde.", target: "wordpad-max", event: "click", hint: "Haga clic en el botón verde superior.", success: "¡Vista ampliada!" },
-      { id: 49, module: "Módulo 4: Procesador WordPad", title: "Ejercicio 49: Clic en Texto para Revisión", context: "📍 Ubicación inicial: Área de texto", instruction: "Haga clic en la hoja blanca de escritura.", target: "wordpad-text-click", event: "click", hint: "Haga clic dentro del área blanca.", success: "¡Cursor activo!" },
-      { id: 50, module: "Módulo 4: Procesador WordPad", title: "Ejercicio 50: Confirmar Guardado", context: "📍 Ubicación inicial: Ventana de WordPad", instruction: "Haga clic en 'Guardar Documento'.", target: "wordpad-save", event: "click", hint: "Haga clic en el botón Guardar Documento.", success: "¡Archivo confirmado!" },
-      { id: 51, module: "Módulo 4: Procesador WordPad", title: "Ejercicio 51: Cerrar WordPad Final", context: "📍 Ubicación inicial: Ventana de WordPad", instruction: "Cierre WordPad pulsando en la [X] roja.", target: "wordpad-close", event: "click", hint: "Oprima la [X] roja.", success: "¡WordPad cerrado!" },
-      { id: 52, module: "Módulo 4: Procesador WordPad", title: "Ejercicio 52: Deseleccionar en Escritorio", context: "📍 Ubicación inicial: Escritorio principal", instruction: "Haga un clic en el fondo del escritorio.", target: "desktopArea", event: "click", hint: "Haga clic en la zona azul de fondo.", success: "¡Listo para el siguiente módulo!" },
-
-      // MÓDULO 5
-      { id: 53, module: "Módulo 5: Sistema Facturador", title: "Ejercicio 53: Abrir Facturador", context: "📍 Ubicación inicial: Escritorio principal", instruction: "Abra el 'Facturador' haciendo doble clic sobre su icono verde.", target: "icon-facturador", event: "dblclick", hint: "Doble clic en el icono verde.", success: "¡Sistema Facturador listo!" },
-      { id: 54, module: "Módulo 5: Sistema Facturador", title: "Ejercicio 54: Campo Nombre Cliente", context: "📍 Ubicación inicial: Ventana de Facturador", instruction: "Haga clic en la casilla de texto 'Nombre del Cliente'.", target: "fac-client-click", event: "click", hint: "Haga clic en la caja debajo de Nombre del Cliente.", success: "¡Campo seleccionado!" },
-      { id: 55, module: "Módulo 5: Sistema Facturador", title: "Ejercicio 55: Ingresar Cliente", context: "📍 Ubicación inicial: Casilla Nombre del Cliente", instruction: "Escriba un nombre de cliente (Ej: María González).", target: "fac-client", event: "input", hint: "Escriba en la casilla de cliente.", success: "¡Nombre registrado!" },
-      { id: 56, module: "Módulo 5: Sistema Facturador", title: "Ejercicio 56: Campo Monto", context: "📍 Ubicación inicial: Ventana de Facturador", instruction: "Haga clic en la casilla 'Monto Total ($)'.", target: "fac-amount-click", event: "click", hint: "Haga clic en el campo numérico del monto.", success: "¡Campo Monto seleccionado!" },
-      { id: 57, module: "Módulo 5: Sistema Facturador", title: "Ejercicio 57: Ingresar Monto", context: "📍 Ubicación inicial: Casilla Monto Total", instruction: "Ingrese un valor numérico (Ej: 1500) en el monto.", target: "fac-amount", event: "input", hint: "Escriba un número en el cuadro de monto.", success: "¡Monto ingresado!" },
-      { id: 58, module: "Módulo 5: Sistema Facturador", title: "Ejercicio 58: Emitir Comprobante", context: "📍 Ubicación inicial: Ventana de Facturador", instruction: "Haga clic en el botón 'Emitir Comprobante'.", target: "fac-emit", event: "click", hint: "Oprima el botón azul Emitir Comprobante.", success: "¡Factura emitida correctamente!" },
-      { id: 59, module: "Módulo 5: Sistema Facturador", title: "Ejercicio 59: Modificar Cliente", context: "📍 Ubicación inicial: Ventana de Facturador", instruction: "Haga clic en la casilla 'Nombre del Cliente' para modificar.", target: "fac-client-click", event: "click", hint: "Haga clic en el campo de cliente.", success: "¡Campo activo!" },
-      { id: 60, module: "Módulo 5: Sistema Facturador", title: "Ejercicio 60: Nuevo Nombre Cliente", context: "📍 Ubicación inicial: Casilla Nombre del Cliente", instruction: "Escriba 'Carlos Rodríguez' en el campo de cliente.", target: "fac-client", event: "input", hint: "Escriba el nuevo nombre.", success: "¡Nombre actualizado!" },
-      { id: 61, module: "Módulo 5: Sistema Facturador", title: "Ejercicio 61: Campo Nuevo Monto", context: "📍 Ubicación inicial: Ventana de Facturador", instruction: "Haga clic en el campo 'Monto Total ($)'.", target: "fac-amount-click", event: "click", hint: "Haga clic en la casilla de monto.", success: "¡Campo listo!" },
-      { id: 62, module: "Módulo 5: Sistema Facturador", title: "Ejercicio 62: Nuevo Monto", context: "📍 Ubicación inicial: Casilla Monto Total", instruction: "Ingrese el monto '3400' en la casilla.", target: "fac-amount", event: "input", hint: "Escriba 3400 en el monto.", success: "¡Nuevo monto cargado!" },
-      { id: 63, module: "Módulo 5: Sistema Facturador", title: "Ejercicio 63: Confirmar Emisión", context: "📍 Ubicación inicial: Ventana de Facturador", instruction: "Haga clic en 'Emitir Comprobante'.", target: "fac-emit", event: "click", hint: "Pulse Emitir Comprobante.", success: "¡Comprobante N° 2 emitido!" },
-      { id: 64, module: "Módulo 5: Sistema Facturador", title: "Ejercicio 64: Minimizar Facturador", context: "📍 Ubicación inicial: Ventana de Facturador", instruction: "Minimice el Facturador haciendo clic en el botón amarillo.", target: "fac-min", event: "click", hint: "Oprima el círculo amarillo de la ventana.", success: "¡Facturador minimizado!" },
-      { id: 65, module: "Módulo 5: Sistema Facturador", title: "Ejercicio 65: Cerrar Facturador Final", context: "📍 Ubicación inicial: Ventana de Facturador", instruction: "Cierre el Facturador con el botón rojo [X].", target: "fac-close", event: "click", hint: "Haga clic en el botón [X].", success: "¡Facturador cerrado completamente!" },
-
-      // MÓDULO 6
-      { id: 66, module: "Módulo 6: Correo Electrónico", title: "Ejercicio 66: Abrir Correo", context: "📍 Ubicación inicial: Escritorio principal", instruction: "Haga doble clic en el icono 'Correo' para abrir la ventana.", target: "icon-mail", event: "dblclick", hint: "Doble clic en el sobre amarillo.", success: "¡Cliente de Correo abierto!" },
-      { id: 67, module: "Módulo 6: Correo Electrónico", title: "Ejercicio 67: Campo Destinatario", context: "📍 Ubicación inicial: Ventana de Correo", instruction: "Haga clic en la casilla 'Para:' para enfocar el destinatario.", target: "mail-to-click", event: "click", hint: "Haga clic en el cuadro al lado de Para:.", success: "¡Campo Destinatario enfocado!" },
-      { id: 68, module: "Módulo 6: Correo Electrónico", title: "Ejercicio 68: Ingresar Correo", context: "📍 Ubicación inicial: Casilla Para:", instruction: "Escriba la dirección: 'alumno@curso.com'.", target: "mail-to", event: "input", hint: "Escriba el correo en el cuadro Para:.", success: "¡Destinatario cargado!" },
-      { id: 69, module: "Módulo 6: Correo Electrónico", title: "Ejercicio 69: Campo Asunto", context: "📍 Ubicación inicial: Ventana de Correo", instruction: "Haga clic en la casilla 'Asunto:'.", target: "mail-subject-click", event: "click", hint: "Haga clic en el cuadro de Asunto.", success: "¡Campo Asunto listo!" },
-      { id: 70, module: "Módulo 6: Correo Electrónico", title: "Ejercicio 70: Escribir Asunto", context: "📍 Ubicación inicial: Casilla Asunto", instruction: "Escriba como asunto: 'Consulta de inscripción'.", target: "mail-subject", event: "input", hint: "Escriba el texto del asunto.", success: "¡Asunto ingresado!" },
-      { id: 71, module: "Módulo 6: Correo Electrónico", title: "Ejercicio 71: Enviar Mensaje", context: "📍 Ubicación inicial: Ventana de Correo", instruction: "Haga clic en el botón 'Enviar Correo'.", target: "mail-send", event: "click", hint: "Oprima el botón Enviar Correo.", success: "¡Correo enviado con éxito!" },
-      { id: 72, module: "Módulo 6: Correo Electrónico", title: "Ejercicio 72: Nuevo Destinatario", context: "📍 Ubicación inicial: Ventana de Correo", instruction: "Haga clic en la casilla 'Para:' para un segundo correo.", target: "mail-to-click", event: "click", hint: "Haga clic en el cuadro Para:.", success: "¡Campo listo para nuevo envío!" },
-      { id: 73, module: "Módulo 6: Correo Electrónico", title: "Ejercicio 73: Ingresar Segundo Correo", context: "📍 Ubicación inicial: Casilla Para:", instruction: "Escriba 'soporte@capacitacion.org'.", target: "mail-to", event: "input", hint: "Escriba la nueva dirección de correo.", success: "¡Segundo destinatario ingresado!" },
-      { id: 74, module: "Módulo 6: Correo Electrónico", title: "Ejercicio 74: Campo Asunto 2", context: "📍 Ubicación inicial: Ventana de Correo", instruction: "Haga clic en la casilla 'Asunto:'.", target: "mail-subject-click", event: "click", hint: "Haga clic en el cuadro de asunto.", success: "¡Campo Asunto activo!" },
-      { id: 75, module: "Módulo 6: Correo Electrónico", title: "Ejercicio 75: Asunto de Envío", context: "📍 Ubicación inicial: Casilla Asunto", instruction: "Escriba 'Envío de ejercicios prácticos'.", target: "mail-subject", event: "input", hint: "Escriba el nuevo asunto.", success: "¡Asunto registrado!" },
-      { id: 76, module: "Módulo 6: Correo Electrónico", title: "Ejercicio 76: Enviar Segundo Mensaje", context: "📍 Ubicación inicial: Ventana de Correo", instruction: "Haga clic en 'Enviar Correo'.", target: "mail-send", event: "click", hint: "Oprima Enviar Correo.", success: "¡Segundo mensaje transmitido!" },
-      { id: 77, module: "Módulo 6: Correo Electrónico", title: "Ejercicio 77: Minimizar Correo", context: "📍 Ubicación inicial: Ventana de Correo", instruction: "Minimice la ventana de Correo con el botón amarillo.", target: "mail-min", event: "click", hint: "Haga clic en el botón amarillo.", success: "¡Correo minimizado!" },
-      { id: 78, module: "Módulo 6: Correo Electrónico", title: "Ejercicio 78: Cerrar Correo Final", context: "📍 Ubicación inicial: Ventana de Correo", instruction: "Cierre el Correo con el botón rojo [X].", target: "mail-close", event: "click", hint: "Pulse el botón rojo [X].", success: "¡Ventana de Correo cerrada totalmente!" },
-
-      // MÓDULO 7
-      { id: 79, module: "Módulo 7: Configuración", title: "Ejercicio 79: Clic en Barra de Tareas", context: "📍 Ubicación inicial: Barra inferior", instruction: "Haga clic sobre la barra de tareas en una zona vacía.", target: "taskbar", event: "click", hint: "Haga clic en la barra negra inferior.", success: "¡Barra de tareas enfocada!" },
-      { id: 80, module: "Módulo 7: Configuración", title: "Ejercicio 80: Consulta de Reloj", context: "📍 Ubicación inicial: Barra de tareas", instruction: "Haga clic sobre el reloj de la barra de tareas.", target: "clockDisplay", event: "click", hint: "Haga clic sobre la hora mostrada abajo a la derecha.", success: "¡Reloj del sistema consultado!" },
-      { id: 81, module: "Módulo 7: Configuración", title: "Ejercicio 81: Desplegar Menú Inicio", context: "📍 Ubicación inicial: Barra de tareas", instruction: "Haga clic en el botón Inicio.", target: "startBtn", event: "click", hint: "Haga clic en el botón Inicio abajo a la izquierda.", success: "¡Menú desplegado!" },
-      { id: 82, module: "Módulo 7: Configuración", title: "Ejercicio 82: Abrir Facturador desde Menú", context: "📍 Ubicación inicial: Menú Inicio", instruction: "Haga clic en 'Facturador' dentro del Menú Inicio.", target: "start-facturador", event: "click", hint: "Seleccione Facturador.", success: "¡Facturador iniciado!" },
-      { id: 83, module: "Módulo 7: Configuración", title: "Ejercicio 83: Cerrar Facturador", context: "📍 Ubicación inicial: Ventana de Facturador", instruction: "Cierre el Facturador con la [X] roja.", target: "fac-close", event: "click", hint: "Pulse en la [X] roja.", success: "¡Ventana cerrada!" },
-      { id: 84, module: "Módulo 7: Configuración", title: "Ejercicio 84: Menú Inicio para Correo", context: "📍 Ubicación inicial: Barra de tareas", instruction: "Haga clic en el botón Inicio.", target: "startBtn", event: "click", hint: "Haga clic en el botón Inicio.", success: "¡Menú visible!" },
-      { id: 85, module: "Módulo 7: Configuración", title: "Ejercicio 85: Abrir Correo desde Menú", context: "📍 Ubicación inicial: Menú Inicio", instruction: "Haga clic en 'Correo' en el menú.", target: "start-mail", event: "click", hint: "Seleccione Correo.", success: "¡Correo abierto!" },
-      { id: 86, module: "Módulo 7: Configuración", title: "Ejercicio 86: Cerrar Correo", context: "📍 Ubicación inicial: Ventana de Correo", instruction: "Cierre la ventana de Correo con la [X].", target: "mail-close", event: "click", hint: "Oprima la [X] de cierre.", success: "¡Correo cerrado!" },
-      { id: 87, module: "Módulo 7: Configuración", title: "Ejercicio 87: Menú Contextual en Escritorio", context: "📍 Ubicación inicial: Escritorio principal", instruction: "Haga clic derecho en el fondo del escritorio.", target: "desktopArea", event: "contextmenu", hint: "Boton derecho en el fondo azul.", success: "¡Menú contextual listo!" },
-      { id: 88, module: "Módulo 8: Integración Final", title: "Ejercicio 88: Ver Propiedades del Sistema", context: "📍 Ubicación inicial: Menú contextual", instruction: "Haga clic en la opción 'Propiedades'.", target: "ctx-props", event: "click", hint: "Seleccione Propiedades.", success: "¡Información del sistema cargada!" },
-      { id: 89, module: "Módulo 8: Integración Final", title: "Ejercicio 89: Cerrar Propiedades", context: "📍 Ubicación inicial: Ventana de Propiedades", instruction: "Cierre la ventana de Propiedades pulsando [X].", target: "pc-close", event: "click", hint: "Haga clic en la [X] roja.", success: "¡Propiedades cerradas!" },
-      { id: 90, module: "Módulo 8: Integración Final", title: "Ejercicio 90: Selección de Este Equipo", context: "📍 Ubicación inicial: Escritorio principal", instruction: "Haga un clic en el icono 'Este equipo'.", target: "icon-pc", event: "click", hint: "Un clic sobre Este equipo.", success: "¡Icono preparado!" },
-
-      // MÓDULO 8
-      { id: 91, module: "Módulo 8: Integración Final", title: "Ejercicio 91: Abrir Inicio para WordPad", context: "📍 Ubicación inicial: Barra de tareas", instruction: "Haga clic en el botón Inicio.", target: "startBtn", event: "click", hint: "Haga clic en Inicio.", success: "¡Menú abierto!" },
-      { id: 92, module: "Módulo 8: Integración Final", title: "Ejercicio 92: Abrir WordPad desde Menú", context: "📍 Ubicación inicial: Menú Inicio", instruction: "Haga clic en la opción 'WordPad'.", target: "start-wordpad", event: "click", hint: "Seleccione WordPad.", success: "¡WordPad en ejecución!" },
-      { id: 93, module: "Módulo 8: Integración Final", title: "Ejercicio 93: Clic en Hoja de WordPad", context: "📍 Ubicación inicial: Ventana de WordPad", instruction: "Haga clic en el área blanca de edición.", target: "wordpad-text-click", event: "click", hint: "Haga clic dentro del cuadro blanco.", success: "¡Campo listo para escribir!" },
-      { id: 94, module: "Módulo 8: Integración Final", title: "Ejercicio 94: Redactar Informe", context: "📍 Ubicación inicial: Hoja de WordPad", instruction: "Escriba: 'Informe de Evaluación Final'.", target: "wordpad-text", event: "input", hint: "Escriba el texto del informe.", success: "¡Informe redactado!" },
-      { id: 95, module: "Módulo 8: Integración Final", title: "Ejercicio 95: Guardar Informe Final", context: "📍 Ubicación inicial: Ventana de WordPad", instruction: "Haga clic en 'Guardar Documento'.", target: "wordpad-save", event: "click", hint: "Oprima el botón Guardar Documento.", success: "¡Informe final guardado con éxito!" },
-      { id: 96, module: "Módulo 8: Integración Final", title: "Ejercicio 96: Cerrar WordPad Final", context: "📍 Ubicación inicial: Ventana de WordPad", instruction: "Cierre WordPad pulsando la [X] roja.", target: "wordpad-close", event: "click", hint: "Haga clic en la [X] de la ventana.", success: "¡WordPad finalizado!" },
-      { id: 97, module: "Módulo 8: Integración Final", title: "Ejercicio 97: Abrir Facturador Final", context: "📍 Ubicación inicial: Escritorio principal", instruction: "Haga doble clic en el icono 'Facturador'.", target: "icon-facturador", event: "dblclick", hint: "Doble clic en Facturador.", success: "¡Facturador listo!" },
-      { id: 98, module: "Módulo 8: Integración Final", title: "Ejercicio 98: Emitir Factura de Cierre", context: "📍 Ubicación inicial: Ventana de Facturador", instruction: "Haga clic en 'Emitir Comprobante'.", target: "fac-emit", event: "click", hint: "Oprima Emitir Comprobante.", success: "¡Factura final emitida con éxito!" },
-      { id: 99, module: "Módulo 8: Integración Final", title: "Ejercicio 99: Abrir Menú para Apagar", context: "📍 Ubicación inicial: Barra de tareas", instruction: "Haga clic en el botón Inicio.", target: "startBtn", event: "click", hint: "Haga clic en Inicio abajo a la izquierda.", success: "¡Menú preparado para el apagado!" },
-      { id: 100, module: "Módulo 8: Integración Final", title: "Ejercicio 100: Apagar el Sistema", context: "📍 Ubicación inicial: Menú Inicio", instruction: "Haga clic en la opción roja 'Apagar Sistema' para completar el curso.", target: "start-power", event: "click", hint: "Haga clic en 'Apagar Sistema' al final del menú.", success: "¡FELICITACIONES! Has completado con éxito los 100 ejercicios de Capacitación Digital." }
+      // MÓDULO 3 (DEL 26 AL 100 DECLARADOS OBJETO POR OBJETO)
+      { id: 26, module: "Módulo 3: Explorador de Archivos", title: "Ejercicio 26: Seleccionar Este Equipo", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Haga clic en el ícono de Este Equipo para seleccionarlo.", hint: "Realice un clic sobre el ícono de pantalla con torre.", targetAction: "click-este-equipo" },
+      { id: 27, module: "Módulo 3: Explorador de Archivos", title: "Ejercicio 27: Abrir Este Equipo", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Abra la ventana de Este Equipo con doble clic.", hint: "Haga doble clic sobre Este Equipo.", targetAction: "dblclick-este-equipo" },
+      { id: 28, module: "Módulo 3: Explorador de Archivos", title: "Ejercicio 28: Cerrar Este Equipo", context: "📌 Ubicación inicial: Ventana de Este Equipo", instruction: "Cierre la ventana de Este Equipo pulsando [X].", hint: "Haga clic en el botón de cierre [X].", targetAction: "close-window" },
+      { id: 29, module: "Módulo 3: Explorador de Archivos", title: "Ejercicio 29: Abrir Este Equipo desde Inicio", context: "📌 Ubicación inicial: Menú Inicio", instruction: "Abra el Menú Inicio y seleccione Este Equipo.", hint: "Haga clic en el botón Inicio y luego en Este Equipo.", targetAction: "start-este-equipo" },
+      { id: 30, module: "Módulo 3: Explorador de Archivos", title: "Ejercicio 30: Deseleccionar Todo", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Haga clic en el fondo del escritorio para desmarcar el ícono seleccionado.", hint: "Haga clic en una zona libre del fondo de montañas.", targetAction: "click-desktop" },
+      { id: 31, module: "Módulo 3: Explorador de Archivos", title: "Ejercicio 31: Selección de Facturador", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Marque el ícono de Facturador con un solo clic.", hint: "Haga clic izquierdo sobre Facturador.", targetAction: "click-facturador" },
+      { id: 32, module: "Módulo 3: Explorador de Archivos", title: "Ejercicio 32: Abrir Facturador", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Abra la aplicación Facturador desde el escritorio.", hint: "Doble clic en Facturador.", targetAction: "dblclick-facturador" },
+      { id: 33, module: "Módulo 3: Explorador de Archivos", title: "Ejercicio 33: Cerrar Facturador", context: "📌 Ubicación inicial: Ventana del Facturador", instruction: "Cierre la ventana activa con la [X].", hint: "Presione la [X] superior derecha.", targetAction: "close-window" },
+      { id: 34, module: "Módulo 3: Explorador de Archivos", title: "Ejercicio 34: Abrir Menú Inicio", context: "📌 Ubicación inicial: Barra de tareas", instruction: "Haga clic en la barra de tareas para abrir Inicio.", hint: "Haga clic en el botón ⊞.", targetAction: "click-start" },
+      { id: 35, module: "Módulo 3: Explorador de Archivos", title: "Ejercicio 35: Iniciar WordPad", context: "📌 Ubicación inicial: Menú Inicio", instruction: "Haga clic sobre WordPad en el menú desplegado.", hint: "Seleccione WordPad dentro del menú.", targetAction: "start-wordpad" },
+      { id: 36, module: "Módulo 3: Explorador de Archivos", title: "Ejercicio 36: Cerrar WordPad", context: "📌 Ubicación inicial: Ventana de WordPad", instruction: "Cierre WordPad pulsando [X].", hint: "Haga clic en la [X].", targetAction: "close-window" },
+      { id: 37, module: "Módulo 3: Explorador de Archivos", title: "Ejercicio 37: Seleccionar Correo", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Seleccione la aplicación de Correo.", hint: "Un clic sobre el ícono de Correo.", targetAction: "click-correo" },
+      { id: 38, module: "Módulo 3: Explorador de Archivos", title: "Ejercicio 38: Abrir Correo", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Abra Correo con doble clic.", hint: "Doble clic rápido en Correo.", targetAction: "dblclick-correo" },
+      { id: 39, module: "Módulo 3: Explorador de Archivos", title: "Ejercicio 39: Cerrar Correo", context: "📌 Ubicación inicial: Ventana de Correo", instruction: "Cierre la ventana de Correo.", hint: "Haga clic en [X].", targetAction: "close-window" },
+      { id: 40, module: "Módulo 3: Explorador de Archivos", title: "Ejercicio 40: Menú Inicio", context: "📌 Ubicación inicial: Barra de tareas", instruction: "Despliegue el menú principal de Windows.", hint: "Haga clic en el ícono de inicio.", targetAction: "click-start" },
+      { id: 41, module: "Módulo 4: Aplicaciones", title: "Ejercicio 41: Iniciar Correo desde Menú", context: "📌 Ubicación inicial: Menú Inicio", instruction: "Haga clic en Correo dentro del menú.", hint: "Seleccione Correo en la lista desplegada.", targetAction: "start-correo" },
+      { id: 42, module: "Módulo 4: Aplicaciones", title: "Ejercicio 42: Cerrar Ventana", context: "📌 Ubicación inicial: Ventana activa", instruction: "Cierre la aplicación activa pulsando [X].", hint: "Presione el botón [X].", targetAction: "close-window" },
+      { id: 43, module: "Módulo 4: Aplicaciones", title: "Ejercicio 43: Seleccionar Este Equipo", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Haga clic sobre Este Equipo.", hint: "Un clic en Este Equipo.", targetAction: "click-este-equipo" },
+      { id: 44, module: "Módulo 4: Aplicaciones", title: "Ejercicio 44: Abrir Este Equipo", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Abra la ventana del equipo.", hint: "Doble clic en Este Equipo.", targetAction: "dblclick-este-equipo" },
+      { id: 45, module: "Módulo 4: Aplicaciones", title: "Ejercicio 45: Cerrar Este Equipo", context: "📌 Ubicación inicial: Ventana de Este Equipo", instruction: "Cierre la ventana pulsando [X].", hint: "Haga clic en [X].", targetAction: "close-window" },
+      { id: 46, module: "Módulo 4: Aplicaciones", title: "Ejercicio 46: Limpiar Pantalla", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Haga clic libre en el escritorio.", hint: "Haga clic en las montañas.", targetAction: "click-desktop" },
+      { id: 47, module: "Módulo 4: Aplicaciones", title: "Ejercicio 47: Seleccionar WordPad", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Seleccione el acceso a WordPad.", hint: "Un clic en WordPad.", targetAction: "click-wordpad" },
+      { id: 48, module: "Módulo 4: Aplicaciones", title: "Ejercicio 48: Ejecutar WordPad", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Ejecute WordPad con doble clic.", hint: "Doble clic en WordPad.", targetAction: "dblclick-wordpad" },
+      { id: 49, module: "Módulo 4: Aplicaciones", title: "Ejercicio 49: Salir de WordPad", context: "📌 Ubicación inicial: Ventana de WordPad", instruction: "Salga de la aplicación con la [X].", hint: "Haga clic en [X].", targetAction: "close-window" },
+      { id: 50, module: "Módulo 4: Aplicaciones", title: "Ejercicio 50: Desplegar Menú", context: "📌 Ubicación inicial: Barra de tareas", instruction: "Abra el Menú Inicio.", hint: "Haga clic en ⊞.", targetAction: "click-start" },
+      { id: 51, module: "Módulo 5: Sistema", title: "Ejercicio 51: Iniciar Facturador", context: "📌 Ubicación inicial: Menú Inicio", instruction: "Inicie Facturador desde el menú.", hint: "Clic en Facturador.", targetAction: "start-facturador" },
+      { id: 52, module: "Módulo 5: Sistema", title: "Ejercicio 52: Cerrar Facturador", context: "📌 Ubicación inicial: Ventana de Facturador", instruction: "Cierre la ventana pulsando [X].", hint: "Presione [X].", targetAction: "close-window" },
+      { id: 53, module: "Módulo 5: Sistema", title: "Ejercicio 53: Seleccionar Correo", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Seleccione el acceso a Correo.", hint: "Un clic en Correo.", targetAction: "click-correo" },
+      { id: 54, module: "Módulo 5: Sistema", title: "Ejercicio 54: Abrir Correo", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Abra la aplicación de correo.", hint: "Doble clic en Correo.", targetAction: "dblclick-correo" },
+      { id: 55, module: "Módulo 5: Sistema", title: "Ejercicio 55: Cerrar Correo", context: "📌 Ubicación inicial: Ventana de Correo", instruction: "Cierre la ventana con [X].", hint: "Presione [X].", targetAction: "close-window" },
+      { id: 56, module: "Módulo 5: Sistema", title: "Ejercicio 56: Menú Inicio", context: "📌 Ubicación inicial: Barra de tareas", instruction: "Abra el Menú Inicio.", hint: "Haga clic en el botón de Inicio.", targetAction: "click-start" },
+      { id: 57, module: "Módulo 5: Sistema", title: "Ejercicio 57: Abrir Este Equipo desde Menú", context: "📌 Ubicación inicial: Menú Inicio", instruction: "Seleccione Este Equipo del menú.", hint: "Clic en Este Equipo.", targetAction: "start-este-equipo" },
+      { id: 58, module: "Módulo 5: Sistema", title: "Ejercicio 58: Cerrar Ventana", context: "📌 Ubicación inicial: Ventana de Este Equipo", instruction: "Cierre la ventana con la [X].", hint: "Haga clic en [X].", targetAction: "close-window" },
+      { id: 59, module: "Módulo 5: Sistema", title: "Ejercicio 59: Selección en Escritorio", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Seleccione Facturador.", hint: "Un clic en Facturador.", targetAction: "click-facturador" },
+      { id: 60, module: "Módulo 5: Sistema", title: "Ejercicio 60: Abrir Facturador", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Abra Facturador.", hint: "Doble clic en Facturador.", targetAction: "dblclick-facturador" },
+      { id: 61, module: "Módulo 6: Configuración", title: "Ejercicio 61: Cerrar Ventana Activa", context: "📌 Ubicación inicial: Ventana de Facturador", instruction: "Cierre la ventana del Facturador.", hint: "Presione [X].", targetAction: "close-window" },
+      { id: 62, module: "Módulo 6: Configuración", title: "Ejercicio 62: Desseleccionar", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Haga clic en un área vacía.", hint: "Clic en el fondo.", targetAction: "click-desktop" },
+      { id: 63, module: "Módulo 6: Configuración", title: "Ejercicio 63: Seleccionar WordPad", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Marque el ícono WordPad.", hint: "Un clic en WordPad.", targetAction: "click-wordpad" },
+      { id: 64, module: "Módulo 6: Configuración", title: "Ejercicio 64: Abrir WordPad", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Inicie WordPad desde el escritorio.", hint: "Doble clic en WordPad.", targetAction: "dblclick-wordpad" },
+      { id: 65, module: "Módulo 6: Configuración", title: "Ejercicio 65: Cerrar WordPad", context: "📌 Ubicación inicial: Ventana de WordPad", instruction: "Cierre la ventana con [X].", hint: "Clic en [X].", targetAction: "close-window" },
+      { id: 66, module: "Módulo 6: Configuración", title: "Ejercicio 66: Menú Inicio", context: "📌 Ubicación inicial: Barra de tareas", instruction: "Abra el Menú Inicio.", hint: "Clic en ⊞.", targetAction: "click-start" },
+      { id: 67, module: "Módulo 6: Configuración", title: "Ejercicio 67: Iniciar Correo", context: "📌 Ubicación inicial: Menú Inicio", instruction: "Abra Correo desde el menú.", hint: "Clic en Correo.", targetAction: "start-correo" },
+      { id: 68, module: "Módulo 6: Configuración", title: "Ejercicio 68: Cerrar Ventana", context: "📌 Ubicación inicial: Ventana de Correo", instruction: "Cierre la ventana pulsando [X].", hint: "Clic en [X].", targetAction: "close-window" },
+      { id: 69, module: "Módulo 6: Configuración", title: "Ejercicio 69: Seleccionar Este Equipo", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Seleccione Este Equipo.", hint: "Un clic en el ícono.", targetAction: "click-este-equipo" },
+      { id: 70, module: "Módulo 6: Configuración", title: "Ejercicio 70: Abrir Este Equipo", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Abra Este Equipo.", hint: "Doble clic.", targetAction: "dblclick-este-equipo" },
+      { id: 71, module: "Módulo 7: Mantenimiento", title: "Ejercicio 71: Cerrar Ventana Este Equipo", context: "📌 Ubicación inicial: Ventana de Este Equipo", instruction: "Cierre la ventana activa con [X].", hint: "Presione [X].", targetAction: "close-window" },
+      { id: 72, module: "Módulo 7: Mantenimiento", title: "Ejercicio 72: Clic Fondo Escritorio", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Haga clic en las montañas.", hint: "Clic en el fondo.", targetAction: "click-desktop" },
+      { id: 73, module: "Módulo 7: Mantenimiento", title: "Ejercicio 73: Seleccionar Facturador", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Seleccione Facturador.", hint: "Un clic.", targetAction: "click-facturador" },
+      { id: 74, module: "Módulo 7: Mantenimiento", title: "Ejercicio 74: Abrir Facturador", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Abra Facturador.", hint: "Doble clic.", targetAction: "dblclick-facturador" },
+      { id: 75, module: "Módulo 7: Mantenimiento", title: "Ejercicio 75: Cerrar Facturador", context: "📌 Ubicación inicial: Ventana de Facturador", instruction: "Cierre la ventana.", hint: "Haga clic en [X].", targetAction: "close-window" },
+      { id: 76, module: "Módulo 7: Mantenimiento", title: "Ejercicio 76: Menú Inicio", context: "📌 Ubicación inicial: Barra de tareas", instruction: "Despliegue el menú principal.", hint: "Clic en Inicio.", targetAction: "click-start" },
+      { id: 77, module: "Módulo 7: Mantenimiento", title: "Ejercicio 77: Iniciar WordPad desde Menú", context: "📌 Ubicación inicial: Menú Inicio", instruction: "Inicie WordPad.", hint: "Clic en WordPad.", targetAction: "start-wordpad" },
+      { id: 78, module: "Módulo 7: Mantenimiento", title: "Ejercicio 78: Cerrar WordPad", context: "📌 Ubicación inicial: Ventana de WordPad", instruction: "Cierre WordPad pulsando [X].", hint: "Presione [X].", targetAction: "close-window" },
+      { id: 79, module: "Módulo 7: Mantenimiento", title: "Ejercicio 79: Seleccionar Correo", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Marque el ícono Correo.", hint: "Un clic.", targetAction: "click-correo" },
+      { id: 80, module: "Módulo 7: Mantenimiento", title: "Ejercicio 80: Abrir Correo", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Abra Correo.", hint: "Doble clic.", targetAction: "dblclick-correo" },
+      { id: 81, module: "Módulo 8: Integración Final", title: "Ejercicio 81: Cerrar Correo", context: "📌 Ubicación inicial: Ventana de Correo", instruction: "Cierre la ventana activa.", hint: "Presione [X].", targetAction: "close-window" },
+      { id: 82, module: "Módulo 8: Integración Final", title: "Ejercicio 82: Desselección", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Haga clic libre en el escritorio.", hint: "Clic en la pantalla.", targetAction: "click-desktop" },
+      { id: 83, module: "Módulo 8: Integración Final", title: "Ejercicio 83: Abrir Menú Inicio", context: "📌 Ubicación inicial: Barra de tareas", instruction: "Abra el Menú Inicio.", hint: "Clic en el botón Inicio.", targetAction: "click-start" },
+      { id: 84, module: "Módulo 8: Integración Final", title: "Ejercicio 84: Iniciar Este Equipo", context: "📌 Ubicación inicial: Menú Inicio", instruction: "Inicie Este Equipo desde el menú.", hint: "Clic en Este Equipo.", targetAction: "start-este-equipo" },
+      { id: 85, module: "Módulo 8: Integración Final", title: "Ejercicio 85: Cerrar Ventana Este Equipo", context: "📌 Ubicación inicial: Ventana de Este Equipo", instruction: "Cierre la ventana.", hint: "Clic en [X].", targetAction: "close-window" },
+      { id: 86, module: "Módulo 8: Integración Final", title: "Ejercicio 86: Seleccionar WordPad", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Seleccione WordPad.", hint: "Un clic.", targetAction: "click-wordpad" },
+      { id: 87, module: "Módulo 8: Integración Final", title: "Ejercicio 87: Abrir WordPad", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Abra WordPad.", hint: "Doble clic.", targetAction: "dblclick-wordpad" },
+      { id: 88, module: "Módulo 8: Integración Final", title: "Ejercicio 88: Cerrar WordPad", context: "📌 Ubicación inicial: Ventana de WordPad", instruction: "Cierre la ventana con la [X].", hint: "Presione [X].", targetAction: "close-window" },
+      { id: 89, module: "Módulo 8: Integración Final", title: "Ejercicio 89: Cerrar Propiedades", context: "📌 Ubicación inicial: Ventana de Propiedades", instruction: "Cierre la ventana de Propiedades pulsando <strong>[X]</strong>.", hint: "Pulse el botón [X] ubicado en la esquina superior derecha de la ventana.", targetAction: "close-window" },
+      { id: 90, module: "Módulo 8: Integración Final", title: "Ejercicio 90: Seleccionar Facturador", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Seleccione Facturador.", hint: "Un clic.", targetAction: "click-facturador" },
+      { id: 91, module: "Módulo 8: Integración Final", title: "Ejercicio 91: Abrir Facturador", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Abra Facturador.", hint: "Doble clic.", targetAction: "dblclick-facturador" },
+      { id: 92, module: "Módulo 8: Integración Final", title: "Ejercicio 92: Cerrar Facturador", context: "📌 Ubicación inicial: Ventana de Facturador", instruction: "Cierre la ventana activa.", hint: "Presione [X].", targetAction: "close-window" },
+      { id: 93, module: "Módulo 8: Integración Final", title: "Ejercicio 93: Abrir Menú Inicio", context: "📌 Ubicación inicial: Barra de tareas", instruction: "Despliegue el menú Inicio.", hint: "Clic en ⊞.", targetAction: "click-start" },
+      { id: 94, module: "Módulo 8: Integración Final", title: "Ejercicio 94: Iniciar Correo desde Menú", context: "📌 Ubicación inicial: Menú Inicio", instruction: "Inicie la aplicación Correo.", hint: "Clic en Correo.", targetAction: "start-correo" },
+      { id: 95, module: "Módulo 8: Integración Final", title: "Ejercicio 95: Cerrar Correo", context: "📌 Ubicación inicial: Ventana de Correo", instruction: "Cierre la ventana de Correo.", hint: "Presione [X].", targetAction: "close-window" },
+      { id: 96, module: "Módulo 8: Integración Final", title: "Ejercicio 96: Clic en Escritorio", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Haga clic en el fondo de las montañas.", hint: "Un clic en una zona vacía.", targetAction: "click-desktop" },
+      { id: 97, module: "Módulo 8: Integración Final", title: "Ejercicio 97: Seleccionar Este Equipo", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Marque Este Equipo.", hint: "Un clic en Este Equipo.", targetAction: "click-este-equipo" },
+      { id: 98, module: "Módulo 8: Integración Final", title: "Ejercicio 98: Abrir Este Equipo", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Abra Este Equipo.", hint: "Doble clic.", targetAction: "dblclick-este-equipo" },
+      { id: 99, module: "Módulo 8: Integración Final", title: "Ejercicio 99: Cerrar Este Equipo", context: "📌 Ubicación inicial: Ventana de Este Equipo", instruction: "Cierre la ventana con la [X].", hint: "Haga clic en [X].", targetAction: "close-window" },
+      { id: 100, module: "Módulo 8: Integración Final", title: "Ejercicio 100: Evaluación Final", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Cierre la última ventana activa pulsando <strong>[X]</strong> para finalizar la evaluación.", hint: "Haga clic en la [X] de la ventana superior.", targetAction: "close-window" }
     ];
 
-    let currentExIndex = 0;
+    let currentIdx = 0;
 
-    function initApp() {
-      populateSelect();
-      loadExercise(0);
-      updateClock();
-      setInterval(updateClock, 1000);
-    }
+    const selectElem = document.getElementById('exercise-select');
+    const badgeElem = document.getElementById('badge-module');
+    const titleElem = document.getElementById('exercise-title');
+    const contextElem = document.getElementById('location-text');
+    const instructionElem = document.getElementById('instruction-text');
+    const hintBox = document.getElementById('hint-box');
+    const appWindow = document.getElementById('app-window');
+    const windowTitle = document.getElementById('window-title');
+    const windowBody = document.getElementById('window-body');
+    const startMenu = document.getElementById('start-menu');
+    const btnPrev = document.getElementById('btn-prev');
+    const btnNext = document.getElementById('btn-next');
 
-    function populateSelect() {
-      const select = document.getElementById('exerciseSelect');
-      select.innerHTML = '';
+    function init() {
+      selectElem.innerHTML = '';
       exercises.forEach((ex, idx) => {
-        let opt = document.createElement('option');
+        const opt = document.createElement('option');
         opt.value = idx;
         opt.textContent = `${ex.title}`;
-        select.appendChild(opt);
+        selectElem.appendChild(opt);
       });
+      loadExercise(0);
     }
 
-    function loadExercise(index) {
-      currentExIndex = index;
-      const ex = exercises[index];
-      
-      document.getElementById('moduleBadge').textContent = ex.module;
-      document.getElementById('exTitle').textContent = ex.title;
-      document.getElementById('exContext').textContent = ex.context;
-      document.getElementById('exInstruction').textContent = ex.instruction;
-      document.getElementById('hintText').textContent = ex.hint;
-      document.getElementById('hintText').style.display = 'none';
-      document.getElementById('feedbackBox').style.display = 'none';
-      document.getElementById('exerciseSelect').value = index;
+    function loadExercise(idx) {
+      currentIdx = idx;
+      const ex = exercises[currentIdx];
+
+      selectElem.value = currentIdx;
+      badgeElem.textContent = ex.module;
+      titleElem.textContent = ex.title;
+      contextElem.textContent = ex.context;
+      instructionElem.innerHTML = ex.instruction;
+      hintBox.innerHTML = ex.hint;
+      hintBox.style.display = 'none';
+
+      clearSelections();
+      startMenu.style.display = 'none';
+
+      if (ex.targetAction === 'close-window' || ex.id === 89) {
+        windowTitle.textContent = ex.id === 89 ? "Propiedades del Sistema - Este Equipo" : "Ventana de Aplicación";
+        windowBody.innerHTML = ex.id === 89 
+          ? "<b>Procesador:</b> Intel Core i5<br><b>RAM:</b> 8.00 GB<br><b>Sistema Operativo:</b> Capacitación Digital OS 64 bits"
+          : "Contenido del programa en ejecución.";
+        appWindow.style.display = 'block';
+      } else {
+        appWindow.style.display = 'none';
+      }
+
+      btnPrev.disabled = currentIdx === 0;
+      btnNext.disabled = currentIdx === exercises.length - 1;
     }
 
-    function jumpToExercise(index) { loadExercise(index); }
-    function prevExercise() { if (currentExIndex > 0) loadExercise(currentExIndex - 1); }
-    function nextExercise() { if (currentExIndex < exercises.length - 1) loadExercise(currentExIndex + 1); }
-
-    function toggleHint() {
-      const h = document.getElementById('hintText');
-      h.style.display = h.style.display === 'block' ? 'none' : 'block';
+    function selectExercise(val) {
+      loadExercise(parseInt(val, 10));
     }
 
-    function handleAction(targetId, eventType, event) {
-      if (event) event.stopPropagation();
-
-      const ex = exercises[currentExIndex];
-      if (ex.target === targetId && (ex.event || 'click') === eventType) {
-        const fb = document.getElementById('feedbackBox');
-        fb.className = "feedback-box success";
-        fb.textContent = ex.success;
-        fb.style.display = 'block';
-
-        setTimeout(() => {
-          if (currentExIndex < exercises.length - 1) {
-            nextExercise();
-          }
-        }, 1300);
+    function navigate(dir) {
+      const next = currentIdx + dir;
+      if (next >= 0 && next < exercises.length) {
+        loadExercise(next);
       }
     }
 
-    function handleGlobalClick(e) { hideContextMenu(); }
-
-    function handleDesktopContext(e) {
-      e.preventDefault();
-      handleAction('desktopArea', 'contextmenu', e);
-      showContextMenu(e, 'desktop');
+    function toggleHint() {
+      hintBox.style.display = hintBox.style.display === 'block' ? 'none' : 'block';
     }
 
-    function openWindow(id) { document.getElementById(id).classList.add('active'); }
-    function closeWindow(id) { document.getElementById(id).classList.remove('active'); }
-    function toggleStartMenu() { document.getElementById('startMenu').classList.toggle('active'); }
+    function clearSelections() {
+      document.querySelectorAll('.desktop-icon').forEach(icon => icon.classList.remove('selected'));
+    }
 
-    function showContextMenu(e, type) {
-      e.preventDefault();
+    function validateAction(actionName) {
+      const currentEx = exercises[currentIdx];
+      if (currentEx.targetAction === actionName) {
+        alert("¡Correcto! Ejercicio completado.");
+        if (currentIdx < exercises.length - 1) {
+          navigate(1);
+        }
+      }
+    }
+
+    function handleIconClick(e, iconName) {
       e.stopPropagation();
-      const cm = document.getElementById('contextMenu');
-      cm.style.top = `${e.clientY}px`;
-      cm.style.left = `${e.clientX}px`;
-      cm.style.display = 'flex';
+      clearSelections();
+      document.getElementById(`icon-${iconName}`).classList.add('selected');
+      validateAction(`click-${iconName}`);
     }
 
-    function hideContextMenu() {
-      const cm = document.getElementById('contextMenu');
-      if (cm) cm.style.display = 'none';
+    function handleIconDblClick(iconName) {
+      clearSelections();
+      windowTitle.textContent = iconName.toUpperCase();
+      windowBody.innerHTML = `Ventana abierta de ${iconName}.`;
+      appWindow.style.display = 'block';
+      validateAction(`dblclick-${iconName}`);
     }
 
-    function updateClock() {
-      const now = new Date();
-      document.getElementById('clockDisplay').textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    function handleDesktopClick(e) {
+      clearSelections();
+      startMenu.style.display = 'none';
+      validateAction('click-desktop');
     }
 
-    window.onload = initApp;
+    function toggleStartMenu(e) {
+      e.stopPropagation();
+      startMenu.style.display = startMenu.style.display === 'block' ? 'none' : 'block';
+      validateAction('click-start');
+    }
+
+    function handleStartItem(itemName) {
+      startMenu.style.display = 'none';
+      windowTitle.textContent = itemName.toUpperCase();
+      windowBody.innerHTML = `Programa ${itemName} iniciado desde Menú Inicio.`;
+      appWindow.style.display = 'block';
+      validateAction(`start-${itemName}`);
+    }
+
+    function closeAppWindow() {
+      appWindow.style.display = 'none';
+      validateAction('close-window');
+    }
+
+    init();
   </script>
 </body>
 </html>
