@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Capacitación Digital - Simulador Educativo</title>
+  <title>Capacitación Digital - Simulador Educativo Windows 10</title>
   <style>
     * {
       box-sizing: border-box;
@@ -29,7 +29,7 @@
 
     /* Panel Izquierdo: Capacitación Digital */
     .sidebar {
-      width: 350px;
+      width: 360px;
       background-color: #0b132b;
       padding: 20px;
       display: flex;
@@ -70,8 +70,8 @@
     }
 
     .exercise-title {
-      font-size: 1.1rem;
-      margin-bottom: 12px;
+      font-size: 1.05rem;
+      margin-bottom: 10px;
       color: #ffffff;
     }
 
@@ -80,12 +80,12 @@
       border-left: 4px solid #00b4d8;
       padding: 10px;
       border-radius: 4px;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       font-size: 0.85rem;
     }
 
     .instruction-text {
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       line-height: 1.4;
       margin-bottom: 15px;
       color: #e0e1dd;
@@ -102,7 +102,7 @@
       font-weight: bold;
       text-align: left;
       font-size: 0.85rem;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .hint-box {
@@ -153,7 +153,7 @@
       padding: 15px;
     }
 
-    /* Iconos Alineados Verticalmente */
+    /* Iconos del Escritorio */
     .desktop-icons {
       display: flex;
       flex-direction: column;
@@ -191,34 +191,37 @@
       margin-bottom: 4px;
     }
 
-    /* Ventanas */
+    /* Ventanas Simuladas */
     .window {
       position: absolute;
-      top: 45%;
+      top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 440px;
-      background-color: #ffffff;
+      width: 520px;
+      height: 360px;
+      background-color: #f8f9fa;
       color: #333333;
       border-radius: 6px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.6);
       overflow: hidden;
       display: none;
       z-index: 10;
+      display: flex;
+      flex-direction: column;
     }
 
     .window-header {
-      background-color: #f0f0f0;
-      padding: 6px 10px;
+      background-color: #e9ecef;
+      padding: 8px 12px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 1px solid #dddddd;
+      border-bottom: 1px solid #ced4da;
     }
 
     .window-title {
-      font-size: 0.8rem;
-      color: #333333;
+      font-size: 0.85rem;
+      color: #212529;
       font-weight: 600;
     }
 
@@ -227,21 +230,55 @@
       border: none;
       font-size: 1rem;
       font-weight: bold;
-      color: #555555;
+      color: #495057;
       cursor: pointer;
       padding: 2px 8px;
       border-radius: 3px;
     }
 
     .btn-close:hover {
-      background-color: #e81123;
+      background-color: #dc3545;
       color: #ffffff;
     }
 
     .window-body {
       padding: 15px;
       font-size: 0.85rem;
-      line-height: 1.6;
+      flex: 1;
+      overflow-y: auto;
+      background-color: #ffffff;
+      color: #212529;
+    }
+
+    /* Contenido Específico de Apps */
+    .app-form-group {
+      margin-bottom: 10px;
+    }
+    .app-form-group label {
+      display: block;
+      font-size: 0.8rem;
+      margin-bottom: 3px;
+      font-weight: 600;
+    }
+    .app-form-control {
+      width: 100%;
+      padding: 6px;
+      border: 1px solid #ced4da;
+      border-radius: 4px;
+      font-size: 0.85rem;
+    }
+    .app-btn {
+      background: #0077b6;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    .app-btn:hover {
+      background: #0096c7;
     }
 
     /* Menú Inicio */
@@ -249,8 +286,8 @@
       position: absolute;
       bottom: 45px;
       left: 0;
-      width: 250px;
-      background-color: rgba(15, 23, 42, 0.95);
+      width: 260px;
+      background-color: rgba(15, 23, 42, 0.96);
       border-top-right-radius: 8px;
       border: 1px solid rgba(255,255,255,0.1);
       padding: 10px;
@@ -372,7 +409,7 @@
 
         <div class="start-menu" id="start-menu">
           <div class="start-item" onclick="handleStartItem('wordpad')">📝 WordPad</div>
-          <div class="start-item" onclick="handleStartItem('facturador')">🧮 Facturador</div>
+          <div class="start-item" onclick="handleStartItem('facturador')">🧮 Facturador Digital</div>
           <div class="start-item" onclick="handleStartItem('correo')">✉️ Correo</div>
           <div class="start-item" onclick="handleStartItem('este-equipo')">💻 Este Equipo</div>
         </div>
@@ -384,7 +421,7 @@
           <button class="start-btn" id="start-btn" onclick="toggleStartMenu(event)">⊞</button>
         </div>
         <div class="taskbar-clock">
-          <div id="clock-time">20:47</div>
+          <div id="clock-time">23:18</div>
           <div id="clock-date">16/08/2026</div>
         </div>
       </footer>
@@ -392,126 +429,127 @@
   </div>
 
   <script>
-    // MATRIZ COMPLETA DE LOS 100 EJERCICIOS OFICIALES ORGANIZADOS EN 8 MÓDULOS
+    // MATRIZ COMPLETA DE LOS 100 EJERCICIOS CON PISTAS Y ACCIONES RIGUROSAMENTE ALINEADAS
     const exercises = [
       // Módulo 01: Panel Táctil y Gestos (01 al 14)[cite: 1]
-      { id: 1, module: "Módulo 1: Panel Táctil y Gestos", title: "Ejercicio 01 – Tap y Selección Única", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Pulsación simple sobre un acceso directo del escritorio para verificar el enfoque visual del cursor.", hint: "Haga clic una vez sobre el ícono de WordPad.", targetAction: "click-wordpad" },
-      { id: 2, module: "Módulo 1: Panel Táctil y Gestos", title: "Ejercicio 02 – Doble Tap Táctil", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Ejecución rápida de doble pulsación sobre un elemento para la apertura de carpetas sin usar botones mecánicos.", hint: "Realice doble clic rápido sobre WordPad.", targetAction: "dblclick-wordpad" },
+      { id: 1, module: "Módulo 1: Panel Táctil y Gestos", title: "Ejercicio 01 – Tap y Selección Única", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Pulsación simple sobre un acceso directo del escritorio para verificar el enfoque visual del cursor.", hint: "Haga un clic simple sobre el ícono de WordPad.", targetAction: "click-wordpad" },
+      { id: 2, module: "Módulo 1: Panel Táctil y Gestos", title: "Ejercicio 02 – Doble Tap Táctil", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Ejecución rápida de doble pulsación sobre un elemento para la apertura de aplicaciones.", hint: "Realice doble clic rápido sobre el ícono de WordPad.", targetAction: "dblclick-wordpad" },
       { id: 3, module: "Módulo 1: Panel Táctil y Gestos", title: "Ejercicio 03 – Tap Prolongado (Menú Contextual)", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Mantener la pulsación en un área libre para desplegar las opciones de ordenamiento y propiedades.", hint: "Haga clic en un área vacía del fondo de pantalla.", targetAction: "click-desktop" },
-      { id: 4, module: "Módulo 1: Panel Táctil y Gestos", title: "Ejercicio 04 – Arrastre de Elementos", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Presión y desplazamiento continuo para mover un archivo .txt de una posición a otra en la cuadrícula del escritorio.", hint: "Seleccione el ícono de Facturador haciendo clic.", targetAction: "click-facturador" },
-      { id: 5, module: "Módulo 1: Panel Táctil y Gestos", title: "Ejercicio 05 – Desplazamiento Vertical", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Uso del deslizamiento simultáneo de dos dedos de arriba a abajo para navegar documentos extensos.", hint: "Haga clic en el fondo del escritorio.", targetAction: "click-desktop" },
-      { id: 6, module: "Módulo 1: Panel Táctil y Gestos", title: "Ejercicio 06 – Desplazamiento Horizontal", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Uso del deslizamiento lateral de dos dedos para recorrer carpetas con vista de iconos grandes o mosaicos.", hint: "Haga clic en Este Equipo.", targetAction: "click-este-equipo" },
-      { id: 7, module: "Módulo 1: Panel Táctil y Gestos", title: "Ejercicio 07 – Zoom Out (Pellizco)", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Gesto de juntar dos dedos hacia adentro dentro del Visor de Fotos para reducir la escala del elemento.", hint: "Seleccione el ícono de Correo.", targetAction: "click-correo" },
-      { id: 8, module: "Módulo 1: Panel Táctil y Gestos", title: "Ejercicio 08 – Zoom In (Ampliación)", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Gesto de separar dos dedos para ampliar una zona específica de un plano o imagen.", hint: "Haga clic en el botón de Inicio (⊞).", targetAction: "click-start" },
-      { id: 9, module: "Módulo 1: Panel Táctil y Gestos", title: "Ejercicio 09 – Despliegue de Vista de Tareas", context: "📌 Ubicación inicial: Barra de tareas", instruction: "Deslizar tres dedos hacia arriba para abrir la interfaz de Task View y revisar las ventanas activas.", hint: "Abra el menú Inicio desde la barra de tareas.", targetAction: "click-start" },
-      { id: 10, module: "Módulo 1: Panel Táctil y Gestos", title: "Ejercicio 10 – Mostrar Escritorio", context: "📌 Ubicación inicial: Barra de tareas", instruction: "Deslizar tres dedos hacia abajo para minimizar en un solo movimiento todas las aplicaciones abiertas.", hint: "Haga clic en el fondo del escritorio.", targetAction: "click-desktop" },
-      { id: 11, module: "Módulo 1: Panel Táctil y Gestos", title: "Ejercicio 11 – Conmutación Rápida de Apps", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Deslizar tres dedos hacia los lados para alternar entre la aplicación actual y la previa.", hint: "Abra la aplicación WordPad con doble clic.", targetAction: "dblclick-wordpad" },
-      { id: 12, module: "Módulo 1: Panel Táctil y Gestos", title: "Ejercicio 12 – Navegación de Escritorios Virtuales", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Deslizar cuatro dedos a la derecha o izquierda para pasar del área de trabajo principal al segundo escritorio.", hint: "Haga clic en el fondo del escritorio.", targetAction: "click-desktop" },
-      { id: 13, module: "Módulo 1: Panel Táctil y Gestos", title: "Ejercicio 13 – Centro de Actividades", context: "📌 Ubicación inicial: Barra de tareas", instruction: "Deslizar un dedo desde el margen derecho hacia el centro para desplegar el panel de notificaciones y acciones rápidas.", hint: "Haga clic en el botón de Inicio.", targetAction: "click-start" },
-      { id: 14, module: "Módulo 1: Panel Táctil y Gestos", title: "Ejercicio 14 – Ajuste de Sensibilidad", context: "📌 Ubicación inicial: Menú Inicio", instruction: "Navegación en el menú de configuración de Windows para modificar la velocidad de respuesta y gestos de tres/cuatro dedos.", hint: "Despliegue el Menú Inicio.", targetAction: "click-start" },
+      { id: 4, module: "Módulo 1: Panel Táctil y Gestos", title: "Ejercicio 04 – Arrastre de Elementos", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Presión y desplazamiento continuo para mover un archivo o acceso directo en la cuadrícula.", hint: "Seleccione el ícono del Facturador haciendo clic.", targetAction: "click-facturador" },
+      { id: 5, module: "Módulo 1: Panel Táctil y Gestos", title: "Ejercicio 05 – Desplazamiento Vertical", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Uso del deslizamiento simultáneo de dos dedos de arriba a abajo para navegar documentos extensos.", hint: "Haga clic en el fondo del escritorio para enfocar.", targetAction: "click-desktop" },
+      { id: 6, module: "Módulo 1: Panel Táctil y Gestos", title: "Ejercicio 06 – Desplazamiento Horizontal", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Uso del deslizamiento lateral de dos dedos para recorrer directorios.", hint: "Haga clic en el ícono de Este Equipo.", targetAction: "click-este-equipo" },
+      { id: 7, module: "Módulo 1: Panel Táctil y Gestos", title: "Ejercicio 07 – Zoom Out (Pellizco)", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Gesto de juntar dos dedos hacia adentro para reducir la escala de visualización.", hint: "Haga clic en el ícono de Correo.", targetAction: "click-correo" },
+      { id: 8, module: "Módulo 1: Panel Táctil y Gestos", title: "Ejercicio 08 – Zoom In (Ampliación)", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Gesto de separar dos dedos para ampliar una zona específica de la pantalla.", hint: "Haga clic en el botón de Inicio (⊞).", targetAction: "click-start" },
+      { id: 9, module: "Módulo 1: Panel Táctil y Gestos", title: "Ejercicio 09 – Despliegue de Vista de Tareas", context: "📌 Ubicación inicial: Barra de tareas", instruction: "Deslizar tres dedos hacia arriba para abrir la interfaz de Task View y revisar ventanas activas.", hint: "Abra el menú Inicio desde la barra de tareas.", targetAction: "click-start" },
+      { id: 10, module: "Módulo 1: Panel Táctil y Gestos", title: "Ejercicio 10 – Mostrar Escritorio", context: "📌 Ubicación inicial: Barra de tareas", instruction: "Deslizar tres dedos hacia abajo para minimizar en un solo movimiento las aplicaciones abiertas.", hint: "Haga clic en un espacio vacío del escritorio.", targetAction: "click-desktop" },
+      { id: 11, module: "Módulo 1: Panel Táctil y Gestos", title: "Ejercicio 11 – Conmutación Rápida de Apps", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Deslizar tres dedos hacia los lados para alternar entre aplicaciones recientes.", hint: "Abra la aplicación WordPad con doble clic.", targetAction: "dblclick-wordpad" },
+      { id: 12, module: "Módulo 1: Panel Táctil y Gestos", title: "Ejercicio 12 – Navegación de Escritorios Virtuales", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Deslizar cuatro dedos a la derecha o izquierda para pasar de un escritorio virtual a otro.", hint: "Haga clic en el fondo del escritorio.", targetAction: "click-desktop" },
+      { id: 13, module: "Módulo 1: Panel Táctil y Gestos", title: "Ejercicio 13 – Centro de Actividades", context: "📌 Ubicación inicial: Barra de tareas", instruction: "Deslizar desde el margen derecho hacia el centro para desplegar notificaciones.", hint: "Haga clic en el botón Inicio.", targetAction: "click-start" },
+      { id: 14, module: "Módulo 1: Panel Táctil y Gestos", title: "Ejercicio 14 – Ajuste de Sensibilidad", context: "📌 Ubicación inicial: Menú Inicio", instruction: "Navegación en la configuración del sistema para modificar la velocidad del panel táctil.", hint: "Despliegue el Menú Inicio.", targetAction: "click-start" },
 
       // Módulo 02: Gestión de Ventanas (15 al 27)[cite: 1]
-      { id: 15, module: "Módulo 2: Gestión de Ventanas", title: "Ejercicio 15 – Control de Estado Básico", context: "📌 Ubicación inicial: Ventana de Aplicación", instruction: "Minimización, maximización y restauración de una ventana activa mediante los botones de control en la barra de título.", hint: "Cierre la ventana activa pulsando [X].", targetAction: "close-window" },
-      { id: 16, module: "Módulo 2: Gestión de Ventanas", title: "Ejercicio 16 – Redimensionamiento Manual", context: "📌 Ubicación inicial: Ventana de Aplicación", instruction: "Ajuste personalizado del ancho y alto de una ventana mediante el arrastre preciso de sus bordes y esquinas.", hint: "Cierre la ventana con el botón [X].", targetAction: "close-window" },
-      { id: 17, module: "Módulo 2: Gestión de Ventanas", title: "Ejercicio 17 – Snap Assist Lateral", context: "📌 Ubicación inicial: Ventana de Aplicación", instruction: "Acoplamiento de una ventana en la mitad izquierda de la pantalla mediante arrastre directo a la orilla o el atajo Win + Flecha Izquierda.", hint: "Cierre la ventana actual con [X].", targetAction: "close-window" },
-      { id: 18, module: "Módulo 2: Gestión de Ventanas", title: "Ejercicio 18 – Pantalla Dividida Doble", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Selección y fijación de una segunda aplicación en el espacio derecho restante utilizando la sugerencia visual de Snap Assist.", hint: "Abra la aplicación Facturador.", targetAction: "dblclick-facturador" },
-      { id: 19, module: "Módulo 2: Gestión de Ventanas", title: "Ejercicio 19 – Acoplamiento en Cuadrantes", context: "📌 Ubicación inicial: Ventana de Facturador", instruction: "Organización de cuatro aplicaciones activas simultáneamente fijando cada una en una de las esquinas de la pantalla.", hint: "Cierre la ventana de Facturador.", targetAction: "close-window" },
-      { id: 20, module: "Módulo 2: Gestión de Ventanas", title: "Ejercicio 20 – Conmutación Alt + Tab", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Alternancia entre aplicaciones abiertas mediante la vista previa en miniatura del conmutador del sistema.", hint: "Abra la aplicación Correo.", targetAction: "dblclick-correo" },
-      { id: 21, module: "Módulo 2: Gestión de Ventanas", title: "Ejercicio 21 – Aislamiento Focal (Aero Shake)", context: "📌 Ubicación inicial: Ventana de Correo", instruction: "Agitar la ventana principal desde su barra de título para minimizar automáticamente todas las demás ventanas en segundo plano.", hint: "Cierre la ventana de Correo con [X].", targetAction: "close-window" },
-      { id: 22, module: "Módulo 2: Gestión de Ventanas", title: "Ejercicio 22 – Disposición en Cascada", context: "📌 Ubicación inicial: Barra de tareas", instruction: "Organización automática de todas las ventanas en una pila escalonada utilizando el menú contextual de la barra de tareas.", hint: "Abra el Menú Inicio.", targetAction: "click-start" },
-      { id: 23, module: "Módulo 2: Gestión de Ventanas", title: "Ejercicio 23 – Disposición en Paralelo/Mosaico", context: "📌 Ubicación inicial: Menú Inicio", instruction: "Distribución equitativa de las aplicaciones abiertas en filas o columnas desde las opciones de la barra de tareas.", hint: "Seleccione Facturador desde el menú.", targetAction: "start-facturador" },
-      { id: 24, module: "Módulo 2: Gestión de Ventanas", title: "Ejercicio 24 – Anclaje a la Barra de Tareas", context: "📌 Ubicación inicial: Ventana de Facturador", instruction: "Fijación del icono de un programa en ejecución en la barra de tareas para conservarlo como acceso rápido tras su cierre.", hint: "Cierre el Facturador con [X].", targetAction: "close-window" },
-      { id: 25, module: "Módulo 2: Gestión de Ventanas", title: "Ejercicio 25 – Cierre de Emergencia (Alt + F4)", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Cierre directo y seguro de la ventana que se encuentra en primer plano.", hint: "Abra WordPad haciendo doble clic.", targetAction: "dblclick-wordpad" },
-      { id: 26, module: "Módulo 2: Gestión de Ventanas", title: "Ejercicio 26 – Reordenamiento de accesos", context: "📌 Ubicación inicial: Ventana de WordPad", instruction: "Cambio de posición de las aplicaciones ancladas en la barra de tareas mediante arrastre horizontal.", hint: "Cierre WordPad usando [X].", targetAction: "close-window" },
-      { id: 27, module: "Módulo 2: Gestión de Ventanas", title: "Ejercicio 27 – Despeje del Área de Trabajo", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Minimización instantánea de todo el conjunto de ventanas activas pulsando la esquina inferior derecha de la barra de tareas.", hint: "Haga clic en el fondo del escritorio.", targetAction: "click-desktop" },
+      { id: 15, module: "Módulo 2: Gestión de Ventanas", title: "Ejercicio 15 – Control de Estado Básico", context: "📌 Ubicación inicial: Ventana de Aplicación", instruction: "Minimización, maximización y cierre de una ventana activa mediante los botones de control.", hint: "Cierre la ventana activa pulsando el botón [X].", targetAction: "close-window" },
+      { id: 16, module: "Módulo 2: Gestión de Ventanas", title: "Ejercicio 16 – Redimensionamiento Manual", context: "📌 Ubicación inicial: Ventana de Aplicación", instruction: "Ajuste personalizado del ancho y alto de una ventana arrastrando sus bordes.", hint: "Cierre la ventana con el botón [X].", targetAction: "close-window" },
+      { id: 17, module: "Módulo 2: Gestión de Ventanas", title: "Ejercicio 17 – Snap Assist Lateral", context: "📌 Ubicación inicial: Ventana de Aplicación", instruction: "Acoplamiento de una ventana en la mitad izquierda o derecha de la pantalla.", hint: "Cierre la ventana actual con [X].", targetAction: "close-window" },
+      { id: 18, module: "Módulo 2: Gestión de Ventanas", title: "Ejercicio 18 – Pantalla Dividida Doble", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Selección y fijación de una segunda aplicación en el espacio libre de pantalla.", hint: "Abra la aplicación Facturador con doble clic.", targetAction: "dblclick-facturador" },
+      { id: 19, module: "Módulo 2: Gestión de Ventanas", title: "Ejercicio 19 – Acoplamiento en Cuadrantes", context: "📌 Ubicación inicial: Ventana de Facturador", instruction: "Organización de cuatro aplicaciones simultáneas en esquinas de pantalla.", hint: "Cierre la ventana del Facturador con [X].", targetAction: "close-window" },
+      { id: 20, module: "Módulo 2: Gestión de Ventanas", title: "Ejercicio 20 – Conmutación Alt + Tab", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Alternancia rápida entre aplicaciones abiertas usando el conmutador.", hint: "Abra la aplicación Correo con doble clic.", targetAction: "dblclick-correo" },
+      { id: 21, module: "Módulo 2: Gestión de Ventanas", title: "Ejercicio 21 – Aislamiento Focal (Aero Shake)", context: "📌 Ubicación inicial: Ventana de Correo", instruction: "Minimizar el resto de ventanas agitando la barra de título de la aplicación principal.", hint: "Cierre la ventana de Correo con [X].", targetAction: "close-window" },
+      { id: 22, module: "Módulo 2: Gestión de Ventanas", title: "Ejercicio 22 – Disposición en Cascada", context: "📌 Ubicación inicial: Barra de tareas", instruction: "Organización automática de ventanas abiertas en pila escalonada.", hint: "Abra el Menú Inicio.", targetAction: "click-start" },
+      { id: 23, module: "Módulo 2: Gestión de Ventanas", title: "Ejercicio 23 – Disposición en Paralelo", context: "📌 Ubicación inicial: Menú Inicio", instruction: "Distribución equitativa de aplicaciones en filas o columnas.", hint: "Seleccione Facturador desde el menú Inicio.", targetAction: "start-facturador" },
+      { id: 24, module: "Módulo 2: Gestión de Ventanas", title: "Ejercicio 24 – Anclaje a la Barra de Tareas", context: "📌 Ubicación inicial: Ventana de Facturador", instruction: "Fijación del icono de un programa en ejecución en la barra inferior.", hint: "Cierre el Facturador con [X].", targetAction: "close-window" },
+      { id: 25, module: "Módulo 2: Gestión de Ventanas", title: "Ejercicio 25 – Cierre de Emergencia (Alt + F4)", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Cierre directo de la ventana activa en primer plano.", hint: "Abra WordPad haciendo doble clic.", targetAction: "dblclick-wordpad" },
+      { id: 26, module: "Módulo 2: Gestión de Ventanas", title: "Ejercicio 26 – Reordenamiento de accesos", context: "📌 Ubicación inicial: Ventana de WordPad", instruction: "Cambio de posición de los iconos anclados en la barra de tareas.", hint: "Cierre WordPad usando [X].", targetAction: "close-window" },
+      { id: 27, module: "Módulo 2: Gestión de Ventanas", title: "Ejercicio 27 – Despeje del Área de Trabajo", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Minimización instantánea de todas las ventanas activas hacia la barra de tareas.", hint: "Haga clic en el fondo del escritorio.", targetAction: "click-desktop" },
 
       // Módulo 03: Explorador de Archivos (28 al 41)[cite: 1]
-      { id: 28, module: "Módulo 3: Explorador de Archivos", title: "Ejercicio 28 – Creación y Anidado de Directorios", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Generación de una estructura jerárquica de carpetas (Documentos/Proyectos/2026/) desde el menú contextual y la barra de herramientas.", hint: "Haga clic en Este Equipo.", targetAction: "click-este-equipo" },
-      { id: 29, module: "Módulo 3: Explorador de Archivos", title: "Ejercicio 29 – Renombrado Masivo y Atajos (F2)", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Cambio de nombre individual y secuencial de varios archivos utilizando la tecla F2 y la tecla Tab para pasar al siguiente elemento.", hint: "Abra Este Equipo con doble clic.", targetAction: "dblclick-este-equipo" },
-      { id: 30, module: "Módulo 3: Explorador de Archivos", title: "Ejercicio 30 – Copiado y Reubicación de Datos", context: "📌 Ubicación inicial: Ventana de Este Equipo", instruction: "Duplicación y movimiento de archivos entre diferentes ubicaciones del disco mediante Ctrl + C, Ctrl + X y Ctrl + V.", hint: "Cierre la ventana de Este Equipo con [X].", targetAction: "close-window" },
-      { id: 31, module: "Módulo 3: Explorador de Archivos", title: "Ejercicio 31 – Modos de Vista y Metadatos", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Alternancia entre vistas de Iconos grandes, Lista y Detalles para inspeccionar la fecha de modificación, el tamaño y el tipo de archivo.", hint: "Seleccione el ícono Facturador.", targetAction: "click-facturador" },
-      { id: 32, module: "Módulo 3: Explorador de Archivos", title: "Ejercicio 32 – Ordenamiento y Agrupación", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Clasificación de archivos filtrando la vista por columnas (nombre, tipo o fecha) y agrupación por criterios específicos.", hint: "Abra el Facturador con doble clic.", targetAction: "dblclick-facturador" },
-      { id: 33, module: "Módulo 3: Explorador de Archivos", title: "Ejercicio 33 – Selección Múltiple Continua (Shift)", context: "📌 Ubicación inicial: Ventana de Facturador", instruction: "Marcación de un lote de archivos consecutivos dentro de un mismo directorio manteniendo presionada la tecla Shift.", hint: "Cierre la ventana del Facturador con [X].", targetAction: "close-window" },
-      { id: 34, module: "Módulo 3: Explorador de Archivos", title: "Ejercicio 34 – Selección Múltiple Discontinua (Ctrl)", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Marcación de archivos individuales no contiguos en una lista extensa mediante Ctrl + Clic.", hint: "Haga clic en el fondo del escritorio.", targetAction: "click-desktop" },
-      { id: 35, module: "Módulo 3: Explorador de Archivos", title: "Ejercicio 35 – Búsqueda por Filtros y Comodines", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Uso de la barra de búsqueda integrada empleando operadores de extensión (ej. *.pdf) y parámetros de tamaño o fecha.", hint: "Abra el menú Inicio.", targetAction: "click-start" },
-      { id: 36, module: "Módulo 3: Explorador de Archivos", title: "Ejercicio 36 – Anclaje a Acceso Rápido", context: "📌 Ubicación inicial: Menú Inicio", instruction: "Incorporación de directorios de trabajo frecuente en el panel lateral de navegación y su posterior gestión.", hint: "Inicie Este Equipo desde el menú.", targetAction: "start-este-equipo" },
-      { id: 37, module: "Módulo 3: Explorador de Archivos", title: "Ejercicio 37 – Compresión Nativa (.ZIP)", context: "📌 Ubicación inicial: Ventana de Este Equipo", instruction: "Selección de carpetas y generación de archivos comprimidos utilizando la función 'Enviar a > Carpeta comprimida en zip'.", hint: "Cierre la ventana de Este Equipo con [X].", targetAction: "close-window" },
-      { id: 38, module: "Módulo 3: Explorador de Archivos", title: "Ejercicio 38 – Extracción de Archivos", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Descompresión de contenidos .zip hacia una ruta de destino específica utilizando la herramienta integrada 'Extraer todo'.", hint: "Haga clic en el ícono de Correo.", targetAction: "click-correo" },
-      { id: 39, module: "Módulo 3: Explorador de Archivos", title: "Ejercicio 39 – Visibilidad de Extensiones e Ítemes Ocultos", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Activación de las casillas de verificación en la pestaña Vista para mostrar formatos de archivo y elementos ocultos del sistema.", hint: "Abra Correo con doble clic.", targetAction: "dblclick-correo" },
-      { id: 40, module: "Módulo 3: Explorador de Archivos", title: "Ejercicio 40 – Gestión de Papelera y Restauración", context: "📌 Ubicación inicial: Ventana de Correo", instruction: "Eliminación estándar de un archivo (Delete) y recuperación desde la Papelera de Reciclaje a su ruta original.", hint: "Cierre la ventana de Correo con [X].", targetAction: "close-window" },
-      { id: 41, module: "Módulo 3: Explorador de Archivos", title: "Ejercicio 41 – Eliminación Definitiva (Shift + Delete)", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Borrado permanente de archivos de prueba sin enviarlos a la Papelera de Reciclaje, previa confirmación del cuadro de diálogo.", hint: "Haga clic en el botón Inicio.", targetAction: "click-start" },
+      { id: 28, module: "Módulo 3: Explorador de Archivos", title: "Ejercicio 28 – Creación y Anidado de Directorios", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Generación de estructura jerárquica de carpetas en el sistema.", hint: "Haga doble clic en Este Equipo para abrir el explorador.", targetAction: "dblclick-este-equipo" },
+      { id: 29, module: "Módulo 3: Explorador de Archivos", title: "Ejercicio 29 – Renombrado Masivo y Atajos (F2)", context: "📌 Ubicación inicial: Ventana de Este Equipo", instruction: "Cambio de nombre de archivos utilizando la tecla F2.", hint: "Cierre la ventana de Este Equipo con [X].", targetAction: "close-window" },
+      { id: 30, module: "Módulo 3: Explorador de Archivos", title: "Ejercicio 30 – Copiado y Reubicación de Datos", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Duplicación y movimiento de archivos entre directorios (Ctrl+C / Ctrl+V).", hint: "Seleccione Este Equipo haciendo un clic.", targetAction: "click-este-equipo" },
+      { id: 31, module: "Módulo 3: Explorador de Archivos", title: "Ejercicio 31 – Modos de Vista y Metadatos", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Alternancia entre vistas de iconos grandes, lista y detalles.", hint: "Haga clic en el ícono del Facturador.", targetAction: "click-facturador" },
+      { id: 32, module: "Módulo 3: Explorador de Archivos", title: "Ejercicio 32 – Ordenamiento y Agrupación", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Clasificación de elementos filtrando por columnas de fecha o tipo.", hint: "Abra el Facturador con doble clic.", targetAction: "dblclick-facturador" },
+      { id: 33, module: "Módulo 3: Explorador de Archivos", title: "Ejercicio 33 – Selección Múltiple Continua (Shift)", context: "📌 Ubicación inicial: Ventana de Facturador", instruction: "Marcación de lote de archivos consecutivos con la tecla Shift.", hint: "Cierre la ventana del Facturador con [X].", targetAction: "close-window" },
+      { id: 34, module: "Módulo 3: Explorador de Archivos", title: "Ejercicio 34 – Selección Múltiple Discontinua (Ctrl)", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Marcación de archivos no contiguos utilizando Ctrl + Clic.", hint: "Haga clic en el fondo del escritorio.", targetAction: "click-desktop" },
+      { id: 35, module: "Módulo 3: Explorador de Archivos", title: "Ejercicio 35 – Búsqueda por Filtros y Comodines", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Uso de la barra de búsqueda empleando operadores de extensión (ej. *.pdf).", hint: "Abra el menú Inicio.", targetAction: "click-start" },
+      { id: 36, module: "Módulo 3: Explorador de Archivos", title: "Ejercicio 36 – Anclaje a Acceso Rápido", context: "📌 Ubicación inicial: Menú Inicio", instruction: "Incorporación de directorios frecuentes en el panel lateral.", hint: "Inicie Este Equipo desde el menú Inicio.", targetAction: "start-este-equipo" },
+      { id: 37, module: "Módulo 3: Explorador de Archivos", title: "Ejercicio 37 – Compresión Nativa (.ZIP)", context: "📌 Ubicación inicial: Ventana de Este Equipo", instruction: "Generación de archivos comprimidos zip desde el menú contextual.", hint: "Cierre la ventana de Este Equipo con [X].", targetAction: "close-window" },
+      { id: 38, module: "Módulo 3: Explorador de Archivos", title: "Ejercicio 38 – Extracción de Archivos", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Descompresión de contenidos .zip hacia una ruta específica.", hint: "Haga clic en el ícono de Correo.", targetAction: "click-correo" },
+      { id: 39, module: "Módulo 3: Explorador de Archivos", title: "Ejercicio 39 – Visibilidad de Extensiones e Ítemes Ocultos", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Mostrar formatos de archivo y elementos ocultos del sistema.", hint: "Abra Correo con doble clic.", targetAction: "dblclick-correo" },
+      { id: 40, module: "Módulo 3: Explorador de Archivos", title: "Ejercicio 40 – Gestión de Papelera y Restauración", context: "📌 Ubicación inicial: Ventana de Correo", instruction: "Recuperación de elementos eliminados desde la Papelera de Reciclaje.", hint: "Cierre la ventana de Correo con [X].", targetAction: "close-window" },
+      { id: 41, module: "Módulo 3: Explorador de Archivos", title: "Ejercicio 41 – Eliminación Definitiva (Shift + Delete)", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Borrado permanente de archivos sin enviarlos a la Papelera.", hint: "Haga clic en el botón Inicio.", targetAction: "click-start" },
 
       // Módulo 04: Edición WordPad (42 al 54)[cite: 1]
-      { id: 42, module: "Módulo 4: Edición WordPad", title: "Ejercicio 42 – Formato de Texto y Fuentes", context: "📌 Ubicación inicial: Menú Inicio", instruction: "Selección de tipografía, tamaño de letra, negrita, cursiva y subrayado para jerarquizar los encabezados de un archivo.", hint: "Inicie WordPad desde el menú Inicio.", targetAction: "start-wordpad" },
-      { id: 43, module: "Módulo 4: Edición WordPad", title: "Ejercicio 43 – Alineación y Sangrías", context: "📌 Ubicación inicial: Ventana de WordPad", instruction: "Configuración de párrafos con alineación izquierda, centrada, derecha y justificada, junto al ajuste de sangría desde la regla.", hint: "Cierre la ventana de WordPad con [X].", targetAction: "close-window" },
-      { id: 44, module: "Módulo 4: Edición WordPad", title: "Ejercicio 44 – Interlineado y Espaciado", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Modificación del espacio entre líneas (1.0, 1.15, 1.5, 2.0) y eliminación del espacio posterior al párrafo.", hint: "Haga clic en WordPad para seleccionarlo.", targetAction: "click-wordpad" },
-      { id: 45, module: "Módulo 4: Edición WordPad", title: "Ejercicio 45 – Listas con Viñetas y Numeración", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Aplicación de viñetas simples y esquemas numerados para la organización de ítemes y consignas.", hint: "Abra WordPad con doble clic.", targetAction: "dblclick-wordpad" },
-      { id: 46, module: "Módulo 4: Edición WordPad", title: "Ejercicio 46 – Inserción de Imágenes", context: "📌 Ubicación inicial: Ventana de WordPad", instruction: "Incorporación de un archivo de imagen desde el almacenamiento local e integración dentro del cuerpo del texto.", hint: "Cierre WordPad usando [X].", targetAction: "close-window" },
-      { id: 47, module: "Módulo 4: Edición WordPad", title: "Ejercicio 47 – Objeto de Dibujo Integrado", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Apertura de la herramienta de Paint desde WordPad para trazar un esquema básico e insertarlo directamente en la página.", hint: "Haga clic en el fondo del escritorio.", targetAction: "click-desktop" },
-      { id: 48, module: "Módulo 4: Edición WordPad", title: "Ejercicio 48 – Fecha y Hora Automática", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Inserción de marcas temporales en el documento seleccionando entre los distintos formatos predefinidos.", hint: "Seleccione el ícono Facturador.", targetAction: "click-facturador" },
-      { id: 49, module: "Módulo 4: Edición WordPad", title: "Ejercicio 49 – Búsqueda y Reemplazo Masivo", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Utilización de las herramientas de búsqueda de texto (Ctrl + B) y reemplazo automático de términos en un texto extenso.", hint: "Abra Facturador con doble clic.", targetAction: "dblclick-facturador" },
-      { id: 50, module: "Módulo 4: Edición WordPad", title: "Ejercicio 50 – Fijación de Tabulaciones", context: "📌 Ubicación inicial: Ventana de Facturador", instruction: "Establecimiento de marcas de tabulación personalizadas en la regla superior para alinear columnas de datos y listas.", hint: "Cierre la ventana del Facturador con [X].", targetAction: "close-window" },
-      { id: 51, module: "Módulo 4: Edición WordPad", title: "Ejercicio 51 – Manipulación de Portapapeles", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Cortar, copiar y pegar bloques de información manteniendo o descartando los formatos preexistentes.", hint: "Abra el Menú Inicio.", targetAction: "click-start" },
-      { id: 52, module: "Módulo 4: Edición WordPad", title: "Ejercicio 52 – Configuración de Página", context: "📌 Ubicación inicial: Menú Inicio", instruction: "Definición del tamaño de papel (A4/Carta), orientación (portarretrato/paisaje) y dimensiones de márgenes.", hint: "Inicie Correo desde el menú.", targetAction: "start-correo" },
-      { id: 53, module: "Módulo 4: Edición WordPad", title: "Ejercicio 53 – Vista Previa e Inspección Visual", context: "📌 Ubicación inicial: Ventana de Correo", instruction: "Revisión de la maquetación final en la vista previa antes de simular el envío a imprenta o exportación.", hint: "Cierre Correo con el botón [X].", targetAction: "close-window" },
-      { id: 54, module: "Módulo 4: Edición WordPad", title: "Ejercicio 54 – Guardado Multi-formato", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Exportación del archivo terminado en formatos Texto Enriquecido (.rtf), Texto Plano (.txt) y Documento Abierto (.odt).", hint: "Haga clic en Este Equipo.", targetAction: "click-este-equipo" },
+      { id: 42, module: "Módulo 4: Edición WordPad", title: "Ejercicio 42 – Formato de Texto y Fuentes", context: "📌 Ubicación inicial: Menú Inicio", instruction: "Selección de tipografía, tamaño de letra, negrita y cursiva.", hint: "Inicie WordPad desde el menú Inicio.", targetAction: "start-wordpad" },
+      { id: 43, module: "Módulo 4: Edición WordPad", title: "Ejercicio 43 – Alineación y Sangrías", context: "📌 Ubicación inicial: Ventana de WordPad", instruction: "Configuración de párrafos con alineación izquierda, centrada y justificada.", hint: "Cierre la ventana de WordPad con [X].", targetAction: "close-window" },
+      { id: 44, module: "Módulo 4: Edición WordPad", title: "Ejercicio 44 – Interlineado y Espaciado", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Modificación del espacio entre líneas de texto.", hint: "Haga clic en WordPad para seleccionarlo.", targetAction: "click-wordpad" },
+      { id: 45, module: "Módulo 4: Edición WordPad", title: "Ejercicio 45 – Listas con Viñetas y Numeración", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Aplicación de viñetas simples y esquemas numerados.", hint: "Abra WordPad con doble clic.", targetAction: "dblclick-wordpad" },
+      { id: 46, module: "Módulo 4: Edición WordPad", title: "Ejercicio 46 – Inserción de Imágenes", context: "📌 Ubicación inicial: Ventana de WordPad", instruction: "Incorporación de archivos gráficos dentro del cuerpo del texto.", hint: "Cierre WordPad usando [X].", targetAction: "close-window" },
+      { id: 47, module: "Módulo 4: Edición WordPad", title: "Ejercicio 47 – Objeto de Dibujo Integrado", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Apertura de herramienta Paint desde WordPad para trazar un esquema.", hint: "Haga clic en el fondo del escritorio.", targetAction: "click-desktop" },
+      { id: 48, module: "Módulo 4: Edición WordPad", title: "Ejercicio 48 – Fecha y Hora Automática", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Inserción de marcas temporales en formatos predefinidos.", hint: "Seleccione el ícono del Facturador.", targetAction: "click-facturador" },
+      { id: 49, module: "Módulo 4: Edición WordPad", title: "Ejercicio 49 – Búsqueda y Reemplazo Masivo", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Utilización de herramientas de búsqueda de texto (Ctrl + B).", hint: "Abra Facturador con doble clic.", targetAction: "dblclick-facturador" },
+      { id: 50, module: "Módulo 4: Edición WordPad", title: "Ejercicio 50 – Fijación de Tabulaciones", context: "📌 Ubicación inicial: Ventana de Facturador", instruction: "Establecimiento de marcas de tabulación en la regla superior.", hint: "Cierre la ventana del Facturador con [X].", targetAction: "close-window" },
+      { id: 51, module: "Módulo 4: Edición WordPad", title: "Ejercicio 51 – Manipulación de Portapapeles", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Cortar, copiar y pegar bloques de información.", hint: "Abra el Menú Inicio.", targetAction: "click-start" },
+      { id: 52, module: "Módulo 4: Edición WordPad", title: "Ejercicio 52 – Configuración de Página", context: "📌 Ubicación inicial: Menú Inicio", instruction: "Definición del tamaño de papel, orientación y márgenes.", hint: "Inicie Correo desde el menú Inicio.", targetAction: "start-correo" },
+      { id: 53, module: "Módulo 4: Edición WordPad", title: "Ejercicio 53 – Vista Previa e Inspección Visual", context: "📌 Ubicación inicial: Ventana de Correo", instruction: "Revisión de maquetación final antes de imprimir o exportar.", hint: "Cierre Correo con el botón [X].", targetAction: "close-window" },
+      { id: 54, module: "Módulo 4: Edición WordPad", title: "Ejercicio 54 – Guardado Multi-formato", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Exportación del archivo en formatos .rtf, .txt u .odt.", hint: "Haga clic en el ícono de Este Equipo.", targetAction: "click-este-equipo" },
 
       // Módulo 05: Facturador Digital (55 al 69)[cite: 1]
-      { id: 55, module: "Módulo 5: Facturador Digital", title: "Ejercicio 55 – Alta de Cliente y Datos Fiscales", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Registro de un nuevo comprador ingresando Razón Social, CUIT/CUIL y selección de condición frente al IVA.", hint: "Abra Este Equipo con doble clic.", targetAction: "dblclick-este-equipo" },
-      { id: 56, module: "Módulo 5: Facturador Digital", title: "Ejercicio 56 – Selección de Tipo de Comprobante", context: "📌 Ubicación inicial: Ventana de Este Equipo", instruction: "Definición del tipo de documento (Factura A, B o C) según la categoría fiscal del cliente.", hint: "Cierre Este Equipo pulsando [X].", targetAction: "close-window" },
-      { id: 57, module: "Módulo 5: Facturador Digital", title: "Ejercicio 57 – Búsqueda en Catálogo de Productos", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Búsqueda e identificación de artículos por código interno, código de barras o descripción.", hint: "Haga clic en el fondo del escritorio.", targetAction: "click-desktop" },
-      { id: 58, module: "Módulo 5: Facturador Digital", title: "Ejercicio 58 – Inserción de Ítems y Cantidades", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Carga de productos en la grilla de venta ajustando cantidades, unidades de medida y precios unitarios.", hint: "Seleccione Facturador.", targetAction: "click-facturador" },
-      { id: 59, module: "Módulo 5: Facturador Digital", title: "Ejercicio 59 – Descuento Específico por Línea", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Aplicación de bonificaciones porcentuales o de monto fijo sobre un ítem en particular.", hint: "Abra Facturador con doble clic.", targetAction: "dblclick-facturador" },
-      { id: 60, module: "Módulo 5: Facturador Digital", title: "Ejercicio 60 – Descuento Global en Factura", context: "📌 Ubicación inicial: Ventana de Facturador", instruction: "Inserción de un porcentaje de descuento o ajuste aplicable al subtotal del comprobante.", hint: "Cierre el Facturador con [X].", targetAction: "close-window" },
-      { id: 61, module: "Módulo 5: Facturador Digital", title: "Ejercicio 61 – Discriminación de Alícuotas de IVA", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Verificación y selección del porcentaje impositivo correspondiente (21%, 10.5%, 0%) según el bien comercializado.", hint: "Despliegue el menú Inicio.", targetAction: "click-start" },
-      { id: 62, module: "Módulo 5: Facturador Digital", title: "Ejercicio 62 – Regla de Formas de Pago", context: "📌 Ubicación inicial: Menú Inicio", instruction: "Asignación del método de cancelación (Efectivo, Tarjeta de Débito/Crédito, Transferencia Bancaria).", hint: "Inicie WordPad desde el menú.", targetAction: "start-wordpad" },
-      { id: 63, module: "Módulo 5: Facturador Digital", title: "Ejercicio 63 – Cobro Mixto/Fraccionado", context: "📌 Ubicación inicial: Ventana de WordPad", instruction: "Registro de un pago dividido en dos o más medios de cobro distintos para una misma operación.", hint: "Cierre WordPad usando [X].", targetAction: "close-window" },
-      { id: 64, module: "Módulo 5: Facturador Digital", title: "Ejercicio 64 – Emisión y Validación Fiscal", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Simulación de envío de datos, solicitud de CAE y generación de fecha de vencimiento.", hint: "Seleccione el ícono Correo.", targetAction: "click-correo" },
-      { id: 65, module: "Módulo 5: Facturador Digital", title: "Ejercicio 65 – Generación y Exportación a PDF", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Conversión del comprobante emitido a archivo .pdf y asignación de ruta en el disco local.", hint: "Abra Correo con doble clic.", targetAction: "dblclick-correo" },
-      { id: 66, module: "Módulo 5: Facturador Digital", title: "Ejercicio 66 – Guardado y Recuperación de Borrador", context: "📌 Ubicación inicial: Ventana de Correo", instruction: "Almacenamiento temporal de una venta en proceso para su posterior edición y cierre.", hint: "Cierre la ventana de Correo con [X].", targetAction: "close-window" },
-      { id: 67, module: "Módulo 5: Facturador Digital", title: "Ejercicio 67 – Consulta e Historial de Ventas", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Filtrado de comprobantes emitidos ordenados por rango de fechas, cliente o estado de cobro.", hint: "Haga clic en el botón de Inicio.", targetAction: "click-start" },
-      { id: 68, module: "Módulo 5: Facturador Digital", title: "Ejercicio 68 – Emisión de Nota de Crédito", context: "📌 Ubicación inicial: Menú Inicio", instruction: "Confección de un comprobante de anulación o devolución vinculado directamente a una factura previa.", hint: "Inicie Facturador desde el menú.", targetAction: "start-facturador" },
-      { id: 69, module: "Módulo 5: Facturador Digital", title: "Ejercicio 69 – Reporte y Cierre de Caja", context: "📌 Ubicación inicial: Ventana de Facturador", instruction: "Exportación del resumen operativo diario con el consolidado de facturación y medios de pago.", hint: "Cierre el Facturador con [X].", targetAction: "close-window" },
+      { id: 55, module: "Módulo 5: Facturador Digital", title: "Ejercicio 55 – Alta de Cliente y Datos Fiscales", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Registro de nuevo comprador ingresando Razón Social y CUIT.", hint: "Abra el Facturador con doble clic para registrar clientes.", targetAction: "dblclick-facturador" },
+      { id: 56, module: "Módulo 5: Facturador Digital", title: "Ejercicio 56 – Selección de Tipo de Comprobante", context: "📌 Ubicación inicial: Ventana de Facturador", instruction: "Definición del tipo de documento fiscal (Factura A, B o C).", hint: "Cierre la ventana del Facturador con [X].", targetAction: "close-window" },
+      { id: 57, module: "Módulo 5: Facturador Digital", title: "Ejercicio 57 – Búsqueda en Catálogo de Productos", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Búsqueda de artículos por código o descripción en el sistema.", hint: "Haga clic en el fondo del escritorio.", targetAction: "click-desktop" },
+      { id: 58, module: "Módulo 5: Facturador Digital", title: "Ejercicio 58 – Inserción de Ítems y Cantidades", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Carga de productos en la grilla de venta y ajuste de cantidades.", hint: "Seleccione el Facturador.", targetAction: "click-facturador" },
+      { id: 59, module: "Módulo 5: Facturador Digital", title: "Ejercicio 59 – Descuento Específico por Línea", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Aplicación de bonificaciones porcentuales sobre un ítem en particular.", hint: "Abra Facturador con doble clic.", targetAction: "dblclick-facturador" },
+      { id: 60, module: "Módulo 5: Facturador Digital", title: "Ejercicio 60 – Descuento Global en Factura", context: "📌 Ubicación inicial: Ventana de Facturador", instruction: "Inserción de porcentaje de descuento aplicable al subtotal.", hint: "Cierre el Facturador con [X].", targetAction: "close-window" },
+      { id: 61, module: "Módulo 5: Facturador Digital", title: "Ejercicio 61 – Discriminación de Alícuotas de IVA", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Verificación y selección del porcentaje impositivo (21%, 10.5%).", hint: "Despliegue el menú Inicio.", targetAction: "click-start" },
+      { id: 62, module: "Módulo 5: Facturador Digital", title: "Ejercicio 62 – Regla de Formas de Pago", context: "📌 Ubicación inicial: Menú Inicio", instruction: "Asignación del método de cancelación (Efectivo, Tarjeta, Transferencia).", hint: "Inicie WordPad desde el menú Inicio.", targetAction: "start-wordpad" },
+      { id: 63, module: "Módulo 5: Facturador Digital", title: "Ejercicio 63 – Cobro Mixto/Fraccionado", context: "📌 Ubicación inicial: Ventana de WordPad", instruction: "Registro de pago dividido en dos o más medios distintos.", hint: "Cierre WordPad usando [X].", targetAction: "close-window" },
+      { id: 64, module: "Módulo 5: Facturador Digital", title: "Ejercicio 64 – Emisión y Validación Fiscal", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Simulación de solicitud de CAE y fecha de vencimiento.", hint: "Seleccione el ícono de Correo.", targetAction: "click-correo" },
+      { id: 65, module: "Módulo 5: Facturador Digital", title: "Ejercicio 65 – Generación y Exportación a PDF", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Conversión de comprobante a PDF y asignación de ruta local.", hint: "Abra Correo con doble clic.", targetAction: "dblclick-correo" },
+      { id: 66, module: "Módulo 5: Facturador Digital", title: "Ejercicio 66 – Guardado y Recuperación de Borrador", context: "📌 Ubicación inicial: Ventana de Correo", instruction: "Almacenamiento temporal de venta en proceso para posterior edición.", hint: "Cierre la ventana de Correo con [X].", targetAction: "close-window" },
+      { id: 67, module: "Módulo 5: Facturador Digital", title: "Ejercicio 67 – Consulta e Historial de Ventas", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Filtrado de comprobantes emitidos por rango de fechas o cliente.", hint: "Haga clic en el botón Inicio.", targetAction: "click-start" },
+      { id: 68, module: "Módulo 5: Facturador Digital", title: "Ejercicio 68 – Emisión de Nota de Crédito", context: "📌 Ubicación inicial: Menú Inicio", instruction: "Confección de comprobante de anulación vinculado a factura previa.", hint: "Inicie Facturador desde el menú Inicio.", targetAction: "start-facturador" },
+      { id: 69, module: "Módulo 5: Facturador Digital", title: "Ejercicio 69 – Reporte y Cierre de Caja", context: "📌 Ubicación inicial: Ventana de Facturador", instruction: "Exportación del resumen operativo diario con consolidado de ventas.", hint: "Cierre el Facturador con [X].", targetAction: "close-window" },
 
       // Módulo 06: Clientes de Correo (70 al 81)[cite: 1]
-      { id: 70, module: "Módulo 6: Clientes de Correo", title: "Ejercicio 70 – Configuración e Inclusión de Cuenta", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Alta de una cuenta de correo electrónico mediante protocolos IMAP/POP3 e integración en la aplicación Mail de Windows 10.", hint: "Haga clic en el fondo del escritorio.", targetAction: "click-desktop" },
-      { id: 71, module: "Módulo 6: Clientes de Correo", title: "Ejercicio 71 – Redacción, Asunto y Destinatarios", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Composición de un mensaje delimitando campos para destinatarios principales (Para), copia visible (CC) y copia oculta (CCO).", hint: "Seleccione WordPad.", targetAction: "click-wordpad" },
-      { id: 72, module: "Módulo 6: Clientes de Correo", title: "Ejercicio 72 – Envío de Archivos Adjuntos", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Selección e incorporación de documentos, planillas o archivos comprimidos desde el Explorador directamente al correo.", hint: "Abra WordPad con doble clic.", targetAction: "dblclick-wordpad" },
-      { id: 73, module: "Módulo 6: Clientes de Correo", title: "Ejercicio 73 – Creación de Firma Personalizada", context: "📌 Ubicación inicial: Ventana de WordPad", instruction: "Formateo y configuración de un pie de firma automático con datos institucionales, imagen y texto enriquecido.", hint: "Cierre WordPad usando [X].", targetAction: "close-window" },
-      { id: 74, module: "Módulo 6: Clientes de Correo", title: "Ejercicio 74 – Clasificación e Identificación Visual", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Uso de banderas de seguimiento, marcas de lectura y asignación de niveles de prioridad (Alta/Baja).", hint: "Abra el menú Inicio.", targetAction: "click-start" },
-      { id: 75, module: "Módulo 6: Clientes de Correo", title: "Ejercicio 75 – Organización en Carpetas y Directorios", context: "📌 Ubicación inicial: Menú Inicio", instruction: "Creación de subcarpetas personalizadas y movimiento manual de mensajes para ordenar la Bandeja de Entrada.", hint: "Seleccione Correo en el menú.", targetAction: "start-correo" },
-      { id: 76, module: "Módulo 6: Clientes de Correo", title: "Ejercicio 76 – Reglas de Filtrado Automático", context: "📌 Ubicación inicial: Ventana de Correo", instruction: "Establecimiento de directrices para derivar mensajes de un remitente específico directamente a una carpeta de proyecto.", hint: "Cierre la ventana de Correo con [X].", targetAction: "close-window" },
-      { id: 77, module: "Módulo 6: Clientes de Correo", title: "Ejercicio 77 – Búsqueda por Criterios Combinados", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Localización de correos antiguos filtrando por palabra clave en el asunto, fecha o presencia de adjuntos.", hint: "Seleccione Este Equipo.", targetAction: "click-este-equipo" },
-      { id: 78, module: "Módulo 6: Clientes de Correo", title: "Ejercicio 78 – Hilos de Conversación y Reenvío", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Gestión de respuestas múltiples (Responder a todos) conservando la cadena de mensajes y reenvío limpio de información.", hint: "Abra Este Equipo con doble clic.", targetAction: "dblclick-este-equipo" },
-      { id: 79, module: "Módulo 6: Clientes de Correo", title: "Ejercicio 79 – Administración de Contactos", context: "📌 Ubicación inicial: Ventana de Este Equipo", instruction: "Guardado de nuevos remitentes en la Libreta de Direcciones y creación de listas de distribución para envíos grupales.", hint: "Cierre la ventana con [X].", targetAction: "close-window" },
-      { id: 80, module: "Módulo 6: Clientes de Correo", title: "Ejercicio 80 – Filtros de Correo No Deseado (Spam)", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Marcado de mensajes sospechosos como correo no deseado y bloqueo definitivo de direcciones o dominios.", hint: "Haga clic en el fondo del escritorio.", targetAction: "click-desktop" },
-      { id: 81, module: "Módulo 6: Clientes de Correo", title: "Ejercicio 81 – Vinculación con Calendario Integrado", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Conversión directa de las consignas recibidas en un correo hacia un evento programado en la agenda de Windows.", hint: "Seleccione Facturador.", targetAction: "click-facturador" },
+      { id: 70, module: "Módulo 6: Clientes de Correo", title: "Ejercicio 70 – Configuración e Inclusión de Cuenta", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Alta de cuenta de correo electrónico mediante protocolos IMAP/POP3.", hint: "Abra Correo haciendo doble clic en su ícono.", targetAction: "dblclick-correo" },
+      { id: 71, module: "Módulo 6: Clientes de Correo", title: "Ejercicio 71 – Redacción, Asunto y Destinatarios", context: "📌 Ubicación inicial: Ventana de Correo", instruction: "Composición de mensaje delimitando campos Para, CC y CCO.", hint: "Cierre la ventana de Correo con [X].", targetAction: "close-window" },
+      { id: 72, module: "Módulo 6: Clientes de Correo", title: "Ejercicio 72 – Envío de Archivos Adjuntos", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Incorporación de documentos o archivos desde el explorador al correo.", hint: "Seleccione WordPad.", targetAction: "click-wordpad" },
+      { id: 73, module: "Módulo 6: Clientes de Correo", title: "Ejercicio 73 – Creación de Firma Personalizada", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Configuración de pie de firma automático con datos institucionales.", hint: "Abra WordPad con doble clic.", targetAction: "dblclick-wordpad" },
+      { id: 74, module: "Módulo 6: Clientes de Correo", title: "Ejercicio 74 – Clasificación e Identificación Visual", context: "📌 Ubicación inicial: Ventana de WordPad", instruction: "Uso de banderas de seguimiento y niveles de prioridad.", hint: "Cierre WordPad usando [X].", targetAction: "close-window" },
+      { id: 75, module: "Módulo 6: Clientes de Correo", title: "Ejercicio 75 – Organización en Carpetas y Directorios", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Creación de subcarpetas personalizadas en la Bandeja de Entrada.", hint: "Abra el menú Inicio.", targetAction: "click-start" },
+      { id: 76, module: "Módulo 6: Clientes de Correo", title: "Ejercicio 76 – Reglas de Filtrado Automático", context: "📌 Ubicación inicial: Menú Inicio", instruction: "Establecer directrices para derivar mensajes de remitentes específicos.", hint: "Inicie Correo desde el menú Inicio.", targetAction: "start-correo" },
+      { id: 77, module: "Módulo 6: Clientes de Correo", title: "Ejercicio 77 – Búsqueda por Criterios Combinados", context: "📌 Ubicación inicial: Ventana de Correo", instruction: "Localización de correos filtrando por palabra clave o fecha.", hint: "Cierre la ventana de Correo con [X].", targetAction: "close-window" },
+      { id: 78, module: "Módulo 6: Clientes de Correo", title: "Ejercicio 78 – Hilos de Conversación y Reenvío", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Gestión de respuestas múltiples conservando la cadena de mensajes.", hint: "Seleccione Este Equipo.", targetAction: "click-este-equipo" },
+      { id: 79, module: "Módulo 6: Clientes de Correo", title: "Ejercicio 79 – Administración de Contactos", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Guardado de nuevos remitentes en la Libreta de Direcciones.", hint: "Abra Este Equipo con doble clic.", targetAction: "dblclick-este-equipo" },
+      { id: 80, module: "Módulo 6: Clientes de Correo", title: "Ejercicio 80 – Filtros de Correo No Deseado (Spam)", context: "📌 Ubicación inicial: Ventana de Este Equipo", instruction: "Marcado de mensajes sospechosos como correo no deseado y bloqueo.", hint: "Cierre la ventana de Este Equipo con [X].", targetAction: "close-window" },
+      { id: 81, module: "Módulo 6: Clientes de Correo", title: "Ejercicio 81 – Vinculación con Calendario Integrado", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Conversión de consignas de correo en eventos agendados.", hint: "Haga clic en el ícono del Facturador.", targetAction: "click-facturador" },
 
       // Módulo 07: Herramientas de Sistema (82 al 97)[cite: 1]
-      { id: 82, module: "Módulo 7: Herramientas de Sistema", title: "Ejercicio 82 – Conexiones de Red y Wi-Fi", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Selección de redes inalámbricas, ingreso de credenciales de seguridad y verificación del estado de conexión.", hint: "Abra Facturador con doble clic.", targetAction: "dblclick-facturador" },
-      { id: 83, module: "Módulo 7: Herramientas de Sistema", title: "Ejercicio 83 – Dispositivos e Impresoras", context: "📌 Ubicación inicial: Ventana de Facturador", instruction: "Vinculación de periféricos, configuración de impresora predeterminada y cola de impresión.", hint: "Cierre la ventana del Facturador con [X].", targetAction: "close-window" },
-      { id: 84, module: "Módulo 7: Herramientas de Sistema", title: "Ejercicio 84 – Ajuste de Pantalla y Resolución", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Modificación del escalado de texto, orientación de pantalla y resolución nativa del monitor.", hint: "Abra el Menú Inicio.", targetAction: "click-start" },
-      { id: 85, module: "Módulo 7: Herramientas de Sistema", title: "Ejercicio 85 – Control de Audio y Sonido", context: "📌 Ubicación inicial: Menú Inicio", instruction: "Selección de dispositivos de salida y entrada, prueba de nivel de volumen y silenciado de aplicaciones.", hint: "Inicie WordPad desde el menú.", targetAction: "start-wordpad" },
-      { id: 86, module: "Módulo 7: Herramientas de Sistema", title: "Ejercicio 86 – Gestión de Windows Update", context: "📌 Ubicación inicial: Ventana de WordPad", instruction: "Verificación del historial de actualizaciones, búsqueda manual de parches y pausa de descargas.", hint: "Cierre la ventana de WordPad con [X].", targetAction: "close-window" },
-      { id: 87, module: "Módulo 7: Herramientas de Sistema", title: "Ejercicio 87 – Panel de Control Tradicional", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Navegación en el menú clásico de herramientas para la gestión avanzada de componentes.", hint: "Seleccione Correo.", targetAction: "click-correo" },
-      { id: 88, module: "Módulo 7: Herramientas de Sistema", title: "Ejercicio 88 – Administrador de Tareas (Procesos)", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Inspección de aplicaciones en ejecución y finalización forzada de tareas bloqueadas.", hint: "Abra Correo con doble clic.", targetAction: "dblclick-correo" },
-      { id: 89, module: "Módulo 7: Herramientas de Sistema", title: "Ejercicio 89 – Monitoreo de Recursos", context: "📌 Ubicación inicial: Ventana de Correo", instruction: "Análisis del consumo de CPU, memoria RAM, disco y red en tiempo real desde la pestaña de Rendimiento.", hint: "Cierre Correo usando [X].", targetAction: "close-window" },
-      { id: 90, module: "Módulo 7: Herramientas de Sistema", title: "Ejercicio 90 – Liberador de Espacio en Disco", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Eliminación de archivos temporales, papelera y memoria caché mediante la herramienta integrada del sistema.", hint: "Haga clic en el fondo del escritorio.", targetAction: "click-desktop" },
-      { id: 91, module: "Módulo 7: Herramientas de Sistema", title: "Ejercicio 91 – Desinstalación de Aplicaciones", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Gestión del catálogo de programas instalados, desinstalación y reparación de componentes.", hint: "Seleccione Este Equipo.", targetAction: "click-este-equipo" },
-      { id: 92, module: "Módulo 7: Herramientas de Sistema", title: "Ejercicio 92 – Opciones de Energía y Suspensión", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Configuración de tiempos de apagado de pantalla y suspensión automática del equipo.", hint: "Abra Este Equipo con doble clic.", targetAction: "dblclick-este-equipo" },
-      { id: 93, module: "Módulo 7: Herramientas de Sistema", title: "Ejercicio 93 – Cuentas de Usuario y Permisos", context: "📌 Ubicación inicial: Ventana de Este Equipo", instruction: "Administración de perfiles locales, modificación de contraseñas y control de cuentas de usuario (UAC).", hint: "Cierre la ventana con [X].", targetAction: "close-window" },
-      { id: 94, module: "Módulo 7: Herramientas de Sistema", title: "Ejercicio 94 – Seguridad con Windows Defender", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Ejecución de examen rápido de amenazas, revisión de cuarentena y estado de protección en tiempo real.", hint: "Abra el Menú Inicio.", targetAction: "click-start" },
-      { id: 95, module: "Módulo 7: Herramientas de Sistema", title: "Ejercicio 95 – Puntos de Restauración", context: "📌 Ubicación inicial: Menú Inicio", instruction: "Creación manual de un punto de restauración del sistema y verificación de copias previas.", hint: "Inicie Facturador desde el menú.", targetAction: "start-facturador" },
-      { id: 96, module: "Módulo 7: Herramientas de Sistema", title: "Ejercicio 96 – Configuración de Región e Idioma", context: "📌 Ubicación inicial: Ventana de Facturador", instruction: "Ajuste de zona horaria, sincronización de la hora de internet y distribución de teclado.", hint: "Cierre el Facturador con [X].", targetAction: "close-window" },
-      { id: 97, module: "Módulo 7: Herramientas de Sistema", title: "Ejercicio 97 – Herramientas de Accesibilidad", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Activación e interacción con la Lupa, Teclado en pantalla y ajustes de contraste elevado.", hint: "Haga clic en el fondo del escritorio.", targetAction: "click-desktop" },
+      { id: 82, module: "Módulo 7: Herramientas de Sistema", title: "Ejercicio 82 – Conexiones de Red y Wi-Fi", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Selección de redes inalámbricas y verificación de estado de conexión.", hint: "Abra el Facturador con doble clic.", targetAction: "dblclick-facturador" },
+      { id: 83, module: "Módulo 7: Herramientas de Sistema", title: "Ejercicio 83 – Dispositivos e Impresoras", context: "📌 Ubicación inicial: Ventana de Facturador", instruction: "Vinculación de periféricos y configuración de impresora predeterminada.", hint: "Cierre la ventana del Facturador con [X].", targetAction: "close-window" },
+      { id: 84, module: "Módulo 7: Herramientas de Sistema", title: "Ejercicio 84 – Ajuste de Pantalla y Resolución", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Modificación del escalado de texto y resolución del monitor.", hint: "Abra el Menú Inicio.", targetAction: "click-start" },
+      { id: 85, module: "Módulo 7: Herramientas de Sistema", title: "Ejercicio 85 – Control de Audio y Sonido", context: "📌 Ubicación inicial: Menú Inicio", instruction: "Selección de dispositivos de salida y prueba de nivel de volumen.", hint: "Inicie WordPad desde el menú Inicio.", targetAction: "start-wordpad" },
+      { id: 86, module: "Módulo 7: Herramientas de Sistema", title: "Ejercicio 86 – Gestión de Windows Update", context: "📌 Ubicación inicial: Ventana de WordPad", instruction: "Verificación de historial de actualizaciones y búsqueda manual.", hint: "Cierre la ventana de WordPad con [X].", targetAction: "close-window" },
+      { id: 87, module: "Módulo 7: Herramientas de Sistema", title: "Ejercicio 87 – Panel de Control Tradicional", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Navegación en el menú clásico de herramientas del sistema.", hint: "Seleccione Correo.", targetAction: "click-correo" },
+      { id: 88, module: "Módulo 7: Herramientas de Sistema", title: "Ejercicio 88 – Administrador de Tareas (Procesos)", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Inspección de aplicaciones en ejecución y finalización de tareas.", hint: "Abra Correo con doble clic.", targetAction: "dblclick-correo" },
+      { id: 89, module: "Módulo 7: Herramientas de Sistema", title: "Ejercicio 89 – Monitoreo de Recursos", context: "📌 Ubicación inicial: Ventana de Correo", instruction: "Análisis de consumo de CPU, memoria RAM y disco en tiempo real.", hint: "Cierre Correo usando [X].", targetAction: "close-window" },
+      { id: 90, module: "Módulo 7: Herramientas de Sistema", title: "Ejercicio 90 – Liberador de Espacio en Disco", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Eliminación de archivos temporales y memoria caché del sistema.", hint: "Haga clic en el fondo del escritorio.", targetAction: "click-desktop" },
+      { id: 91, module: "Módulo 7: Herramientas de Sistema", title: "Ejercicio 91 – Desinstalación de Aplicaciones", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Gestión del catálogo de programas instalados y desinstalación.", hint: "Seleccione Este Equipo.", targetAction: "click-este-equipo" },
+      { id: 92, module: "Módulo 7: Herramientas de Sistema", title: "Ejercicio 92 – Opciones de Energía y Suspensión", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Configuración de tiempos de apagado de pantalla y suspensión.", hint: "Abra Este Equipo con doble clic.", targetAction: "dblclick-este-equipo" },
+      { id: 93, module: "Módulo 7: Herramientas de Sistema", title: "Ejercicio 93 – Cuentas de Usuario y Permisos", context: "📌 Ubicación inicial: Ventana de Este Equipo", instruction: "Administración de perfiles locales y control de cuentas (UAC).", hint: "Cierre la ventana de Este Equipo con [X].", targetAction: "close-window" },
+      { id: 94, module: "Módulo 7: Herramientas de Sistema", title: "Ejercicio 94 – Seguridad con Windows Defender", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Ejecución de examen rápido de amenazas y protección en tiempo real.", hint: "Abra el Menú Inicio.", targetAction: "click-start" },
+      { id: 95, module: "Módulo 7: Herramientas de Sistema", title: "Ejercicio 95 – Puntos de Restauración", context: "📌 Ubicación inicial: Menú Inicio", instruction: "Creación manual de un punto de restauración del sistema operativo.", hint: "Inicie Facturador desde el menú Inicio.", targetAction: "start-facturador" },
+      { id: 96, module: "Módulo 7: Herramientas de Sistema", title: "Ejercicio 96 – Configuración de Región e Idioma", context: "📌 Ubicación inicial: Ventana de Facturador", instruction: "Ajuste de zona horaria y sincronización de la hora de internet.", hint: "Cierre el Facturador con [X].", targetAction: "close-window" },
+      { id: 97, module: "Módulo 7: Herramientas de Sistema", title: "Ejercicio 97 – Herramientas de Accesibilidad", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Activación de Lupa, Teclado en pantalla y contraste elevado.", hint: "Haga clic en el fondo del escritorio.", targetAction: "click-desktop" },
 
       // Módulo 08: Integración Operativa (98 al 100)[cite: 1]
-      { id: 98, module: "Módulo 8: Integración Operativa", title: "Ejercicio 98 – Flujo Transaccional Completo", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Emisión de comprobante en el facturador digital, guardado estructurado en el explorador y envío adjunto por cliente de correo.", hint: "Abra el Facturador con doble clic.", targetAction: "dblclick-facturador" },
-      { id: 99, module: "Módulo 8: Integración Operativa", title: "Ejercicio 99 – Resolución de Incidencias", context: "📌 Ubicación inicial: Ventana de Facturador", instruction: "Diagnóstico y corrección simulada de fallos de red, espacio en disco y archivos bloqueados en multitarea.", hint: "Cierre la ventana del Facturador con [X].", targetAction: "close-window" },
-      { id: 100, module: "Módulo 8: Integración Operativa", title: "Ejercicio 100 – Evaluación de Autonomía Integral", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Ejercicio práctico integrador que evalúa el cumplimiento de consignas en tiempo de ejecución sin asistencia en pantalla.", hint: "Cierre la última ventana activa pulsando [X] para finalizar.", targetAction: "close-window" }
+      { id: 98, module: "Módulo 8: Integración Operativa", title: "Ejercicio 98 – Flujo Transaccional Completo", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Emitir factura en el Facturador (se guarda en Descargas), buscarla en el Explorador y adjuntarla en el Correo para enviarla.", hint: "Abra el Facturador para iniciar la emisión de la factura.", targetAction: "dblclick-facturador" },
+      { id: 99, module: "Módulo 8: Integración Operativa", title: "Ejercicio 99 – Resolución de Incidencias", context: "📌 Ubicación inicial: Ventana de Facturador", instruction: "Diagnóstico y corrección simulada de fallos de red y archivos bloqueados.", hint: "Cierre la ventana del Facturador con [X].", targetAction: "close-window" },
+      { id: 100, module: "Módulo 8: Integración Operativa", title: "Ejercicio 100 – Evaluación de Autonomía Integral", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Ejercicio práctico integrador que evalúa el cumplimiento autónomo de consignas.", hint: "Cierre la última ventana activa pulsando [X] para finalizar.", targetAction: "close-window" }
     ];
 
     let currentIdx = 0;
+    let facturaGuardada = false;
 
     const selectElem = document.getElementById('exercise-select');
     const badgeElem = document.getElementById('badge-module');
@@ -555,14 +593,7 @@
 
       clearSelections();
       startMenu.style.display = 'none';
-
-      if (ex.targetAction === 'close-window') {
-        windowTitle.textContent = "Ventana de Aplicación";
-        windowBody.innerHTML = "Contenido del programa en ejecución.";
-        appWindow.style.display = 'block';
-      } else {
-        appWindow.style.display = 'none';
-      }
+      appWindow.style.display = 'none';
 
       btnPrev.disabled = currentIdx === 0;
       btnNext.disabled = currentIdx === exercises.length - 1;
@@ -590,6 +621,12 @@
     function validateAction(actionName) {
       const currentEx = exercises[currentIdx];
       if (currentEx.targetAction === actionName) {
+        if (currentIdx === 97) { // Ejercicio 98: Flujo Transaccional Especial
+          if (actionName === 'dblclick-facturador') {
+            openFacturadorApp();
+            return;
+          }
+        }
         alert("¡Correcto! Ejercicio completado.");
         if (currentIdx < exercises.length - 1) {
           navigate(1);
@@ -606,9 +643,15 @@
 
     function handleIconDblClick(iconName) {
       clearSelections();
-      windowTitle.textContent = iconName.toUpperCase();
-      windowBody.innerHTML = `Ventana abierta de ${iconName}.`;
-      appWindow.style.display = 'block';
+      if (iconName === 'este-equipo') {
+        openEsteEquipoApp();
+      } else if (iconName === 'wordpad') {
+        openWordpadApp();
+      } else if (iconName === 'facturador') {
+        openFacturadorApp();
+      } else if (iconName === 'correo') {
+        openCorreoApp();
+      }
       validateAction(`dblclick-${iconName}`);
     }
 
@@ -626,15 +669,121 @@
 
     function handleStartItem(itemName) {
       startMenu.style.display = 'none';
-      windowTitle.textContent = itemName.toUpperCase();
-      windowBody.innerHTML = `Programa ${itemName} iniciado desde Menú Inicio.`;
-      appWindow.style.display = 'block';
+      if (itemName === 'este-equipo') openEsteEquipoApp();
+      else if (itemName === 'wordpad') openWordpadApp();
+      else if (itemName === 'facturador') openFacturadorApp();
+      else if (itemName === 'correo') openCorreoApp();
       validateAction(`start-${itemName}`);
     }
 
     function closeAppWindow() {
       appWindow.style.display = 'none';
       validateAction('close-window');
+    }
+
+    // INTERFACES REALES DE LAS APLICACIONES
+    function openEsteEquipoApp() {
+      windowTitle.textContent = "Este Equipo - Explorador de Archivos";
+      windowBody.innerHTML = `
+        <div style="font-weight:bold; margin-bottom:10px;">Carpetas Principales y Unidades:</div>
+        <ul style="list-style:none; padding-left:0;">
+          <li style="padding:6px; background:#f1f3f5; margin-bottom:4px; border-radius:4px; cursor:pointer;" onclick="alert('Abriendo Disco Local (C:)')">💻 Disco Local (C:)</li>
+          <li style="padding:6px; background:#e2f0d9; margin-bottom:4px; border-radius:4px; cursor:pointer; font-weight:600;" onclick="openCarpetaDescargas()">📁 Descargas ${facturaGuardada ? '<span style="color:green; float:right;">[Factura_001.pdf disponible]</span>' : ''}</li>
+          <li style="padding:6px; background:#f1f3f5; margin-bottom:4px; border-radius:4px; cursor:pointer;" onclick="alert('Abriendo Documentos')">📄 Documentos</li>
+        </ul>
+      `;
+      appWindow.style.display = 'flex';
+    }
+
+    function openCarpetaDescargas() {
+      if (currentIdx === 97 && facturaGuardada) {
+        windowBody.innerHTML = `
+          <div style="font-weight:bold; color:#0077b6; margin-bottom:10px;">Carpeta: Descargas</div>
+          <div style="padding:8px; background:#d4edda; border:1px solid #c3e6cb; border-radius:4px; display:flex; justify-content:space-between; align-items:center;">
+            <span>📄 Factura_001.pdf (Generada y guardada correctamente)</span>
+            <button class="app-btn" onclick="abrirCorreoParaAdjuntar()">Adjuntar al Correo</button>
+          </div>
+        `;
+      } else {
+        alert("Carpeta Descargas abierta.");
+      }
+    }
+
+    function openWordpadApp() {
+      windowTitle.textContent = "WordPad - Editor de Texto";
+      windowBody.innerHTML = `
+        <div style="border-bottom:1px solid #dee2e6; padding-bottom:6px; margin-bottom:10px; font-size:0.75rem; color:#6c757d;">
+          Archivo | Edición | Ver | Insertar | Formato
+        </div>
+        <textarea class="app-form-control" style="height:180px; resize:none;" placeholder="Escriba su texto aquí..."></textarea>
+      `;
+      appWindow.style.display = 'flex';
+    }
+
+    function openFacturadorApp() {
+      windowTitle.textContent = "Facturador Digital - Emisión de Comprobantes";
+      windowBody.innerHTML = `
+        <div class="app-form-group">
+          <label>Cliente / Razón Social:</label>
+          <input type="text" class="app-form-control" id="fac-cliente" value="Guillermo López">
+        </div>
+        <div class="app-form-group">
+          <label>Total de la Factura ($):</label>
+          <input type="text" class="app-form-control" id="fac-total" value="15000">
+        </div>
+        <button class="app-btn" onclick="emitirYGuardarFactura()">Emitir y Guardar en Descargas</button>
+      `;
+      appWindow.style.display = 'flex';
+    }
+
+    function emitirYGuardarFactura() {
+      facturaGuardada = true;
+      alert("¡Factura emitida con éxito! El comprobante PDF se ha guardado automáticamente en la carpeta Descargas.");
+      closeAppWindow();
+      if (currentIdx === 97) {
+        // Paso siguiente sugerido para el ejercicio 98
+        setTimeout(() => {
+          openEsteEquipoApp();
+        }, 500);
+      }
+    }
+
+    function openCorreoApp() {
+      windowTitle.textContent = "Correo - Cliente de Mail";
+      windowBody.innerHTML = `
+        <div class="app-form-group">
+          <label>Para:</label>
+          <input type="text" class="app-form-control" id="mail-to" value="cliente@empresa.com">
+        </div>
+        <div class="app-form-group">
+          <label>Asunto:</label>
+          <input type="text" class="app-form-control" id="mail-sub" value="Envío de Factura Digital">
+        </div>
+        <div id="mail-adjunto-container" style="margin-bottom:10px; font-size:0.8rem; color:#495057;">
+          📎 Archivos adjuntos: <em>Ninguno</em>
+        </div>
+        <button class="app-btn" onclick="enviarCorreoFinal()">Enviar Correo</button>
+      `;
+      appWindow.style.display = 'flex';
+    }
+
+    function abrirCorreoParaAdjuntar() {
+      openCorreoApp();
+      setTimeout(() => {
+        const adjContainer = document.getElementById('mail-adjunto-container');
+        if (adjContainer) {
+          adjContainer.innerHTML = `📎 Archivos adjuntos: <strong style="color:green;">Factura_001.pdf</strong> (Adjuntado desde Descargas)`;
+        }
+      }, 200);
+    }
+
+    function enviarCorreoFinal() {
+      alert("¡Correo enviado exitosamente con la factura adjunta!");
+      closeAppWindow();
+      if (currentIdx === 97) {
+        alert("¡Ejercicio 98 completado con éxito! Flujo transaccional finalizado.");
+        navigate(1);
+      }
     }
 
     init();
