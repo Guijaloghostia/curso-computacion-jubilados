@@ -301,8 +301,8 @@
       border: 1px solid #00b4d8;
     }
     .desktop-icon svg {
-      width: 28px;
-      height: 28px;
+      width: 32px;
+      height: 32px;
       margin-bottom: 2px;
     }
 
@@ -559,32 +559,32 @@
     <div class="desktop-workspace">
       <div class="desktop-icons">
         <!-- Este Equipo -->
-        <div class="desktop-icon" id="icon-este-equipo" onclick="handleIconClick(event, 'este-equipo')" ondblclick="handleIconDblClick('este-equipo')">
+        <div class="desktop-icon" id="icon-este-equipo" onclick="handleIconClick('este-equipo')" ondblclick="handleIconDblClick('este-equipo')">
           <svg viewBox="0 0 48 48"><path fill="#0078d7" d="M40 8H8a4 4 0 00-4 4v20a4 4 0 004 4h14l-2 4h-4v2h16v-2h-4l-2-4h14a4 4 0 004-4V12a4 4 0 00-4-4zm0 22H8V12h32z"/></svg>
           <span>Este Equipo</span>
         </div>
         <!-- WordPad -->
-        <div class="desktop-icon" id="icon-wordpad" onclick="handleIconClick(event, 'wordpad')" ondblclick="handleIconDblClick('wordpad')">
+        <div class="desktop-icon" id="icon-wordpad" onclick="handleIconClick('wordpad')" ondblclick="handleIconDblClick('wordpad')">
           <svg viewBox="0 0 48 48"><path fill="#2b579a" d="M6 6h28l8 8v28H6z"/><path fill="#fff" d="M14 18h20v2H14zm0 6h20v2H14zm0 6h14v2H14z"/><path fill="#19325c" d="M34 6v8h8z"/></svg>
           <span>WordPad</span>
         </div>
         <!-- Facturador -->
-        <div class="desktop-icon" id="icon-facturador" onclick="handleIconClick(event, 'facturador')" ondblclick="handleIconDblClick('facturador')">
+        <div class="desktop-icon" id="icon-facturador" onclick="handleIconClick('facturador')" ondblclick="handleIconDblClick('facturador')">
           <svg viewBox="0 0 48 48"><path fill="#107c41" d="M8 4h24l8 8v32H8z"/><path fill="#fff" d="M14 16h20v2H14zm0 6h20v2H14zm0 6h12v2H14z"/><path fill="#0b532c" d="M32 4v10h10z"/></svg>
           <span>Facturador</span>
         </div>
-        <!-- Correo -->
-        <div class="desktop-icon" id="icon-correo" onclick="handleIconClick(event, 'correo')" ondblclick="handleIconDblClick('correo')">
+        <!-- Correo (estilo Gmail) -->
+        <div class="desktop-icon" id="icon-correo" onclick="handleIconClick('correo')" ondblclick="handleIconDblClick('correo')">
           <svg viewBox="0 0 48 48">
-            <path fill="#0078d7" d="M4 8h40l-20 12L4 8z"/>
-            <path fill="#0078d7" d="M4 10v20l14-9-14-11z"/>
-            <path fill="#0078d7" d="M44 10v20l-14-9 14-11z"/>
-            <path fill="#0078d7" d="M4 30l14-10 6 4 6-4 14 10H4z"/>
+            <path fill="#EA4335" d="M24 24L4 10v24l20 4 20-4V10L24 24z"/>
+            <path fill="#FBBC04" d="M4 10l20 14 20-14H4z"/>
+            <path fill="#34A853" d="M44 10v24l-20 4V24l20-14z"/>
+            <path fill="#4285F4" d="M4 34l20-4V24L4 10v24z"/>
           </svg>
           <span>Correo</span>
         </div>
-        <!-- Papelera -->
-        <div class="desktop-icon" id="icon-papelera" onclick="handleIconClick(event, 'papelera')" ondblclick="handleIconDblClick('papelera')">
+        <!-- Papelera (mejorada) -->
+        <div class="desktop-icon" id="icon-papelera" onclick="handleIconClick('papelera')" ondblclick="handleIconDblClick('papelera')">
           <svg viewBox="0 0 48 48">
             <path fill="#6c757d" d="M14 10h20v30H14z"/>
             <path fill="#495057" d="M10 6h28v4H10z"/>
@@ -655,7 +655,133 @@ function playClickSound() {
 }
 
 // ============================================================
-// 1. EJERCICIOS (20 por módulo = 100 ejercicios)
+// 1. BANCO DE PREGUNTAS (Módulo 6)
+// ============================================================
+const bank = {
+  1: [ // Módulo 1: Táctil
+    { type: 'mcq', q: '¿Qué acción abre un programa?', opts: ['Clic simple', 'Doble clic', 'Clic derecho'], answer: 1 },
+    { type: 'mcq', q: '¿Qué hace un clic simple?', opts: ['Abrir', 'Seleccionar', 'Cerrar'], answer: 1 },
+    { type: 'tf', q: 'El doble clic se usa para abrir archivos.', answer: true },
+    { type: 'tf', q: 'El clic derecho siempre abre un programa.', answer: false },
+    { type: 'order', q: 'Ordena los pasos para abrir WordPad:', steps: ['Ubicar ícono', 'Hacer doble clic', 'Esperar que cargue'], correct: [0,1,2] },
+    { type: 'mcq', q: '¿Qué es un gesto táctil?', opts: ['Tocar la pantalla', 'Mover el mouse', 'Presionar teclas'], answer: 0 },
+    { type: 'mcq', q: '¿Con qué dedo se hace clic izquierdo?', opts: ['Índice', 'Pulgar', 'Anular'], answer: 0 },
+    { type: 'tf', q: 'El clic derecho muestra opciones adicionales.', answer: true },
+    { type: 'tf', q: 'Para seleccionar un archivo se usa doble clic.', answer: false },
+    { type: 'order', q: 'Ordena los pasos para seleccionar un icono:', steps: ['Ubicar el icono', 'Hacer clic simple', 'Ver que se resalte'], correct: [0,1,2] },
+    { type: 'mcq', q: '¿Cómo se llama el movimiento de deslizar dos dedos?', opts: ['Desplazamiento', 'Zoom', 'Giro'], answer: 0 },
+    { type: 'mcq', q: '¿Qué significa "clic"?', opts: ['Presionar y soltar', 'Presionar y mantener', 'Deslizar'], answer: 0 },
+    { type: 'tf', q: 'El panel táctil reemplaza al mouse.', answer: true },
+    { type: 'tf', q: 'El doble clic debe ser lento para funcionar.', answer: false },
+    { type: 'order', q: 'Ordena los pasos para usar el panel táctil:', steps: ['Colocar dedo', 'Deslizar para mover cursor', 'Hacer clic para seleccionar'], correct: [0,1,2] },
+    { type: 'mcq', q: '¿Qué acción abre el menú contextual?', opts: ['Clic derecho', 'Clic izquierdo', 'Doble clic'], answer: 0 },
+    { type: 'mcq', q: '¿Qué dedo se usa para clic derecho?', opts: ['Índice', 'Medio', 'Anular'], answer: 0 },
+    { type: 'tf', q: 'El panel táctil solo funciona con un dedo.', answer: false },
+    { type: 'tf', q: 'El cursor se mueve deslizando el dedo.', answer: true },
+    { type: 'order', q: 'Ordena los pasos para abrir un programa:', steps: ['Ubicar icono', 'Hacer doble clic', 'Esperar que cargue'], correct: [0,1,2] },
+    { type: 'mcq', q: '¿Qué significa "arrastrar"?', opts: ['Mover manteniendo clic', 'Clic rápido', 'Deslizar sin clic'], answer: 0 },
+    { type: 'tf', q: 'El panel táctil necesita calibración constante.', answer: false }
+  ],
+  2: [ // Módulo 2: Ventanas
+    { type: 'mcq', q: '¿Cómo cierras una ventana?', opts: ['Botón [X]', 'Botón Inicio', 'Doble clic'], answer: 0 },
+    { type: 'tf', q: 'Para mover una ventana, arrastras la barra superior.', answer: true },
+    { type: 'mcq', q: '¿Qué hace el botón "Minimizar"?', opts: ['Cierra la ventana', 'Oculta en la barra', 'Agranda la ventana'], answer: 1 },
+    { type: 'order', q: 'Ordena los pasos para cerrar una ventana:', steps: ['Ubicar la cruz [X]', 'Hacer clic en [X]', 'Confirmar si pregunta'], correct: [0,1,2] },
+    { type: 'mcq', q: '¿Qué botón agranda la ventana?', opts: ['Maximizar', 'Minimizar', 'Cerrar'], answer: 0 },
+    { type: 'tf', q: 'Todas las ventanas tienen barra de título.', answer: true },
+    { type: 'tf', q: 'No se puede mover una ventana minimizada.', answer: true },
+    { type: 'order', q: 'Ordena los pasos para minimizar una ventana:', steps: ['Ubicar botón minimizar', 'Hacer clic en el botón', 'Ver que se oculta en la barra'], correct: [0,1,2] },
+    { type: 'mcq', q: '¿Qué indica la barra de título?', opts: ['Nombre de la ventana', 'Contenido', 'Botones de control'], answer: 0 },
+    { type: 'mcq', q: '¿Cómo se restaura una ventana minimizada?', opts: ['Clic en la barra', 'Doble clic en el icono', 'Clic derecho'], answer: 1 },
+    { type: 'tf', q: 'El botón [X] cierra la ventana.', answer: true },
+    { type: 'tf', q: 'Una ventana maximizada no se puede mover.', answer: true },
+    { type: 'order', q: 'Ordena los pasos para maximizar una ventana:', steps: ['Ubicar botón maximizar', 'Hacer clic en el botón', 'Ver que ocupa toda la pantalla'], correct: [0,1,2] },
+    { type: 'mcq', q: '¿Qué hace el botón "Restaurar"?', opts: ['Vuelve al tamaño anterior', 'Cierra la ventana', 'Minimiza'], answer: 0 },
+    { type: 'mcq', q: '¿Dónde están los botones de control?', opts: ['Esquina superior derecha', 'Esquina inferior izquierda', 'Centro'], answer: 0 },
+    { type: 'tf', q: 'Las ventanas se pueden superponer.', answer: true },
+    { type: 'tf', q: 'El botón de inicio abre el menú.', answer: true },
+    { type: 'order', q: 'Ordena los pasos para cambiar entre ventanas:', steps: ['Hacer clic en la barra', 'Ubicar la ventana deseada', 'Seleccionar la ventana'], correct: [1,0,2] },
+    { type: 'mcq', q: '¿Qué significa "ventana activa"?', opts: ['La que está en primer plano', 'La que está cerrada', 'La que está minimizada'], answer: 0 },
+    { type: 'mcq', q: '¿Cómo se cierra una ventana desde el teclado?', opts: ['Alt+F4', 'Ctrl+C', 'Windows+D'], answer: 0 },
+    { type: 'tf', q: 'Todas las ventanas tienen el mismo tamaño.', answer: false },
+    { type: 'tf', q: 'Se puede tener varias ventanas abiertas a la vez.', answer: true }
+  ],
+  3: [ // Módulo 3: Explorador
+    { type: 'mcq', q: '¿Dónde se guardan las descargas?', opts: ['Documentos', 'Descargas', 'Escritorio'], answer: 1 },
+    { type: 'tf', q: '"Este Equipo" muestra las unidades de la PC.', answer: true },
+    { type: 'mcq', q: '¿Qué carpeta contiene los archivos del usuario?', opts: ['Windows', 'Usuarios', 'Sistema'], answer: 1 },
+    { type: 'order', q: 'Ordena los pasos para abrir Descargas:', steps: ['Abrir Este Equipo', 'Ubicar la carpeta Descargas', 'Hacer doble clic en Descargas'], correct: [0,1,2] },
+    { type: 'mcq', q: '¿Qué icono muestra los discos de la PC?', opts: ['Este Equipo', 'Papelera', 'Correo'], answer: 0 },
+    { type: 'tf', q: 'La papelera guarda archivos eliminados.', answer: true },
+    { type: 'tf', q: 'Los archivos de la papelera se eliminan automáticamente.', answer: false },
+    { type: 'order', q: 'Ordena los pasos para vaciar la papelera:', steps: ['Abrir Papelera', 'Hacer clic en Vaciar', 'Confirmar eliminación'], correct: [0,1,2] },
+    { type: 'mcq', q: '¿Cómo se abre un archivo en el explorador?', opts: ['Doble clic', 'Clic simple', 'Clic derecho'], answer: 0 },
+    { type: 'mcq', q: '¿Qué muestra el explorador de archivos?', opts: ['Carpetas y archivos', 'Correos', 'Facturas'], answer: 0 },
+    { type: 'tf', q: 'Se pueden crear carpetas dentro de Descargas.', answer: true },
+    { type: 'tf', q: 'El explorador solo muestra archivos de texto.', answer: false },
+    { type: 'order', q: 'Ordena los pasos para crear una carpeta:', steps: ['Abrir la ubicación', 'Clic derecho', 'Seleccionar Nueva Carpeta'], correct: [0,1,2] },
+    { type: 'mcq', q: '¿Qué significa "unidad C:"?', opts: ['Disco local', 'Unidad de red', 'Memoria USB'], answer: 0 },
+    { type: 'mcq', q: '¿Cómo se cambia el nombre de un archivo?', opts: ['Clic derecho > Cambiar nombre', 'Doble clic', 'Arrastrar'], answer: 0 },
+    { type: 'tf', q: 'Los archivos se pueden copiar de una carpeta a otra.', answer: true },
+    { type: 'tf', q: 'La papelera se encuentra en el escritorio.', answer: true },
+    { type: 'order', q: 'Ordena los pasos para eliminar un archivo:', steps: ['Seleccionar archivo', 'Presionar Supr', 'Confirmar eliminación'], correct: [0,1,2] },
+    { type: 'mcq', q: '¿Qué hace el botón "Atrás" en el explorador?', opts: ['Volver a la carpeta anterior', 'Cerrar la ventana', 'Actualizar'], answer: 0 },
+    { type: 'mcq', q: '¿Qué icono representa la papelera?', opts: ['Cubo de basura', 'Carpeta', 'Disco'], answer: 0 },
+    { type: 'tf', q: 'El explorador permite buscar archivos.', answer: true },
+    { type: 'tf', q: 'Todos los archivos se guardan en el escritorio.', answer: false }
+  ],
+  4: [ // Módulo 4: Facturador
+    { type: 'mcq', q: '¿Qué programa usamos para emitir facturas?', opts: ['WordPad', 'Facturador Digital', 'Correo'], answer: 1 },
+    { type: 'tf', q: 'El Facturador permite agregar productos con cantidad y precio.', answer: true },
+    { type: 'mcq', q: '¿Dónde se guarda la factura después de emitirla?', opts: ['Descargas', 'Documentos', 'Escritorio'], answer: 0 },
+    { type: 'order', q: 'Ordena los pasos para emitir una factura:', steps: ['Completar datos del cliente', 'Agregar productos', 'Emitir y guardar'], correct: [0,1,2] },
+    { type: 'mcq', q: '¿Qué botón usamos para guardar una factura?', opts: ['Emitir y Guardar', 'Adjuntar', 'Enviar'], answer: 0 },
+    { type: 'tf', q: 'El subtotal incluye el IVA.', answer: false },
+    { type: 'mcq', q: '¿Qué campo es obligatorio en una factura?', opts: ['Cliente', 'Color de fondo', 'Fecha de emisión'], answer: 0 },
+    { type: 'order', q: 'Ordena los pasos para cargar un producto:', steps: ['Escribir nombre', 'Poner cantidad', 'Poner precio', 'Agregar'], correct: [0,1,2,3] },
+    { type: 'mcq', q: '¿Cómo se calcula el IVA en el facturador?', opts: ['21% del subtotal', '10% del total', 'No se calcula'], answer: 0 },
+    { type: 'tf', q: 'Se puede emitir una factura sin productos cargados.', answer: false },
+    { type: 'mcq', q: '¿Qué indica el "Subtotal"?', opts: ['Suma de productos sin IVA', 'Total con IVA', 'Descuento aplicado'], answer: 0 },
+    { type: 'tf', q: 'Las facturas se guardan automáticamente en la Papelera.', answer: false },
+    { type: 'order', q: 'Ordena los pasos para verificar factura en Descargas:', steps: ['Abrir Este Equipo', 'Entrar en Descargas', 'Buscar el archivo'], correct: [0,1,2] },
+    { type: 'mcq', q: '¿Qué permite agregar el botón "➕ Agregar"?', opts: ['Añadir un producto', 'Añadir un cliente', 'Guardar la factura'], answer: 0 },
+    { type: 'mcq', q: '¿Qué ocurre si no hay productos cargados?', opts: ['No se puede emitir', 'Se emite vacía', 'Se guarda igual'], answer: 0 },
+    { type: 'tf', q: 'El Facturador permite modificar productos cargados.', answer: true },
+    { type: 'tf', q: 'La factura se puede enviar por correo desde el Facturador.', answer: false },
+    { type: 'order', q: 'Ordena los pasos para adjuntar factura desde Descargas:', steps: ['Abrir Este Equipo', 'Entrar en Descargas', 'Seleccionar factura', 'Adjuntar al Correo'], correct: [0,1,2,3] },
+    { type: 'mcq', q: '¿Qué dato NO es necesario para una factura?', opts: ['CUIT del cliente', 'Productos', 'Color de fondo'], answer: 2 },
+    { type: 'mcq', q: '¿Cuál es el último paso para completar una factura?', opts: ['Emitir y Guardar', 'Agregar productos', 'Cerrar el programa'], answer: 0 },
+    { type: 'tf', q: 'El Facturador permite imprimir facturas.', answer: true },
+    { type: 'tf', q: 'La factura guardada se puede adjuntar a un correo.', answer: true }
+  ],
+  5: [ // Módulo 5: Correo
+    { type: 'mcq', q: '¿Qué programa usamos para enviar correos?', opts: ['WordPad', 'Facturador', 'Correo'], answer: 2 },
+    { type: 'tf', q: 'Para enviar un correo necesitas un destinatario.', answer: true },
+    { type: 'mcq', q: '¿Cómo adjuntas un archivo en Correo?', opts: ['Botón "Adjuntar"', 'Arrastrar al correo', 'Copiar y pegar'], answer: 0 },
+    { type: 'order', q: 'Ordena los pasos para enviar un correo:', steps: ['Escribir destinatario', 'Escribir asunto', 'Escribir mensaje', 'Enviar'], correct: [0,1,2,3] },
+    { type: 'mcq', q: '¿Qué es la bandeja de entrada?', opts: ['Correos recibidos', 'Correos enviados', 'Correos borrados'], answer: 0 },
+    { type: 'tf', q: 'Se puede adjuntar más de un archivo a un correo.', answer: true },
+    { type: 'mcq', q: '¿Qué botón envía el correo?', opts: ['Enviar', 'Guardar', 'Cerrar'], answer: 0 },
+    { type: 'order', q: 'Ordena los pasos para adjuntar un archivo:', steps: ['Abrir Correo', 'Hacer clic en Adjuntar', 'Seleccionar archivo', 'Adjuntar'], correct: [0,1,2,3] },
+    { type: 'mcq', q: '¿Qué campo es obligatorio en un correo?', opts: ['Para (destinatario)', 'Asunto', 'Cuerpo'], answer: 0 },
+    { type: 'tf', q: 'El correo permite enviar archivos adjuntos.', answer: true },
+    { type: 'mcq', q: '¿Qué significa "CC" en un correo?', opts: ['Copia para otro destinatario', 'Copia oculta', 'Cerrar correo'], answer: 0 },
+    { type: 'tf', q: 'No se puede deshacer el envío de un correo.', answer: true },
+    { type: 'order', q: 'Ordena los pasos para reenviar un correo:', steps: ['Abrir correo', 'Hacer clic en Reenviar', 'Agregar destinatario', 'Enviar'], correct: [0,1,2,3] },
+    { type: 'mcq', q: '¿Qué es el asunto del correo?', opts: ['Breve descripción', 'El destinatario', 'El archivo adjunto'], answer: 0 },
+    { type: 'mcq', q: '¿Cómo se responde a un correo?', opts: ['Botón Responder', 'Botón Reenviar', 'Botón Nuevo'], answer: 0 },
+    { type: 'tf', q: 'Los correos se pueden guardar como borrador.', answer: true },
+    { type: 'tf', q: 'El correo solo funciona con internet.', answer: true },
+    { type: 'order', q: 'Ordena los pasos para enviar factura por correo:', steps: ['Adjuntar factura', 'Escribir destinatario', 'Escribir mensaje', 'Enviar'], correct: [0,1,2,3] },
+    { type: 'mcq', q: '¿Qué significa "Bandeja de salida"?', opts: ['Correos enviados', 'Correos pendientes', 'Correos borrados'], answer: 1 },
+    { type: 'mcq', q: '¿Cómo se elimina un correo?', opts: ['Seleccionar y eliminar', 'Arrastrar', 'Doble clic'], answer: 0 },
+    { type: 'tf', q: 'El correo permite organizar mensajes en carpetas.', answer: true },
+    { type: 'tf', q: 'Todos los correos enviados se guardan automáticamente.', answer: true }
+  ]
+};
+
+// ============================================================
+// 2. EJERCICIOS (20 por módulo = 100 ejercicios)
 // ============================================================
 const exercises = [];
 
@@ -1414,131 +1540,19 @@ for (let i = 1; i <= 20; i++) {
   });
 }
 
-// ============================================================
-// 2. BANCO DE PREGUNTAS (Módulo 6)
-// ============================================================
-const bank = {
-  1: [ // Módulo 1: Táctil
-    { type: 'mcq', q: '¿Qué acción abre un programa?', opts: ['Clic simple', 'Doble clic', 'Clic derecho'], answer: 1 },
-    { type: 'mcq', q: '¿Qué hace un clic simple?', opts: ['Abrir', 'Seleccionar', 'Cerrar'], answer: 1 },
-    { type: 'tf', q: 'El doble clic se usa para abrir archivos.', answer: true },
-    { type: 'tf', q: 'El clic derecho siempre abre un programa.', answer: false },
-    { type: 'order', q: 'Ordena los pasos para abrir WordPad:', steps: ['Ubicar ícono', 'Hacer doble clic', 'Esperar que cargue'], correct: [0,1,2] },
-    { type: 'mcq', q: '¿Qué es un gesto táctil?', opts: ['Tocar la pantalla', 'Mover el mouse', 'Presionar teclas'], answer: 0 },
-    { type: 'mcq', q: '¿Con qué dedo se hace clic izquierdo?', opts: ['Índice', 'Pulgar', 'Anular'], answer: 0 },
-    { type: 'tf', q: 'El clic derecho muestra opciones adicionales.', answer: true },
-    { type: 'tf', q: 'Para seleccionar un archivo se usa doble clic.', answer: false },
-    { type: 'order', q: 'Ordena los pasos para seleccionar un icono:', steps: ['Ubicar el icono', 'Hacer clic simple', 'Ver que se resalte'], correct: [0,1,2] },
-    { type: 'mcq', q: '¿Cómo se llama el movimiento de deslizar dos dedos?', opts: ['Desplazamiento', 'Zoom', 'Giro'], answer: 0 },
-    { type: 'mcq', q: '¿Qué significa "clic"?', opts: ['Presionar y soltar', 'Presionar y mantener', 'Deslizar'], answer: 0 },
-    { type: 'tf', q: 'El panel táctil reemplaza al mouse.', answer: true },
-    { type: 'tf', q: 'El doble clic debe ser lento para funcionar.', answer: false },
-    { type: 'order', q: 'Ordena los pasos para usar el panel táctil:', steps: ['Colocar dedo', 'Deslizar para mover cursor', 'Hacer clic para seleccionar'], correct: [0,1,2] },
-    { type: 'mcq', q: '¿Qué acción abre el menú contextual?', opts: ['Clic derecho', 'Clic izquierdo', 'Doble clic'], answer: 0 },
-    { type: 'mcq', q: '¿Qué dedo se usa para clic derecho?', opts: ['Índice', 'Medio', 'Anular'], answer: 0 },
-    { type: 'tf', q: 'El panel táctil solo funciona con un dedo.', answer: false },
-    { type: 'tf', q: 'El cursor se mueve deslizando el dedo.', answer: true },
-    { type: 'order', q: 'Ordena los pasos para abrir un programa:', steps: ['Ubicar icono', 'Hacer doble clic', 'Esperar que cargue'], correct: [0,1,2] },
-    { type: 'mcq', q: '¿Qué significa "arrastrar"?', opts: ['Mover manteniendo clic', 'Clic rápido', 'Deslizar sin clic'], answer: 0 },
-    { type: 'tf', q: 'El panel táctil necesita calibración constante.', answer: false }
-  ],
-  2: [ // Módulo 2: Ventanas
-    { type: 'mcq', q: '¿Cómo cierras una ventana?', opts: ['Botón [X]', 'Botón Inicio', 'Doble clic'], answer: 0 },
-    { type: 'tf', q: 'Para mover una ventana, arrastras la barra superior.', answer: true },
-    { type: 'mcq', q: '¿Qué hace el botón "Minimizar"?', opts: ['Cierra la ventana', 'Oculta en la barra', 'Agranda la ventana'], answer: 1 },
-    { type: 'order', q: 'Ordena los pasos para cerrar una ventana:', steps: ['Ubicar la cruz [X]', 'Hacer clic en [X]', 'Confirmar si pregunta'], correct: [0,1,2] },
-    { type: 'mcq', q: '¿Qué botón agranda la ventana?', opts: ['Maximizar', 'Minimizar', 'Cerrar'], answer: 0 },
-    { type: 'tf', q: 'Todas las ventanas tienen barra de título.', answer: true },
-    { type: 'tf', q: 'No se puede mover una ventana minimizada.', answer: true },
-    { type: 'order', q: 'Ordena los pasos para minimizar una ventana:', steps: ['Ubicar botón minimizar', 'Hacer clic en el botón', 'Ver que se oculta en la barra'], correct: [0,1,2] },
-    { type: 'mcq', q: '¿Qué indica la barra de título?', opts: ['Nombre de la ventana', 'Contenido', 'Botones de control'], answer: 0 },
-    { type: 'mcq', q: '¿Cómo se restaura una ventana minimizada?', opts: ['Clic en la barra', 'Doble clic en el icono', 'Clic derecho'], answer: 1 },
-    { type: 'tf', q: 'El botón [X] cierra la ventana.', answer: true },
-    { type: 'tf', q: 'Una ventana maximizada no se puede mover.', answer: true },
-    { type: 'order', q: 'Ordena los pasos para maximizar una ventana:', steps: ['Ubicar botón maximizar', 'Hacer clic en el botón', 'Ver que ocupa toda la pantalla'], correct: [0,1,2] },
-    { type: 'mcq', q: '¿Qué hace el botón "Restaurar"?', opts: ['Vuelve al tamaño anterior', 'Cierra la ventana', 'Minimiza'], answer: 0 },
-    { type: 'mcq', q: '¿Dónde están los botones de control?', opts: ['Esquina superior derecha', 'Esquina inferior izquierda', 'Centro'], answer: 0 },
-    { type: 'tf', q: 'Las ventanas se pueden superponer.', answer: true },
-    { type: 'tf', q: 'El botón de inicio abre el menú.', answer: true },
-    { type: 'order', q: 'Ordena los pasos para cambiar entre ventanas:', steps: ['Hacer clic en la barra', 'Ubicar la ventana deseada', 'Seleccionar la ventana'], correct: [1,0,2] },
-    { type: 'mcq', q: '¿Qué significa "ventana activa"?', opts: ['La que está en primer plano', 'La que está cerrada', 'La que está minimizada'], answer: 0 },
-    { type: 'mcq', q: '¿Cómo se cierra una ventana desde el teclado?', opts: ['Alt+F4', 'Ctrl+C', 'Windows+D'], answer: 0 },
-    { type: 'tf', q: 'Todas las ventanas tienen el mismo tamaño.', answer: false },
-    { type: 'tf', q: 'Se puede tener varias ventanas abiertas a la vez.', answer: true }
-  ],
-  3: [ // Módulo 3: Explorador
-    { type: 'mcq', q: '¿Dónde se guardan las descargas?', opts: ['Documentos', 'Descargas', 'Escritorio'], answer: 1 },
-    { type: 'tf', q: '"Este Equipo" muestra las unidades de la PC.', answer: true },
-    { type: 'mcq', q: '¿Qué carpeta contiene los archivos del usuario?', opts: ['Windows', 'Usuarios', 'Sistema'], answer: 1 },
-    { type: 'order', q: 'Ordena los pasos para abrir Descargas:', steps: ['Abrir Este Equipo', 'Ubicar la carpeta Descargas', 'Hacer doble clic en Descargas'], correct: [0,1,2] },
-    { type: 'mcq', q: '¿Qué icono muestra los discos de la PC?', opts: ['Este Equipo', 'Papelera', 'Correo'], answer: 0 },
-    { type: 'tf', q: 'La papelera guarda archivos eliminados.', answer: true },
-    { type: 'tf', q: 'Los archivos de la papelera se eliminan automáticamente.', answer: false },
-    { type: 'order', q: 'Ordena los pasos para vaciar la papelera:', steps: ['Abrir Papelera', 'Hacer clic en Vaciar', 'Confirmar eliminación'], correct: [0,1,2] },
-    { type: 'mcq', q: '¿Cómo se abre un archivo en el explorador?', opts: ['Doble clic', 'Clic simple', 'Clic derecho'], answer: 0 },
-    { type: 'mcq', q: '¿Qué muestra el explorador de archivos?', opts: ['Carpetas y archivos', 'Correos', 'Facturas'], answer: 0 },
-    { type: 'tf', q: 'Se pueden crear carpetas dentro de Descargas.', answer: true },
-    { type: 'tf', q: 'El explorador solo muestra archivos de texto.', answer: false },
-    { type: 'order', q: 'Ordena los pasos para crear una carpeta:', steps: ['Abrir la ubicación', 'Clic derecho', 'Seleccionar Nueva Carpeta'], correct: [0,1,2] },
-    { type: 'mcq', q: '¿Qué significa "unidad C:"?', opts: ['Disco local', 'Unidad de red', 'Memoria USB'], answer: 0 },
-    { type: 'mcq', q: '¿Cómo se cambia el nombre de un archivo?', opts: ['Clic derecho > Cambiar nombre', 'Doble clic', 'Arrastrar'], answer: 0 },
-    { type: 'tf', q: 'Los archivos se pueden copiar de una carpeta a otra.', answer: true },
-    { type: 'tf', q: 'La papelera se encuentra en el escritorio.', answer: true },
-    { type: 'order', q: 'Ordena los pasos para eliminar un archivo:', steps: ['Seleccionar archivo', 'Presionar Supr', 'Confirmar eliminación'], correct: [0,1,2] },
-    { type: 'mcq', q: '¿Qué hace el botón "Atrás" en el explorador?', opts: ['Volver a la carpeta anterior', 'Cerrar la ventana', 'Actualizar'], answer: 0 },
-    { type: 'mcq', q: '¿Qué icono representa la papelera?', opts: ['Cubo de basura', 'Carpeta', 'Disco'], answer: 0 },
-    { type: 'tf', q: 'El explorador permite buscar archivos.', answer: true },
-    { type: 'tf', q: 'Todos los archivos se guardan en el escritorio.', answer: false }
-  ],
-  4: [ // Módulo 4: Facturador
-    { type: 'mcq', q: '¿Qué programa usamos para emitir facturas?', opts: ['WordPad', 'Facturador Digital', 'Correo'], answer: 1 },
-    { type: 'tf', q: 'El Facturador permite agregar productos con cantidad y precio.', answer: true },
-    { type: 'mcq', q: '¿Dónde se guarda la factura después de emitirla?', opts: ['Descargas', 'Documentos', 'Escritorio'], answer: 0 },
-    { type: 'order', q: 'Ordena los pasos para emitir una factura:', steps: ['Completar datos del cliente', 'Agregar productos', 'Emitir y guardar'], correct: [0,1,2] },
-    { type: 'mcq', q: '¿Qué botón usamos para guardar una factura?', opts: ['Emitir y Guardar', 'Adjuntar', 'Enviar'], answer: 0 },
-    { type: 'tf', q: 'El subtotal incluye el IVA.', answer: false },
-    { type: 'mcq', q: '¿Qué campo es obligatorio en una factura?', opts: ['Cliente', 'Color de fondo', 'Fecha de emisión'], answer: 0 },
-    { type: 'order', q: 'Ordena los pasos para cargar un producto:', steps: ['Escribir nombre', 'Poner cantidad', 'Poner precio', 'Agregar'], correct: [0,1,2,3] },
-    { type: 'mcq', q: '¿Cómo se calcula el IVA en el facturador?', opts: ['21% del subtotal', '10% del total', 'No se calcula'], answer: 0 },
-    { type: 'tf', q: 'Se puede emitir una factura sin productos cargados.', answer: false },
-    { type: 'mcq', q: '¿Qué indica el "Subtotal"?', opts: ['Suma de productos sin IVA', 'Total con IVA', 'Descuento aplicado'], answer: 0 },
-    { type: 'tf', q: 'Las facturas se guardan automáticamente en la Papelera.', answer: false },
-    { type: 'order', q: 'Ordena los pasos para verificar factura en Descargas:', steps: ['Abrir Este Equipo', 'Entrar en Descargas', 'Buscar el archivo'], correct: [0,1,2] },
-    { type: 'mcq', q: '¿Qué permite agregar el botón "➕ Agregar"?', opts: ['Añadir un producto', 'Añadir un cliente', 'Guardar la factura'], answer: 0 },
-    { type: 'mcq', q: '¿Qué ocurre si no hay productos cargados?', opts: ['No se puede emitir', 'Se emite vacía', 'Se guarda igual'], answer: 0 },
-    { type: 'tf', q: 'El Facturador permite modificar productos cargados.', answer: true },
-    { type: 'tf', q: 'La factura se puede enviar por correo desde el Facturador.', answer: false },
-    { type: 'order', q: 'Ordena los pasos para adjuntar factura desde Descargas:', steps: ['Abrir Este Equipo', 'Entrar en Descargas', 'Seleccionar factura', 'Adjuntar al Correo'], correct: [0,1,2,3] },
-    { type: 'mcq', q: '¿Qué dato NO es necesario para una factura?', opts: ['CUIT del cliente', 'Productos', 'Color de fondo'], answer: 2 },
-    { type: 'mcq', q: '¿Cuál es el último paso para completar una factura?', opts: ['Emitir y Guardar', 'Agregar productos', 'Cerrar el programa'], answer: 0 },
-    { type: 'tf', q: 'El Facturador permite imprimir facturas.', answer: true },
-    { type: 'tf', q: 'La factura guardada se puede adjuntar a un correo.', answer: true }
-  ],
-  5: [ // Módulo 5: Correo
-    { type: 'mcq', q: '¿Qué programa usamos para enviar correos?', opts: ['WordPad', 'Facturador', 'Correo'], answer: 2 },
-    { type: 'tf', q: 'Para enviar un correo necesitas un destinatario.', answer: true },
-    { type: 'mcq', q: '¿Cómo adjuntas un archivo en Correo?', opts: ['Botón "Adjuntar"', 'Arrastrar al correo', 'Copiar y pegar'], answer: 0 },
-    { type: 'order', q: 'Ordena los pasos para enviar un correo:', steps: ['Escribir destinatario', 'Escribir asunto', 'Escribir mensaje', 'Enviar'], correct: [0,1,2,3] },
-    { type: 'mcq', q: '¿Qué es la bandeja de entrada?', opts: ['Correos recibidos', 'Correos enviados', 'Correos borrados'], answer: 0 },
-    { type: 'tf', q: 'Se puede adjuntar más de un archivo a un correo.', answer: true },
-    { type: 'mcq', q: '¿Qué botón envía el correo?', opts: ['Enviar', 'Guardar', 'Cerrar'], answer: 0 },
-    { type: 'order', q: 'Ordena los pasos para adjuntar un archivo:', steps: ['Abrir Correo', 'Hacer clic en Adjuntar', 'Seleccionar archivo', 'Adjuntar'], correct: [0,1,2,3] },
-    { type: 'mcq', q: '¿Qué campo es obligatorio en un correo?', opts: ['Para (destinatario)', 'Asunto', 'Cuerpo'], answer: 0 },
-    { type: 'tf', q: 'El correo permite enviar archivos adjuntos.', answer: true },
-    { type: 'mcq', q: '¿Qué significa "CC" en un correo?', opts: ['Copia para otro destinatario', 'Copia oculta', 'Cerrar correo'], answer: 0 },
-    { type: 'tf', q: 'No se puede deshacer el envío de un correo.', answer: true },
-    { type: 'order', q: 'Ordena los pasos para reenviar un correo:', steps: ['Abrir correo', 'Hacer clic en Reenviar', 'Agregar destinatario', 'Enviar'], correct: [0,1,2,3] },
-    { type: 'mcq', q: '¿Qué es el asunto del correo?', opts: ['Breve descripción', 'El destinatario', 'El archivo adjunto'], answer: 0 },
-    { type: 'mcq', q: '¿Cómo se responde a un correo?', opts: ['Botón Responder', 'Botón Reenviar', 'Botón Nuevo'], answer: 0 },
-    { type: 'tf', q: 'Los correos se pueden guardar como borrador.', answer: true },
-    { type: 'tf', q: 'El correo solo funciona con internet.', answer: true },
-    { type: 'order', q: 'Ordena los pasos para enviar factura por correo:', steps: ['Adjuntar factura', 'Escribir destinatario', 'Escribir mensaje', 'Enviar'], correct: [0,1,2,3] },
-    { type: 'mcq', q: '¿Qué significa "Bandeja de salida"?', opts: ['Correos enviados', 'Correos pendientes', 'Correos borrados'], answer: 1 },
-    { type: 'mcq', q: '¿Cómo se elimina un correo?', opts: ['Seleccionar y eliminar', 'Arrastrar', 'Doble clic'], answer: 0 },
-    { type: 'tf', q: 'El correo permite organizar mensajes en carpetas.', answer: true },
-    { type: 'tf', q: 'Todos los correos enviados se guardan automáticamente.', answer: true }
-  ]
-};
+// ---- MÓDULO 6: EVALUACIÓN GENERAL ----
+// Agregamos un solo ejercicio que dispara el examen
+exercises.push({
+  id: 101,
+  module: "6",
+  modName: "Módulo 6: Evaluación General",
+  title: "101 – Examen final",
+  contexto: "Evaluación general de todos los módulos.",
+  objetivo: "Respondé las 25 preguntas para evaluar tus conocimientos.",
+  desarrollo: ["Seleccioná la respuesta correcta para cada pregunta.", "Usá el botón 'Actualizar' para generar un nuevo examen."],
+  pista: "Las preguntas son de los 5 módulos: Táctil, Ventanas, Explorador, Facturador y Correo.",
+  targetAction: "examen"
+});
 
 // ============================================================
 // 3. VARIABLES GLOBALES
@@ -1593,7 +1607,8 @@ function loadExercise(idx) {
   renderizarDetalleEjercicio(ex);
 
   if (ex.module === '6') {
-    // Ya está renderizado por renderizarDetalleEjercicio
+    // Mostrar el examen en la ventana
+    mostrarExamen();
   } else {
     document.getElementById('app-window').style.display = 'none';
   }
@@ -1604,7 +1619,6 @@ function loadExercise(idx) {
   document.getElementById('btn-prev').disabled = currentIdx === 0;
   document.getElementById('btn-next').disabled = currentIdx === exercises.length - 1;
 
-  // Ocultar feedback al cambiar de ejercicio
   document.getElementById('feedback').className = '';
   document.getElementById('feedback').style.display = 'none';
 }
@@ -1634,7 +1648,6 @@ function renderizarDetalleEjercicio(ex) {
   }
 
   if (ex.module === '6') {
-    // Mostrar mensaje en el panel izquierdo
     contenedor.innerHTML = `
       <div class="bloque-examen">
         <div class="examen-icono">📝</div>
@@ -1642,8 +1655,6 @@ function renderizarDetalleEjercicio(ex) {
         <div style="font-size:0.8rem; color:#8d99ae; margin-top:4px;">Respondé en la ventana de la derecha</div>
       </div>
     `;
-    // Mostrar el examen en la ventana
-    mostrarExamen();
     return;
   }
 
@@ -1702,13 +1713,23 @@ function validateAction(actionName) {
 // ============================================================
 // 7. MANEJADORES DE EVENTOS (Escritorio, Iconos, Menú)
 // ============================================================
-function handleIconClick(e, iconName) {
-  e.stopPropagation();
+function handleIconClick(iconName) {
   playClickSound();
   clearSelections();
   const icon = document.getElementById(`icon-${iconName}`);
   if (icon) {
     icon.classList.add('selected');
+    // Abrir la aplicación correspondiente con un clic (simulación)
+    const actions = {
+      'este-equipo': openEsteEquipoApp,
+      'wordpad': openWordpadApp,
+      'facturador': openFacturadorApp,
+      'correo': openCorreoApp,
+      'papelera': openPapeleraApp
+    };
+    if (actions[iconName]) {
+      actions[iconName]();
+    }
     validateAction(`click-${iconName}`);
   }
 }
