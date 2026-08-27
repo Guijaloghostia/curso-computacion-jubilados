@@ -11,7 +11,6 @@
       padding: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
-
     body {
       display: flex;
       height: 100vh;
@@ -20,14 +19,13 @@
       overflow: hidden;
       user-select: none;
     }
-
     .app-container {
       display: flex;
       width: 100%;
       height: 100%;
     }
 
-    /* Panel Izquierdo: Capacitación Digital */
+    /* Panel Izquierdo */
     .sidebar {
       width: 380px;
       background-color: #0b132b;
@@ -38,19 +36,15 @@
       border-right: 2px solid #1c2541;
       z-index: 20;
     }
-
     .sidebar-header h2 {
       font-size: 1.3rem;
       color: #00b4d8;
       margin-bottom: 12px;
       text-align: center;
     }
-
-    /* Controles de Módulos y Ejercicios Flotantes */
     .control-group {
       margin-bottom: 12px;
     }
-
     .control-label {
       font-size: 0.78rem;
       color: #8d99ae;
@@ -58,7 +52,6 @@
       display: block;
       font-weight: 600;
     }
-
     .module-select, .exercise-dropdown-select {
       width: 100%;
       padding: 9px;
@@ -69,7 +62,6 @@
       font-size: 0.85rem;
       cursor: pointer;
     }
-
     .badge-module {
       display: inline-block;
       background-color: #0077b6;
@@ -81,13 +73,11 @@
       margin-bottom: 8px;
       text-transform: uppercase;
     }
-
     .exercise-title {
       font-size: 1rem;
       margin-bottom: 8px;
       color: #ffffff;
     }
-
     .instruction-card {
       background-color: #1c2541;
       border-left: 4px solid #00b4d8;
@@ -96,7 +86,6 @@
       margin-bottom: 8px;
       font-size: 0.8rem;
     }
-
     .instruction-text {
       font-size: 0.85rem;
       line-height: 1.4;
@@ -105,7 +94,6 @@
       max-height: 130px;
       overflow-y: auto;
     }
-
     .hint-btn {
       width: 100%;
       background: rgba(255, 183, 3, 0.15);
@@ -119,7 +107,6 @@
       font-size: 0.82rem;
       margin-bottom: 6px;
     }
-
     .hint-box {
       display: none;
       background: rgba(255, 183, 3, 0.1);
@@ -132,12 +119,10 @@
       max-height: 110px;
       overflow-y: auto;
     }
-
     .nav-buttons {
       display: flex;
       gap: 10px;
     }
-
     .btn-nav {
       flex: 1;
       padding: 9px;
@@ -149,14 +134,13 @@
       cursor: pointer;
       font-size: 0.85rem;
     }
-
     .btn-nav:disabled {
       background-color: #3a506b;
       color: #8d99ae;
       cursor: not-allowed;
     }
 
-    /* Panel Derecho: Escritorio de Windows */
+    /* Panel Derecho: Escritorio */
     .desktop-container {
       flex: 1;
       display: flex;
@@ -164,52 +148,46 @@
       position: relative;
       background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
     }
-
     .desktop-workspace {
       flex: 1;
       position: relative;
       padding: 15px;
     }
-
-    /* Iconos del Escritorio */
     .desktop-icons {
       display: flex;
       flex-direction: column;
-      gap: 15px;
-      width: 90px;
+      gap: 12px;
+      width: 70px;
     }
-
     .desktop-icon {
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
       color: #ffffff;
-      font-size: 0.75rem;
+      font-size: 0.85rem;
+      font-weight: 600;
       text-shadow: 1px 1px 3px rgba(0,0,0,0.9);
       cursor: pointer;
-      padding: 6px;
+      padding: 4px 2px;
       border-radius: 4px;
       border: 1px solid transparent;
     }
-
     .desktop-icon:hover {
       background-color: rgba(255, 255, 255, 0.15);
       border: 1px solid rgba(255, 255, 255, 0.3);
     }
-
     .desktop-icon.selected {
       background-color: rgba(0, 180, 216, 0.3);
       border: 1px solid #00b4d8;
     }
-
     .desktop-icon svg, .desktop-icon img {
-      width: 38px;
-      height: 38px;
-      margin-bottom: 4px;
+      width: 28px;
+      height: 28px;
+      margin-bottom: 2px;
     }
 
-    /* Ventanas Simuladas */
+    /* Ventanas */
     .window {
       position: absolute;
       top: 50%;
@@ -226,7 +204,6 @@
       z-index: 10;
       flex-direction: column;
     }
-
     .window-header {
       background-color: #e9ecef;
       padding: 8px 12px;
@@ -235,13 +212,11 @@
       align-items: center;
       border-bottom: 1px solid #ced4da;
     }
-
     .window-title {
       font-size: 0.85rem;
       color: #212529;
       font-weight: 600;
     }
-
     .btn-close {
       background: transparent;
       border: none;
@@ -252,12 +227,10 @@
       padding: 2px 8px;
       border-radius: 3px;
     }
-
     .btn-close:hover {
       background-color: #dc3545;
       color: #ffffff;
     }
-
     .window-body {
       padding: 15px;
       font-size: 0.85rem;
@@ -266,8 +239,6 @@
       background-color: #ffffff;
       color: #212529;
     }
-
-    /* Contenido Específico de Apps */
     .app-form-group {
       margin-bottom: 10px;
     }
@@ -311,7 +282,6 @@
       display: none;
       z-index: 15;
     }
-
     .start-item {
       padding: 8px 12px;
       color: #fff;
@@ -322,7 +292,6 @@
       align-items: center;
       gap: 10px;
     }
-
     .start-item:hover {
       background-color: #00b4d8;
       color: #000;
@@ -340,7 +309,6 @@
       border-top: 1px solid rgba(255, 255, 255, 0.1);
       z-index: 20;
     }
-
     .start-btn {
       background: transparent;
       border: none;
@@ -351,529 +319,831 @@
       display: flex;
       align-items: center;
     }
-
     .start-btn:hover {
       background-color: rgba(255, 255, 255, 0.1);
     }
-
     .taskbar-clock {
       font-size: 0.75rem;
       text-align: right;
       color: #ffffff;
     }
+
+    /* Estilos para drag & drop en evaluación */
+    .drop-zone {
+      border: 2px dashed #0077b6;
+      border-radius: 6px;
+      padding: 10px;
+      min-height: 80px;
+      background: #f1f3f5;
+      margin: 10px 0;
+    }
+    .drop-item {
+      background: #0077b6;
+      color: white;
+      padding: 6px 12px;
+      margin: 4px;
+      border-radius: 4px;
+      cursor: grab;
+      display: inline-block;
+      user-select: none;
+    }
+    .drop-item.dragging {
+      opacity: 0.5;
+    }
+    .drop-zone.drag-over {
+      background: #cfe2ff;
+      border-color: #0d6efd;
+    }
   </style>
 </head>
 <body>
 
-  <div class="app-container">
-    <!-- Panel Izquierdo: Capacitación Digital con Menús Flotantes -->
-    <aside class="sidebar">
-      <div class="sidebar-top">
-        <div class="sidebar-header">
-          <h2>Capacitación Digital</h2>
-        </div>
+<div class="app-container">
+  <aside class="sidebar">
+    <div class="sidebar-top">
+      <div class="sidebar-header"><h2>Capacitación Digital</h2></div>
+      <div class="control-group">
+        <label class="control-label">Módulo actual:</label>
+        <select id="module-select" class="module-select" onchange="changeModuleFilter(this.value)">
+          <option value="all">Todos los módulos</option>
+          <option value="1">Módulo 1: Panel Táctil y Gestos</option>
+          <option value="2">Módulo 2: Gestión de Ventanas</option>
+          <option value="3">Módulo 3: Explorador de Archivos</option>
+          <option value="4">Módulo 4: Facturador Digital</option>
+          <option value="5">Módulo 5: Gestión de Correo</option>
+          <option value="6">Módulo 6: Evaluación General</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <label class="control-label">Seleccionar Ejercicio:</label>
+        <select id="exercise-dropdown-select" class="exercise-dropdown-select" onchange="selectExercise(this.value)"></select>
+      </div>
+      <span id="badge-module" class="badge-module">Módulo 1</span>
+      <h3 id="exercise-title" class="exercise-title">Ejercicio 1</h3>
+      <div class="instruction-card">📌 <span id="location-text">Ubicación inicial: Escritorio principal</span></div>
+      <p id="instruction-text" class="instruction-text">Cargando consigna...</p>
+      <button class="hint-btn" onclick="toggleHint()">💡 Pista: Ver paso a paso</button>
+      <div id="hint-box" class="hint-box"></div>
+    </div>
+    <div class="nav-buttons">
+      <button id="btn-prev" class="btn-nav" onclick="navigate(-1)">Anterior</button>
+      <button id="btn-next" class="btn-nav" onclick="navigate(1)">Siguiente</button>
+    </div>
+  </aside>
 
-        <!-- Selector de Módulo -->
-        <div class="control-group">
-          <label class="control-label">Módulo actual:</label>
-          <select id="module-select" class="module-select" onchange="changeModuleFilter(this.value)">
-            <option value="all">Todos los módulos</option>
-            <option value="1">Módulo 1: Panel Táctil y Gestos</option>
-            <option value="2">Módulo 2: Gestión de Ventanas</option>
-            <option value="3">Módulo 3: Explorador de Archivos</option>
-            <option value="4">Módulo 4: Edición WordPad</option>
-            <option value="5">Módulo 5: Facturador Digital</option>
-            <option value="6">Módulo 6: Clientes de Correo</option>
-            <option value="7">Módulo 7: Herramientas de Sistema</option>
-            <option value="8">Módulo 8: Integración Operativa</option>
-          </select>
+  <main class="desktop-container" onclick="handleDesktopClick(event)">
+    <div class="desktop-workspace">
+      <div class="desktop-icons">
+        <div class="desktop-icon" id="icon-este-equipo" onclick="handleIconClick(event, 'este-equipo')" ondblclick="handleIconDblClick('este-equipo')">
+          <svg viewBox="0 0 48 48"><path fill="#0078d7" d="M40 8H8a4 4 0 00-4 4v20a4 4 0 004 4h14l-2 4h-4v2h16v-2h-4l-2-4h14a4 4 0 004-4V12a4 4 0 00-4-4zm0 22H8V12h32z"/></svg>
+          <span>Este Equipo</span>
         </div>
-
-        <!-- Menú flotante de ejercicios correspondientes al módulo -->
-        <div class="control-group">
-          <label class="control-label">Seleccionar Ejercicio:</label>
-          <select id="exercise-dropdown-select" class="exercise-dropdown-select" onchange="selectExercise(this.value)"></select>
+        <div class="desktop-icon" id="icon-wordpad" onclick="handleIconClick(event, 'wordpad')" ondblclick="handleIconDblClick('wordpad')">
+          <svg viewBox="0 0 48 48"><path fill="#2b579a" d="M6 6h28l8 8v28H6z"/><path fill="#fff" d="M14 18h20v2H14zm0 6h20v2H14zm0 6h14v2H14z"/><path fill="#19325c" d="M34 6v8h8z"/></svg>
+          <span>WordPad</span>
         </div>
-
-        <span id="badge-module" class="badge-module">Módulo 1</span>
-        <h3 id="exercise-title" class="exercise-title">Ejercicio 1</h3>
-        
-        <div class="instruction-card">
-          📌 <span id="location-text">Ubicación inicial: Escritorio principal</span>
+        <div class="desktop-icon" id="icon-facturador" onclick="handleIconClick(event, 'facturador')" ondblclick="handleIconDblClick('facturador')">
+          <svg viewBox="0 0 48 48"><path fill="#107c41" d="M8 4h24l8 8v32H8z"/><path fill="#fff" d="M14 16h20v2H14zm0 6h20v2H14zm0 6h12v2H14z"/><path fill="#0b532c" d="M32 4v10h10z"/></svg>
+          <span>Facturador</span>
         </div>
-        
-        <p id="instruction-text" class="instruction-text">Cargando consigna...</p>
-        
-        <button class="hint-btn" onclick="toggleHint()">💡 Pista: Ver paso a paso</button>
-        <div id="hint-box" class="hint-box"></div>
+        <div class="desktop-icon" id="icon-correo" onclick="handleIconClick(event, 'correo')" ondblclick="handleIconDblClick('correo')">
+          <img src="https://img.icons8.com/color/48/gmail-new.png" alt="Correo">
+          <span>Correo</span>
+        </div>
+        <div class="desktop-icon" id="icon-papelera" onclick="handleIconClick(event, 'papelera')" ondblclick="handleIconDblClick('papelera')">
+          <svg viewBox="0 0 48 48"><path fill="#6c757d" d="M12 12h24v30H12z"/><path fill="#495057" d="M10 8h28v4H10z"/><path fill="#adb5bd" d="M20 4h8v4h-8z"/></svg>
+          <span>Papelera</span>
+        </div>
       </div>
 
-      <div class="nav-buttons">
-        <button id="btn-prev" class="btn-nav" onclick="navigate(-1)">Anterior</button>
-        <button id="btn-next" class="btn-nav" onclick="navigate(1)">Siguiente</button>
-      </div>
-    </aside>
-
-    <!-- Panel Derecho: Escritorio de Windows con Íconos Oficiales -->
-    <main class="desktop-container" onclick="handleDesktopClick(event)">
-      <div class="desktop-workspace">
-        
-        <div class="desktop-icons">
-          <!-- Este Equipo (Icono original Win10: PC con soporte) -->
-          <div class="desktop-icon" id="icon-este-equipo" onclick="handleIconClick(event, 'este-equipo')" ondblclick="handleIconDblClick('este-equipo')">
-            <svg viewBox="0 0 48 48" width="38" height="38"><path fill="#0078d7" d="M40 8H8a4 4 0 00-4 4v20a4 4 0 004 4h14l-2 4h-4v2h16v-2h-4l-2-4h14a4 4 0 004-4V12a4 4 0 00-4-4zm0 22H8V12h32z"/></svg>
-            <span>Este Equipo</span>
-          </div>
-
-          <!-- WordPad (Icono Bloc de notas / Cuaderno clásico Win10) -->
-          <div class="desktop-icon" id="icon-wordpad" onclick="handleIconClick(event, 'wordpad')" ondblclick="handleIconDblClick('wordpad')">
-            <svg viewBox="0 0 48 48" width="38" height="38"><path fill="#2b579a" d="M6 6h28l8 8v28H6z"/><path fill="#fff" d="M14 18h20v2H14zm0 6h20v2H14zm0 6h14v2H14z"/><path fill="#19325c" d="M34 6v8h8z"/></svg>
-            <span>WordPad</span>
-          </div>
-
-          <!-- Facturador (Icono Documento Fiscal / Factura) -->
-          <div class="desktop-icon" id="icon-facturador" onclick="handleIconClick(event, 'facturador')" ondblclick="handleIconDblClick('facturador')">
-            <svg viewBox="0 0 48 48" width="38" height="38"><path fill="#107c41" d="M8 4h24l8 8v32H8z"/><path fill="#fff" d="M14 16h20v2H14zm0 6h20v2H14zm0 6h12v2H14z"/><path fill="#0b532c" d="M32 4v10h10z"/></svg>
-            <span>Facturador</span>
-          </div>
-
-          <!-- Correo -->
-          <div class="desktop-icon" id="icon-correo" onclick="handleIconClick(event, 'correo')" ondblclick="handleIconDblClick('correo')">
-            <img src="https://img.icons8.com/color/48/gmail-new.png" alt="Correo">
-            <span>Correo</span>
-          </div>
-
-          <!-- Papelera de Reciclaje -->
-          <div class="desktop-icon" id="icon-papelera" onclick="handleIconClick(event, 'papelera')" ondblclick="handleIconDblClick('papelera')">
-            <svg viewBox="0 0 48 48" width="38" height="38"><path fill="#6c757d" d="M12 12h24v30H12z"/><path fill="#495057" d="M10 8h28v4H10z"/><path fill="#adb5bd" d="M20 4h8v4h-8z"/></svg>
-            <span>Papelera</span>
-          </div>
+      <div class="window" id="app-window">
+        <div class="window-header">
+          <span class="window-title" id="window-title">Ventana</span>
+          <button class="btn-close" onclick="closeAppWindow()" title="Cerrar">[X]</button>
         </div>
-
-        <div class="window" id="app-window">
-          <div class="window-header">
-            <span class="window-title" id="window-title">Ventana</span>
-            <button class="btn-close" onclick="closeAppWindow()" title="Cerrar">[X]</button>
-          </div>
-          <div class="window-body" id="window-body">
-            Contenido de la aplicación...
-          </div>
-        </div>
-
-        <div class="start-menu" id="start-menu">
-          <div class="start-item" onclick="handleStartItem('wordpad')">📝 WordPad</div>
-          <div class="start-item" onclick="handleStartItem('facturador')">🧮 Facturador Digital</div>
-          <div class="start-item" onclick="handleStartItem('correo')">✉️ Correo</div>
-          <div class="start-item" onclick="handleStartItem('este-equipo')">💻 Este Equipo</div>
-          <div class="start-item" onclick="handleStartItem('papelera')">🗑️ Papelera de Reciclaje</div>
-        </div>
-
+        <div class="window-body" id="window-body">Contenido de la aplicación...</div>
       </div>
 
-      <!-- Barra de tareas con logotipo oficial Windows 10 -->
-      <footer class="taskbar">
-        <div class="taskbar-left">
-          <button class="start-btn" id="start-btn" onclick="toggleStartMenu(event)" title="Inicio">
-            <svg viewBox="0 0 88 88" width="20" height="20">
-              <path fill="#00b4d8" d="M0 12.402l35.687-4.86.016 34.423-35.703.203zm35.687 34.93l.031 34.531-35.718-4.937-.016-29.75zm5.797-40.407L87.89 0l-.016 41.563-42.39.313zm42.422 41.141l.016 42.188-42.438-6.094-.031-36.438z"/>
-            </svg>
-          </button>
-        </div>
-        <div class="taskbar-clock">
-          <div id="clock-time">23:18</div>
-          <div id="clock-date">17/08/2026</div>
-        </div>
-      </footer>
-    </main>
-  </div>
+      <div class="start-menu" id="start-menu">
+        <div class="start-item" onclick="handleStartItem('wordpad')">📝 WordPad</div>
+        <div class="start-item" onclick="handleStartItem('facturador')">🧮 Facturador Digital</div>
+        <div class="start-item" onclick="handleStartItem('correo')">✉️ Correo</div>
+        <div class="start-item" onclick="handleStartItem('este-equipo')">💻 Este Equipo</div>
+        <div class="start-item" onclick="handleStartItem('papelera')">🗑️ Papelera de Reciclaje</div>
+      </div>
+    </div>
 
-  <script>
-    // MATRIZ COMPLETA DE LOS 100 EJERCICIOS (CON ENUNCIADOS COLOQUIALES Y PISTAS PASO A PASO DETALLADAS)
-    const exercises = [
-      // Módulo 1: Panel Táctil y Gestos (01 al 14)
-      { id: 1, module: "1", modName: "Módulo 1: Panel Táctil y Gestos", title: "Ejercicio 01 – Tocar con precisión", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Para seleccionar un programa en la computadora, necesitamos tocarlo una vez suavemente con el dedo o el mouse.", hint: "Paso 1: Ubique el ícono de WordPad en el escritorio.\nPaso 2: Haga un clic simple sobre el ícono para seleccionarlo.", targetAction: "click-wordpad" },
-      { id: 2, module: "1", modName: "Módulo 1: Panel Táctil y Gestos", title: "Ejercicio 02 – Abrir con doble toque", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Para abrir un programa y empezar a usarlo, necesitamos hacer dos toques rápidos seguidos sobre su ícono.", hint: "Paso 1: Coloque el cursor sobre el ícono de WordPad.\nPaso 2: Haga doble clic rápido seguido para abrir la aplicación.", targetAction: "dblclick-wordpad" },
-      { id: 3, module: "1", modName: "Módulo 1: Panel Táctil y Gestos", title: "Ejercicio 03 – Abrir menú auxiliar", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Si queremos ver opciones adicionales de la pantalla, podemos hacer clic en un espacio libre del fondo.", hint: "Paso 1: Busque un espacio vacío en el fondo de pantalla donde no haya íconos.\nPaso 2: Haga un clic simple para activar el área de trabajo.", targetAction: "click-desktop" },
-      { id: 4, module: "1", modName: "Módulo 1: Panel Táctil y Gestos", title: "Ejercicio 14 – Tocar ícono del Facturador", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Vamos a preparar el acceso al sistema de facturación tocando su ícono en el escritorio.", hint: "Paso 1: Localice el ícono del Facturador.\nPaso 2: Haga un clic simple sobre él.", targetAction: "click-facturador" },
-      { id: 5, module: "1", modName: "Módulo 1: Panel Táctil y Gestos", title: "Ejercicio 05 – Enfocar pantalla", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Haga clic en el fondo de la pantalla para asegurarse de que el sistema está listo.", hint: "Paso 1: Apunte con el cursor a un espacio libre del fondo.\nPaso 2: Haga clic izquierdo.", targetAction: "click-desktop" },
-      { id: 6, module: "1", modName: "Módulo 1: Panel Táctil y Gestos", title: "Ejercicio 06 – Seleccionar Este Equipo", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Seleccione el ícono 'Este Equipo' para explorar los discos y carpetas de la computadora.", hint: "Paso 1: Localice el ícono 'Este Equipo' arriba a la izquierda.\nPaso 2: Haga un clic simple.", targetAction: "click-este-equipo" },
-      { id: 7, module: "1", modName: "Módulo 1: Panel Táctil y Gestos", title: "Ejercicio 07 – Seleccionar Correo", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Toque el ícono de Correo para seleccionarlo.", hint: "Paso 1: Busque el ícono de Correo.\nPaso 2: Haga un clic sobre él.", targetAction: "click-correo" },
-      { id: 8, module: "1", modName: "Módulo 1: Panel Táctil y Gestos", title: "Ejercicio 08 – Abrir Menú Inicio", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Para ver todas las aplicaciones instaladas, abriremos el Menú Inicio desde la barra inferior.", hint: "Paso 1: Dirija el cursor al botón con el logotipo de Windows abajo a la izquierda.\nPaso 2: Haga clic para desplegar el menú.", targetAction: "click-start" },
-      { id: 9, module: "1", modName: "Módulo 1: Panel Táctil y Gestos", title: "Ejercicio 09 – Abrir Menú Inicio secundario", context: "📌 Ubicación inicial: Barra de tareas", instruction: "Abra nuevamente el Menú Inicio para practicar el acceso rápido.", hint: "Paso 1: Haga clic en el botón de Windows de la barra inferior.", targetAction: "click-start" },
-      { id: 10, module: "1", modName: "Módulo 1: Panel Táctil y Gestos", title: "Ejercicio 10 – Volver al Escritorio", context: "📌 Ubicación inicial: Barra de tareas", instruction: "Haga clic en el fondo del escritorio para limpiar la selección actual.", hint: "Paso 1: Haga clic en cualquier zona vacía del fondo de pantalla.", targetAction: "click-desktop" },
-      { id: 11, module: "1", modName: "Módulo 1: Panel Táctil y Gestos", title: "Ejercicio 11 – Abrir WordPad rápidamente", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Abra la aplicación WordPad mediante doble clic en su acceso directo.", hint: "Paso 1: Posiciónese sobre WordPad.\nPaso 2: Haga doble clic rápido para abrirlo.", targetAction: "dblclick-wordpad" },
-      { id: 12, module: "1", modName: "Módulo 1: Panel Táctil y Gestos", title: "Ejercicio 12 – Enfoque de escritorio", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Haga clic en el fondo de la pantalla para enfocar el escritorio.", hint: "Paso 1: Haga clic en un espacio libre del fondo.", targetAction: "click-desktop" },
-      { id: 13, module: "1", modName: "Módulo 1: Panel Táctil y Gestos", title: "Ejercicio 13 – Menú de inicio rápido", context: "📌 Ubicación inicial: Barra de tareas", instruction: "Despliegue el Menú Inicio para ver las opciones disponibles.", hint: "Paso 1: Haga clic en el botón de inicio de Windows en la barra de tareas.", targetAction: "click-start" },
-      { id: 14, module: "1", modName: "Módulo 1: Panel Táctil y Gestos", title: "Ejercicio 14 – Menú Inicio y ajustes", context: "📌 Ubicación inicial: Menú Inicio", instruction: "Abra el Menú Inicio para repasar el acceso a herramientas.", hint: "Paso 1: Haga clic en el botón de Windows abajo a la izquierda.", targetAction: "click-start" },
+    <footer class="taskbar">
+      <div class="taskbar-left">
+        <button class="start-btn" id="start-btn" onclick="toggleStartMenu(event)" title="Inicio">
+          <svg viewBox="0 0 88 88" width="20" height="20">
+            <path fill="#00b4d8" d="M0 12.402l35.687-4.86.016 34.423-35.703.203zm35.687 34.93l.031 34.531-35.718-4.937-.016-29.75zm5.797-40.407L87.89 0l-.016 41.563-42.39.313zm42.422 41.141l.016 42.188-42.438-6.094-.031-36.438z"/>
+          </svg>
+        </button>
+      </div>
+      <div class="taskbar-clock">
+        <div id="clock-time">23:18</div>
+        <div id="clock-date">17/08/2026</div>
+      </div>
+    </footer>
+  </main>
+</div>
 
-      // Módulo 2: Gestión de Ventanas (15 al 27)
-      { id: 15, module: "2", modName: "Módulo 2: Gestión de Ventanas", title: "Ejercicio 15 – Cerrar ventana activa", context: "📌 Ubicación inicial: Ventana de Aplicación", instruction: "Para cerrar una ventana que ya no necesitamos, podemos pulsar el botón con la cruz (X) arriba a la derecha.", hint: "Paso 1: Localice la cruz roja [X] en la esquina superior derecha de la ventana.\nPaso 2: Haga clic sobre ella para cerrarla.", targetAction: "close-window" },
-      { id: 16, module: "2", modName: "Módulo 2: Gestión de Ventanas", title: "Ejercicio 16 – Cerrar ventana actual", context: "📌 Ubicación inicial: Ventana de Aplicación", instruction: "Cierre la ventana activa usando el botón de salida.", hint: "Paso 1: Haga clic en la cruz [X] de la ventana.", targetAction: "close-window" },
-      { id: 17, module: "2", modName: "Módulo 2: Gestión de Ventanas", title: "Ejercicio 17 – Cerrar ventana abierta", context: "📌 Ubicación inicial: Ventana de Aplicación", instruction: "Cierre la ventana actual para continuar con el ejercicio.", hint: "Paso 1: Haga clic en el botón [X] de cierre.", targetAction: "close-window" },
-      { id: 18, module: "2", modName: "Módulo 2: Gestión de Ventanas", title: "Ejercicio 18 – Abrir el Facturador", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Abra el Facturador haciendo doble clic en su ícono.", hint: "Paso 1: Ubique el ícono del Facturador.\nPaso 2: Haga doble clic rápido para abrir su ventana.", targetAction: "dblclick-facturador" },
-      { id: 19, module: "2", modName: "Módulo 2: Gestión de Ventanas", title: "Ejercicio 19 – Cerrar Facturador", context: "📌 Ubicación inicial: Ventana de Facturador", instruction: "Cierre la ventana del Facturador pulsando la cruz.", hint: "Paso 1: Haga clic en el botón [X] de la esquina superior derecha.", targetAction: "close-window" },
-      { id: 20, module: "2", modName: "Módulo 2: Gestión de Ventanas", title: "Ejercicio 20 – Abrir Correo", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Abra la aplicación de Correo mediante doble clic.", hint: "Paso 1: Colóquese sobre el ícono de Correo.\nPaso 2: Haga doble clic para abrir la ventana.", targetAction: "dblclick-correo" },
-      { id: 21, module: "2", modName: "Módulo 2: Gestión de Ventanas", title: "Ejercicio 21 – Cerrar ventana de Correo", context: "📌 Ubicación inicial: Ventana de Correo", instruction: "Cierre la ventana de Correo usando el botón superior.", hint: "Paso 1: Haga clic en el botón [X] de la ventana.", targetAction: "close-window" },
-      { id: 22, module: "2", modName: "Módulo 2: Gestión de Ventanas", title: "Ejercicio 22 – Menú de inicio para ventanas", context: "📌 Ubicación inicial: Barra de tareas", instruction: "Abra el Menú Inicio para organizar las aplicaciones.", hint: "Paso 1: Haga clic en el botón de inicio de Windows.", targetAction: "click-start" },
-      { id: 23, module: "2", modName: "Módulo 2: Gestión de Ventanas", title: "Ejercicio 23 – Iniciar Facturador desde Inicio", context: "📌 Ubicación inicial: Menú Inicio", instruction: "Abra el Facturador seleccionándolo desde el Menú Inicio.", hint: "Paso 1: Abra el Menú Inicio.\nPaso 2: Haga clic en 'Facturador Digital'.", targetAction: "start-facturador" },
-      { id: 24, module: "2", modName: "Módulo 2: Gestión de Ventanas", title: "Ejercicio 24 – Cerrar ventana activa", context: "📌 Ubicación inicial: Ventana de Facturador", instruction: "Cierre la ventana del Facturador con el botón [X].", hint: "Paso 1: Haga clic en la cruz [X] de la ventana.", targetAction: "close-window" },
-      { id: 25, module: "2", modName: "Módulo 2: Gestión de Ventanas", title: "Ejercicio 25 – Abrir WordPad", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Abra WordPad haciendo doble clic en su acceso directo.", hint: "Paso 1: Haga doble clic sobre el ícono de WordPad.", targetAction: "dblclick-wordpad" },
-      { id: 26, module: "2", modName: "Módulo 2: Gestión de Ventanas", title: "Ejercicio 26 – Cerrar WordPad", context: "📌 Ubicación inicial: Ventana de WordPad", instruction: "Cierre la ventana de WordPad usando el botón [X].", hint: "Paso 1: Haga clic en la cruz [X] superior.", targetAction: "close-window" },
-      { id: 27, module: "2", modName: "Módulo 2: Gestión de Ventanas", title: "Ejercicio 27 – Limpiar escritorio", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Haga clic en un espacio vacío del escritorio para dejarlo limpio.", hint: "Paso 1: Haga clic en el fondo de pantalla.", targetAction: "click-desktop" },
+<script>
+// ============================================================
+// 1. BANCO DE PREGUNTAS POR MÓDULO (22 por módulo)
+// ============================================================
+const bank = {
+  1: [ // Módulo 1: Táctil
+    { type: 'mcq', q: '¿Qué acción abre un programa?', opts: ['Clic simple', 'Doble clic', 'Clic derecho'], answer: 1 },
+    { type: 'mcq', q: '¿Qué hace un clic simple?', opts: ['Abrir', 'Seleccionar', 'Cerrar'], answer: 1 },
+    { type: 'tf', q: 'El doble clic se usa para abrir archivos.', answer: true },
+    { type: 'tf', q: 'El clic derecho siempre abre un programa.', answer: false },
+    { type: 'order', q: 'Ordena los pasos para abrir WordPad:', steps: ['Ubicar ícono', 'Hacer doble clic', 'Esperar que cargue'], correct: [0,1,2] },
+    { type: 'mcq', q: '¿Qué es un gesto táctil?', opts: ['Tocar la pantalla', 'Mover el mouse', 'Presionar teclas'], answer: 0 },
+    { type: 'mcq', q: '¿Con qué dedo se hace clic izquierdo?', opts: ['Índice', 'Pulgar', 'Anular'], answer: 0 },
+    { type: 'tf', q: 'El clic derecho muestra opciones adicionales.', answer: true },
+    { type: 'tf', q: 'Para seleccionar un archivo se usa doble clic.', answer: false },
+    { type: 'order', q: 'Ordena los pasos para seleccionar un icono:', steps: ['Ubicar el icono', 'Hacer clic simple', 'Ver que se resalte'], correct: [0,1,2] },
+    { type: 'mcq', q: '¿Cómo se llama el movimiento de deslizar dos dedos?', opts: ['Desplazamiento', 'Zoom', 'Giro'], answer: 0 },
+    { type: 'mcq', q: '¿Qué significa "clic"?', opts: ['Presionar y soltar', 'Presionar y mantener', 'Deslizar'], answer: 0 },
+    { type: 'tf', q: 'El panel táctil reemplaza al mouse.', answer: true },
+    { type: 'tf', q: 'El doble clic debe ser lento para funcionar.', answer: false },
+    { type: 'order', q: 'Ordena los pasos para usar el panel táctil:', steps: ['Colocar dedo', 'Deslizar para mover cursor', 'Hacer clic para seleccionar'], correct: [0,1,2] },
+    { type: 'mcq', q: '¿Qué acción abre el menú contextual?', opts: ['Clic derecho', 'Clic izquierdo', 'Doble clic'], answer: 0 },
+    { type: 'mcq', q: '¿Qué dedo se usa para clic derecho?', opts: ['Índice', 'Medio', 'Anular'], answer: 0 },
+    { type: 'tf', q: 'El panel táctil solo funciona con un dedo.', answer: false },
+    { type: 'tf', q: 'El cursor se mueve deslizando el dedo.', answer: true },
+    { type: 'order', q: 'Ordena los pasos para abrir un programa:', steps: ['Ubicar icono', 'Hacer doble clic', 'Esperar que cargue'], correct: [0,1,2] },
+    { type: 'mcq', q: '¿Qué significa "arrastrar"?', opts: ['Mover manteniendo clic', 'Clic rápido', 'Deslizar sin clic'], answer: 0 },
+    { type: 'tf', q: 'El panel táctil necesita calibración constante.', answer: false }
+  ],
+  2: [ // Módulo 2: Ventanas
+    { type: 'mcq', q: '¿Cómo cierras una ventana?', opts: ['Botón [X]', 'Botón Inicio', 'Doble clic'], answer: 0 },
+    { type: 'tf', q: 'Para mover una ventana, arrastras la barra superior.', answer: true },
+    { type: 'mcq', q: '¿Qué hace el botón "Minimizar"?', opts: ['Cierra la ventana', 'Oculta en la barra', 'Agranda la ventana'], answer: 1 },
+    { type: 'order', q: 'Ordena los pasos para cerrar una ventana:', steps: ['Ubicar la cruz [X]', 'Hacer clic en [X]', 'Confirmar si pregunta'], correct: [0,1,2] },
+    { type: 'mcq', q: '¿Qué botón agranda la ventana?', opts: ['Maximizar', 'Minimizar', 'Cerrar'], answer: 0 },
+    { type: 'tf', q: 'Todas las ventanas tienen barra de título.', answer: true },
+    { type: 'tf', q: 'No se puede mover una ventana minimizada.', answer: true },
+    { type: 'order', q: 'Ordena los pasos para minimizar una ventana:', steps: ['Ubicar botón minimizar', 'Hacer clic en el botón', 'Ver que se oculta en la barra'], correct: [0,1,2] },
+    { type: 'mcq', q: '¿Qué indica la barra de título?', opts: ['Nombre de la ventana', 'Contenido', 'Botones de control'], answer: 0 },
+    { type: 'mcq', q: '¿Cómo se restaura una ventana minimizada?', opts: ['Clic en la barra', 'Doble clic en el icono', 'Clic derecho'], answer: 1 },
+    { type: 'tf', q: 'El botón [X] cierra la ventana.', answer: true },
+    { type: 'tf', q: 'Una ventana maximizada no se puede mover.', answer: true },
+    { type: 'order', q: 'Ordena los pasos para maximizar una ventana:', steps: ['Ubicar botón maximizar', 'Hacer clic en el botón', 'Ver que ocupa toda la pantalla'], correct: [0,1,2] },
+    { type: 'mcq', q: '¿Qué hace el botón "Restaurar"?', opts: ['Vuelve al tamaño anterior', 'Cierra la ventana', 'Minimiza'], answer: 0 },
+    { type: 'mcq', q: '¿Dónde están los botones de control?', opts: ['Esquina superior derecha', 'Esquina inferior izquierda', 'Centro'], answer: 0 },
+    { type: 'tf', q: 'Las ventanas se pueden superponer.', answer: true },
+    { type: 'tf', q: 'El botón de inicio abre el menú.', answer: true },
+    { type: 'order', q: 'Ordena los pasos para cambiar entre ventanas:', steps: ['Hacer clic en la barra', 'Ubicar la ventana deseada', 'Seleccionar la ventana'], correct: [1,0,2] },
+    { type: 'mcq', q: '¿Qué significa "ventana activa"?', opts: ['La que está en primer plano', 'La que está cerrada', 'La que está minimizada'], answer: 0 },
+    { type: 'mcq', q: '¿Cómo se cierra una ventana desde el teclado?', opts: ['Alt+F4', 'Ctrl+C', 'Windows+D'], answer: 0 },
+    { type: 'tf', q: 'Todas las ventanas tienen el mismo tamaño.', answer: false },
+    { type: 'tf', q: 'Se puede tener varias ventanas abiertas a la vez.', answer: true }
+  ],
+  3: [ // Módulo 3: Explorador
+    { type: 'mcq', q: '¿Dónde se guardan las descargas?', opts: ['Documentos', 'Descargas', 'Escritorio'], answer: 1 },
+    { type: 'tf', q: '"Este Equipo" muestra las unidades de la PC.', answer: true },
+    { type: 'mcq', q: '¿Qué carpeta contiene los archivos del usuario?', opts: ['Windows', 'Usuarios', 'Sistema'], answer: 1 },
+    { type: 'order', q: 'Ordena los pasos para abrir Descargas:', steps: ['Abrir Este Equipo', 'Ubicar la carpeta Descargas', 'Hacer doble clic en Descargas'], correct: [0,1,2] },
+    { type: 'mcq', q: '¿Qué icono muestra los discos de la PC?', opts: ['Este Equipo', 'Papelera', 'Correo'], answer: 0 },
+    { type: 'tf', q: 'La papelera guarda archivos eliminados.', answer: true },
+    { type: 'tf', q: 'Los archivos de la papelera se eliminan automáticamente.', answer: false },
+    { type: 'order', q: 'Ordena los pasos para vaciar la papelera:', steps: ['Abrir Papelera', 'Hacer clic en Vaciar', 'Confirmar eliminación'], correct: [0,1,2] },
+    { type: 'mcq', q: '¿Cómo se abre un archivo en el explorador?', opts: ['Doble clic', 'Clic simple', 'Clic derecho'], answer: 0 },
+    { type: 'mcq', q: '¿Qué muestra el explorador de archivos?', opts: ['Carpetas y archivos', 'Correos', 'Facturas'], answer: 0 },
+    { type: 'tf', q: 'Se pueden crear carpetas dentro de Descargas.', answer: true },
+    { type: 'tf', q: 'El explorador solo muestra archivos de texto.', answer: false },
+    { type: 'order', q: 'Ordena los pasos para crear una carpeta:', steps: ['Abrir la ubicación', 'Clic derecho', 'Seleccionar Nueva Carpeta'], correct: [0,1,2] },
+    { type: 'mcq', q: '¿Qué significa "unidad C:"?', opts: ['Disco local', 'Unidad de red', 'Memoria USB'], answer: 0 },
+    { type: 'mcq', q: '¿Cómo se cambia el nombre de un archivo?', opts: ['Clic derecho > Cambiar nombre', 'Doble clic', 'Arrastrar'], answer: 0 },
+    { type: 'tf', q: 'Los archivos se pueden copiar de una carpeta a otra.', answer: true },
+    { type: 'tf', q: 'La papelera se encuentra en el escritorio.', answer: true },
+    { type: 'order', q: 'Ordena los pasos para eliminar un archivo:', steps: ['Seleccionar archivo', 'Presionar Supr', 'Confirmar eliminación'], correct: [0,1,2] },
+    { type: 'mcq', q: '¿Qué hace el botón "Atrás" en el explorador?', opts: ['Volver a la carpeta anterior', 'Cerrar la ventana', 'Actualizar'], answer: 0 },
+    { type: 'mcq', q: '¿Qué icono representa la papelera?', opts: ['Cubo de basura', 'Carpeta', 'Disco'], answer: 0 },
+    { type: 'tf', q: 'El explorador permite buscar archivos.', answer: true },
+    { type: 'tf', q: 'Todos los archivos se guardan en el escritorio.', answer: false }
+  ],
+  4: [ // Módulo 4: Facturador
+    { type: 'mcq', q: '¿Qué programa usamos para emitir facturas?', opts: ['WordPad', 'Facturador Digital', 'Correo'], answer: 1 },
+    { type: 'tf', q: 'El Facturador permite agregar productos con cantidad y precio.', answer: true },
+    { type: 'mcq', q: '¿Dónde se guarda la factura después de emitirla?', opts: ['Descargas', 'Documentos', 'Escritorio'], answer: 0 },
+    { type: 'order', q: 'Ordena los pasos para emitir una factura:', steps: ['Completar datos del cliente', 'Agregar productos', 'Emitir y guardar'], correct: [0,1,2] },
+    { type: 'mcq', q: '¿Qué botón usamos para guardar una factura?', opts: ['Emitir y Guardar', 'Adjuntar', 'Enviar'], answer: 0 },
+    { type: 'tf', q: 'El subtotal incluye el IVA.', answer: false },
+    { type: 'mcq', q: '¿Qué campo es obligatorio en una factura?', opts: ['Cliente', 'Color de fondo', 'Fecha de emisión'], answer: 0 },
+    { type: 'order', q: 'Ordena los pasos para cargar un producto:', steps: ['Escribir nombre', 'Poner cantidad', 'Poner precio', 'Agregar'], correct: [0,1,2,3] },
+    { type: 'mcq', q: '¿Cómo se calcula el IVA en el facturador?', opts: ['21% del subtotal', '10% del total', 'No se calcula'], answer: 0 },
+    { type: 'tf', q: 'Se puede emitir una factura sin productos cargados.', answer: false },
+    { type: 'mcq', q: '¿Qué indica el "Subtotal"?', opts: ['Suma de productos sin IVA', 'Total con IVA', 'Descuento aplicado'], answer: 0 },
+    { type: 'tf', q: 'Las facturas se guardan automáticamente en la Papelera.', answer: false },
+    { type: 'order', q: 'Ordena los pasos para verificar factura en Descargas:', steps: ['Abrir Este Equipo', 'Entrar en Descargas', 'Buscar el archivo'], correct: [0,1,2] },
+    { type: 'mcq', q: '¿Qué permite agregar el botón "➕ Agregar"?', opts: ['Añadir un producto', 'Añadir un cliente', 'Guardar la factura'], answer: 0 },
+    { type: 'mcq', q: '¿Qué ocurre si no hay productos cargados?', opts: ['No se puede emitir', 'Se emite vacía', 'Se guarda igual'], answer: 0 },
+    { type: 'tf', q: 'El Facturador permite modificar productos cargados.', answer: true },
+    { type: 'tf', q: 'La factura se puede enviar por correo desde el Facturador.', answer: false },
+    { type: 'order', q: 'Ordena los pasos para adjuntar factura desde Descargas:', steps: ['Abrir Este Equipo', 'Entrar en Descargas', 'Seleccionar factura', 'Adjuntar al Correo'], correct: [0,1,2,3] },
+    { type: 'mcq', q: '¿Qué dato NO es necesario para una factura?', opts: ['CUIT del cliente', 'Productos', 'Color de fondo'], answer: 2 },
+    { type: 'mcq', q: '¿Cuál es el último paso para completar una factura?', opts: ['Emitir y Guardar', 'Agregar productos', 'Cerrar el programa'], answer: 0 },
+    { type: 'tf', q: 'El Facturador permite imprimir facturas.', answer: true },
+    { type: 'tf', q: 'La factura guardada se puede adjuntar a un correo.', answer: true }
+  ],
+  5: [ // Módulo 5: Correo
+    { type: 'mcq', q: '¿Qué programa usamos para enviar correos?', opts: ['WordPad', 'Facturador', 'Correo'], answer: 2 },
+    { type: 'tf', q: 'Para enviar un correo necesitas un destinatario.', answer: true },
+    { type: 'mcq', q: '¿Cómo adjuntas un archivo en Correo?', opts: ['Botón "Adjuntar"', 'Arrastrar al correo', 'Copiar y pegar'], answer: 0 },
+    { type: 'order', q: 'Ordena los pasos para enviar un correo:', steps: ['Escribir destinatario', 'Escribir asunto', 'Escribir mensaje', 'Enviar'], correct: [0,1,2,3] },
+    { type: 'mcq', q: '¿Qué es la bandeja de entrada?', opts: ['Correos recibidos', 'Correos enviados', 'Correos borrados'], answer: 0 },
+    { type: 'tf', q: 'Se puede adjuntar más de un archivo a un correo.', answer: true },
+    { type: 'mcq', q: '¿Qué botón envía el correo?', opts: ['Enviar', 'Guardar', 'Cerrar'], answer: 0 },
+    { type: 'order', q: 'Ordena los pasos para adjuntar un archivo:', steps: ['Abrir Correo', 'Hacer clic en Adjuntar', 'Seleccionar archivo', 'Adjuntar'], correct: [0,1,2,3] },
+    { type: 'mcq', q: '¿Qué campo es obligatorio en un correo?', opts: ['Para (destinatario)', 'Asunto', 'Cuerpo'], answer: 0 },
+    { type: 'tf', q: 'El correo permite enviar archivos adjuntos.', answer: true },
+    { type: 'mcq', q: '¿Qué significa "CC" en un correo?', opts: ['Copia para otro destinatario', 'Copia oculta', 'Cerrar correo'], answer: 0 },
+    { type: 'tf', q: 'No se puede deshacer el envío de un correo.', answer: true },
+    { type: 'order', q: 'Ordena los pasos para reenviar un correo:', steps: ['Abrir correo', 'Hacer clic en Reenviar', 'Agregar destinatario', 'Enviar'], correct: [0,1,2,3] },
+    { type: 'mcq', q: '¿Qué es el asunto del correo?', opts: ['Breve descripción', 'El destinatario', 'El archivo adjunto'], answer: 0 },
+    { type: 'mcq', q: '¿Cómo se responde a un correo?', opts: ['Botón Responder', 'Botón Reenviar', 'Botón Nuevo'], answer: 0 },
+    { type: 'tf', q: 'Los correos se pueden guardar como borrador.', answer: true },
+    { type: 'tf', q: 'El correo solo funciona con internet.', answer: true },
+    { type: 'order', q: 'Ordena los pasos para enviar factura por correo:', steps: ['Adjuntar factura', 'Escribir destinatario', 'Escribir mensaje', 'Enviar'], correct: [0,1,2,3] },
+    { type: 'mcq', q: '¿Qué significa "Bandeja de salida"?', opts: ['Correos enviados', 'Correos pendientes', 'Correos borrados'], answer: 1 },
+    { type: 'mcq', q: '¿Cómo se elimina un correo?', opts: ['Seleccionar y eliminar', 'Arrastrar', 'Doble clic'], answer: 0 },
+    { type: 'tf', q: 'El correo permite organizar mensajes en carpetas.', answer: true },
+    { type: 'tf', q: 'Todos los correos enviados se guardan automáticamente.', answer: true }
+  ]
+};
 
-      // Módulo 3: Explorador de Archivos (28 al 41)
-      { id: 28, module: "3", modName: "Módulo 3: Explorador de Archivos", title: "Ejercicio 28 – Abrir Este Equipo", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Para ver los discos y carpetas de la PC, abra 'Este Equipo' haciendo doble clic.", hint: "Paso 1: Coloque el cursor sobre el ícono 'Este Equipo'.\nPaso 2: Haga doble clic para abrir el explorador.", targetAction: "dblclick-este-equipo" },
-      { id: 29, module: "3", modName: "Módulo 3: Explorador de Archivos", title: "Ejercicio 29 – Cerrar explorador", context: "📌 Ubicación inicial: Ventana de Este Equipo", instruction: "Cierre la ventana del explorador de archivos con la cruz.", hint: "Paso 1: Haga clic en el botón [X] de la esquina superior derecha.", targetAction: "close-window" },
-      { id: 30, module: "3", modName: "Módulo 3: Explorador de Archivos", title: "Ejercicio 30 – Seleccionar Este Equipo", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Haga un clic simple sobre el ícono 'Este Equipo'.", hint: "Paso 1: Haga clic simple sobre 'Este Equipo'.", targetAction: "click-este-equipo" },
-      { id: 31, module: "3", modName: "Módulo 3: Explorador de Archivos", title: "Ejercicio 31 – Seleccionar Facturador", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Toque el ícono del Facturador para seleccionarlo.", hint: "Paso 1: Haga un clic simple sobre el Facturador.", targetAction: "click-facturador" },
-      { id: 32, module: "3", modName: "Módulo 3: Explorador de Archivos", title: "Ejercicio 32 – Abrir Facturador", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Abra el Facturador haciendo doble clic en su ícono.", hint: "Paso 1: Haga doble clic rápido en el ícono del Facturador.", targetAction: "dblclick-facturador" },
-      { id: 33, module: "3", modName: "Módulo 3: Explorador de Archivos", title: "Ejercicio 33 – Cerrar Facturador", context: "📌 Ubicación inicial: Ventana de Facturador", instruction: "Cierre la ventana del Facturador pulsando [X].", hint: "Paso 1: Haga clic en la cruz [X].", targetAction: "close-window" },
-      { id: 34, module: "3", modName: "Módulo 3: Explorador de Archivos", title: "Ejercicio 34 – Enfocar escritorio", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Haga clic en el fondo libre de la pantalla.", hint: "Paso 1: Haga clic en un espacio vacío del escritorio.", targetAction: "click-desktop" },
-      { id: 35, module: "3", modName: "Módulo 3: Explorador de Archivos", title: "Ejercicio 35 – Abrir Menú Inicio", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Abra el Menú Inicio desde la barra inferior.", hint: "Paso 1: Haga clic en el botón de Windows de la barra de tareas.", targetAction: "click-start" },
-      { id: 36, module: "3", modName: "Módulo 3: Explorador de Archivos", title: "Ejercicio 36 – Iniciar Este Equipo desde menú", context: "📌 Ubicación inicial: Menú Inicio", instruction: "Abra Este Equipo desde las opciones del Menú Inicio.", hint: "Paso 1: Abra el Menú Inicio.\nPaso 2: Haga clic en 'Este Equipo'.", targetAction: "start-este-equipo" },
-      { id: 37, module: "3", modName: "Módulo 3: Explorador de Archivos", title: "Ejercicio 37 – Cerrar ventana", context: "📌 Ubicación inicial: Ventana de Este Equipo", instruction: "Cierre la ventana activa con el botón [X].", hint: "Paso 1: Haga clic en la cruz [X].", targetAction: "close-window" },
-      { id: 38, module: "3", modName: "Módulo 3: Explorador de Archivos", title: "Ejercicio 38 – Seleccionar Correo", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Haga un clic simple sobre el ícono de Correo.", hint: "Paso 1: Haga clic en el ícono de Correo.", targetAction: "click-correo" },
-      { id: 39, module: "3", modName: "Módulo 3: Explorador de Archivos", title: "Ejercicio 39 – Abrir Correo", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Abra la aplicación de Correo con doble clic.", hint: "Paso 1: Haga doble clic sobre el ícono de Correo.", targetAction: "dblclick-correo" },
-      { id: 40, module: "3", modName: "Módulo 3: Explorador de Archivos", title: "Ejercicio 40 – Cerrar ventana de Correo", context: "📌 Ubicación inicial: Ventana de Correo", instruction: "Cierre la ventana de Correo con la cruz [X].", hint: "Paso 1: Haga clic en el botón [X].", targetAction: "close-window" },
-      { id: 41, module: "3", modName: "Módulo 3: Explorador de Archivos", title: "Ejercicio 41 – Abrir Menú Inicio", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Despliegue el Menú Inicio desde la barra inferior.", hint: "Paso 1: Haga clic en el botón de Windows.", targetAction: "click-start" },
+// ============================================================
+// 2. MATRIZ DE EJERCICIOS (Módulos 1 a 5)
+// ============================================================
+const exercises = [
+  // Módulo 1: Panel Táctil
+  { id: 1, module: "1", modName: "Módulo 1: Panel Táctil", title: "01 – Tocar con precisión", context: "📌 Escritorio", instruction: "Toque suavemente el ícono de WordPad para seleccionarlo.", hint: "Paso 1: Ubique WordPad.\nPaso 2: Haga clic simple.", targetAction: "click-wordpad" },
+  { id: 2, module: "1", modName: "Módulo 1: Panel Táctil", title: "02 – Abrir con doble toque", context: "📌 Escritorio", instruction: "Abra WordPad con doble clic rápido.", hint: "Paso 1: Coloque el cursor.\nPaso 2: Haga doble clic.", targetAction: "dblclick-wordpad" },
+  { id: 3, module: "1", modName: "Módulo 1: Panel Táctil", title: "03 – Seleccionar Este Equipo", context: "📌 Escritorio", instruction: "Haga clic simple sobre el ícono 'Este Equipo'.", hint: "Paso 1: Ubique 'Este Equipo'.\nPaso 2: Haga clic simple.", targetAction: "click-este-equipo" },
+  { id: 4, module: "1", modName: "Módulo 1: Panel Táctil", title: "04 – Seleccionar Facturador", context: "📌 Escritorio", instruction: "Haga clic simple sobre el ícono del Facturador.", hint: "Paso 1: Ubique Facturador.\nPaso 2: Haga clic simple.", targetAction: "click-facturador" },
+  { id: 5, module: "1", modName: "Módulo 1: Panel Táctil", title: "05 – Seleccionar Correo", context: "📌 Escritorio", instruction: "Haga clic simple sobre el ícono de Correo.", hint: "Paso 1: Ubique Correo.\nPaso 2: Haga clic simple.", targetAction: "click-correo" },
+  { id: 6, module: "1", modName: "Módulo 1: Panel Táctil", title: "06 – Abrir Menú Inicio", context: "📌 Barra de tareas", instruction: "Abra el Menú Inicio desde la barra inferior.", hint: "Paso 1: Ubique el botón de Windows.\nPaso 2: Haga clic.", targetAction: "click-start" },
+  { id: 7, module: "1", modName: "Módulo 1: Panel Táctil", title: "07 – Enfocar escritorio", context: "📌 Escritorio", instruction: "Haga clic en un espacio vacío del fondo.", hint: "Paso 1: Busque un espacio libre.\nPaso 2: Haga clic.", targetAction: "click-desktop" },
 
-      // Módulo 4: Edición WordPad (42 al 54)
-      { id: 42, module: "4", modName: "Módulo 4: Edición WordPad", title: "Ejercicio 42 – Iniciar WordPad desde el menú", context: "📌 Ubicación inicial: Menú Inicio", instruction: "Abra WordPad seleccionándolo desde el Menú Inicio para comenzar a escribir.", hint: "Paso 1: Abra el Menú Inicio.\nPaso 2: Haga clic en la opción 'WordPad'.", targetAction: "start-wordpad" },
-      { id: 43, module: "4", modName: "Módulo 4: Edición WordPad", title: "Ejercicio 43 – Cerrar WordPad", context: "📌 Ubicación inicial: Ventana de WordPad", instruction: "Cierre la ventana de WordPad pulsando la cruz [X].", hint: "Paso 1: Haga clic en el botón [X] superior.", targetAction: "close-window" },
-      { id: 44, module: "4", modName: "Módulo 4: Edición WordPad", title: "Ejercicio 44 – Seleccionar WordPad", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Haga un clic simple sobre el ícono de WordPad.", hint: "Paso 1: Haga clic en el ícono de WordPad.", targetAction: "click-wordpad" },
-      { id: 45, module: "4", modName: "Módulo 4: Edición WordPad", title: "Ejercicio 45 – Abrir WordPad", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Abra WordPad haciendo doble clic en su ícono.", hint: "Paso 1: Haga doble clic sobre WordPad.", targetAction: "dblclick-wordpad" },
-      { id: 46, module: "4", modName: "Módulo 4: Edición WordPad", title: "Ejercicio 46 – Cerrar WordPad", context: "📌 Ubicación inicial: Ventana de WordPad", instruction: "Cierre la ventana de WordPad con [X].", hint: "Paso 1: Haga clic en la cruz [X].", targetAction: "close-window" },
-      { id: 47, module: "4", modName: "Módulo 4: Edición WordPad", title: "Ejercicio 47 – Enfocar escritorio", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Haga clic en un espacio vacío del fondo.", hint: "Paso 1: Haga clic en el fondo de pantalla.", targetAction: "click-desktop" },
-      { id: 48, module: "4", modName: "Módulo 4: Edición WordPad", title: "Ejercicio 48 – Seleccionar Facturador", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Toque el ícono del Facturador con un clic.", hint: "Paso 1: Haga clic en el ícono del Facturador.", targetAction: "click-facturador" },
-      { id: 49, module: "4", modName: "Módulo 4: Edición WordPad", title: "Ejercicio 49 – Abrir Facturador", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Abra el Facturador haciendo doble clic.", hint: "Paso 1: Haga doble clic en el Facturador.", targetAction: "dblclick-facturador" },
-      { id: 50, module: "4", modName: "Módulo 4: Edición WordPad", title: "Ejercicio 50 – Cerrar Facturador", context: "📌 Ubicación inicial: Ventana de Facturador", instruction: "Cierre la ventana del Facturador con [X].", hint: "Paso 1: Haga clic en la cruz [X].", targetAction: "close-window" },
-      { id: 51, module: "4", modName: "Módulo 4: Edición WordPad", title: "Ejercicio 51 – Abrir Menú Inicio", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Despliegue el Menú Inicio desde la barra inferior.", hint: "Paso 1: Haga clic en el botón de inicio de Windows.", targetAction: "click-start" },
-      { id: 52, module: "4", modName: "Módulo 4: Edición WordPad", title: "Ejercicio 52 – Iniciar Correo desde menú", context: "📌 Ubicación inicial: Menú Inicio", instruction: "Abra la aplicación de Correo desde el Menú Inicio.", hint: "Paso 1: Abra el Menú Inicio.\nPaso 2: Haga clic en 'Correo'.", targetAction: "start-correo" },
-      { id: 53, module: "4", modName: "Módulo 4: Edición WordPad", title: "Ejercicio 53 – Cerrar Correo", context: "📌 Ubicación inicial: Ventana de Correo", instruction: "Cierre la ventana de Correo con la cruz [X].", hint: "Paso 1: Haga clic en el botón [X].", targetAction: "close-window" },
-      { id: 54, module: "4", modName: "Módulo 4: Edición WordPad", title: "Ejercicio 54 – Seleccionar Este Equipo", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Haga un clic simple sobre el ícono 'Este Equipo'.", hint: "Paso 1: Haga clic en 'Este Equipo'.", targetAction: "click-este-equipo" },
+  // Módulo 2: Gestión de Ventanas
+  { id: 8, module: "2", modName: "Módulo 2: Ventanas", title: "08 – Abrir WordPad", context: "📌 Escritorio", instruction: "Abra WordPad desde el escritorio.", hint: "Paso 1: Ubique WordPad.\nPaso 2: Doble clic.", targetAction: "dblclick-wordpad" },
+  { id: 9, module: "2", modName: "Módulo 2: Ventanas", title: "09 – Cerrar ventana", context: "📌 Ventana de WordPad", instruction: "Cierre la ventana de WordPad usando la cruz [X].", hint: "Paso 1: Ubique la cruz [X].\nPaso 2: Haga clic.", targetAction: "close-window" },
+  { id: 10, module: "2", modName: "Módulo 2: Ventanas", title: "10 – Abrir Facturador", context: "📌 Escritorio", instruction: "Abra el Facturador desde el escritorio.", hint: "Paso 1: Ubique Facturador.\nPaso 2: Doble clic.", targetAction: "dblclick-facturador" },
+  { id: 11, module: "2", modName: "Módulo 2: Ventanas", title: "11 – Cerrar Facturador", context: "📌 Ventana de Facturador", instruction: "Cierre la ventana del Facturador.", hint: "Paso 1: Ubique la cruz [X].\nPaso 2: Haga clic.", targetAction: "close-window" },
+  { id: 12, module: "2", modName: "Módulo 2: Ventanas", title: "12 – Abrir Correo", context: "📌 Escritorio", instruction: "Abra Correo desde el escritorio.", hint: "Paso 1: Ubique Correo.\nPaso 2: Doble clic.", targetAction: "dblclick-correo" },
+  { id: 13, module: "2", modName: "Módulo 2: Ventanas", title: "13 – Cerrar Correo", context: "📌 Ventana de Correo", instruction: "Cierre la ventana de Correo.", hint: "Paso 1: Ubique la cruz [X].\nPaso 2: Haga clic.", targetAction: "close-window" },
 
-      // Módulo 5: Facturador Digital (55 al 69)
-      { id: 55, module: "5", modName: "Módulo 5: Facturador Digital", title: "Ejercicio 55 – Abrir Facturador para Clientes", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Abra el Facturador haciendo doble clic para registrar clientes y datos fiscales.", hint: "Paso 1: Localice el ícono del Facturador.\nPaso 2: Haga doble clic para abrir la ventana.", targetAction: "dblclick-facturador" },
-      { id: 56, module: "5", modName: "Módulo 5: Facturador Digital", title: "Ejercicio 56 – Cerrar Facturador", context: "📌 Ubicación inicial: Ventana de Facturador", instruction: "Cierre la ventana del Facturador pulsando la cruz [X].", hint: "Paso 1: Haga clic en la cruz [X].", targetAction: "close-window" },
-      { id: 57, module: "5", modName: "Módulo 5: Facturador Digital", title: "Ejercicio 57 – Enfocar escritorio", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Haga clic en un espacio vacío del fondo.", hint: "Paso 1: Haga clic en el fondo de pantalla.", targetAction: "click-desktop" },
-      { id: 58, module: "5", modName: "Módulo 5: Facturador Digital", title: "Ejercicio 58 – Seleccionar Facturador", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Toque el ícono del Facturador con un clic simple.", hint: "Paso 1: Haga clic en el Facturador.", targetAction: "click-facturador" },
-      { id: 59, module: "5", modName: "Módulo 5: Facturador Digital", title: "Ejercicio 59 – Abrir Facturador", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Abra el Facturador con doble clic.", hint: "Paso 1: Haga doble clic en el ícono del Facturador.", targetAction: "dblclick-facturador" },
-      { id: 60, module: "5", modName: "Módulo 5: Facturador Digital", title: "Ejercicio 60 – Cerrar ventana", context: "📌 Ubicación inicial: Ventana de Facturador", instruction: "Cierre la ventana del Facturador con [X].", hint: "Paso 1: Haga clic en la cruz [X].", targetAction: "close-window" },
-      { id: 61, module: "5", modName: "Módulo 5: Facturador Digital", title: "Ejercicio 61 – Abrir Menú Inicio", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Despliegue el Menú Inicio desde la barra inferior.", hint: "Paso 1: Haga clic en el botón de Windows.", targetAction: "click-start" },
-      { id: 62, module: "5", modName: "Módulo 5: Facturador Digital", title: "Ejercicio 62 – Iniciar WordPad desde menú", context: "📌 Ubicación inicial: Menú Inicio", instruction: "Abra WordPad desde el Menú Inicio.", hint: "Paso 1: Abra el Menú Inicio.\nPaso 2: Haga clic en 'WordPad'.", targetAction: "start-wordpad" },
-      { id: 63, module: "5", modName: "Módulo 5: Facturador Digital", title: "Ejercicio 63 – Cerrar WordPad", context: "📌 Ubicación inicial: Ventana de WordPad", instruction: "Cierre la ventana de WordPad con [X].", hint: "Paso 1: Haga clic en el botón [X].", targetAction: "close-window" },
-      { id: 64, module: "5", modName: "Módulo 5: Facturador Digital", title: "Ejercicio 64 – Seleccionar Correo", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Haga un clic simple sobre el ícono de Correo.", hint: "Paso 1: Haga clic en el ícono de Correo.", targetAction: "click-correo" },
-      { id: 65, module: "5", modName: "Módulo 5: Facturador Digital", title: "Ejercicio 65 – Abrir Correo", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Abra el Correo haciendo doble clic en su ícono.", hint: "Paso 1: Haga doble clic en Correo.", targetAction: "dblclick-correo" },
-      { id: 66, module: "5", modName: "Módulo 5: Facturador Digital", title: "Ejercicio 66 – Cerrar Correo", context: "📌 Ubicación inicial: Ventana de Correo", instruction: "Cierre la ventana de Correo con [X].", hint: "Paso 1: Haga clic en la cruz [X].", targetAction: "close-window" },
-      { id: 67, module: "5", modName: "Módulo 5: Facturador Digital", title: "Ejercicio 67 – Abrir Menú Inicio", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Abra el Menú Inicio desde la barra de tareas.", hint: "Paso 1: Haga clic en el botón de Windows.", targetAction: "click-start" },
-      { id: 68, module: "5", modName: "Módulo 5: Facturador Digital", title: "Ejercicio 68 – Iniciar Facturador desde menú", context: "📌 Ubicación inicial: Menú Inicio", instruction: "Abra el Facturador seleccionándolo en el Menú Inicio.", hint: "Paso 1: Abra el Menú Inicio.\nPaso 2: Haga clic en 'Facturador Digital'.", targetAction: "start-facturador" },
-      { id: 69, module: "5", modName: "Módulo 5: Facturador Digital", title: "Ejercicio 69 – Cerrar Facturador", context: "📌 Ubicación inicial: Ventana de Facturador", instruction: "Cierre la ventana del Facturador pulsando [X].", hint: "Paso 1: Haga clic en el botón [X].", targetAction: "close-window" },
+  // Módulo 3: Explorador de Archivos
+  { id: 14, module: "3", modName: "Módulo 3: Explorador", title: "14 – Abrir Este Equipo", context: "📌 Escritorio", instruction: "Abra 'Este Equipo' desde el escritorio.", hint: "Paso 1: Ubique 'Este Equipo'.\nPaso 2: Doble clic.", targetAction: "dblclick-este-equipo" },
+  { id: 15, module: "3", modName: "Módulo 3: Explorador", title: "15 – Cerrar Explorador", context: "📌 Ventana de Este Equipo", instruction: "Cierre la ventana del Explorador.", hint: "Paso 1: Ubique la cruz [X].\nPaso 2: Haga clic.", targetAction: "close-window" },
+  { id: 16, module: "3", modName: "Módulo 3: Explorador", title: "16 – Abrir Descargas", context: "📌 Este Equipo", instruction: "Abra la carpeta Descargas desde Este Equipo.", hint: "Paso 1: Abra Este Equipo.\nPaso 2: Doble clic en Descargas.", targetAction: "dblclick-descargas" },
+  { id: 17, module: "3", modName: "Módulo 3: Explorador", title: "17 – Cerrar Descargas", context: "📌 Ventana de Descargas", instruction: "Cierre la ventana de Descargas.", hint: "Paso 1: Ubique la cruz [X].\nPaso 2: Haga clic.", targetAction: "close-window" },
 
-      // Módulo 6: Clientes de Correo (70 al 81)
-      { id: 70, module: "6", modName: "Módulo 6: Clientes de Correo", title: "Ejercicio 70 – Abrir Correo", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Abra la aplicación de Correo haciendo doble clic en su ícono para configurar su cuenta.", hint: "Paso 1: Ubique el ícono de Correo en el escritorio.\nPaso 2: Haga doble clic rápido para abrirlo.", targetAction: "dblclick-correo" },
-      { id: 71, module: "6", modName: "Módulo 6: Clientes de Correo", title: "Ejercicio 71 – Cerrar Correo", context: "📌 Ubicación inicial: Ventana de Correo", instruction: "Cierre la ventana de Correo con el botón [X].", hint: "Paso 1: Haga clic en la cruz [X] superior.", targetAction: "close-window" },
-      { id: 72, module: "6", modName: "Módulo 6: Clientes de Correo", title: "Ejercicio 72 – Seleccionar WordPad", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Haga un clic simple sobre el ícono de WordPad.", hint: "Paso 1: Haga clic en WordPad.", targetAction: "click-wordpad" },
-      { id: 73, module: "6", modName: "Módulo 6: Clientes de Correo", title: "Ejercicio 73 – Abrir WordPad", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Abra WordPad con doble clic.", hint: "Paso 1: Haga doble clic en WordPad.", targetAction: "dblclick-wordpad" },
-      { id: 74, module: "6", modName: "Módulo 6: Clientes de Correo", title: "Ejercicio 74 – Cerrar WordPad", context: "📌 Ubicación inicial: Ventana de WordPad", instruction: "Cierre la ventana de WordPad con [X].", hint: "Paso 1: Haga clic en la cruz [X].", targetAction: "close-window" },
-      { id: 75, module: "6", modName: "Módulo 6: Clientes de Correo", title: "Ejercicio 75 – Abrir Menú Inicio", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Despliegue el Menú Inicio desde la barra inferior.", hint: "Paso 1: Haga clic en el botón de Windows.", targetAction: "click-start" },
-      { id: 76, module: "6", modName: "Módulo 6: Clientes de Correo", title: "Ejercicio 76 – Iniciar Correo desde menú", context: "📌 Ubicación inicial: Menú Inicio", instruction: "Abra el Correo seleccionándolo en el Menú Inicio.", hint: "Paso 1: Abra el Menú Inicio.\nPaso 2: Haga clic en 'Correo'.", targetAction: "start-correo" },
-      { id: 77, module: "6", modName: "Módulo 6: Clientes de Correo", title: "Ejercicio 77 – Cerrar Correo", context: "📌 Ubicación inicial: Ventana de Correo", instruction: "Cierre la ventana de Correo con [X].", hint: "Paso 1: Haga clic en el botón [X].", targetAction: "close-window" },
-      { id: 78, module: "6", modName: "Módulo 6: Clientes de Correo", title: "Ejercicio 78 – Seleccionar Este Equipo", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Haga clic simple en 'Este Equipo'.", hint: "Paso 1: Haga clic en el ícono 'Este Equipo'.", targetAction: "click-este-equipo" },
-      { id: 79, module: "6", modName: "Módulo 6: Clientes de Correo", title: "Ejercicio 79 – Abrir Este Equipo", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Abra 'Este Equipo' con doble clic.", hint: "Paso 1: Haga doble clic en 'Este Equipo'.", targetAction: "dblclick-este-equipo" },
-      { id: 80, module: "6", modName: "Módulo 6: Clientes de Correo", title: "Ejercicio 80 – Cerrar ventana", context: "📌 Ubicación inicial: Ventana de Este Equipo", instruction: "Cierre la ventana abierta con [X].", hint: "Paso 1: Haga clic en la cruz [X].", targetAction: "close-window" },
-      { id: 81, module: "6", modName: "Módulo 6: Clientes de Correo", title: "Ejercicio 81 – Seleccionar Facturador", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Toque el ícono del Facturador con un clic.", hint: "Paso 1: Haga clic en el Facturador.", targetAction: "click-facturador" },
+  // Módulo 4: Facturador Digital
+  { id: 18, module: "4", modName: "Módulo 4: Facturador", title: "18 – Abrir Facturador", context: "📌 Escritorio", instruction: "Abra el Facturador desde el escritorio.", hint: "Paso 1: Ubique Facturador.\nPaso 2: Doble clic.", targetAction: "dblclick-facturador" },
+  { id: 19, module: "4", modName: "Módulo 4: Facturador", title: "19 – Cargar cliente", context: "📌 Ventana de Facturador", instruction: "Complete los datos del cliente (nombre, CUIT, domicilio).", hint: "Paso 1: Escriba el nombre.\nPaso 2: Escriba el CUIT.\nPaso 3: Escriba el domicilio.", targetAction: "click-cliente" },
+  { id: 20, module: "4", modName: "Módulo 4: Facturador", title: "20 – Agregar producto", context: "📌 Ventana de Facturador", instruction: "Agregue un producto con cantidad y precio.", hint: "Paso 1: Escriba el producto.\nPaso 2: Ponga cantidad.\nPaso 3: Ponga precio.\nPaso 4: Haga clic en 'Agregar'.", targetAction: "click-agregar-item" },
+  { id: 21, module: "4", modName: "Módulo 4: Facturador", title: "21 – Emitir y guardar", context: "📌 Ventana de Facturador", instruction: "Emita la factura y guárdela en Descargas.", hint: "Paso 1: Verifique los datos.\nPaso 2: Haga clic en 'Emitir y Guardar'.", targetAction: "click-emitir-guardar" },
+  { id: 22, module: "4", modName: "Módulo 4: Facturador", title: "22 – Verificar en Descargas", context: "📌 Este Equipo", instruction: "Abra Descargas y verifique que la factura esté guardada.", hint: "Paso 1: Abra Este Equipo.\nPaso 2: Abra Descargas.\nPaso 3: Busque el archivo.", targetAction: "click-verificar-descargas" },
 
-      // Módulo 7: Herramientas de Sistema (82 al 97)
-      { id: 82, module: "7", modName: "Módulo 7: Herramientas de Sistema", title: "Ejercicio 82 – Abrir Facturador de Red", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Abra el Facturador con doble clic para comprobar conexiones.", hint: "Paso 1: Haga doble clic en el ícono del Facturador.", targetAction: "dblclick-facturador" },
-      { id: 83, module: "7", modName: "Módulo 7: Herramientas de Sistema", title: "Ejercicio 83 – Cerrar Facturador", context: "📌 Ubicación inicial: Ventana de Facturador", instruction: "Cierre la ventana del Facturador con [X].", hint: "Paso 1: Haga clic en la cruz [X].", targetAction: "close-window" },
-      { id: 84, module: "7", modName: "Módulo 7: Herramientas de Sistema", title: "Ejercicio 84 – Abrir Menú Inicio", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Abra el Menú Inicio desde la barra de tareas.", hint: "Paso 1: Haga clic en el botón de Windows.", targetAction: "click-start" },
-      { id: 85, module: "7", modName: "Módulo 7: Herramientas de Sistema", title: "Ejercicio 85 – Iniciar WordPad desde menú", context: "📌 Ubicación inicial: Menú Inicio", instruction: "Abra WordPad desde el Menú Inicio para configurar sonido.", hint: "Paso 1: Abra el Menú Inicio.\nPaso 2: Haga clic en 'WordPad'.", targetAction: "start-wordpad" },
-      { id: 86, module: "7", modName: "Módulo 7: Herramientas de Sistema", title: "Ejercicio 86 – Cerrar WordPad", context: "📌 Ubicación inicial: Ventana de WordPad", instruction: "Cierre la ventana de WordPad con [X].", hint: "Paso 1: Haga clic en el botón [X].", targetAction: "close-window" },
-      { id: 87, module: "7", modName: "Módulo 7: Herramientas de Sistema", title: "Ejercicio 87 – Seleccionar Correo", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Haga un clic simple sobre el ícono de Correo.", hint: "Paso 1: Haga clic en Correo.", targetAction: "click-correo" },
-      { id: 88, module: "7", modName: "Módulo 7: Herramientas de Sistema", title: "Ejercicio 88 – Abrir Correo", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Abra el Correo con doble clic para ver procesos.", hint: "Paso 1: Haga doble clic en Correo.", targetAction: "dblclick-correo" },
-      { id: 89, module: "7", modName: "Módulo 7: Herramientas de Sistema", title: "Ejercicio 89 – Cerrar Correo", context: "📌 Ubicación inicial: Ventana de Correo", instruction: "Cierre la ventana de Correo con [X].", hint: "Paso 1: Haga clic en la cruz [X].", targetAction: "close-window" },
-      { id: 90, module: "7", modName: "Módulo 7: Herramientas de Sistema", title: "Ejercicio 90 – Enfocar escritorio", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Haga clic en un espacio vacío del fondo.", hint: "Paso 1: Haga clic en el fondo de pantalla.", targetAction: "click-desktop" },
-      { id: 91, module: "7", modName: "Módulo 7: Herramientas de Sistema", title: "Ejercicio 91 – Seleccionar Este Equipo", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Haga clic simple en 'Este Equipo'.", hint: "Paso 1: Haga clic en 'Este Equipo'.", targetAction: "click-este-equipo" },
-      { id: 92, module: "7", modName: "Módulo 7: Herramientas de Sistema", title: "Ejercicio 92 – Abrir Este Equipo", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Abra 'Este Equipo' con doble clic.", hint: "Paso 1: Haga doble clic en 'Este Equipo'.", targetAction: "dblclick-este-equipo" },
-      { id: 93, module: "7", modName: "Módulo 7: Herramientas de Sistema", title: "Ejercicio 93 – Cerrar ventana", context: "📌 Ubicación inicial: Ventana de Este Equipo", instruction: "Cierre la ventana abierta con [X].", hint: "Paso 1: Haga clic en la cruz [X].", targetAction: "close-window" },
-      { id: 94, module: "7", modName: "Módulo 7: Herramientas de Sistema", title: "Ejercicio 94 – Abrir Menú Inicio", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Despliegue el Menú Inicio.", hint: "Paso 1: Haga clic en el botón de Windows.", targetAction: "click-start" },
-      { id: 95, module: "7", modName: "Módulo 7: Herramientas de Sistema", title: "Ejercicio 95 – Iniciar Facturador desde menú", context: "📌 Ubicación inicial: Menú Inicio", instruction: "Abra el Facturador desde el Menú Inicio.", hint: "Paso 1: Abra el Menú Inicio.\nPaso 2: Haga clic en 'Facturador Digital'.", targetAction: "start-facturador" },
-      { id: 96, module: "7", modName: "Módulo 7: Herramientas de Sistema", title: "Ejercicio 96 – Cerrar Facturador", context: "📌 Ubicación inicial: Ventana de Facturador", instruction: "Cierre la ventana del Facturador con [X].", hint: "Paso 1: Haga clic en el botón [X].", targetAction: "close-window" },
-      { id: 97, module: "7", modName: "Módulo 7: Herramientas de Sistema", title: "Ejercicio 97 – Limpiar pantalla", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Haga clic en un espacio vacío del fondo.", hint: "Paso 1: Haga clic en el fondo del escritorio.", targetAction: "click-desktop" },
+  // Módulo 5: Gestión de Correo
+  { id: 23, module: "5", modName: "Módulo 5: Correo", title: "23 – Abrir Correo", context: "📌 Escritorio", instruction: "Abra Correo desde el escritorio.", hint: "Paso 1: Ubique Correo.\nPaso 2: Doble clic.", targetAction: "dblclick-correo" },
+  { id: 24, module: "5", modName: "Módulo 5: Correo", title: "24 – Adjuntar desde Correo", context: "📌 Ventana de Correo", instruction: "Adjunte la factura desde la carpeta Descargas.", hint: "Paso 1: Haga clic en 'Adjuntar archivo'.\nPaso 2: Busque en Descargas.\nPaso 3: Seleccione la factura.", targetAction: "click-adjuntar-desde-correo" },
+  { id: 25, module: "5", modName: "Módulo 5: Correo", title: "25 – Adjuntar desde Descargas", context: "📌 Este Equipo", instruction: "Desde Descargas, adjunte la factura al correo.", hint: "Paso 1: Abra Este Equipo.\nPaso 2: Abra Descargas.\nPaso 3: Haga clic en 'Adjuntar al Correo'.", targetAction: "click-adjuntar-desde-descargas" },
+  { id: 26, module: "5", modName: "Módulo 5: Correo", title: "26 – Enviar correo", context: "📌 Ventana de Correo", instruction: "Complete el destinatario y envíe el correo.", hint: "Paso 1: Escriba el destinatario.\nPaso 2: Haga clic en 'Enviar'.", targetAction: "click-enviar-correo" },
+  { id: 27, module: "5", modName: "Módulo 5: Correo", title: "27 – Cerrar Correo", context: "📌 Ventana de Correo", instruction: "Cierre la ventana de Correo.", hint: "Paso 1: Ubique la cruz [X].\nPaso 2: Haga clic.", targetAction: "close-window" }
+];
 
-      // Módulo 8: Integración Operativa (98 al 100)
-      { id: 98, module: "8", modName: "Módulo 8: Integración Operativa", title: "Ejercicio 98 – Flujo transaccional completo", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Para completar este ejercicio integrador: Primero abra el Facturador, emita la factura (se guardará en Descargas), luego búsquela en el explorador 'Este Equipo' y envíela por Correo.", hint: "Paso 1: Haga doble clic en el ícono del Facturador para comenzar la emisión.", targetAction: "dblclick-facturador" },
-      { id: 99, module: "8", modName: "Módulo 8: Integración Operativa", title: "Ejercicio 99 – Resolución de incidencias", context: "📌 Ubicación inicial: Ventana de Facturador", instruction: "Cierre la ventana activa del Facturador para finalizar el diagnóstico de archivos.", hint: "Paso 1: Haga clic en la cruz [X] de la ventana.", targetAction: "close-window" },
-      { id: 100, module: "8", modName: "Módulo 8: Integración Operativa", title: "Ejercicio 100 – Evaluación de autonomía", context: "📌 Ubicación inicial: Escritorio principal", instruction: "Cierre la última ventana abierta haciendo clic en la cruz [X] para completar con éxito el ciclo de capacitación.", hint: "Paso 1: Cierre cualquier ventana activa pulsando [X] para finalizar.", targetAction: "close-window" }
-    ];
+// ============================================================
+// 3. VARIABLES GLOBALES Y ESTADO
+// ============================================================
+let currentIdx = 0;
+let facturaGuardada = false;
+let itemsFactura = [];
+let facturaPDF = null;
+let facturaSeleccionada = null;
+let examenActual = [];
+let respuestasExamen = [];
+let examenCompletado = false;
 
-    let currentIdx = 0;
-    let facturaGuardada = false;
+// ============================================================
+// 4. FUNCIONES DE INICIALIZACIÓN Y NAVEGACIÓN
+// ============================================================
+function init() {
+  populateExerciseDropdown();
+  loadExercise(0);
+}
 
-    const moduleSelectElem = document.getElementById('module-select');
-    const exerciseDropdownElem = document.getElementById('exercise-dropdown-select');
-    const badgeElem = document.getElementById('badge-module');
-    const titleElem = document.getElementById('exercise-title');
-    const contextElem = document.getElementById('location-text');
-    const instructionElem = document.getElementById('instruction-text');
-    const hintBox = document.getElementById('hint-box');
-    const appWindow = document.getElementById('app-window');
-    const windowTitle = document.getElementById('window-title');
-    const windowBody = document.getElementById('window-body');
-    const startMenu = document.getElementById('start-menu');
-    const btnPrev = document.getElementById('btn-prev');
-    const btnNext = document.getElementById('btn-next');
+function populateExerciseDropdown() {
+  const selectedModule = document.getElementById('module-select').value;
+  const dropdown = document.getElementById('exercise-dropdown-select');
+  dropdown.innerHTML = '';
 
-    function init() {
-      populateExerciseDropdown();
-      loadExercise(0);
+  exercises.forEach((ex, idx) => {
+    if (selectedModule === 'all' || ex.module === selectedModule) {
+      const opt = document.createElement('option');
+      opt.value = idx;
+      opt.textContent = ex.title;
+      dropdown.appendChild(opt);
     }
+  });
+}
 
-    function populateExerciseDropdown() {
-      const selectedModule = moduleSelectElem.value;
-      exerciseDropdownElem.innerHTML = '';
+function changeModuleFilter(modVal) {
+  populateExerciseDropdown();
+  const firstOpt = document.getElementById('exercise-dropdown-select').options[0];
+  if (firstOpt) loadExercise(parseInt(firstOpt.value, 10));
+}
 
-      exercises.forEach((ex, idx) => {
-        if (selectedModule === 'all' || ex.module === selectedModule) {
-          const opt = document.createElement('option');
-          opt.value = idx;
-          opt.textContent = ex.title;
-          exerciseDropdownElem.appendChild(opt);
-        }
+function loadExercise(idx) {
+  currentIdx = idx;
+  const ex = exercises[currentIdx];
+  if (!ex) return;
+
+  document.getElementById('exercise-dropdown-select').value = currentIdx;
+  document.getElementById('badge-module').textContent = ex.modName;
+  document.getElementById('exercise-title').textContent = ex.title;
+  document.getElementById('location-text').textContent = ex.context;
+  document.getElementById('instruction-text').innerHTML = ex.instruction;
+  document.getElementById('hint-box').innerHTML = ex.hint;
+  document.getElementById('hint-box').style.display = 'none';
+
+  // Si es el módulo de evaluación, mostrar el examen
+  if (ex.module === '6') {
+    mostrarExamen();
+  } else {
+    document.getElementById('app-window').style.display = 'none';
+  }
+
+  clearSelections();
+  document.getElementById('start-menu').style.display = 'none';
+
+  document.getElementById('btn-prev').disabled = currentIdx === 0;
+  document.getElementById('btn-next').disabled = currentIdx === exercises.length - 1;
+}
+
+function selectExercise(val) {
+  loadExercise(parseInt(val, 10));
+}
+
+function navigate(dir) {
+  const next = currentIdx + dir;
+  if (next >= 0 && next < exercises.length) {
+    const targetEx = exercises[next];
+    const moduleSelect = document.getElementById('module-select');
+    if (moduleSelect.value !== 'all' && targetEx.module !== moduleSelect.value) {
+      moduleSelect.value = targetEx.module;
+      populateExerciseDropdown();
+    }
+    loadExercise(next);
+  }
+}
+
+function toggleHint() {
+  const box = document.getElementById('hint-box');
+  box.style.display = box.style.display === 'block' ? 'none' : 'block';
+}
+
+function clearSelections() {
+  document.querySelectorAll('.desktop-icon').forEach(icon => icon.classList.remove('selected'));
+}
+
+// ============================================================
+// 5. VALIDACIÓN DE EJERCICIOS
+// ============================================================
+function validateAction(actionName) {
+  const currentEx = exercises[currentIdx];
+  if (!currentEx || currentEx.module === '6') return;
+  if (currentEx.targetAction === actionName) {
+    alert("¡Excelente! Ejercicio completado correctamente.");
+    if (currentIdx < exercises.length - 1) navigate(1);
+  }
+}
+
+// ============================================================
+// 6. MANEJADORES DE EVENTOS (Escritorio, Iconos, Menú)
+// ============================================================
+function handleIconClick(e, iconName) {
+  e.stopPropagation();
+  clearSelections();
+  const icon = document.getElementById(`icon-${iconName}`);
+  if (icon) icon.classList.add('selected');
+  validateAction(`click-${iconName}`);
+}
+
+function handleIconDblClick(iconName) {
+  clearSelections();
+  const actions = {
+    'este-equipo': openEsteEquipoApp,
+    'wordpad': openWordpadApp,
+    'facturador': openFacturadorApp,
+    'correo': openCorreoApp,
+    'papelera': openPapeleraApp
+  };
+  if (actions[iconName]) actions[iconName]();
+  validateAction(`dblclick-${iconName}`);
+}
+
+function handleDesktopClick(e) {
+  clearSelections();
+  document.getElementById('start-menu').style.display = 'none';
+  validateAction('click-desktop');
+}
+
+function toggleStartMenu(e) {
+  e.stopPropagation();
+  const menu = document.getElementById('start-menu');
+  menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+  validateAction('click-start');
+}
+
+function handleStartItem(itemName) {
+  document.getElementById('start-menu').style.display = 'none';
+  const actions = {
+    'este-equipo': openEsteEquipoApp,
+    'wordpad': openWordpadApp,
+    'facturador': openFacturadorApp,
+    'correo': openCorreoApp,
+    'papelera': openPapeleraApp
+  };
+  if (actions[itemName]) actions[itemName]();
+  validateAction(`start-${itemName}`);
+}
+
+function closeAppWindow() {
+  document.getElementById('app-window').style.display = 'none';
+  validateAction('close-window');
+}
+
+// ============================================================
+// 7. APLICACIONES (WordPad, Facturador, Correo, Este Equipo, Papelera)
+// ============================================================
+function openWordpadApp() {
+  const win = document.getElementById('app-window');
+  document.getElementById('window-title').textContent = 'WordPad - Editor de Texto';
+  document.getElementById('window-body').innerHTML = `
+    <div style="border-bottom:1px solid #dee2e6; padding-bottom:6px; margin-bottom:10px; font-size:0.75rem; color:#6c757d;">
+      Archivo | Edición | Ver | Insertar | Formato
+    </div>
+    <textarea class="app-form-control" style="height:180px; resize:none;" placeholder="Escriba su texto aquí..."></textarea>
+  `;
+  win.style.display = 'flex';
+}
+
+function openFacturadorApp() {
+  const win = document.getElementById('app-window');
+  document.getElementById('window-title').textContent = 'Facturador Digital';
+  document.getElementById('window-body').innerHTML = `
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:12px;">
+      <div class="app-form-group">
+        <label>Cliente / Razón Social:</label>
+        <input type="text" class="app-form-control" id="fac-cliente" value="Guillermo López">
+      </div>
+      <div class="app-form-group">
+        <label>CUIT / DNI:</label>
+        <input type="text" class="app-form-control" id="fac-cuit" value="30-12345678-9">
+      </div>
+      <div class="app-form-group" style="grid-column: span 2;">
+        <label>Domicilio:</label>
+        <input type="text" class="app-form-control" id="fac-domicilio" value="Calle Falsa 123, CABA">
+      </div>
+    </div>
+    <div style="border-top:1px solid #ced4da; padding-top:10px; margin-top:8px;">
+      <div style="display:flex; gap:8px; margin-bottom:8px;">
+        <input type="text" class="app-form-control" id="fac-producto" placeholder="Producto/Servicio" style="flex:3;">
+        <input type="number" class="app-form-control" id="fac-cantidad" placeholder="Cant." style="flex:1;" value="1">
+        <input type="number" class="app-form-control" id="fac-precio" placeholder="Precio $" style="flex:1;" value="15000">
+        <button class="app-btn" onclick="agregarItemFactura()">➕ Agregar</button>
+      </div>
+      <div id="fac-items-lista" style="max-height:110px; overflow-y:auto; border:1px solid #dee2e6; border-radius:4px; padding:4px; background:#f8f9fa; font-size:0.8rem;">
+        <em style="color:#6c757d;">No hay productos cargados</em>
+      </div>
+    </div>
+    <div style="display:flex; justify-content:space-between; margin-top:12px; padding:10px; background:#e9ecef; border-radius:6px;">
+      <span style="font-weight:bold;">Subtotal: $<span id="fac-subtotal">0.00</span></span>
+      <span style="font-weight:bold;">IVA (21%): $<span id="fac-iva">0.00</span></span>
+      <span style="font-weight:bold; color:#0077b6;">TOTAL: $<span id="fac-total">0.00</span></span>
+    </div>
+    <button class="app-btn" onclick="emitirYGuardarFactura()" style="margin-top:12px;">💾 Emitir y Guardar en Descargas</button>
+    <div id="fac-mensaje" style="margin-top:8px; font-size:0.85rem; font-weight:bold; text-align:center;"></div>
+  `;
+  win.style.display = 'flex';
+  itemsFactura = [];
+  facturaPDF = null;
+}
+
+function agregarItemFactura() {
+  const producto = document.getElementById('fac-producto').value.trim();
+  const cantidad = parseInt(document.getElementById('fac-cantidad').value, 10) || 1;
+  const precio = parseFloat(document.getElementById('fac-precio').value) || 0;
+  if (!producto || precio <= 0) { alert("Completa el producto y el precio."); return; }
+  itemsFactura.push({ producto, cantidad, precio });
+  actualizarListaFactura();
+  calcularTotalesFactura();
+  document.getElementById('fac-producto').value = '';
+  document.getElementById('fac-precio').value = '';
+  document.getElementById('fac-cantidad').value = '1';
+  validateAction('click-agregar-item');
+}
+
+function actualizarListaFactura() {
+  const lista = document.getElementById('fac-items-lista');
+  if (itemsFactura.length === 0) {
+    lista.innerHTML = '<em style="color:#6c757d;">No hay productos cargados</em>';
+    return;
+  }
+  lista.innerHTML = itemsFactura.map((item, idx) =>
+    `<div style="display:flex; justify-content:space-between; padding:2px 4px; border-bottom:1px solid #dee2e6;">
+      <span>${item.cantidad}x ${item.producto}</span>
+      <span>$${(item.cantidad * item.precio).toFixed(2)}</span>
+      <button onclick="eliminarItemFactura(${idx})" style="background:none; border:none; color:#dc3545; cursor:pointer;">✖</button>
+    </div>`
+  ).join('');
+}
+
+function eliminarItemFactura(idx) {
+  itemsFactura.splice(idx, 1);
+  actualizarListaFactura();
+  calcularTotalesFactura();
+}
+
+function calcularTotalesFactura() {
+  const subtotal = itemsFactura.reduce((sum, item) => sum + (item.cantidad * item.precio), 0);
+  const iva = subtotal * 0.21;
+  const total = subtotal + iva;
+  document.getElementById('fac-subtotal').textContent = subtotal.toFixed(2);
+  document.getElementById('fac-iva').textContent = iva.toFixed(2);
+  document.getElementById('fac-total').textContent = total.toFixed(2);
+}
+
+function emitirYGuardarFactura() {
+  if (itemsFactura.length === 0) { alert("Agrega al menos un producto."); return; }
+  const cliente = document.getElementById('fac-cliente').value || "Cliente";
+  const cuit = document.getElementById('fac-cuit').value || "N/A";
+  const domicilio = document.getElementById('fac-domicilio').value || "N/A";
+  const total = document.getElementById('fac-total').textContent;
+  facturaPDF = {
+    numero: `F-${String(Math.floor(Math.random() * 10000)).padStart(4, '0')}`,
+    fecha: new Date().toLocaleDateString('es-AR'),
+    cliente, cuit, domicilio,
+    items: [...itemsFactura],
+    total
+  };
+  facturaGuardada = true;
+  const facturasGuardadas = JSON.parse(localStorage.getItem('facturas_guardadas') || '[]');
+  facturasGuardadas.push(facturaPDF);
+  localStorage.setItem('facturas_guardadas', JSON.stringify(facturasGuardadas));
+  document.getElementById('fac-mensaje').innerHTML = `<span style="color:#28a745;">✅ Factura ${facturaPDF.numero} emitida y guardada en Descargas.</span>`;
+  validateAction('click-emitir-guardar');
+}
+
+function openCorreoApp() {
+  const win = document.getElementById('app-window');
+  document.getElementById('window-title').textContent = 'Correo - Cliente de Mail';
+  document.getElementById('window-body').innerHTML = `
+    <div class="app-form-group">
+      <label>Para:</label>
+      <input type="text" class="app-form-control" id="mail-to" value="cliente@empresa.com">
+    </div>
+    <div class="app-form-group">
+      <label>Asunto:</label>
+      <input type="text" class="app-form-control" id="mail-sub" value="Envío de Factura Digital">
+    </div>
+    <div style="margin-bottom:10px;">
+      <button class="app-btn" onclick="simularAdjuntarDesdeCorreo()" style="background:#6c757d;">📎 Adjuntar archivo</button>
+    </div>
+    <div id="correo-adjunto" style="margin-bottom:10px; font-size:0.8rem; color:#495057; border:1px dashed #ced4da; padding:6px; border-radius:4px; min-height:30px;">
+      📎 Archivos adjuntos: <em>Ninguno</em>
+    </div>
+    <button class="app-btn" onclick="enviarCorreoFinal()" style="background:#28a745;">📤 Enviar Correo</button>
+  `;
+  win.style.display = 'flex';
+}
+
+function simularAdjuntarDesdeCorreo() {
+  const facturasGuardadas = JSON.parse(localStorage.getItem('facturas_guardadas') || '[]');
+  if (facturasGuardadas.length === 0) { alert("❌ No hay facturas en Descargas. Emite una primero."); return; }
+  const ultima = facturasGuardadas[facturasGuardadas.length - 1];
+  const adj = document.getElementById('correo-adjunto');
+  if (adj) adj.innerHTML = `📎 Archivos adjuntos: <strong style="color:green;">${ultima.numero}.pdf</strong> (Adjuntado desde Descargas)`;
+  validateAction('click-adjuntar-desde-correo');
+  alert("✅ Factura adjuntada correctamente.");
+}
+
+function enviarCorreoFinal() {
+  const adj = document.getElementById('correo-adjunto');
+  if (!adj || !adj.innerHTML.includes('.pdf')) { alert("❌ No hay factura adjunta."); return; }
+  const para = document.getElementById('mail-to').value.trim();
+  if (!para) { alert("❌ Escribe un destinatario."); return; }
+  alert("✅ ¡Correo enviado exitosamente!");
+  validateAction('click-enviar-correo');
+  closeAppWindow();
+}
+
+function openEsteEquipoApp() {
+  const win = document.getElementById('app-window');
+  document.getElementById('window-title').textContent = 'Este Equipo';
+  document.getElementById('window-body').innerHTML = `
+    <div style="font-weight:bold; margin-bottom:10px;">Carpetas y Unidades:</div>
+    <ul style="list-style:none; padding-left:0;">
+      <li style="padding:6px; background:#f1f3f5; border-radius:4px; cursor:pointer;" onclick="abrirDescargas()">📁 Descargas</li>
+      <li style="padding:6px; background:#f1f3f5; border-radius:4px; cursor:pointer;" onclick="alert('Abriendo Documentos')">📄 Documentos</li>
+      <li style="padding:6px; background:#f1f3f5; border-radius:4px; cursor:pointer;" onclick="alert('Abriendo Música')">🎵 Música</li>
+    </ul>
+  `;
+  win.style.display = 'flex';
+}
+
+function abrirDescargas() {
+  const facturasGuardadas = JSON.parse(localStorage.getItem('facturas_guardadas') || '[]');
+  const tiene = facturasGuardadas.length > 0;
+  const body = document.getElementById('window-body');
+  if (!tiene) {
+    body.innerHTML = `<div style="text-align:center; color:#6c757d;">📭 No hay facturas guardadas. Emite una primero.</div>`;
+    return;
+  }
+  const ultima = facturasGuardadas[facturasGuardadas.length - 1];
+  facturaSeleccionada = ultima;
+  body.innerHTML = `
+    <div style="font-weight:bold; color:#0077b6;">Descargas</div>
+    <div style="padding:8px; background:#d4edda; border:1px solid #c3e6cb; border-radius:4px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;">
+      <span>📄 <strong>${ultima.numero}.pdf</strong> (${ultima.fecha})</span>
+      <button class="app-btn" onclick="adjuntarDesdeDescargas()" style="background:#0077b6;">📎 Adjuntar al Correo</button>
+    </div>
+  `;
+  validateAction('click-verificar-descargas');
+}
+
+function adjuntarDesdeDescargas() {
+  if (!facturaSeleccionada) { alert("Primero selecciona una factura."); return; }
+  openCorreoApp();
+  setTimeout(() => {
+    const adj = document.getElementById('correo-adjunto');
+    if (adj) adj.innerHTML = `📎 Archivos adjuntos: <strong style="color:green;">${facturaSeleccionada.numero}.pdf</strong> (Adjuntado desde Descargas)`;
+    const to = document.getElementById('mail-to');
+    if (to) to.value = 'cliente@empresa.com';
+    const sub = document.getElementById('mail-sub');
+    if (sub) sub.value = `Factura ${facturaSeleccionada.numero}`;
+  }, 300);
+  validateAction('click-adjuntar-desde-descargas');
+  alert("✅ Factura adjuntada al correo.");
+}
+
+function openPapeleraApp() {
+  const win = document.getElementById('app-window');
+  document.getElementById('window-title').textContent = 'Papelera de Reciclaje';
+  document.getElementById('window-body').innerHTML = `<div style="color:#6c757d; text-align:center; padding:20px;">🗑️ La papelera está vacía.</div>`;
+  win.style.display = 'flex';
+}
+
+// ============================================================
+// 8. MÓDULO 6: EVALUACIÓN GENERAL CON ARRASTRE
+// ============================================================
+function generarExamen() {
+  const preguntas = [];
+  const modulos = ['1','2','3','4','5'];
+  modulos.forEach(mod => {
+    const pool = bank[mod] || [];
+    const shuffled = pool.sort(() => Math.random() - 0.5);
+    const seleccionadas = shuffled.slice(0, 5);
+    preguntas.push(...seleccionadas.map(p => ({ ...p, modulo: mod })));
+  });
+  return preguntas.sort(() => Math.random() - 0.5);
+}
+
+function mostrarExamen() {
+  examenActual = generarExamen();
+  respuestasExamen = [];
+  examenCompletado = false;
+  const body = document.getElementById('window-body');
+  let html = `<div style="margin-bottom:15px; font-weight:bold;">📝 Evaluación General (25 preguntas)</div>`;
+  examenActual.forEach((p, idx) => {
+    html += `<div style="margin-bottom:20px; padding:10px; background:#f8f9fa; border-radius:6px; border-left:4px solid #0077b6;">`;
+    html += `<div style="font-weight:600; margin-bottom:6px;">${idx+1}. ${p.q}</div>`;
+    if (p.type === 'mcq') {
+      p.opts.forEach((opt, oi) => {
+        html += `<label style="display:block; margin:4px 0; cursor:pointer;">
+          <input type="radio" name="q${idx}" value="${oi}" onchange="guardarRespuesta(${idx}, ${oi})"> ${opt}
+        </label>`;
       });
+    } else if (p.type === 'tf') {
+      html += `<label style="display:block; margin:4px 0; cursor:pointer;">
+        <input type="radio" name="q${idx}" value="true" onchange="guardarRespuesta(${idx}, true)"> Verdadero
+      </label>
+      <label style="display:block; margin:4px 0; cursor:pointer;">
+        <input type="radio" name="q${idx}" value="false" onchange="guardarRespuesta(${idx}, false)"> Falso
+      </label>`;
+    } else if (p.type === 'order') {
+      html += `<div class="drop-zone" id="dropzone-${idx}" ondrop="soltarItem(event, ${idx})" ondragover="permitirDrop(event)" ondragleave="limpiarDrag(event)">
+        <span style="color:#6c757d;">Arrastra los pasos en orden:</span>
+      </div>
+      <div id="items-${idx}" style="display:flex; flex-wrap:wrap; gap:6px; margin-top:8px;">`;
+      p.steps.forEach((step, si) => {
+        html += `<span class="drop-item" draggable="true" data-idx="${idx}" data-step="${si}" ondragstart="iniciarDrag(event)">${step}</span>`;
+      });
+      html += `</div>`;
     }
+    html += `</div>`;
+  });
+  html += `<button class="app-btn" onclick="corregirExamen()" style="background:#28a745;">✅ Corregir Examen</button>
+           <button class="app-btn" onclick="actualizarExamen()" style="background:#0077b6; margin-left:10px;">🔄 Actualizar</button>
+           <div id="resultado-examen" style="margin-top:15px; font-weight:bold; text-align:center;"></div>`;
+  body.innerHTML = html;
+  document.getElementById('app-window').style.display = 'flex';
+}
 
-    function changeModuleFilter(modVal) {
-      populateExerciseDropdown();
-      // Seleccionar el primer ejercicio disponible del módulo filtrado
-      const firstOpt = exerciseDropdownElem.options[0];
-      if (firstOpt) {
-        loadExercise(parseInt(firstOpt.value, 10));
+function guardarRespuesta(idx, valor) {
+  respuestasExamen[idx] = valor;
+}
+
+function iniciarDrag(e) {
+  e.dataTransfer.setData('text/plain', JSON.stringify({
+    idx: e.target.dataset.idx,
+    step: e.target.dataset.step,
+    text: e.target.textContent
+  }));
+  e.target.classList.add('dragging');
+}
+
+function permitirDrop(e) { e.preventDefault(); e.currentTarget.classList.add('drag-over'); }
+function limpiarDrag(e) { e.currentTarget.classList.remove('drag-over'); }
+
+function soltarItem(e, idx) {
+  e.preventDefault();
+  e.currentTarget.classList.remove('drag-over');
+  const data = JSON.parse(e.dataTransfer.getData('text/plain'));
+  if (parseInt(data.idx) !== idx) return;
+  const dropZone = document.getElementById(`dropzone-${idx}`);
+  const item = document.createElement('span');
+  item.className = 'drop-item';
+  item.textContent = data.text;
+  item.style.cursor = 'default';
+  item.draggable = false;
+  dropZone.appendChild(item);
+  // Remover el original
+  const itemsContainer = document.getElementById(`items-${idx}`);
+  const original = itemsContainer.querySelector(`[data-step="${data.step}"]`);
+  if (original) original.remove();
+  // Guardar orden
+  const orden = Array.from(dropZone.querySelectorAll('.drop-item')).map(el => el.textContent);
+  const originalSteps = examenActual[idx].steps;
+  const ordenNumeros = orden.map(text => originalSteps.indexOf(text));
+  respuestasExamen[idx] = ordenNumeros;
+}
+
+function corregirExamen() {
+  if (examenCompletado) return;
+  let correctas = 0;
+  const total = examenActual.length;
+  examenActual.forEach((p, idx) => {
+    let resp = respuestasExamen[idx];
+    if (resp === undefined) return;
+    let esCorrecto = false;
+    if (p.type === 'mcq' || p.type === 'tf') {
+      esCorrecto = (resp === p.answer);
+    } else if (p.type === 'order') {
+      if (Array.isArray(resp) && resp.length === p.correct.length) {
+        esCorrecto = resp.every((v, i) => v === p.correct[i]);
       }
     }
-
-    function loadExercise(idx) {
-      currentIdx = idx;
-      const ex = exercises[currentIdx];
-
-      // Sincronizar el select flotante de ejercicios
-      exerciseDropdownElem.value = currentIdx;
-
-      badgeElem.textContent = ex.modName;
-      titleElem.textContent = ex.title;
-      contextElem.textContent = ex.context;
-      instructionElem.innerHTML = ex.instruction;
-      hintBox.innerHTML = ex.hint;
-      hintBox.style.display = 'none';
-
-      clearSelections();
-      startMenu.style.display = 'none';
-      appWindow.style.display = 'none';
-
-      btnPrev.disabled = currentIdx === 0;
-      btnNext.disabled = currentIdx === exercises.length - 1;
+    if (esCorrecto) correctas++;
+    // Marcar visualmente
+    const container = document.querySelector(`#app-window .window-body > div:nth-child(${idx+1})`);
+    if (container) {
+      container.style.borderLeftColor = esCorrecto ? '#28a745' : '#dc3545';
+      container.style.background = esCorrecto ? '#d4edda' : '#f8d7da';
     }
+  });
+  examenCompletado = true;
+  const mensaje = correctas >= 9 ? '¡Excelente! Bien logrado' :
+                  correctas >= 6 ? 'Bien logrado' :
+                  'Estuviste muy cerca, hay que seguir practicando';
+  document.getElementById('resultado-examen').innerHTML = `
+    <span style="font-size:1.2rem;">${correctas}/${total} - ${mensaje}</span>
+  `;
+}
 
-    function selectExercise(val) {
-      loadExercise(parseInt(val, 10));
-    }
+function actualizarExamen() {
+  if (!examenCompletado) { alert("Completa el examen antes de actualizar."); return; }
+  mostrarExamen();
+}
 
-    function navigate(dir) {
-      const next = currentIdx + dir;
-      if (next >= 0 && next < exercises.length) {
-        // Verificar si el ejercicio pertenece al filtro actual, si no, ajustar el módulo
-        const targetEx = exercises[next];
-        if (moduleSelectElem.value !== 'all' && targetEx.module !== moduleSelectElem.value) {
-          moduleSelectElem.value = targetEx.module;
-          populateExerciseDropdown();
-        }
-        loadExercise(next);
-      }
-    }
+// ============================================================
+// 9. RELOJ Y ARRANQUE
+// ============================================================
+function updateClock() {
+  const now = new Date();
+  document.getElementById('clock-time').textContent = now.toLocaleTimeString('es-AR', {hour:'2-digit',minute:'2-digit'});
+  document.getElementById('clock-date').textContent = now.toLocaleDateString('es-AR');
+}
+setInterval(updateClock, 1000);
+updateClock();
 
-    function toggleHint() {
-      hintBox.style.display = hintBox.style.display === 'block' ? 'none' : 'block';
-    }
-
-    function clearSelections() {
-      document.querySelectorAll('.desktop-icon').forEach(icon => icon.classList.remove('selected'));
-    }
-
-    function validateAction(actionName) {
-      const currentEx = exercises[currentIdx];
-      if (currentEx.targetAction === actionName) {
-        if (currentIdx === 97) { // Ejercicio 98: Flujo Transaccional
-          if (actionName === 'dblclick-facturador') {
-            openFacturadorApp();
-            return;
-          }
-        }
-        alert("¡Excelente! Ejercicio completado correctamente.");
-        if (currentIdx < exercises.length - 1) {
-          navigate(1);
-        }
-      }
-    }
-
-    function handleIconClick(e, iconName) {
-      e.stopPropagation();
-      clearSelections();
-      document.getElementById(`icon-${iconName}`).classList.add('selected');
-      validateAction(`click-${iconName}`);
-    }
-
-    function handleIconDblClick(iconName) {
-      clearSelections();
-      if (iconName === 'este-equipo') openEsteEquipoApp();
-      else if (iconName === 'wordpad') openWordpadApp();
-      else if (iconName === 'facturador') openFacturadorApp();
-      else if (iconName === 'correo') openCorreoApp();
-      else if (iconName === 'papelera') openPapeleraApp();
-      validateAction(`dblclick-${iconName}`);
-    }
-
-    function handleDesktopClick(e) {
-      clearSelections();
-      startMenu.style.display = 'none';
-      validateAction('click-desktop');
-    }
-
-    function toggleStartMenu(e) {
-      e.stopPropagation();
-      startMenu.style.display = startMenu.style.display === 'block' ? 'none' : 'block';
-      validateAction('click-start');
-    }
-
-    function handleStartItem(itemName) {
-      startMenu.style.display = 'none';
-      if (itemName === 'este-equipo') openEsteEquipoApp();
-      else if (itemName === 'wordpad') openWordpadApp();
-      else if (itemName === 'facturador') openFacturadorApp();
-      else if (itemName === 'correo') openCorreoApp();
-      else if (itemName === 'papelera') openPapeleraApp();
-      validateAction(`start-${itemName}`);
-    }
-
-    function closeAppWindow() {
-      appWindow.style.display = 'none';
-      validateAction('close-window');
-    }
-
-    // APLICACIONES INTERACTIVAS REALES
-    function openEsteEquipoApp() {
-      windowTitle.textContent = "Este Equipo - Explorador de Archivos";
-      windowBody.innerHTML = `
-        <div style="font-weight:bold; margin-bottom:10px;">Carpetas y Unidades del Sistema:</div>
-        <ul style="list-style:none; padding-left:0;">
-          <li style="padding:6px; background:#f1f3f5; margin-bottom:4px; border-radius:4px; cursor:pointer;" onclick="alert('Abriendo Disco Local (C:)')">💻 Disco Local (C:)</li>
-          <li style="padding:6px; background:#e2f0d9; margin-bottom:4px; border-radius:4px; cursor:pointer; font-weight:600;" onclick="openCarpetaDescargas()">📁 Descargas ${facturaGuardada ? '<span style="color:green; float:right;">[Factura_001.pdf disponible]</span>' : ''}</li>
-          <li style="padding:6px; background:#f1f3f5; margin-bottom:4px; border-radius:4px; cursor:pointer;" onclick="alert('Abriendo Documentos')">📄 Documentos</li>
-        </ul>
-      `;
-      appWindow.style.display = 'flex';
-    }
-
-    function openCarpetaDescargas() {
-      if (currentIdx === 97 && facturaGuardada) {
-        windowBody.innerHTML = `
-          <div style="font-weight:bold; color:#0077b6; margin-bottom:10px;">Carpeta: Descargas</div>
-          <div style="padding:8px; background:#d4edda; border:1px solid #c3e6cb; border-radius:4px; display:flex; justify-content:space-between; align-items:center;">
-            <span>📄 Factura_001.pdf (Generada y guardada correctamente)</span>
-            <button class="app-btn" onclick="abrirCorreoParaAdjuntar()">Adjuntar al Correo</button>
-          </div>
-        `;
-      } else {
-        alert("Carpeta Descargas abierta.");
-      }
-    }
-
-    function openWordpadApp() {
-      windowTitle.textContent = "WordPad - Editor de Texto";
-      windowBody.innerHTML = `
-        <div style="border-bottom:1px solid #dee2e6; padding-bottom:6px; margin-bottom:10px; font-size:0.75rem; color:#6c757d;">
-          Archivo | Edición | Ver | Insertar | Formato
-        </div>
-        <textarea class="app-form-control" style="height:180px; resize:none;" placeholder="Escriba su texto aquí..."></textarea>
-      `;
-      appWindow.style.display = 'flex';
-    }
-
-    function openFacturadorApp() {
-      windowTitle.textContent = "Facturador Digital - Emisión de Comprobantes";
-      windowBody.innerHTML = `
-        <div class="app-form-group">
-          <label>Cliente / Razón Social:</label>
-          <input type="text" class="app-form-control" id="fac-cliente" value="Guillermo López">
-        </div>
-        <div class="app-form-group">
-          <label>Total de la Factura ($):</label>
-          <input type="text" class="app-form-control" id="fac-total" value="15000">
-        </div>
-        <button class="app-btn" onclick="emitirYGuardarFactura()">Emitir y Guardar en Descargas</button>
-      `;
-      appWindow.style.display = 'flex';
-    }
-
-    function emitirYGuardarFactura() {
-      facturaGuardada = true;
-      alert("¡Factura emitida con éxito! El comprobante PDF se ha guardado automáticamente en la carpeta Descargas.");
-      closeAppWindow();
-      if (currentIdx === 97) {
-        setTimeout(() => {
-          openEsteEquipoApp();
-        }, 500);
-      }
-    }
-
-    function openCorreoApp() {
-      windowTitle.textContent = "Correo - Cliente de Mail";
-      windowBody.innerHTML = `
-        <div class="app-form-group">
-          <label>Para:</label>
-          <input type="text" class="app-form-control" id="mail-to" value="cliente@empresa.com">
-        </div>
-        <div class="app-form-group">
-          <label>Asunto:</label>
-          <input type="text" class="app-form-control" id="mail-sub" value="Envío de Factura Digital">
-        </div>
-        <div id="mail-adjunto-container" style="margin-bottom:10px; font-size:0.8rem; color:#495057;">
-          📎 Archivos adjuntos: <em>Ninguno</em>
-        </div>
-        <button class="app-btn" onclick="enviarCorreoFinal()">Enviar Correo</button>
-      `;
-      appWindow.style.display = 'flex';
-    }
-
-    function abrirCorreoParaAdjuntar() {
-      openCorreoApp();
-      setTimeout(() => {
-        const adjContainer = document.getElementById('mail-adjunto-container');
-        if (adjContainer) {
-          adjContainer.innerHTML = `📎 Archivos adjuntos: <strong style="color:green;">Factura_001.pdf</strong> (Adjuntado desde Descargas)`;
-        }
-      }, 200);
-    }
-
-    function enviarCorreoFinal() {
-      alert("¡Correo enviado exitosamente con la factura adjunta!");
-      closeAppWindow();
-      if (currentIdx === 97) {
-        alert("¡Ejercicio 98 completado con éxito! Flujo transaccional finalizado.");
-        navigate(1);
-      }
-    }
-
-    function openPapeleraApp() {
-      windowTitle.textContent = "Papelera de Reciclaje";
-      windowBody.innerHTML = `
-        <div style="color:#6c757d; font-size:0.9rem; text-align:center; padding:20px;">
-          🗑️ La papelera está actualmente vacía.
-        </div>
-      `;
-      appWindow.style.display = 'flex';
-    }
-
-    init();
-  </script>
+init();
+</script>
 </body>
 </html>
