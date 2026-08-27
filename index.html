@@ -680,7 +680,7 @@ function playClickSound() {
 // 1. BANCO DE PREGUNTAS (Módulo 6)
 // ============================================================
 const bank = {
-  1: [ // Módulo 1: Táctil
+  1: [
     { type: 'mcq', q: '¿Qué acción abre un programa?', opts: ['Clic simple', 'Doble clic', 'Clic derecho'], answer: 1 },
     { type: 'mcq', q: '¿Qué hace un clic simple?', opts: ['Abrir', 'Seleccionar', 'Cerrar'], answer: 1 },
     { type: 'tf', q: 'El doble clic se usa para abrir archivos.', answer: true },
@@ -704,7 +704,7 @@ const bank = {
     { type: 'mcq', q: '¿Qué significa "arrastrar"?', opts: ['Mover manteniendo clic', 'Clic rápido', 'Deslizar sin clic'], answer: 0 },
     { type: 'tf', q: 'El panel táctil necesita calibración constante.', answer: false }
   ],
-  2: [ // Módulo 2: Ventanas
+  2: [
     { type: 'mcq', q: '¿Cómo cierras una ventana?', opts: ['Botón [X]', 'Botón Inicio', 'Doble clic'], answer: 0 },
     { type: 'tf', q: 'Para mover una ventana, arrastras la barra superior.', answer: true },
     { type: 'mcq', q: '¿Qué hace el botón "Minimizar"?', opts: ['Cierra la ventana', 'Oculta en la barra', 'Agranda la ventana'], answer: 1 },
@@ -728,7 +728,7 @@ const bank = {
     { type: 'tf', q: 'Todas las ventanas tienen el mismo tamaño.', answer: false },
     { type: 'tf', q: 'Se puede tener varias ventanas abiertas a la vez.', answer: true }
   ],
-  3: [ // Módulo 3: Explorador
+  3: [
     { type: 'mcq', q: '¿Dónde se guardan las descargas?', opts: ['Documentos', 'Descargas', 'Escritorio'], answer: 1 },
     { type: 'tf', q: '"Este Equipo" muestra las unidades de la PC.', answer: true },
     { type: 'mcq', q: '¿Qué carpeta contiene los archivos del usuario?', opts: ['Windows', 'Usuarios', 'Sistema'], answer: 1 },
@@ -752,7 +752,7 @@ const bank = {
     { type: 'tf', q: 'El explorador permite buscar archivos.', answer: true },
     { type: 'tf', q: 'Todos los archivos se guardan en el escritorio.', answer: false }
   ],
-  4: [ // Módulo 4: Facturador
+  4: [
     { type: 'mcq', q: '¿Qué programa usamos para emitir facturas?', opts: ['WordPad', 'Facturador Digital', 'Correo'], answer: 1 },
     { type: 'tf', q: 'El Facturador permite agregar productos con cantidad y precio.', answer: true },
     { type: 'mcq', q: '¿Dónde se guarda la factura después de emitirla?', opts: ['Descargas', 'Documentos', 'Escritorio'], answer: 0 },
@@ -776,7 +776,7 @@ const bank = {
     { type: 'tf', q: 'El Facturador permite imprimir facturas.', answer: true },
     { type: 'tf', q: 'La factura guardada se puede adjuntar a un correo.', answer: true }
   ],
-  5: [ // Módulo 5: Correo
+  5: [
     { type: 'mcq', q: '¿Qué programa usamos para enviar correos?', opts: ['WordPad', 'Facturador', 'Correo'], answer: 2 },
     { type: 'tf', q: 'Para enviar un correo necesitas un destinatario.', answer: true },
     { type: 'mcq', q: '¿Cómo adjuntas un archivo en Correo?', opts: ['Botón "Adjuntar"', 'Arrastrar al correo', 'Copiar y pegar'], answer: 0 },
@@ -1748,6 +1748,7 @@ function validateAction(actionName) {
 // 7. MANEJADORES DE EVENTOS (Escritorio, Iconos, Menú)
 // ============================================================
 function handleIconClick(iconName) {
+  console.log("handleIconClick llamado con:", iconName);
   playClickSound();
   clearSelections();
   const icon = document.getElementById(`icon-${iconName}`);
@@ -1755,12 +1756,16 @@ function handleIconClick(iconName) {
     icon.classList.add('selected');
     // Validar ejercicio de clic simple
     validateAction(`click-${iconName}`);
+  } else {
+    console.error("Ícono no encontrado:", iconName);
   }
 }
 
 function handleIconDblClick(iconName) {
+  console.log("handleIconDblClick llamado con:", iconName);
   playClickSound();
   clearSelections();
+  
   // Abrir la aplicación correspondiente
   const actions = {
     'este-equipo': openEsteEquipoApp,
@@ -1769,10 +1774,13 @@ function handleIconDblClick(iconName) {
     'correo': openCorreoApp,
     'papelera': openPapeleraApp
   };
+  
   if (actions[iconName]) {
     actions[iconName]();
     // Validar ejercicio de doble clic
     validateAction(`dblclick-${iconName}`);
+  } else {
+    console.error("Acción no encontrada para:", iconName);
   }
 }
 
