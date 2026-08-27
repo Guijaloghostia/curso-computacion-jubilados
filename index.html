@@ -31,86 +31,90 @@
       min-width: 280px;
       flex-shrink: 0;
       background-color: #0b132b;
-      padding: 16px;
+      padding: 10px 12px;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      height: 100vh;
       border-right: 2px solid #1c2541;
       z-index: 20;
+      overflow-y: auto;
     }
     .sidebar-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
+      flex-shrink: 0;
     }
     .sidebar-header h2 {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       color: #00b4d8;
     }
     .btn-ayuda {
       background: #1c2541;
       border: 1px solid #3a506b;
       color: #00b4d8;
-      padding: 4px 8px;
+      padding: 2px 8px;
       border-radius: 4px;
       cursor: pointer;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
     }
     .btn-ayuda:hover {
       background: #3a506b;
     }
     .control-group {
-      margin-bottom: 10px;
+      margin-bottom: 6px;
+      flex-shrink: 0;
     }
     .control-label {
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       color: #8d99ae;
-      margin-bottom: 3px;
+      margin-bottom: 2px;
       display: block;
       font-weight: 600;
     }
     .module-select, .exercise-dropdown-select {
       width: 100%;
-      padding: 8px;
+      padding: 6px 8px;
       background: #1c2541;
       color: #fff;
       border: 1px solid #3a506b;
-      border-radius: 6px;
-      font-size: 0.85rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
       cursor: pointer;
     }
 
     /* ===== PROGRESO ===== */
     #progreso-container {
       background: #1c2541;
-      border-radius: 6px;
-      padding: 8px 10px;
-      margin-bottom: 8px;
+      border-radius: 4px;
+      padding: 6px 8px;
+      margin-bottom: 6px;
+      flex-shrink: 0;
     }
     #progreso-container .progreso-titulo {
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       color: #8d99ae;
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      margin-bottom: 4px;
+      margin-bottom: 2px;
     }
     #progreso-container .progreso-barra {
       width: 100%;
-      height: 8px;
+      height: 6px;
       background: #0d1117;
-      border-radius: 4px;
+      border-radius: 3px;
       overflow: hidden;
     }
     #progreso-container .progreso-barra-interna {
       height: 100%;
       width: 0%;
       background: linear-gradient(90deg, #00b4d8, #0077b6);
-      border-radius: 4px;
+      border-radius: 3px;
       transition: width 0.3s ease;
     }
     #progreso-container .progreso-texto {
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       color: #e0e1dd;
       margin-top: 2px;
       text-align: right;
@@ -118,13 +122,14 @@
 
     /* ===== FEEDBACK ===== */
     #feedback {
-      margin-top: 8px;
-      padding: 8px;
-      border-radius: 6px;
+      margin-top: 6px;
+      padding: 6px;
+      border-radius: 4px;
       background: #1c2541;
       text-align: center;
       font-weight: bold;
       display: none;
+      flex-shrink: 0;
     }
     #feedback.exito {
       display: block;
@@ -136,21 +141,22 @@
     #ayuda-panel {
       display: none;
       background: #1c2541;
-      border-radius: 6px;
-      padding: 10px;
-      margin-bottom: 8px;
-      max-height: 200px;
+      border-radius: 4px;
+      padding: 8px;
+      margin-bottom: 6px;
+      max-height: 150px;
       overflow-y: auto;
       border: 1px solid #3a506b;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       color: #e0e1dd;
+      flex-shrink: 0;
     }
     #ayuda-panel.visible {
       display: block;
     }
     #ayuda-panel .ayuda-item {
-      margin-bottom: 8px;
-      padding-bottom: 8px;
+      margin-bottom: 6px;
+      padding-bottom: 6px;
       border-bottom: 1px solid #2a3a5a;
     }
     #ayuda-panel .ayuda-item:last-child {
@@ -165,47 +171,47 @@
     #ayuda-panel .ayuda-desc {
       margin-top: 2px;
       color: #e0e1dd;
-      line-height: 1.4;
+      line-height: 1.3;
     }
     .btn-cerrar-ayuda {
       background: transparent;
       border: none;
       color: #dc3545;
       cursor: pointer;
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       float: right;
     }
 
     /* ===== DETALLE DEL EJERCICIO ===== */
     #ejercicio-detalle {
-      margin-top: 10px;
+      margin-top: 6px;
       flex: 1;
       overflow-y: auto;
-      padding-right: 4px;
-      font-size: 0.95rem;
+      padding-right: 2px;
+      font-size: 0.85rem;
     }
     #ejercicio-detalle .bloque {
-      margin-bottom: 10px;
+      margin-bottom: 6px;
       background: #1c2541;
-      padding: 8px 10px;
-      border-radius: 6px;
+      padding: 6px 8px;
+      border-radius: 4px;
       border-left: 3px solid #00b4d8;
     }
     #ejercicio-detalle .bloque-titulo {
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       color: #8d99ae;
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
     #ejercicio-detalle .bloque-contenido {
-      font-size: 0.9rem;
+      font-size: 0.8rem;
       color: #e0e1dd;
-      margin-top: 3px;
-      line-height: 1.5;
+      margin-top: 2px;
+      line-height: 1.4;
     }
     #ejercicio-detalle .bloque-contenido ol {
-      padding-left: 18px;
-      line-height: 1.6;
+      padding-left: 16px;
+      line-height: 1.4;
     }
     #ejercicio-detalle .bloque-contenido li {
       margin-bottom: 2px;
@@ -216,19 +222,20 @@
 
     .nav-buttons {
       display: flex;
-      gap: 8px;
-      margin-top: 10px;
+      gap: 6px;
+      margin-top: 6px;
+      flex-shrink: 0;
     }
     .btn-nav {
       flex: 1;
-      padding: 8px;
+      padding: 6px;
       border: none;
-      border-radius: 6px;
+      border-radius: 4px;
       background-color: #00b4d8;
       color: #000000;
       font-weight: bold;
       cursor: pointer;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
     }
     .btn-nav:disabled {
       background-color: #3a506b;
@@ -247,13 +254,13 @@
     .desktop-workspace {
       flex: 1;
       position: relative;
-      padding: 12px;
+      padding: 10px;
     }
     .desktop-icons {
       display: flex;
       flex-direction: column;
       gap: 10px;
-      width: 65px;
+      width: 60px;
     }
     .desktop-icon {
       display: flex;
@@ -261,7 +268,7 @@
       align-items: center;
       text-align: center;
       color: #ffffff;
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       font-weight: 600;
       text-shadow: 1px 1px 3px rgba(0,0,0,0.9);
       cursor: pointer;
@@ -405,6 +412,7 @@
       padding: 0 10px;
       border-top: 1px solid rgba(255, 255, 255, 0.1);
       z-index: 20;
+      flex-shrink: 0;
     }
     .start-btn {
       background: transparent;
@@ -544,14 +552,19 @@
           <svg viewBox="0 0 48 48"><path fill="#107c41" d="M8 4h24l8 8v32H8z"/><path fill="#fff" d="M14 16h20v2H14zm0 6h20v2H14zm0 6h12v2H14z"/><path fill="#0b532c" d="M32 4v10h10z"/></svg>
           <span>Facturador</span>
         </div>
-        <!-- Correo -->
+        <!-- Correo (icono mejorado - vuelve al anterior) -->
         <div class="desktop-icon" id="icon-correo" onclick="handleIconClick(event, 'correo')" ondblclick="handleIconDblClick('correo')">
-          <svg viewBox="0 0 48 48"><path fill="#0078d7" d="M4 8h40l-20 12L4 8z"/><path fill="#0078d7" d="M4 10v20l14-9-14-11z"/><path fill="#0078d7" d="M44 10v20l-14-9 14-11z"/><path fill="#0078d7" d="M4 30l14-10 6 4 6-4 14 10H4z"/></svg>
+          <svg viewBox="0 0 48 48">
+            <path fill="#0078d7" d="M4 8h40l-20 12L4 8z"/>
+            <path fill="#0078d7" d="M4 10v20l14-9-14-11z"/>
+            <path fill="#0078d7" d="M44 10v20l-14-9 14-11z"/>
+            <path fill="#0078d7" d="M4 30l14-10 6 4 6-4 14 10H4z"/>
+          </svg>
           <span>Correo</span>
         </div>
         <!-- Papelera (mejorada) -->
         <div class="desktop-icon" id="icon-papelera" onclick="handleIconClick(event, 'papelera')" ondblclick="handleIconDblClick('papelera')">
-          <svg viewBox="0 0 48 48" width="32" height="32">
+          <svg viewBox="0 0 48 48">
             <path fill="#6c757d" d="M14 10h20v30H14z"/>
             <path fill="#495057" d="M10 6h28v4H10z"/>
             <path fill="#adb5bd" d="M18 4h12v3H18z"/>
@@ -1994,4 +2007,4 @@ updateClock();
 init();
 </script>
 </body>
-  </html>
+</html>
