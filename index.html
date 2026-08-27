@@ -803,7 +803,47 @@ const bank = {
 };
 
 // ============================================================
-// 2. EJERCICIOS (20 por módulo = 100 ejercicios)
+// 2. FUNCIONES GLOBALES PARA LOS ÍCONOS DEL ESCRITORIO (CORREGIDAS)
+// ============================================================
+function handleIconClick(iconName) {
+  console.log("handleIconClick llamado con:", iconName);
+  playClickSound();
+  clearSelections();
+  const icon = document.getElementById(`icon-${iconName}`);
+  if (icon) {
+    icon.classList.add('selected');
+    // Validar ejercicio de clic simple
+    validateAction(`click-${iconName}`);
+  } else {
+    console.error("Ícono no encontrado:", iconName);
+  }
+}
+
+function handleIconDblClick(iconName) {
+  console.log("handleIconDblClick llamado con:", iconName);
+  playClickSound();
+  clearSelections();
+  
+  // Abrir la aplicación correspondiente
+  const actions = {
+    'este-equipo': openEsteEquipoApp,
+    'wordpad': openWordpadApp,
+    'facturador': openFacturadorApp,
+    'correo': openCorreoApp,
+    'papelera': openPapeleraApp
+  };
+  
+  if (actions[iconName]) {
+    actions[iconName]();
+    // Validar ejercicio de doble clic
+    validateAction(`dblclick-${iconName}`);
+  } else {
+    console.error("Acción no encontrada para:", iconName);
+  }
+}
+
+// ============================================================
+// 3. EJERCICIOS (20 por módulo = 100 ejercicios)
 // ============================================================
 const exercises = [];
 
@@ -1747,42 +1787,7 @@ function validateAction(actionName) {
 // ============================================================
 // 7. MANEJADORES DE EVENTOS (Escritorio, Iconos, Menú) - FUNCIONES GLOBALES
 // ============================================================
-function handleIconClick(iconName) {
-  console.log("handleIconClick llamado con:", iconName);
-  playClickSound();
-  clearSelections();
-  const icon = document.getElementById(`icon-${iconName}`);
-  if (icon) {
-    icon.classList.add('selected');
-    // Validar ejercicio de clic simple
-    validateAction(`click-${iconName}`);
-  } else {
-    console.error("Ícono no encontrado:", iconName);
-  }
-}
-
-function handleIconDblClick(iconName) {
-  console.log("handleIconDblClick llamado con:", iconName);
-  playClickSound();
-  clearSelections();
-  
-  // Abrir la aplicación correspondiente
-  const actions = {
-    'este-equipo': openEsteEquipoApp,
-    'wordpad': openWordpadApp,
-    'facturador': openFacturadorApp,
-    'correo': openCorreoApp,
-    'papelera': openPapeleraApp
-  };
-  
-  if (actions[iconName]) {
-    actions[iconName]();
-    // Validar ejercicio de doble clic
-    validateAction(`dblclick-${iconName}`);
-  } else {
-    console.error("Acción no encontrada para:", iconName);
-  }
-}
+// (handleIconClick y handleIconDblClick ya están declaradas al principio del script)
 
 function handleDesktopClick(e) {
   clearSelections();
