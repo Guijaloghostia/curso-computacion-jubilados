@@ -219,6 +219,21 @@
     #ejercicio-detalle .bloque-pista {
       border-left-color: #ffb703;
     }
+    #ejercicio-detalle .bloque-examen {
+      border-left-color: #9d4edd;
+      background: #1c2541;
+      padding: 10px;
+      border-radius: 4px;
+      text-align: center;
+    }
+    #ejercicio-detalle .bloque-examen .examen-icono {
+      font-size: 2rem;
+      margin-bottom: 4px;
+    }
+    #ejercicio-detalle .bloque-examen .examen-texto {
+      font-size: 0.9rem;
+      color: #e0e1dd;
+    }
 
     .nav-buttons {
       display: flex;
@@ -297,8 +312,8 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 520px;
-      height: 360px;
+      width: 560px;
+      height: 420px;
       background-color: #f8f9fa;
       color: #333333;
       border-radius: 6px;
@@ -459,6 +474,12 @@
       background: #cfe2ff;
       border-color: #0d6efd;
     }
+    .examen-botones {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+      justify-content: center;
+    }
   </style>
 </head>
 <body>
@@ -471,7 +492,7 @@
         <button class="btn-ayuda" onclick="toggleAyuda()">❓ Ayuda</button>
       </div>
 
-      <!-- AYUDA CONTEXTUAL (coloquial) -->
+      <!-- AYUDA CONTEXTUAL -->
       <div id="ayuda-panel">
         <button class="btn-cerrar-ayuda" onclick="toggleAyuda()">✕ Cerrar</button>
         <div class="ayuda-item">
@@ -552,7 +573,7 @@
           <svg viewBox="0 0 48 48"><path fill="#107c41" d="M8 4h24l8 8v32H8z"/><path fill="#fff" d="M14 16h20v2H14zm0 6h20v2H14zm0 6h12v2H14z"/><path fill="#0b532c" d="M32 4v10h10z"/></svg>
           <span>Facturador</span>
         </div>
-        <!-- Correo (icono mejorado - vuelve al anterior) -->
+        <!-- Correo -->
         <div class="desktop-icon" id="icon-correo" onclick="handleIconClick(event, 'correo')" ondblclick="handleIconDblClick('correo')">
           <svg viewBox="0 0 48 48">
             <path fill="#0078d7" d="M4 8h40l-20 12L4 8z"/>
@@ -562,7 +583,7 @@
           </svg>
           <span>Correo</span>
         </div>
-        <!-- Papelera (mejorada) -->
+        <!-- Papelera -->
         <div class="desktop-icon" id="icon-papelera" onclick="handleIconClick(event, 'papelera')" ondblclick="handleIconDblClick('papelera')">
           <svg viewBox="0 0 48 48">
             <path fill="#6c757d" d="M14 10h20v30H14z"/>
@@ -640,123 +661,143 @@ const exercises = [];
 
 // ---- MÓDULO 1: PANEL TÁCTIL (20 ejercicios) ----
 for (let i = 1; i <= 20; i++) {
-  let targetAction, contexto, objetivo, desarrollo, pista;
+  let targetAction, contexto, objetivo, desarrollo, pista, title;
   if (i === 1) {
     targetAction = "click-wordpad";
+    title = "Seleccionar WordPad";
     contexto = "Para usar la computadora, primero debemos aprender a seleccionar elementos con el panel táctil o el mouse.";
     objetivo = "Seleccionar el ícono de WordPad con un clic simple.";
     desarrollo = ["Ubicá el ícono de WordPad en el escritorio.", "Apoyá el dedo sobre el panel táctil y movelo hasta que el cursor esté sobre el ícono.", "Presioná suavemente una vez (clic simple) sobre el ícono.", "Verás que el ícono se resalta, indicando que está seleccionado."];
     pista = "Si no ves el cursor, mové el dedo lentamente sobre el panel táctil hasta que aparezca.";
   } else if (i === 2) {
     targetAction = "dblclick-wordpad";
+    title = "Abrir WordPad";
     contexto = "Para abrir un programa, necesitamos hacer doble clic en su ícono.";
     objetivo = "Abrir WordPad usando doble clic.";
     desarrollo = ["Ubicá el ícono de WordPad en el escritorio.", "Hacé dos clics rápidos y seguidos (doble clic) sobre el ícono.", "La ventana de WordPad se abrirá y podrás empezar a escribir."];
     pista = "El doble clic debe ser rápido. Si lo hacés muy lento, la computadora lo interpreta como dos clics separados.";
   } else if (i === 3) {
     targetAction = "click-este-equipo";
+    title = "Seleccionar Este Equipo";
     contexto = "Para explorar los archivos de la computadora, primero debemos seleccionar 'Este Equipo'.";
     objetivo = "Seleccionar el ícono 'Este Equipo' con un clic simple.";
     desarrollo = ["Ubicá el ícono 'Este Equipo' en el escritorio.", "Hacé un clic simple sobre él.", "El ícono se resaltará, indicando que está seleccionado."];
     pista = "'Este Equipo' también se llama 'Mi PC' en versiones anteriores de Windows.";
   } else if (i === 4) {
     targetAction = "click-facturador";
+    title = "Seleccionar Facturador";
     contexto = "Para emitir facturas, primero debemos seleccionar el Facturador Digital.";
     objetivo = "Seleccionar el ícono del Facturador con un clic simple.";
     desarrollo = ["Ubicá el ícono del Facturador en el escritorio.", "Hacé un clic simple sobre él.", "El ícono se resaltará."];
     pista = "El Facturador es una herramienta para crear comprobantes de venta.";
   } else if (i === 5) {
     targetAction = "click-correo";
+    title = "Seleccionar Correo";
     contexto = "Para enviar y recibir mensajes, debemos seleccionar el Correo.";
     objetivo = "Seleccionar el ícono de Correo con un clic simple.";
     desarrollo = ["Ubicá el ícono de Correo en el escritorio.", "Hacé un clic simple sobre él.", "El ícono se resaltará."];
     pista = "El Correo se usa para comunicarse con otras personas por Internet.";
   } else if (i === 6) {
     targetAction = "click-start";
+    title = "Abrir Menú Inicio";
     contexto = "El Menú Inicio es el punto de partida para acceder a todas las aplicaciones.";
     objetivo = "Abrir el Menú Inicio desde la barra de tareas.";
     desarrollo = ["Ubicá el botón de Windows en la esquina inferior izquierda de la pantalla.", "Hacé un clic simple sobre él.", "Se desplegará el Menú Inicio con todas las aplicaciones."];
     pista = "El botón de Windows tiene el logo de la ventana de Windows.";
   } else if (i === 7) {
     targetAction = "click-desktop";
+    title = "Enfocar Escritorio";
     contexto = "A veces necesitamos despejar la vista y volver al escritorio.";
     objetivo = "Hacer clic en un espacio vacío del fondo de pantalla.";
     desarrollo = ["Buscá un lugar del escritorio donde no haya íconos ni ventanas.", "Hacé un clic simple en ese espacio vacío.", "Las ventanas abiertas se mantienen, pero el foco vuelve al escritorio."];
     pista = "Si tenés muchas ventanas abiertas, podés usar el atajo Windows + D para mostrar el escritorio rápidamente.";
   } else if (i === 8) {
     targetAction = "click-papelera";
+    title = "Seleccionar Papelera";
     contexto = "La Papelera guarda los archivos que eliminamos por si los necesitamos recuperar.";
     objetivo = "Seleccionar el ícono de la Papelera con un clic simple.";
     desarrollo = ["Ubicá el ícono de la Papelera en el escritorio.", "Hacé un clic simple sobre él.", "El ícono se resaltará."];
     pista = "La Papelera se encuentra en el escritorio, generalmente en la esquina inferior derecha.";
   } else if (i === 9) {
     targetAction = "click-derecho";
+    title = "Usar clic derecho";
     contexto = "El clic derecho abre un menú con opciones adicionales.";
     objetivo = "Hacer clic derecho sobre el ícono de WordPad.";
     desarrollo = ["Ubicá el ícono de WordPad en el escritorio.", "Hacé clic con el botón derecho del mouse (o tocá con dos dedos en el panel táctil).", "Se abrirá un menú contextual con opciones como 'Abrir', 'Copiar', 'Eliminar'."];
     pista = "El clic derecho es muy útil para acceder a funciones rápidas.";
   } else if (i === 10) {
     targetAction = "click-arrastrar";
+    title = "Arrastrar un ícono";
     contexto = "Arrastrar un icono nos permite moverlo a otra posición en el escritorio.";
     objetivo = "Arrastrar el ícono de WordPad a la derecha.";
     desarrollo = ["Ubicá el ícono de WordPad.", "Mantené presionado el clic izquierdo.", "Sin soltar, mové el cursor hacia la derecha.", "Soltaba el clic cuando el ícono esté en la nueva ubicación."];
     pista = "Arrastrar es útil para organizar los íconos del escritorio.";
   } else if (i === 11) {
     targetAction = "click-desplazar";
+    title = "Desplazarse con dos dedos";
     contexto = "Desplazarse con dos dedos es un gesto táctil para mover el contenido de una ventana.";
     objetivo = "Simular el desplazamiento con dos dedos sobre el panel táctil.";
     desarrollo = ["Abrí una ventana (ej: WordPad).", "Colocá dos dedos sobre el panel táctil.", "Deslizá los dedos hacia arriba o hacia abajo.", "El contenido de la ventana se moverá."];
     pista = "El desplazamiento con dos dedos es muy común en portátiles.";
   } else if (i === 12) {
     targetAction = "click-wordpad";
+    title = "Seleccionar WordPad (repaso)";
     contexto = "Practicamos la selección de programas con clic simple.";
     objetivo = "Seleccionar WordPad con un clic simple (repaso).";
     desarrollo = ["Ubicá WordPad en el escritorio.", "Hacé un clic simple sobre él.", "El ícono se resaltará."];
     pista = "El clic simple solo selecciona, no abre el programa.";
   } else if (i === 13) {
     targetAction = "click-facturador";
+    title = "Seleccionar Facturador (repaso)";
     contexto = "Practicamos la selección del Facturador.";
     objetivo = "Seleccionar el Facturador con un clic simple (repaso).";
     desarrollo = ["Ubicá el Facturador en el escritorio.", "Hacé un clic simple sobre él.", "El ícono se resaltará."];
     pista = "El clic simple es la base de la interacción con la computadora.";
   } else if (i === 14) {
     targetAction = "click-correo";
+    title = "Seleccionar Correo (repaso)";
     contexto = "Practicamos la selección de Correo.";
     objetivo = "Seleccionar Correo con un clic simple (repaso).";
     desarrollo = ["Ubicá Correo en el escritorio.", "Hacé un clic simple sobre él.", "El ícono se resaltará."];
     pista = "El clic simple se usa para seleccionar elementos.";
   } else if (i === 15) {
     targetAction = "click-start";
+    title = "Abrir Menú Inicio (repaso)";
     contexto = "El Menú Inicio es el acceso a todas las aplicaciones.";
     objetivo = "Abrir el Menú Inicio (repaso).";
     desarrollo = ["Ubicá el botón de Windows en la esquina inferior izquierda.", "Hacé un clic simple sobre él.", "El Menú Inicio se desplegará."];
     pista = "Desde el Menú Inicio podés acceder a todas las aplicaciones instaladas.";
   } else if (i === 16) {
     targetAction = "click-desktop";
+    title = "Enfocar Escritorio (repaso)";
     contexto = "Volver al escritorio es útil para despejar la vista.";
     objetivo = "Hacer clic en el fondo del escritorio (repaso).";
     desarrollo = ["Buscá un espacio vacío en el fondo del escritorio.", "Hacé un clic simple en él.", "El foco volverá al escritorio."];
     pista = "Hacer clic en el fondo es una forma rápida de deseleccionar todo.";
   } else if (i === 17) {
     targetAction = "click-papelera";
+    title = "Seleccionar Papelera (repaso)";
     contexto = "La Papelera guarda los archivos eliminados temporalmente.";
     objetivo = "Seleccionar la Papelera con un clic simple (repaso).";
     desarrollo = ["Ubicá el ícono de la Papelera en el escritorio.", "Hacé un clic simple sobre él.", "El ícono se resaltará."];
     pista = "Si eliminás un archivo por error, podés recuperarlo desde la Papelera.";
   } else if (i === 18) {
     targetAction = "dblclick-wordpad";
+    title = "Abrir WordPad (repaso)";
     contexto = "Abrir programas con doble clic es una habilidad fundamental.";
     objetivo = "Abrir WordPad con doble clic (repaso).";
     desarrollo = ["Ubicá WordPad en el escritorio.", "Hacé doble clic rápido sobre él.", "La ventana de WordPad se abrirá."];
     pista = "El doble clic debe ser rápido y con el botón izquierdo.";
   } else if (i === 19) {
     targetAction = "dblclick-facturador";
+    title = "Abrir Facturador (repaso)";
     contexto = "Practicamos la apertura de programas con el Facturador.";
     objetivo = "Abrir el Facturador con doble clic (repaso).";
     desarrollo = ["Ubicá el Facturador en el escritorio.", "Hacé doble clic rápido sobre él.", "La ventana del Facturador se abrirá."];
     pista = "El doble clic siempre abre programas o archivos.";
   } else if (i === 20) {
     targetAction = "dblclick-correo";
+    title = "Abrir Correo (repaso)";
     contexto = "Practicamos la apertura de programas con Correo.";
     objetivo = "Abrir Correo con doble clic (repaso).";
     desarrollo = ["Ubicá Correo en el escritorio.", "Hacé doble clic rápido sobre él.", "La ventana de Correo se abrirá."];
@@ -764,130 +805,150 @@ for (let i = 1; i <= 20; i++) {
   }
   exercises.push({
     id: i, module: "1", modName: "Módulo 1: Panel Táctil",
-    title: `${String(i).padStart(2, '0')} – ${targetAction.replace('-', ' ')}`,
+    title: `${String(i).padStart(2, '0')} – ${title}`,
     contexto, objetivo, desarrollo, pista, targetAction
   });
 }
 
 // ---- MÓDULO 2: GESTIÓN DE VENTANAS (20 ejercicios) ----
 for (let i = 1; i <= 20; i++) {
-  let targetAction, contexto, objetivo, desarrollo, pista;
+  let targetAction, contexto, objetivo, desarrollo, pista, title;
   if (i === 1) {
     targetAction = "dblclick-wordpad";
+    title = "Abrir WordPad";
     contexto = "Vamos a practicar cómo abrir un programa desde el escritorio.";
     objetivo = "Abrir WordPad haciendo doble clic en su ícono.";
     desarrollo = ["Ubicá el ícono de WordPad en el escritorio.", "Hacé doble clic rápido sobre él.", "La ventana de WordPad se abrirá."];
     pista = "El doble clic debe ser rápido y con el botón izquierdo.";
   } else if (i === 2) {
     targetAction = "close-window";
+    title = "Cerrar ventana";
     contexto = "Para mantener el escritorio ordenado, debemos cerrar las ventanas que no usamos.";
     objetivo = "Cerrar la ventana de WordPad usando el botón [X].";
     desarrollo = ["Ubicá el botón [X] en la esquina superior derecha de la ventana de WordPad.", "Hacé clic en él.", "La ventana se cerrará."];
     pista = "El botón [X] también se encuentra en todas las demás ventanas.";
   } else if (i === 3) {
     targetAction = "dblclick-facturador";
+    title = "Abrir Facturador";
     contexto = "Ahora vamos a abrir el Facturador para practicar la gestión de ventanas.";
     objetivo = "Abrir el Facturador desde el escritorio.";
     desarrollo = ["Ubicá el ícono del Facturador en el escritorio.", "Hacé doble clic sobre él.", "La ventana del Facturador se abrirá."];
     pista = "El Facturador es una herramienta para crear comprobantes de venta.";
   } else if (i === 4) {
     targetAction = "close-window";
+    title = "Cerrar Facturador";
     contexto = "Cerramos el Facturador para mantener el orden.";
     objetivo = "Cerrar la ventana del Facturador.";
     desarrollo = ["Ubicá el botón [X] en la esquina superior derecha de la ventana del Facturador.", "Hacé clic en él.", "La ventana se cerrará."];
     pista = "También podés cerrar una ventana presionando Alt + F4.";
   } else if (i === 5) {
     targetAction = "dblclick-correo";
+    title = "Abrir Correo";
     contexto = "Abrimos el Correo para practicar con diferentes aplicaciones.";
     objetivo = "Abrir Correo desde el escritorio.";
     desarrollo = ["Ubicá el ícono de Correo en el escritorio.", "Hacé doble clic sobre él.", "La ventana de Correo se abrirá."];
     pista = "El Correo se usa para enviar y recibir mensajes.";
   } else if (i === 6) {
     targetAction = "close-window";
+    title = "Cerrar Correo";
     contexto = "Cerramos el Correo para finalizar la práctica de apertura y cierre.";
     objetivo = "Cerrar la ventana de Correo.";
     desarrollo = ["Ubicá el botón [X] en la esquina superior derecha de la ventana de Correo.", "Hacé clic en él.", "La ventana se cerrará."];
     pista = "Podés cerrar todas las ventanas abiertas a la vez presionando Alt + F4 repetidamente.";
   } else if (i === 7) {
     targetAction = "click-minimizar";
+    title = "Minimizar y restaurar";
     contexto = "Minimizar una ventana la oculta en la barra de tareas sin cerrarla.";
     objetivo = "Minimizar WordPad y luego restaurarlo desde la barra de tareas.";
     desarrollo = ["Abrí WordPad si no lo tenés abierto.", "Ubicá el botón '_' (Minimizar) en la esquina superior derecha.", "Hacé clic en él. La ventana desaparecerá y quedará solo en la barra de tareas.", "En la barra de tareas, buscá el ícono de WordPad y hacé clic.", "La ventana volverá a aparecer en su tamaño original."];
     pista = "Minimizar es útil cuando querés tener varias ventanas abiertas sin que se superpongan.";
   } else if (i === 8) {
     targetAction = "click-maximizar";
+    title = "Maximizar y restaurar";
     contexto = "Maximizar una ventana la agranda para que ocupe toda la pantalla.";
     objetivo = "Maximizar WordPad y luego restaurarlo a su tamaño anterior.";
     desarrollo = ["Abrí WordPad si no lo tenés abierto.", "Ubicá el botón '⬜' (Maximizar) en la esquina superior derecha.", "Hacé clic en él. La ventana ocupará toda la pantalla.", "El mismo botón ahora muestra dos cuadrados superpuestos. Hacé clic nuevamente.", "La ventana volverá a su tamaño original."];
     pista = "Maximizar es útil para trabajar sin distracciones en un solo programa.";
   } else if (i === 9) {
     targetAction = "click-cambiar-ventana";
+    title = "Cambiar entre ventanas";
     contexto = "A veces trabajamos con varios programas a la vez y necesitamos cambiar entre ellos.";
     objetivo = "Abrir WordPad y Facturador, y cambiar entre ellos usando la barra de tareas.";
     desarrollo = ["Abrí WordPad desde el escritorio.", "Abrí el Facturador desde el escritorio.", "En la barra de tareas, hacé clic en el ícono de WordPad.", "La ventana de WordPad pasará al frente.", "Luego hacé clic en el ícono del Facturador para pasar a esa ventana."];
     pista = "También podés cambiar entre ventanas presionando Alt + Tab.";
   } else if (i === 10) {
     targetAction = "click-mover-ventana";
+    title = "Mover una ventana";
     contexto = "Mover una ventana nos permite organizar el escritorio a nuestro gusto.";
     objetivo = "Mover la ventana de WordPad a otra ubicación.";
     desarrollo = ["Abrí WordPad si no lo tenés abierto.", "Colocá el cursor sobre la barra superior de la ventana.", "Mantené presionado el clic y arrastrá la ventana hacia la derecha o hacia abajo.", "Soltaba el clic cuando la ventana esté en la nueva ubicación."];
     pista = "La barra superior se llama 'barra de título' y sirve para mover la ventana.";
   } else if (i === 11) {
     targetAction = "click-redimensionar";
+    title = "Redimensionar una ventana";
     contexto = "A veces necesitamos ajustar el tamaño de una ventana para ver mejor su contenido.";
     objetivo = "Redimensionar la ventana de WordPad para hacerla más ancha.";
     desarrollo = ["Abrí WordPad si no lo tenés abierto.", "Colocá el cursor sobre el borde derecho de la ventana.", "Mantené presionado el clic y arrastrá hacia la derecha para hacerla más ancha.", "Soltaba el clic cuando tenga el tamaño deseado."];
     pista = "También podés redimensionar desde las esquinas para cambiar ancho y alto a la vez.";
   } else if (i === 12) {
     targetAction = "click-cerrar-todas";
+    title = "Cerrar todas las ventanas";
     contexto = "Al terminar el trabajo, es buena práctica cerrar todas las ventanas.";
     objetivo = "Cerrar WordPad, Facturador y Correo uno por uno.";
     desarrollo = ["Abrí WordPad, Facturador y Correo desde el escritorio.", "Cerrá WordPad haciendo clic en su botón [X].", "Cerrá el Facturador haciendo clic en su botón [X].", "Cerrá Correo haciendo clic en su botón [X]."];
     pista = "También podés cerrar todas las ventanas a la vez desde el Administrador de tareas.";
   } else if (i === 13) {
     targetAction = "click-mosaico";
+    title = "Organizar en mosaico";
     contexto = "Para ver varias ventanas a la vez, podemos organizarlas en mosaico.";
     objetivo = "Organizar las ventanas abiertas en mosaico horizontal.";
     desarrollo = ["Abrí WordPad y el Facturador desde el escritorio.", "Hacé clic derecho en un espacio vacío de la barra de tareas.", "Seleccioná 'Mostrar ventanas en mosaico horizontal'.", "Las ventanas se distribuirán una al lado de la otra."];
     pista = "El mosaico vertical es otra opción útil cuando tenés muchas ventanas.";
   } else if (i === 14) {
     targetAction = "click-ventana";
+    title = "Activar ventana (clic)";
     contexto = "Practicamos la selección de ventanas con un clic.";
     objetivo = "Hacer clic en una ventana para activarla.";
     desarrollo = ["Abrí WordPad y dejalo abierto.", "Abrí el Facturador y dejalo abierto.", "Hacé clic en la ventana de WordPad para activarla.", "Notá cómo se resalta la barra de título."];
     pista = "La ventana activa tiene la barra de título más oscura o de otro color.";
   } else if (i === 15) {
     targetAction = "click-ventana";
+    title = "Activar ventana (clic)";
     contexto = "Cambiar entre ventanas con clic es la forma más básica.";
     objetivo = "Activar la ventana del Facturador con un clic.";
     desarrollo = ["Tené WordPad y Facturador abiertos.", "Hacé clic en la ventana del Facturador.", "La barra de título del Facturador se resaltará."];
     pista = "Solo la ventana activa responde a las acciones del teclado.";
   } else if (i === 16) {
     targetAction = "close-window";
+    title = "Cerrar WordPad y Facturador";
     contexto = "Cerramos las ventanas una por una para mantener el orden.";
     objetivo = "Cerrar WordPad y Facturador.";
     desarrollo = ["Hacé clic en la cruz [X] de WordPad.", "Hacé clic en la cruz [X] del Facturador.", "Ambas ventanas se cerrarán."];
     pista = "Podés cerrar ventanas usando el atajo Alt + F4.";
   } else if (i === 17) {
     targetAction = "click-minimizar";
+    title = "Minimizar WordPad y Facturador";
     contexto = "Minimizar todas las ventanas para ver el escritorio.";
     objetivo = "Minimizar WordPad y Facturador.";
     desarrollo = ["Hacé clic en el botón Minimizar de WordPad.", "Hacé clic en el botón Minimizar del Facturador.", "Ambas ventanas se ocultarán en la barra de tareas."];
     pista = "Minimizar no cierra las ventanas, solo las oculta.";
   } else if (i === 18) {
     targetAction = "click-maximizar";
+    title = "Maximizar Facturador";
     contexto = "Maximizar una ventana para trabajar más cómodo.";
     objetivo = "Maximizar el Facturador.";
     desarrollo = ["Abrí el Facturador.", "Hacé clic en el botón Maximizar.", "La ventana ocupará toda la pantalla."];
     pista = "Para salir de pantalla completa, hacé clic en el mismo botón (ahora de Restaurar).";
   } else if (i === 19) {
     targetAction = "click-mover-ventana";
+    title = "Mover Facturador a la izquierda";
     contexto = "Mover una ventana a la izquierda para organizar el escritorio.";
     objetivo = "Mover el Facturador a la izquierda de la pantalla.";
     desarrollo = ["Abrí el Facturador.", "Arrastrá la barra superior hacia la izquierda.", "Soltaba el clic cuando esté en la posición deseada."];
     pista = "Mover ventanas te permite ver varias a la vez.";
   } else if (i === 20) {
     targetAction = "click-redimensionar";
+    title = "Redimensionar Facturador (alto)";
     contexto = "Redimensionar una ventana para ver más contenido.";
     objetivo = "Redimensionar el Facturador para que sea más alto.";
     desarrollo = ["Abrí el Facturador.", "Colocá el cursor sobre el borde inferior.", "Arrastrá hacia abajo para hacerlo más alto.", "Soltaba el clic cuando tenga el tamaño deseado."];
@@ -895,130 +956,150 @@ for (let i = 1; i <= 20; i++) {
   }
   exercises.push({
     id: i + 20, module: "2", modName: "Módulo 2: Ventanas",
-    title: `${String(i + 20).padStart(2, '0')} – ${targetAction.replace('-', ' ')}`,
+    title: `${String(i + 20).padStart(2, '0')} – ${title}`,
     contexto, objetivo, desarrollo, pista, targetAction
   });
 }
 
 // ---- MÓDULO 3: EXPLORADOR DE ARCHIVOS (20 ejercicios) ----
 for (let i = 1; i <= 20; i++) {
-  let targetAction, contexto, objetivo, desarrollo, pista;
+  let targetAction, contexto, objetivo, desarrollo, pista, title;
   if (i === 1) {
     targetAction = "dblclick-este-equipo";
+    title = "Abrir Este Equipo";
     contexto = "Para administrar archivos y carpetas, primero debemos abrir el explorador de archivos.";
     objetivo = "Abrir 'Este Equipo' desde el escritorio.";
     desarrollo = ["Ubicá el ícono 'Este Equipo' en el escritorio.", "Hacé doble clic sobre él.", "Se abrirá la ventana del explorador con las unidades de la PC."];
     pista = "'Este Equipo' también se llama 'Mi PC' en versiones anteriores.";
   } else if (i === 2) {
     targetAction = "close-window";
+    title = "Cerrar Explorador";
     contexto = "Cerramos el explorador cuando ya no lo necesitamos.";
     objetivo = "Cerrar la ventana del explorador de archivos.";
     desarrollo = ["Ubicá el botón [X] en la esquina superior derecha.", "Hacé clic en él.", "La ventana se cerrará."];
     pista = "También podés cerrar el explorador con Alt + F4.";
   } else if (i === 3) {
     targetAction = "dblclick-descargas";
+    title = "Abrir Descargas";
     contexto = "La carpeta Descargas es donde se guardan los archivos que bajamos de Internet.";
     objetivo = "Abrir la carpeta Descargas desde 'Este Equipo'.";
     desarrollo = ["Abrí 'Este Equipo'.", "Ubicá la carpeta 'Descargas' en el listado.", "Hacé doble clic sobre ella.", "Se abrirá la carpeta con los archivos descargados."];
     pista = "También podés acceder a Descargas desde el Menú Inicio.";
   } else if (i === 4) {
     targetAction = "close-window";
+    title = "Cerrar Descargas";
     contexto = "Cerramos la carpeta Descargas para volver al escritorio.";
     objetivo = "Cerrar la ventana de Descargas.";
     desarrollo = ["Ubicá el botón [X] en la esquina superior derecha.", "Hacé clic en él.", "La ventana se cerrará."];
     pista = "Podés abrir y cerrar carpetas rápidamente para mantener el orden.";
   } else if (i === 5) {
     targetAction = "click-documentos";
+    title = "Abrir Documentos";
     contexto = "La carpeta Documentos es donde guardamos nuestros archivos personales.";
     objetivo = "Abrir la carpeta 'Documentos' desde 'Este Equipo'.";
     desarrollo = ["Abrí 'Este Equipo'.", "Ubicá la carpeta 'Documentos' en el listado.", "Hacé doble clic sobre ella.", "Se abrirá la carpeta con tus documentos."];
     pista = "Documentos es la ubicación predeterminada para guardar archivos de texto.";
   } else if (i === 6) {
     targetAction = "click-crear-carpeta";
+    title = "Crear carpeta en Descargas";
     contexto = "Organizar los archivos en carpetas facilita encontrarlos después.";
     objetivo = "Crear una carpeta llamada 'Mis facturas' dentro de Descargas.";
     desarrollo = ["Abrí la carpeta 'Descargas'.", "Hacé clic derecho en un espacio vacío.", "Seleccioná 'Nuevo' → 'Carpeta'.", "Escribí 'Mis facturas' y presioná Enter."];
     pista = "También podés crear una carpeta con el atajo Ctrl + Shift + N.";
   } else if (i === 7) {
     targetAction = "click-renombrar";
+    title = "Renombrar archivo";
     contexto = "A veces necesitamos cambiar el nombre de un archivo para identificarlo mejor.";
     objetivo = "Renombrar 'Informe.txt' a 'Informe_final.txt' en Documentos.";
     desarrollo = ["Abrí la carpeta 'Documentos'.", "Ubicá el archivo 'Informe.txt'.", "Hacé clic derecho sobre él y seleccioná 'Cambiar nombre'.", "Escribí 'Informe_final.txt' y presioná Enter."];
     pista = "También podés renombrar seleccionando el archivo y presionando F2.";
   } else if (i === 8) {
     targetAction = "click-copiar";
+    title = "Copiar archivo";
     contexto = "Copiar un archivo nos permite tener una copia en otra ubicación.";
     objetivo = "Copiar 'Informe.txt' de Documentos a Descargas.";
     desarrollo = ["Abrí 'Documentos' y seleccioná 'Informe.txt'.", "Hacé clic derecho y elegí 'Copiar' (o Ctrl + C).", "Abrí 'Descargas'.", "Hacé clic derecho en un espacio vacío y elegí 'Pegar' (o Ctrl + V)."];
     pista = "Copiar deja el archivo original en su lugar.";
   } else if (i === 9) {
     targetAction = "click-mover";
+    title = "Mover archivo";
     contexto = "Mover un archivo lo traslada de una carpeta a otra.";
     objetivo = "Mover 'Informe.txt' de Descargas a Documentos.";
     desarrollo = ["Abrí 'Descargas' y seleccioná 'Informe.txt'.", "Hacé clic derecho y elegí 'Cortar' (o Ctrl + X).", "Abrí 'Documentos'.", "Hacé clic derecho en un espacio vacío y elegí 'Pegar' (o Ctrl + V)."];
     pista = "Al mover, el archivo desaparece de la carpeta original.";
   } else if (i === 10) {
     targetAction = "click-eliminar";
+    title = "Eliminar y vaciar Papelera";
     contexto = "Los archivos eliminados van a la Papelera, pero debemos vaciarla para liberar espacio.";
     objetivo = "Eliminar 'Informe.txt' y luego vaciar la Papelera.";
     desarrollo = ["Abrí 'Descargas' y seleccioná 'Informe.txt'.", "Presioná la tecla Supr (o clic derecho → Eliminar).", "Abrí la Papelera de Reciclaje.", "Hacé clic en 'Vaciar papelera' y confirmá."];
     pista = "Los archivos eliminados no se recuperan después de vaciar la Papelera.";
   } else if (i === 11) {
     targetAction = "click-buscar";
+    title = "Buscar archivo";
     contexto = "Cuando tenemos muchos archivos, la búsqueda ayuda a encontrarlos rápidamente.";
     objetivo = "Usar la barra de búsqueda para encontrar 'Factura_001'.";
     desarrollo = ["Abrí 'Este Equipo'.", "Ubicá la barra de búsqueda en la esquina superior derecha.", "Escribí 'Factura_001' y presioná Enter.", "El sistema mostrará los archivos que coinciden con la búsqueda."];
     pista = "La búsqueda es muy útil cuando no recordamos en qué carpeta está un archivo.";
   } else if (i === 12) {
     targetAction = "click-propiedades";
+    title = "Ver propiedades de archivo";
     contexto = "Las propiedades nos muestran información importante de un archivo.";
     objetivo = "Ver el tamaño y la fecha de creación de 'Factura_001.pdf'.";
     desarrollo = ["Abrí la carpeta donde está 'Factura_001.pdf'.", "Hacé clic derecho sobre el archivo.", "Seleccioná 'Propiedades'.", "En la pestaña 'General' verás el tamaño y la fecha de creación."];
     pista = "Las propiedades también indican el tipo de archivo y quién lo creó.";
   } else if (i === 13) {
     targetAction = "click-archivo";
+    title = "Seleccionar archivo";
     contexto = "Seleccionar un archivo es el primer paso para trabajar con él.";
     objetivo = "Seleccionar 'Factura_001.pdf' con un clic simple.";
     desarrollo = ["Abrí la carpeta donde está 'Factura_001.pdf'.", "Hacé un clic simple sobre el archivo.", "El archivo se resaltará."];
     pista = "Seleccionar un archivo te permite copiarlo, moverlo o eliminarlo.";
   } else if (i === 14) {
     targetAction = "dblclick-archivo";
+    title = "Abrir archivo PDF";
     contexto = "Doble clic en un archivo lo abre con el programa correspondiente.";
     objetivo = "Abrir 'Factura_001.pdf' con doble clic.";
     desarrollo = ["Abrí la carpeta donde está 'Factura_001.pdf'.", "Hacé doble clic rápido sobre él.", "El archivo se abrirá con el lector de PDF."];
     pista = "Cada tipo de archivo se abre con el programa que le corresponde.";
   } else if (i === 15) {
     targetAction = "click-ordenar";
+    title = "Ordenar archivos por fecha";
     contexto = "Ordenar archivos ayuda a encontrarlos más rápido.";
     objetivo = "Ordenar los archivos de Descargas por fecha (más reciente primero).";
     desarrollo = ["Abrí 'Descargas'.", "Hacé clic en el encabezado 'Fecha de modificación'.", "Los archivos se ordenarán por fecha."];
     pista = "También podés ordenar por nombre, tamaño o tipo.";
   } else if (i === 16) {
     targetAction = "click-vista";
+    title = "Cambiar vista a 'Detalles'";
     contexto = "Cambiar la vista de los archivos nos permite ver más o menos detalles.";
     objetivo = "Cambiar la vista de Descargas a 'Detalles'.";
     desarrollo = ["Abrí 'Descargas'.", "Hacé clic en la pestaña 'Vista' en la barra superior.", "Seleccioná 'Detalles'.", "Verás más información de cada archivo."];
     pista = "Las vistas más comunes son 'Iconos grandes', 'Lista' y 'Detalles'.";
   } else if (i === 17) {
     targetAction = "click-nueva-carpeta";
+    title = "Crear carpeta en Documentos";
     contexto = "Crear carpetas organizadas facilita el trabajo diario.";
     objetivo = "Crear una carpeta llamada 'Proyectos' en Documentos.";
     desarrollo = ["Abrí 'Documentos'.", "Hacé clic derecho en un espacio vacío.", "Seleccioná 'Nuevo' → 'Carpeta'.", "Escribí 'Proyectos' y presioná Enter."];
     pista = "Usá nombres descriptivos para tus carpetas.";
   } else if (i === 18) {
     targetAction = "click-eliminar";
+    title = "Eliminar y vaciar (repaso)";
     contexto = "Eliminar archivos que ya no necesitamos libera espacio.";
     objetivo = "Eliminar 'Informe_final.txt' y vaciar la Papelera.";
     desarrollo = ["Abrí 'Documentos'.", "Seleccioná 'Informe_final.txt'.", "Presioná Supr.", "Abrí la Papelera y vacíala."];
     pista = "Los archivos eliminados ocupan espacio en la Papelera hasta que la vaciás.";
   } else if (i === 19) {
     targetAction = "click-copiar";
+    title = "Copiar a 'Mis facturas'";
     contexto = "Copiar archivos te permite tener respaldos.";
     objetivo = "Copiar 'Factura_001.pdf' a la carpeta 'Mis facturas'.";
     desarrollo = ["Abrí la carpeta donde está 'Factura_001.pdf'.", "Seleccioná el archivo y copialo (Ctrl + C).", "Abrí la carpeta 'Mis facturas'.", "Pegá el archivo (Ctrl + V)."];
     pista = "Copiar es útil para hacer respaldos sin perder el archivo original.";
   } else if (i === 20) {
     targetAction = "click-mover";
+    title = "Mover a 'Mis facturas'";
     contexto = "Mover archivos a carpetas organizadas mejora la productividad.";
     objetivo = "Mover 'Factura_001.pdf' a la carpeta 'Mis facturas'.";
     desarrollo = ["Abrí la carpeta donde está 'Factura_001.pdf'.", "Seleccioná el archivo y cortalo (Ctrl + X).", "Abrí la carpeta 'Mis facturas'.", "Pegá el archivo (Ctrl + V)."];
@@ -1026,130 +1107,150 @@ for (let i = 1; i <= 20; i++) {
   }
   exercises.push({
     id: i + 40, module: "3", modName: "Módulo 3: Explorador",
-    title: `${String(i + 40).padStart(2, '0')} – ${targetAction.replace('-', ' ')}`,
+    title: `${String(i + 40).padStart(2, '0')} – ${title}`,
     contexto, objetivo, desarrollo, pista, targetAction
   });
 }
 
 // ---- MÓDULO 4: FACTURADOR DIGITAL (20 ejercicios) ----
 for (let i = 1; i <= 20; i++) {
-  let targetAction, contexto, objetivo, desarrollo, pista;
+  let targetAction, contexto, objetivo, desarrollo, pista, title;
   if (i === 1) {
     targetAction = "dblclick-facturador";
+    title = "Abrir Facturador";
     contexto = "El Facturador es la herramienta para crear comprobantes de venta.";
     objetivo = "Abrir el Facturador desde el escritorio.";
     desarrollo = ["Ubicá el ícono del Facturador en el escritorio.", "Hacé doble clic sobre él.", "La ventana del Facturador se abrirá con los campos para cargar datos."];
     pista = "El Facturador es muy útil para pequeños negocios o trabajos independientes.";
   } else if (i === 2) {
     targetAction = "click-cliente";
+    title = "Cargar datos del cliente";
     contexto = "Toda factura necesita los datos del cliente para ser válida.";
     objetivo = "Completar los datos del cliente (nombre, CUIT y domicilio).";
     desarrollo = ["Abrí el Facturador.", "En el campo 'Cliente', escribí el nombre de la persona o empresa.", "En 'CUIT', escribí el número de identificación tributaria.", "En 'Domicilio', escribí la dirección completa."];
     pista = "Los datos del cliente son obligatorios para emitir una factura.";
   } else if (i === 3) {
     targetAction = "click-agregar-item";
+    title = "Agregar producto";
     contexto = "Una factura detalla los productos o servicios que se venden.";
     objetivo = "Agregar un producto con cantidad y precio.";
     desarrollo = ["En el Facturador, buscá la sección de productos.", "Escribí el nombre del producto en el campo correspondiente.", "Indicá la cantidad.", "Indicá el precio unitario.", "Hacé clic en 'Agregar' para que el producto se añada a la lista."];
     pista = "Podés agregar tantos productos como necesites antes de emitir la factura.";
   } else if (i === 4) {
     targetAction = "click-emitir-guardar";
+    title = "Emitir y guardar factura";
     contexto = "Una vez cargados los datos y productos, podemos emitir la factura.";
     objetivo = "Emitir la factura y guardarla en la carpeta Descargas.";
     desarrollo = ["Verificá que todos los datos del cliente estén completos.", "Verificá que los productos estén cargados.", "Hacé clic en el botón 'Emitir y Guardar en Descargas'.", "La factura se generará y se guardará automáticamente."];
     pista = "La factura se guarda en PDF para que puedas imprimirla o enviarla por correo.";
   } else if (i === 5) {
     targetAction = "click-verificar-descargas";
+    title = "Verificar factura en Descargas";
     contexto = "Es importante confirmar que la factura se haya guardado correctamente.";
     objetivo = "Abrir Descargas y verificar que la factura esté allí.";
     desarrollo = ["Abrí 'Este Equipo' desde el escritorio.", "Abrí la carpeta 'Descargas'.", "Buscá el archivo de la factura.", "Verificá que el archivo esté en la lista."];
     pista = "Si no ves la factura, verificá que hiciste clic en 'Emitir y Guardar'.";
   } else if (i === 6) {
     targetAction = "click-cliente";
+    title = "Cargar cliente nuevo (María)";
     contexto = "Cargar datos del cliente es el primer paso para emitir una factura.";
     objetivo = "Cargar los datos de un cliente nuevo.";
     desarrollo = ["Abrí el Facturador.", "En 'Cliente', escribí 'María García'.", "En 'CUIT', escribí '30-87654321-0'.", "En 'Domicilio', escribí 'Av. Libertador 1234'."];
     pista = "Los datos del cliente deben ser precisos para que la factura sea válida.";
   } else if (i === 7) {
     targetAction = "click-agregar-item";
+    title = "Agregar dos productos";
     contexto = "Agregar productos a la factura es el paso más importante.";
     objetivo = "Agregar dos productos a la factura.";
     desarrollo = ["Agregá 'Teclado' con cantidad 1 y precio 1500.", "Agregá 'Mouse' con cantidad 2 y precio 800."];
     pista = "La cantidad y el precio determinan el total de la factura.";
   } else if (i === 8) {
     targetAction = "click-emitir-guardar";
+    title = "Emitir factura (con productos)";
     contexto = "Emitir la factura genera el documento final.";
     objetivo = "Emitir una factura con los productos cargados.";
     desarrollo = ["Verificá que haya al menos un producto en la lista.", "Hacé clic en 'Emitir y Guardar'.", "La factura se guardará en Descargas."];
     pista = "No podés emitir una factura vacía (sin productos).";
   } else if (i === 9) {
     targetAction = "click-verificar-descargas";
+    title = "Verificar factura (con productos)";
     contexto = "Verificar que la factura esté guardada da tranquilidad.";
     objetivo = "Abrir Descargas y verificar la factura generada.";
     desarrollo = ["Abrí 'Este Equipo'.", "Entrá en 'Descargas'.", "Buscá el archivo con el nombre F-XXXX.pdf.", "Verificá que esté allí."];
     pista = "Si no está, repetí el proceso de emisión y guardado.";
   } else if (i === 10) {
     targetAction = "click-cliente";
+    title = "Cargar cliente (Juan)";
     contexto = "Practicamos la carga de datos de cliente.";
     objetivo = "Cargar los datos de 'Juan Pérez'.";
     desarrollo = ["Abrí el Facturador.", "Escribí 'Juan Pérez' en Cliente.", "Escribí '30-12345678-9' en CUIT.", "Escribí 'Calle Falsa 123' en Domicilio."];
     pista = "El CUIT es obligatorio para facturas a empresas.";
   } else if (i === 11) {
     targetAction = "click-agregar-item";
+    title = "Agregar productos (papelería)";
     contexto = "Cargar productos con diferentes cantidades.";
     objetivo = "Agregar 'Lápices' (cantidad 10, precio 100) y 'Cuadernos' (cantidad 3, precio 500).";
     desarrollo = ["En el Facturador, agregá 'Lápices' con cantidad 10 y precio 100.", "Agregá 'Cuadernos' con cantidad 3 y precio 500."];
     pista = "La cantidad puede ser cualquier número entero positivo.";
   } else if (i === 12) {
     targetAction = "click-emitir-guardar";
+    title = "Emitir factura (papelería)";
     contexto = "Emitir una factura con productos de papelería.";
     objetivo = "Emitir una factura con 'Lápices' y 'Cuadernos'.";
     desarrollo = ["Verificá que 'Lápices' y 'Cuadernos' estén en la lista.", "Hacé clic en 'Emitir y Guardar'.", "La factura se guardará en Descargas."];
     pista = "El total de la factura se calcula automáticamente.";
   } else if (i === 13) {
     targetAction = "click-verificar-descargas";
+    title = "Verificar factura (papelería)";
     contexto = "Verificar la factura generada en la carpeta Descargas.";
     objetivo = "Abrir Descargas y verificar que la factura esté allí.";
     desarrollo = ["Abrí 'Este Equipo'.", "Entrá en 'Descargas'.", "Buscá la factura más reciente."];
     pista = "Las facturas se guardan con un número de identificación único.";
   } else if (i === 14) {
     targetAction = "click-cliente";
+    title = "Cargar cliente (empresa)";
     contexto = "Cargar un cliente con datos completos.";
     objetivo = "Cargar los datos de 'Comercial López S.A.'.";
     desarrollo = ["Abrí el Facturador.", "Escribí 'Comercial López S.A.' en Cliente.", "Escribí '30-98765432-1' en CUIT.", "Escribí 'Av. Corrientes 4567' en Domicilio."];
     pista = "Las empresas suelen tener un CUIT que comienza con 30.";
   } else if (i === 15) {
     targetAction = "click-agregar-item";
+    title = "Agregar productos (computación)";
     contexto = "Agregar productos para una factura de una empresa.";
     objetivo = "Agregar 'Computadoras' (cantidad 2, precio 15000) y 'Monitores' (cantidad 3, precio 8000).";
     desarrollo = ["Agregá 'Computadoras' con cantidad 2 y precio 15000.", "Agregá 'Monitores' con cantidad 3 y precio 8000."];
     pista = "Los precios deben ser números positivos.";
   } else if (i === 16) {
     targetAction = "click-emitir-guardar";
+    title = "Emitir factura (empresa)";
     contexto = "Emitir una factura para una empresa.";
     objetivo = "Emitir una factura para 'Comercial López S.A.'.";
     desarrollo = ["Verificá los datos del cliente.", "Verificá los productos cargados.", "Hacé clic en 'Emitir y Guardar'."];
     pista = "Las facturas para empresas deben tener el CUIT correcto.";
   } else if (i === 17) {
     targetAction = "click-verificar-descargas";
+    title = "Verificar factura (empresa)";
     contexto = "Verificar la factura de la empresa en Descargas.";
     objetivo = "Abrir Descargas y verificar que la factura esté guardada.";
     desarrollo = ["Abrí 'Este Equipo'.", "Entrá en 'Descargas'.", "Buscá la factura correspondiente."];
     pista = "Todas las facturas se guardan en la misma carpeta.";
   } else if (i === 18) {
     targetAction = "click-agregar-item";
+    title = "Agregar productos (precios decimales)";
     contexto = "Agregar productos con precios decimales.";
     objetivo = "Agregar 'Regla' (cantidad 5, precio 50.50) y 'Compás' (cantidad 3, precio 120.75).";
     desarrollo = ["Agregá 'Regla' con cantidad 5 y precio 50.50.", "Agregá 'Compás' con cantidad 3 y precio 120.75."];
     pista = "Los precios pueden tener decimales (centavos).";
   } else if (i === 19) {
     targetAction = "click-emitir-guardar";
+    title = "Emitir factura (geometría)";
     contexto = "Emitir una factura con productos de geometría.";
     objetivo = "Emitir una factura con 'Regla' y 'Compás'.";
     desarrollo = ["Verificá que los productos estén cargados.", "Hacé clic en 'Emitir y Guardar'.", "La factura se guardará en Descargas."];
     pista = "El total se calcula sumando el precio por cantidad de cada producto.";
   } else if (i === 20) {
     targetAction = "click-verificar-descargas";
+    title = "Verificar factura final";
     contexto = "Verificar la factura final en Descargas.";
     objetivo = "Abrir Descargas y verificar que todas las facturas estén allí.";
     desarrollo = ["Abrí 'Este Equipo'.", "Entrá en 'Descargas'.", "Verificá que las facturas generadas estén en la lista."];
@@ -1157,130 +1258,150 @@ for (let i = 1; i <= 20; i++) {
   }
   exercises.push({
     id: i + 60, module: "4", modName: "Módulo 4: Facturador",
-    title: `${String(i + 60).padStart(2, '0')} – ${targetAction.replace('-', ' ')}`,
+    title: `${String(i + 60).padStart(2, '0')} – ${title}`,
     contexto, objetivo, desarrollo, pista, targetAction
   });
 }
 
 // ---- MÓDULO 5: GESTIÓN DE CORREO (20 ejercicios) ----
 for (let i = 1; i <= 20; i++) {
-  let targetAction, contexto, objetivo, desarrollo, pista;
+  let targetAction, contexto, objetivo, desarrollo, pista, title;
   if (i === 1) {
     targetAction = "dblclick-correo";
+    title = "Abrir Correo";
     contexto = "El Correo es la herramienta para comunicarse a través de Internet.";
     objetivo = "Abrir Correo desde el escritorio.";
     desarrollo = ["Ubicá el ícono de Correo en el escritorio.", "Hacé doble clic sobre él.", "La ventana de Correo se abrirá con tu bandeja de entrada."];
     pista = "El Correo te permite enviar y recibir mensajes de cualquier parte del mundo.";
   } else if (i === 2) {
     targetAction = "click-adjuntar-desde-correo";
+    title = "Adjuntar desde Correo";
     contexto = "Para compartir un archivo, podemos adjuntarlo a un correo.";
     objetivo = "Adjuntar la factura desde el Correo.";
     desarrollo = ["Abrí Correo y hacé clic en 'Nuevo correo'.", "Hacé clic en el botón 'Adjuntar archivo' (el clip).", "Seleccioná la carpeta 'Descargas'.", "Elegí el archivo de la factura y hacé clic en 'Adjuntar'."];
     pista = "Los archivos adjuntos son una forma segura de compartir documentos.";
   } else if (i === 3) {
     targetAction = "click-adjuntar-desde-descargas";
+    title = "Adjuntar desde Descargas";
     contexto = "También podemos adjuntar un archivo directamente desde la carpeta Descargas.";
     objetivo = "Adjuntar la factura al correo desde la carpeta Descargas.";
     desarrollo = ["Abrí 'Este Equipo' y entrá en 'Descargas'.", "Seleccioná el archivo de la factura.", "Hacé clic derecho y elegí 'Enviar a' → 'Correo'.", "Se abrirá Correo con el archivo ya adjunto."];
     pista = "Esta es una forma rápida de adjuntar archivos sin abrir el Correo primero.";
   } else if (i === 4) {
     targetAction = "click-enviar-correo";
+    title = "Enviar correo";
     contexto = "Completar los datos del destinatario y el asunto antes de enviar.";
     objetivo = "Completar el destinatario y enviar el correo con la factura adjunta.";
     desarrollo = ["En la ventana de Correo, escribí la dirección del destinatario.", "Escribí un asunto claro.", "Revisá que el archivo esté adjunto.", "Hacé clic en el botón 'Enviar'."];
     pista = "Verificá siempre que la dirección de correo sea correcta antes de enviar.";
   } else if (i === 5) {
     targetAction = "close-window";
+    title = "Cerrar Correo";
     contexto = "Cerramos Correo cuando hemos terminado de trabajar.";
     objetivo = "Cerrar la ventana de Correo.";
     desarrollo = ["Ubicá el botón [X] en la esquina superior derecha.", "Hacé clic en él.", "La ventana de Correo se cerrará."];
     pista = "Siempre cerrá las aplicaciones que no estés usando para liberar memoria.";
   } else if (i === 6) {
     targetAction = "dblclick-correo";
+    title = "Abrir Correo (revisar)";
     contexto = "Abrir Correo para revisar la bandeja de entrada.";
     objetivo = "Abrir Correo y revisar los mensajes no leídos.";
     desarrollo = ["Abrí Correo desde el escritorio.", "Observá la bandeja de entrada.", "Los mensajes no leídos aparecen en negrita."];
     pista = "La bandeja de entrada muestra todos los mensajes recibidos.";
   } else if (i === 7) {
     targetAction = "click-nuevo-correo";
+    title = "Nuevo correo";
     contexto = "Escribir un nuevo correo es la forma de comunicarse.";
     objetivo = "Escribir un nuevo correo para un familiar.";
     desarrollo = ["Abrí Correo.", "Hacé clic en 'Nuevo correo'.", "Escribí la dirección de tu familiar en 'Para:'.", "Escribí un asunto y el mensaje."];
     pista = "Podés escribir a cualquier persona que tenga dirección de correo.";
   } else if (i === 8) {
     targetAction = "click-adjuntar-desde-correo";
+    title = "Adjuntar foto";
     contexto = "Adjuntar un archivo a un correo es útil para compartir documentos.";
     objetivo = "Adjuntar una foto a un correo.";
     desarrollo = ["Abrí Correo y hacé clic en 'Nuevo correo'.", "Hacé clic en 'Adjuntar archivo'.", "Seleccioná una foto de la carpeta 'Imágenes'.", "Adjuntá el archivo."];
     pista = "Podés adjuntar cualquier tipo de archivo: fotos, documentos, etc.";
   } else if (i === 9) {
     targetAction = "click-enviar-correo";
+    title = "Enviar correo (completo)";
     contexto = "Enviar un correo es el paso final para comunicarse.";
     objetivo = "Enviar un correo con asunto y mensaje completo.";
     desarrollo = ["Completá el destinatario.", "Escribí un asunto.", "Escribí el mensaje.", "Hacé clic en 'Enviar'."];
     pista = "Revisá que el mensaje esté completo antes de enviar.";
   } else if (i === 10) {
     targetAction = "click-responder-correo";
+    title = "Responder correo";
     contexto = "Responder un correo es una forma común de comunicación.";
     objetivo = "Responder un correo recibido.";
     desarrollo = ["Abrí Correo.", "Seleccioná un mensaje de la bandeja de entrada.", "Hacé clic en 'Responder'.", "Escribí tu respuesta y hacé clic en 'Enviar'."];
     pista = "Al responder, el asunto se completa automáticamente con 'Re: '.";
   } else if (i === 11) {
     targetAction = "click-reenviar-correo";
+    title = "Reenviar correo";
     contexto = "Reenviar un correo permite compartir información con otra persona.";
     objetivo = "Reenviar un correo a un contacto.";
     desarrollo = ["Abrí Correo.", "Seleccioná un mensaje de la bandeja de entrada.", "Hacé clic en 'Reenviar'.", "Escribí la dirección del nuevo destinatario.", "Hacé clic en 'Enviar'."];
     pista = "Al reenviar, se incluye el mensaje original en el cuerpo del correo.";
   } else if (i === 12) {
     targetAction = "click-eliminar-correo";
+    title = "Eliminar correo";
     contexto = "Eliminar correos que ya no necesitamos mantiene ordenada la bandeja.";
     objetivo = "Eliminar un correo de la bandeja de entrada.";
     desarrollo = ["Abrí Correo.", "Seleccioná un mensaje de la bandeja de entrada.", "Hacé clic en el ícono de la papelera o en 'Eliminar'.", "El correo se moverá a la papelera."];
     pista = "Los correos eliminados se pueden recuperar desde la papelera.";
   } else if (i === 13) {
     targetAction = "click-vaciar-papelera";
+    title = "Vaciar papelera de correos";
     contexto = "Vaciar la papelera libera espacio en el servidor de correo.";
     objetivo = "Vaciar la papelera de correos eliminados.";
     desarrollo = ["Abrí Correo.", "Entrá en la carpeta 'Papelera' o 'Eliminados'.", "Hacé clic en 'Vaciar papelera'.", "Confirmá la acción."];
     pista = "Una vez vaciada la papelera, los correos no se pueden recuperar.";
   } else if (i === 14) {
     targetAction = "click-crear-carpeta";
+    title = "Crear carpeta 'Facturas'";
     contexto = "Organizar los correos en carpetas facilita encontrar mensajes importantes.";
     objetivo = "Crear una carpeta llamada 'Facturas' en Correo.";
     desarrollo = ["Abrí Correo.", "Hacé clic en 'Nueva carpeta'.", "Escribí 'Facturas' como nombre.", "Presioná Enter."];
     pista = "Las carpetas te permiten clasificar los correos por tema.";
   } else if (i === 15) {
     targetAction = "click-mover-correo";
+    title = "Mover correo a 'Facturas'";
     contexto = "Mover correos a carpetas organiza la bandeja de entrada.";
     objetivo = "Mover un correo a la carpeta 'Facturas'.";
     desarrollo = ["Abrí Correo.", "Seleccioná un correo de la bandeja de entrada.", "Hacé clic en 'Mover a'.", "Seleccioná la carpeta 'Facturas'."];
     pista = "Mover correos te ayuda a encontrar mensajes importantes rápidamente.";
   } else if (i === 16) {
     targetAction = "click-buscar-correo";
+    title = "Buscar correo ('factura')";
     contexto = "Buscar correos es útil cuando tenemos muchos mensajes.";
     objetivo = "Buscar un correo que contenga la palabra 'factura'.";
     desarrollo = ["Abrí Correo.", "En la barra de búsqueda, escribí 'factura'.", "Presioná Enter.", "Los correos que contienen 'factura' aparecerán en los resultados."];
     pista = "La búsqueda es muy útil para encontrar correos antiguos.";
   } else if (i === 17) {
     targetAction = "click-archivar-correo";
+    title = "Archivar correo";
     contexto = "Archivar correos los oculta de la bandeja de entrada sin eliminarlos.";
     objetivo = "Archivar un correo de la bandeja de entrada.";
     desarrollo = ["Abrí Correo.", "Seleccioná un mensaje.", "Hacé clic en 'Archivar'.", "El correo se moverá a la carpeta 'Archivo'."];
     pista = "Archivar es una alternativa a eliminar cuando querés conservar el correo.";
   } else if (i === 18) {
     targetAction = "click-marcar-leido";
+    title = "Marcar como leído";
     contexto = "Marcar un correo como leído ayuda a llevar el control.";
     objetivo = "Marcar un correo como leído.";
     desarrollo = ["Abrí Correo.", "Seleccioná un mensaje no leído.", "Hacé clic derecho y elegí 'Marcar como leído'.", "El correo dejará de aparecer en negrita."];
     pista = "Los correos no leídos aparecen en negrita en la bandeja de entrada.";
   } else if (i === 19) {
     targetAction = "click-marcar-no-leido";
+    title = "Marcar como no leído";
     contexto = "Marcar un correo como no leído nos recuerda que debemos revisarlo.";
     objetivo = "Marcar un correo como no leído.";
     desarrollo = ["Abrí Correo.", "Seleccioná un mensaje leído.", "Hacé clic derecho y elegí 'Marcar como no leído'.", "El correo aparecerá en negrita."];
     pista = "Marcar como no leído es útil para recordar revisar un correo más tarde.";
   } else if (i === 20) {
     targetAction = "close-window";
+    title = "Cerrar Correo (final)";
     contexto = "Cerramos Correo para finalizar la práctica.";
     objetivo = "Cerrar la ventana de Correo.";
     desarrollo = ["Ubicá el botón [X] en la esquina superior derecha.", "Hacé clic en él.", "La ventana de Correo se cerrará."];
@@ -1288,13 +1409,13 @@ for (let i = 1; i <= 20; i++) {
   }
   exercises.push({
     id: i + 80, module: "5", modName: "Módulo 5: Correo",
-    title: `${String(i + 80).padStart(2, '0')} – ${targetAction.replace('-', ' ')}`,
+    title: `${String(i + 80).padStart(2, '0')} – ${title}`,
     contexto, objetivo, desarrollo, pista, targetAction
   });
 }
 
 // ============================================================
-// 2. BANCO DE PREGUNTAS POR MÓDULO (22 por módulo)
+// 2. BANCO DE PREGUNTAS (Módulo 6)
 // ============================================================
 const bank = {
   1: [ // Módulo 1: Táctil
@@ -1513,6 +1634,15 @@ function renderizarDetalleEjercicio(ex) {
   }
 
   if (ex.module === '6') {
+    // Mostrar mensaje en el panel izquierdo
+    contenedor.innerHTML = `
+      <div class="bloque-examen">
+        <div class="examen-icono">📝</div>
+        <div class="examen-texto">Evaluación General - 25 preguntas</div>
+        <div style="font-size:0.8rem; color:#8d99ae; margin-top:4px;">Respondé en la ventana de la derecha</div>
+      </div>
+    `;
+    // Mostrar el examen en la ventana
     mostrarExamen();
     return;
   }
@@ -1557,19 +1687,12 @@ function validateAction(actionName) {
   const currentEx = exercises[currentIdx];
   if (!currentEx || currentEx.module === '6') return;
   if (currentEx.targetAction === actionName) {
-    // Feedback visual
     const feedback = document.getElementById('feedback');
     feedback.textContent = '✅ ¡Ejercicio completado!';
     feedback.className = 'exito';
     feedback.style.display = 'block';
-
-    // Sonido de clic
     playClickSound();
-
-    // Marcar como completado en localStorage
     marcarCompletado(currentEx.id);
-
-    // Si hay siguiente, habilitar el botón "Siguiente" automáticamente
     if (currentIdx < exercises.length - 1) {
       document.getElementById('btn-next').disabled = false;
     }
@@ -1584,8 +1707,10 @@ function handleIconClick(e, iconName) {
   playClickSound();
   clearSelections();
   const icon = document.getElementById(`icon-${iconName}`);
-  if (icon) icon.classList.add('selected');
-  validateAction(`click-${iconName}`);
+  if (icon) {
+    icon.classList.add('selected');
+    validateAction(`click-${iconName}`);
+  }
 }
 
 function handleIconDblClick(iconName) {
@@ -1598,8 +1723,10 @@ function handleIconDblClick(iconName) {
     'correo': openCorreoApp,
     'papelera': openPapeleraApp
   };
-  if (actions[iconName]) actions[iconName]();
-  validateAction(`dblclick-${iconName}`);
+  if (actions[iconName]) {
+    actions[iconName]();
+    validateAction(`dblclick-${iconName}`);
+  }
 }
 
 function handleDesktopClick(e) {
@@ -1624,8 +1751,10 @@ function handleStartItem(itemName) {
     'correo': openCorreoApp,
     'papelera': openPapeleraApp
   };
-  if (actions[itemName]) actions[itemName]();
-  validateAction(`start-${itemName}`);
+  if (actions[itemName]) {
+    actions[itemName]();
+    validateAction(`start-${itemName}`);
+  }
 }
 
 function closeAppWindow() {
@@ -1863,7 +1992,7 @@ function openPapeleraApp() {
 }
 
 // ============================================================
-// 10. MÓDULO 6: EVALUACIÓN GENERAL CON ARRASTRE
+// 10. MÓDULO 6: EVALUACIÓN GENERAL CON ARRASTRE Y ACTUALIZAR
 // ============================================================
 function generarExamen() {
   const preguntas = [];
@@ -1882,21 +2011,22 @@ function mostrarExamen() {
   respuestasExamen = [];
   examenCompletado = false;
   const body = document.getElementById('window-body');
-  let html = `<div style="margin-bottom:15px; font-weight:bold;">📝 Evaluación General (25 preguntas)</div>`;
+  let html = `<div style="margin-bottom:15px; font-weight:bold; font-size:1.1rem;">📝 Evaluación General (25 preguntas)</div>`;
+  html += `<div style="font-size:0.8rem; color:#6c757d; margin-bottom:10px;">Seleccioná la respuesta correcta para cada pregunta.</div>`;
   examenActual.forEach((p, idx) => {
     html += `<div style="margin-bottom:20px; padding:10px; background:#f8f9fa; border-radius:6px; border-left:4px solid #0077b6;">`;
-    html += `<div style="font-weight:600; margin-bottom:6px;">${idx+1}. ${p.q}</div>`;
+    html += `<div style="font-weight:600; margin-bottom:6px; color:#212529;">${idx+1}. ${p.q}</div>`;
     if (p.type === 'mcq') {
       p.opts.forEach((opt, oi) => {
-        html += `<label style="display:block; margin:4px 0; cursor:pointer;">
+        html += `<label style="display:block; margin:4px 0; cursor:pointer; color:#333;">
           <input type="radio" name="q${idx}" value="${oi}" onchange="guardarRespuesta(${idx}, ${oi})"> ${opt}
         </label>`;
       });
     } else if (p.type === 'tf') {
-      html += `<label style="display:block; margin:4px 0; cursor:pointer;">
+      html += `<label style="display:block; margin:4px 0; cursor:pointer; color:#333;">
         <input type="radio" name="q${idx}" value="true" onchange="guardarRespuesta(${idx}, true)"> Verdadero
       </label>
-      <label style="display:block; margin:4px 0; cursor:pointer;">
+      <label style="display:block; margin:4px 0; cursor:pointer; color:#333;">
         <input type="radio" name="q${idx}" value="false" onchange="guardarRespuesta(${idx}, false)"> Falso
       </label>`;
     } else if (p.type === 'order') {
@@ -1911,13 +2041,14 @@ function mostrarExamen() {
     }
     html += `</div>`;
   });
-  html += `<div style="display:flex; gap:10px; margin-top:10px;">
+  html += `<div class="examen-botones">
     <button class="app-btn" onclick="corregirExamen()" style="background:#28a745;">✅ Corregir Examen</button>
     <button class="app-btn" onclick="actualizarExamen()" style="background:#0077b6;">🔄 Actualizar</button>
   </div>
   <div id="resultado-examen" style="margin-top:15px; font-weight:bold; text-align:center;"></div>`;
   body.innerHTML = html;
   document.getElementById('app-window').style.display = 'flex';
+  document.getElementById('window-title').textContent = 'Evaluación General';
 }
 
 function guardarRespuesta(idx, valor) {
@@ -1973,7 +2104,7 @@ function corregirExamen() {
       }
     }
     if (esCorrecto) correctas++;
-    const container = document.querySelector(`#app-window .window-body > div:nth-child(${idx+1})`);
+    const container = document.querySelector(`#app-window .window-body > div:nth-child(${idx+2})`);
     if (container) {
       container.style.borderLeftColor = esCorrecto ? '#28a745' : '#dc3545';
       container.style.background = esCorrecto ? '#d4edda' : '#f8d7da';
