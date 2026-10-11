@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Capacitación Digital - Simulador Educativo Windows 10</title>
+  <title>Capacitación Digital - 100 Ejercicios para Jubilados</title>
   <style>
     * {
       box-sizing: border-box;
@@ -11,6 +11,7 @@
       padding: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
+
     body {
       display: flex;
       height: 100vh;
@@ -19,249 +20,142 @@
       overflow: hidden;
       user-select: none;
     }
+
     .app-container {
       display: flex;
       width: 100%;
       height: 100%;
     }
 
-    /* ===== PANEL IZQUIERDO (320px) ===== */
+    /* Panel Izquierdo */
     .sidebar {
-      width: 320px;
-      min-width: 280px;
-      flex-shrink: 0;
+      width: 400px;
       background-color: #0b132b;
-      padding: 10px 12px;
+      padding: 20px;
       display: flex;
       flex-direction: column;
-      height: 100vh;
+      justify-content: space-between;
       border-right: 2px solid #1c2541;
       z-index: 20;
-      overflow-y: auto;
     }
-    .sidebar-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 8px;
-      flex-shrink: 0;
-    }
+
     .sidebar-header h2 {
-      font-size: 1.1rem;
+      font-size: 1.25rem;
       color: #00b4d8;
+      margin-bottom: 10px;
+      text-align: center;
     }
-    .btn-ayuda {
-      background: #1c2541;
-      border: 1px solid #3a506b;
-      color: #00b4d8;
-      padding: 2px 8px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 0.8rem;
-    }
-    .btn-ayuda:hover {
-      background: #3a506b;
-    }
+
     .control-group {
-      margin-bottom: 6px;
-      flex-shrink: 0;
+      margin-bottom: 10px;
     }
+
     .control-label {
-      font-size: 0.7rem;
+      font-size: 0.78rem;
       color: #8d99ae;
-      margin-bottom: 2px;
+      margin-bottom: 3px;
       display: block;
       font-weight: 600;
     }
+
     .module-select, .exercise-dropdown-select {
       width: 100%;
-      padding: 6px 8px;
+      padding: 8px;
       background: #1c2541;
       color: #fff;
       border: 1px solid #3a506b;
-      border-radius: 4px;
-      font-size: 0.8rem;
+      border-radius: 6px;
+      font-size: 0.82rem;
       cursor: pointer;
     }
 
-    /* ===== PROGRESO ===== */
-    #progreso-container {
-      background: #1c2541;
-      border-radius: 4px;
-      padding: 6px 8px;
-      margin-bottom: 6px;
-      flex-shrink: 0;
-    }
-    #progreso-container .progreso-titulo {
-      font-size: 0.65rem;
-      color: #8d99ae;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 2px;
-    }
-    #progreso-container .progreso-barra {
-      width: 100%;
-      height: 6px;
-      background: #0d1117;
-      border-radius: 3px;
-      overflow: hidden;
-    }
-    #progreso-container .progreso-barra-interna {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, #00b4d8, #0077b6);
-      border-radius: 3px;
-      transition: width 0.3s ease;
-    }
-    #progreso-container .progreso-texto {
-      font-size: 0.7rem;
-      color: #e0e1dd;
-      margin-top: 2px;
-      text-align: right;
-    }
-
-    /* ===== FEEDBACK ===== */
-    #feedback {
-      margin-top: 6px;
-      padding: 8px;
-      border-radius: 4px;
-      background: #1c2541;
-      text-align: center;
+    .badge-module {
+      display: inline-block;
+      background-color: #0077b6;
+      color: #fff;
+      font-size: 0.72rem;
       font-weight: bold;
-      display: none;
-      flex-shrink: 0;
-      border-left: 4px solid transparent;
-    }
-    #feedback.exito {
-      display: block;
-      color: #28a745;
-      border-left-color: #28a745;
-    }
-    #feedback.error {
-      display: block;
-      color: #ffb703;
-      border-left-color: #ffb703;
-    }
-
-    /* ===== AYUDA CONTEXTUAL ===== */
-    #ayuda-panel {
-      display: none;
-      background: #1c2541;
+      padding: 3px 6px;
       border-radius: 4px;
-      padding: 8px;
       margin-bottom: 6px;
-      max-height: 150px;
-      overflow-y: auto;
-      border: 1px solid #3a506b;
-      font-size: 0.8rem;
-      color: #e0e1dd;
-      flex-shrink: 0;
-    }
-    #ayuda-panel.visible {
-      display: block;
-    }
-    #ayuda-panel .ayuda-item {
-      margin-bottom: 6px;
-      padding-bottom: 6px;
-      border-bottom: 1px solid #2a3a5a;
-    }
-    #ayuda-panel .ayuda-item:last-child {
-      border-bottom: none;
-      margin-bottom: 0;
-      padding-bottom: 0;
-    }
-    #ayuda-panel .ayuda-titulo {
-      font-weight: 600;
-      color: #00b4d8;
-    }
-    #ayuda-panel .ayuda-desc {
-      margin-top: 2px;
-      color: #e0e1dd;
-      line-height: 1.3;
-    }
-    .btn-cerrar-ayuda {
-      background: transparent;
-      border: none;
-      color: #dc3545;
-      cursor: pointer;
-      font-size: 0.75rem;
-      float: right;
-    }
-
-    /* ===== DETALLE DEL EJERCICIO ===== */
-    #ejercicio-detalle {
-      margin-top: 6px;
-      flex: 1;
-      overflow-y: auto;
-      padding-right: 2px;
-      font-size: 0.85rem;
-    }
-    #ejercicio-detalle .bloque {
-      margin-bottom: 6px;
-      background: #1c2541;
-      padding: 6px 8px;
-      border-radius: 4px;
-      border-left: 3px solid #00b4d8;
-    }
-    #ejercicio-detalle .bloque-titulo {
-      font-size: 0.65rem;
-      color: #8d99ae;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
     }
-    #ejercicio-detalle .bloque-contenido {
-      font-size: 0.8rem;
-      color: #e0e1dd;
-      margin-top: 2px;
-      line-height: 1.4;
+
+    .exercise-title {
+      font-size: 0.95rem;
+      margin-bottom: 6px;
+      color: #ffffff;
     }
-    #ejercicio-detalle .bloque-contenido ol {
-      padding-left: 16px;
-      line-height: 1.4;
-    }
-    #ejercicio-detalle .bloque-contenido li {
-      margin-bottom: 2px;
-    }
-    #ejercicio-detalle .bloque-examen {
-      border-left-color: #9d4edd;
-      background: #1c2541;
-      padding: 10px;
+
+    .instruction-card {
+      background-color: #1c2541;
+      border-left: 4px solid #00b4d8;
+      padding: 8px;
       border-radius: 4px;
-      text-align: center;
+      margin-bottom: 6px;
+      font-size: 0.78rem;
     }
-    #ejercicio-detalle .bloque-examen .examen-icono {
-      font-size: 2rem;
-      margin-bottom: 4px;
-    }
-    #ejercicio-detalle .bloque-examen .examen-texto {
-      font-size: 0.9rem;
+
+    .instruction-text {
+      font-size: 0.85rem;
+      line-height: 1.35;
+      margin-bottom: 8px;
       color: #e0e1dd;
+      max-height: 110px;
+      overflow-y: auto;
+    }
+
+    .hint-btn {
+      width: 100%;
+      background: rgba(255, 183, 3, 0.15);
+      border: 1px solid #ffb703;
+      color: #ffb703;
+      padding: 7px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      text-align: left;
+      font-size: 0.8rem;
+      margin-bottom: 5px;
+    }
+
+    .hint-box {
+      display: none;
+      background: rgba(255, 183, 3, 0.1);
+      border: 1px dashed #ffb703;
+      padding: 7px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      color: #ffb703;
+      margin-bottom: 8px;
+      max-height: 95px;
+      overflow-y: auto;
     }
 
     .nav-buttons {
       display: flex;
-      gap: 6px;
-      margin-top: 6px;
-      flex-shrink: 0;
+      gap: 8px;
     }
+
     .btn-nav {
       flex: 1;
-      padding: 6px;
+      padding: 8px;
       border: none;
-      border-radius: 4px;
+      border-radius: 6px;
       background-color: #00b4d8;
       color: #000000;
       font-weight: bold;
       cursor: pointer;
-      font-size: 0.8rem;
+      font-size: 0.82rem;
     }
+
     .btn-nav:disabled {
       background-color: #3a506b;
       color: #8d99ae;
       cursor: not-allowed;
     }
 
-    /* ===== ESCRITORIO ===== */
+    /* Panel Derecho: Escritorio */
     .desktop-container {
       flex: 1;
       display: flex;
@@ -269,17 +163,20 @@
       position: relative;
       background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
     }
+
     .desktop-workspace {
       flex: 1;
       position: relative;
-      padding: 10px;
+      padding: 15px;
     }
+
     .desktop-icons {
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      width: 60px;
+      gap: 15px;
+      width: 90px;
     }
+
     .desktop-icon {
       display: flex;
       flex-direction: column;
@@ -287,38 +184,37 @@
       text-align: center;
       color: #ffffff;
       font-size: 0.75rem;
-      font-weight: 600;
       text-shadow: 1px 1px 3px rgba(0,0,0,0.9);
       cursor: pointer;
-      padding: 4px 2px;
+      padding: 6px;
       border-radius: 4px;
       border: 1px solid transparent;
-      transition: all 0.2s;
-      user-select: none;
     }
+
     .desktop-icon:hover {
       background-color: rgba(255, 255, 255, 0.15);
       border: 1px solid rgba(255, 255, 255, 0.3);
     }
+
     .desktop-icon.selected {
       background-color: rgba(0, 180, 216, 0.3);
       border: 1px solid #00b4d8;
     }
-    .desktop-icon svg {
-      width: 32px;
-      height: 32px;
-      margin-bottom: 2px;
-      pointer-events: none;
+
+    .desktop-icon svg, .desktop-icon img {
+      width: 38px;
+      height: 38px;
+      margin-bottom: 4px;
     }
 
-    /* ===== VENTANAS ===== */
+    /* Ventanas */
     .window {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 560px;
-      height: 420px;
+      width: 540px;
+      height: 380px;
       background-color: #f8f9fa;
       color: #333333;
       border-radius: 6px;
@@ -328,19 +224,22 @@
       z-index: 10;
       flex-direction: column;
     }
+
     .window-header {
       background-color: #e9ecef;
-      padding: 6px 12px;
+      padding: 8px 12px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       border-bottom: 1px solid #ced4da;
     }
+
     .window-title {
       font-size: 0.85rem;
       color: #212529;
       font-weight: 600;
     }
+
     .btn-close {
       background: transparent;
       border: none;
@@ -351,25 +250,28 @@
       padding: 2px 8px;
       border-radius: 3px;
     }
+
     .btn-close:hover {
       background-color: #dc3545;
       color: #ffffff;
     }
+
     .window-body {
-      padding: 12px;
+      padding: 15px;
       font-size: 0.85rem;
       flex: 1;
       overflow-y: auto;
       background-color: #ffffff;
       color: #212529;
     }
+
     .app-form-group {
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
     .app-form-group label {
       display: block;
       font-size: 0.8rem;
-      margin-bottom: 2px;
+      margin-bottom: 3px;
       font-weight: 600;
     }
     .app-form-control {
@@ -406,6 +308,7 @@
       display: none;
       z-index: 15;
     }
+
     .start-item {
       padding: 8px 12px;
       color: #fff;
@@ -416,16 +319,13 @@
       align-items: center;
       gap: 10px;
     }
+
     .start-item:hover {
       background-color: #00b4d8;
       color: #000;
     }
-    .start-item svg {
-      width: 24px;
-      height: 24px;
-    }
 
-    /* Barra de Tareas */
+    /* Barra de tareas */
     .taskbar {
       height: 45px;
       background-color: rgba(15, 23, 42, 0.9);
@@ -436,8 +336,8 @@
       padding: 0 10px;
       border-top: 1px solid rgba(255, 255, 255, 0.1);
       z-index: 20;
-      flex-shrink: 0;
     }
+
     .start-btn {
       background: transparent;
       border: none;
@@ -448,1995 +348,586 @@
       display: flex;
       align-items: center;
     }
+
     .start-btn:hover {
       background-color: rgba(255, 255, 255, 0.1);
     }
+
     .taskbar-clock {
       font-size: 0.75rem;
       text-align: right;
       color: #ffffff;
     }
-
-    /* Drag & drop para evaluación */
-    .drop-zone {
-      border: 2px dashed #0077b6;
-      border-radius: 6px;
-      padding: 10px;
-      min-height: 80px;
-      background: #f1f3f5;
-      margin: 10px 0;
-    }
-    .drop-item {
-      background: #0077b6;
-      color: white;
-      padding: 6px 12px;
-      margin: 4px;
-      border-radius: 4px;
-      cursor: grab;
-      display: inline-block;
-      user-select: none;
-    }
-    .drop-item.dragging {
-      opacity: 0.5;
-    }
-    .drop-zone.drag-over {
-      background: #cfe2ff;
-      border-color: #0d6efd;
-    }
-    .examen-botones {
-      display: flex;
-      gap: 10px;
-      margin-top: 10px;
-      justify-content: center;
-    }
-
-    /* Zonas de drop para arrastre de iconos */
-    .drop-zone-icon {
-      position: absolute;
-      width: 100px;
-      height: 100px;
-      border: 2px dashed #0077b6;
-      border-radius: 10px;
-      background: rgba(0, 180, 216, 0.1);
-      display: none;
-      pointer-events: auto;
-    }
   </style>
 </head>
 <body>
 
-<div class="app-container">
-  <aside class="sidebar">
-    <div class="sidebar-top">
-      <div class="sidebar-header">
-        <h2>Capacitación Digital</h2>
-        <button class="btn-ayuda" onclick="toggleAyuda()">❓ Ayuda</button>
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="sidebar-top">
+        <div class="sidebar-header">
+          <h2>Computación Fácil (Jubilados)</h2>
+        </div>
+
+        <div class="control-group">
+          <label class="control-label">Módulo de Aprendizaje:</label>
+          <select id="module-select" class="module-select" onchange="changeModuleFilter(this.value)">
+            <option value="all">Ver todos los 100 ejercicios</option>
+            <option value="1">Módulo 1: Manejo del Mouse (01-14)</option>
+            <option value="2">Módulo 2: Escritorio y Ventanas (15-27)</option>
+            <option value="3">Módulo 3: Explorador de Archivos (28-41)</option>
+            <option value="4">Módulo 4: Redacción en WordPad (42-54)</option>
+            <option value="5">Módulo 5: Facturador Digital (55-69)</option>
+            <option value="6">Módulo 6: Correo Electrónico (70-81)</option>
+            <option value="7">Módulo 7: Primeros Auxilios de la PC (82-97)</option>
+            <option value="8">Módulo 8: Examen Integrador Final (98-100)</option>
+          </select>
+        </div>
+
+        <div class="control-group">
+          <label class="control-label">Seleccionar Ejercicio:</label>
+          <select id="exercise-dropdown-select" class="exercise-dropdown-select" onchange="selectExercise(this.value)"></select>
+        </div>
+
+        <span id="badge-module" class="badge-module">Módulo 1</span>
+        <h3 id="exercise-title" class="exercise-title">Ejercicio 1</h3>
+        
+        <div class="instruction-card">
+          📌 <span id="location-text">Pantalla Principal</span>
+        </div>
+        
+        <p id="instruction-text" class="instruction-text">Cargando...</p>
+        
+        <button class="hint-btn" onclick="toggleHint()">💡 Ayuda paso a paso</button>
+        <div id="hint-box" class="hint-box"></div>
       </div>
 
-      <!-- AYUDA CONTEXTUAL -->
-      <div id="ayuda-panel">
-        <button class="btn-cerrar-ayuda" onclick="toggleAyuda()">✕ Cerrar</button>
-        <div class="ayuda-item">
-          <div class="ayuda-titulo">🖥️ Escritorio</div>
-          <div class="ayuda-desc">Es la pantalla principal que ves al prender la compu. Es como la mesa de tu casa: podés dejar tus cosas (íconos) a mano.</div>
+      <div class="nav-buttons">
+        <button id="btn-prev" class="btn-nav" onclick="navigate(-1)">Anterior</button>
+        <button id="btn-next" class="btn-nav" onclick="navigate(1)">Siguiente</button>
+      </div>
+    </aside>
+
+    <main class="desktop-container" onclick="handleDesktopClick(event)">
+      <div class="desktop-workspace">
+        
+        <div class="desktop-icons">
+          <div class="desktop-icon" id="icon-este-equipo" onclick="handleIconClick(event, 'este-equipo')" ondblclick="handleIconDblClick('este-equipo')">
+            <svg viewBox="0 0 48 48" width="38" height="38"><path fill="#0078d7" d="M40 8H8a4 4 0 00-4 4v20a4 4 0 004 4h14l-2 4h-4v2h16v-2h-4l-2-4h14a4 4 0 004-4V12a4 4 0 00-4-4zm0 22H8V12h32z"/></svg>
+            <span>Este Equipo</span>
+          </div>
+
+          <div class="desktop-icon" id="icon-wordpad" onclick="handleIconClick(event, 'wordpad')" ondblclick="handleIconDblClick('wordpad')">
+            <svg viewBox="0 0 48 48" width="38" height="38"><path fill="#2b579a" d="M6 6h28l8 8v28H6z"/><path fill="#fff" d="M14 18h20v2H14zm0 6h20v2H14zm0 6h14v2H14z"/><path fill="#19325c" d="M34 6v8h8z"/></svg>
+            <span>WordPad</span>
+          </div>
+
+          <div class="desktop-icon" id="icon-facturador" onclick="handleIconClick(event, 'facturador')" ondblclick="handleIconDblClick('facturador')">
+            <svg viewBox="0 0 48 48" width="38" height="38"><path fill="#107c41" d="M8 4h24l8 8v32H8z"/><path fill="#fff" d="M14 16h20v2H14zm0 6h20v2H14zm0 6h12v2H14z"/><path fill="#0b532c" d="M32 4v10h10z"/></svg>
+            <span>Facturador</span>
+          </div>
+
+          <div class="desktop-icon" id="icon-correo" onclick="handleIconClick(event, 'correo')" ondblclick="handleIconDblClick('correo')">
+            <img src="https://img.icons8.com/color/48/gmail-new.png" alt="Correo">
+            <span>Correo</span>
+          </div>
+
+          <div class="desktop-icon" id="icon-papelera" onclick="handleIconClick(event, 'papelera')" ondblclick="handleIconDblClick('papelera')">
+            <svg viewBox="0 0 48 48" width="38" height="38"><path fill="#6c757d" d="M12 12h24v30H12z"/><path fill="#495057" d="M10 8h28v4H10z"/><path fill="#adb5bd" d="M20 4h8v4h-8z"/></svg>
+            <span>Papelera</span>
+          </div>
         </div>
-        <div class="ayuda-item">
-          <div class="ayuda-titulo">📁 Íconos</div>
-          <div class="ayuda-desc">Son dibujitos que representan programas o carpetas. Si hacés doble clic, se abre lo que sea que representen.</div>
+
+        <div class="window" id="app-window">
+          <div class="window-header">
+            <span class="window-title" id="window-title">Ventana</span>
+            <button class="btn-close" onclick="closeAppWindow()" title="Cerrar">[X]</button>
+          </div>
+          <div class="window-body" id="window-body">
+            Contenido...
+          </div>
         </div>
-        <div class="ayuda-item">
-          <div class="ayuda-titulo">📋 Panel izquierdo</div>
-          <div class="ayuda-desc">Ahí está todo lo que necesitás para aprender. Elegís el tema y el ejercicio, y te dice qué hacer paso a paso.</div>
+
+        <div class="start-menu" id="start-menu">
+          <div class="start-item" onclick="handleStartItem('wordpad')">📝 Escribir en WordPad</div>
+          <div class="start-item" onclick="handleStartItem('facturador')">🧮 Abrir Facturador</div>
+          <div class="start-item" onclick="handleStartItem('correo')">✉️ Revisar Correo</div>
+          <div class="start-item" onclick="handleStartItem('este-equipo')">💻 Ver Mis Archivos</div>
+          <div class="start-item" onclick="handleStartItem('papelera')">🗑️ Papelera de Reciclaje</div>
         </div>
-        <div class="ayuda-item">
-          <div class="ayuda-titulo">📌 Barra de tareas</div>
-          <div class="ayuda-desc">La franja gris que está abajo de todo. Te muestra qué programas tenés abiertos y te permite cambiar entre ellos. El botón de Inicio (el logo de Windows) está ahí.</div>
-        </div>
-        <div class="ayuda-item">
-          <div class="ayuda-titulo">🪟 Ventanas</div>
-          <div class="ayuda-desc">Los cuadros que se abren al hacer clic en un programa. Podés moverlas, agrandarlas, achicarlas o cerrarlas con los botones de arriba a la derecha.</div>
-        </div>
-        <div class="ayuda-item">
-          <div class="ayuda-titulo">🏠 Menú Inicio</div>
-          <div class="ayuda-desc">El centro de control de la compu. Desde ahí podés abrir cualquier programa instalado.</div>
-        </div>
+
       </div>
 
-      <!-- PROGRESO -->
-      <div id="progreso-container">
-        <div class="progreso-titulo">📊 Progreso</div>
-        <div class="progreso-barra">
-          <div class="progreso-barra-interna" id="progreso-barra" style="width:0%"></div>
+      <footer class="taskbar">
+        <div class="taskbar-left">
+          <button class="start-btn" id="start-btn" onclick="toggleStartMenu(event)" title="Menú Inicio">
+            <svg viewBox="0 0 88 88" width="20" height="20">
+              <path fill="#00b4d8" d="M0 12.402l35.687-4.86.016 34.423-35.703.203zm35.687 34.93l.031 34.531-35.718-4.937-.016-29.75zm5.797-40.407L87.89 0l-.016 41.563-42.39.313zm42.422 41.141l.016 42.188-42.438-6.094-.031-36.438z"/>
+            </svg>
+          </button>
         </div>
-        <div class="progreso-texto" id="progreso-texto">0%</div>
-      </div>
-
-      <div class="control-group">
-        <label class="control-label">Módulo actual:</label>
-        <select id="module-select" class="module-select" onchange="changeModuleFilter(this.value)">
-          <option value="all">Todos los módulos</option>
-          <option value="1">Módulo 1: Panel Táctil y Gestos</option>
-          <option value="2">Módulo 2: Gestión de Ventanas</option>
-          <option value="3">Módulo 3: Explorador de Archivos</option>
-          <option value="4">Módulo 4: Facturador Digital</option>
-          <option value="5">Módulo 5: Gestión de Correo</option>
-          <option value="6">Módulo 6: Evaluación General</option>
-        </select>
-      </div>
-      <div class="control-group">
-        <label class="control-label">Seleccionar Ejercicio:</label>
-        <select id="exercise-dropdown-select" class="exercise-dropdown-select" onchange="selectExercise(this.value)"></select>
-      </div>
-      <div id="feedback"></div>
-      <div id="ejercicio-detalle"></div>
-    </div>
-    <div class="nav-buttons">
-      <button id="btn-prev" class="btn-nav" onclick="navigate(-1)">◀ Anterior</button>
-      <button id="btn-next" class="btn-nav" onclick="navigate(1)">Siguiente ▶</button>
-    </div>
-  </aside>
-
-  <main class="desktop-container" onclick="handleDesktopClick(event)">
-    <div class="desktop-workspace">
-      <div class="desktop-icons">
-        <!-- Este Equipo -->
-        <div class="desktop-icon" id="icon-este-equipo" onclick="handleIconClick(event, 'este-equipo')" ondblclick="handleIconDblClick(event, 'este-equipo')" draggable="true">
-          <svg viewBox="0 0 48 48"><path fill="#0078d7" d="M40 8H8a4 4 0 00-4 4v20a4 4 0 004 4h14l-2 4h-4v2h16v-2h-4l-2-4h14a4 4 0 004-4V12a4 4 0 00-4-4zm0 22H8V12h32z"/></svg>
-          <span>Este Equipo</span>
+        <div class="taskbar-clock">
+          <div id="clock-time">12:06</div>
+          <div id="clock-date">11/10/2026</div>
         </div>
-        <!-- WordPad -->
-        <div class="desktop-icon" id="icon-wordpad" onclick="handleIconClick(event, 'wordpad')" ondblclick="handleIconDblClick(event, 'wordpad')" draggable="true">
-          <svg viewBox="0 0 48 48"><path fill="#2b579a" d="M6 6h28l8 8v28H6z"/><path fill="#fff" d="M14 18h20v2H14zm0 6h20v2H14zm0 6h14v2H14z"/><path fill="#19325c" d="M34 6v8h8z"/></svg>
-          <span>WordPad</span>
-        </div>
-        <!-- Facturador -->
-        <div class="desktop-icon" id="icon-facturador" onclick="handleIconClick(event, 'facturador')" ondblclick="handleIconDblClick(event, 'facturador')" draggable="true">
-          <svg viewBox="0 0 48 48"><path fill="#107c41" d="M8 4h24l8 8v32H8z"/><path fill="#fff" d="M14 16h20v2H14zm0 6h20v2H14zm0 6h12v2H14z"/><path fill="#0b532c" d="M32 4v10h10z"/></svg>
-          <span>Facturador</span>
-        </div>
-        <!-- Correo (estilo Gmail) -->
-        <div class="desktop-icon" id="icon-correo" onclick="handleIconClick(event, 'correo')" ondblclick="handleIconDblClick(event, 'correo')" draggable="true">
-          <svg viewBox="0 0 48 48">
-            <path fill="#EA4335" d="M24 24L4 10v24l20 4 20-4V10L24 24z"/>
-            <path fill="#FBBC04" d="M4 10l20 14 20-14H4z"/>
-            <path fill="#34A853" d="M44 10v24l-20 4V24l20-14z"/>
-            <path fill="#4285F4" d="M4 34l20-4V24L4 10v24z"/>
-          </svg>
-          <span>Correo</span>
-        </div>
-        <!-- Papelera (mejorada) -->
-        <div class="desktop-icon" id="icon-papelera" onclick="handleIconClick(event, 'papelera')" ondblclick="handleIconDblClick(event, 'papelera')" draggable="true">
-          <svg viewBox="0 0 48 48">
-            <path fill="#6c757d" d="M14 10h20v30H14z"/>
-            <path fill="#495057" d="M10 6h28v4H10z"/>
-            <path fill="#adb5bd" d="M18 4h12v3H18z"/>
-            <path fill="#ced4da" d="M16 12v24h16V12H16z"/>
-            <path fill="#6c757d" d="M18 12h12v2H18z"/>
-            <rect x="20" y="15" width="2" height="18" fill="#ced4da"/>
-            <rect x="24" y="15" width="2" height="18" fill="#ced4da"/>
-            <rect x="28" y="15" width="2" height="18" fill="#ced4da"/>
-          </svg>
-          <span>Papelera</span>
-        </div>
-      </div>
-
-      <!-- Zonas de drop para arrastre de iconos -->
-      <div class="drop-zone-icon" id="drop-zone-right" style="right: 20px; top: 50%;"></div>
-      <div class="drop-zone-icon" id="drop-zone-left" style="left: 20px; top: 50%;"></div>
-
-      <div class="window" id="app-window">
-        <div class="window-header">
-          <span class="window-title" id="window-title">Ventana</span>
-          <button class="btn-close" onclick="closeAppWindow()" title="Cerrar">[X]</button>
-        </div>
-        <div class="window-body" id="window-body">Contenido de la aplicación...</div>
-      </div>
-
-      <div class="start-menu" id="start-menu">
-        <div class="start-item" onclick="handleStartItem('wordpad')">
-          <svg viewBox="0 0 48 48"><path fill="#2b579a" d="M6 6h28l8 8v28H6z"/><path fill="#fff" d="M14 18h20v2H14zm0 6h20v2H14zm0 6h14v2H14z"/><path fill="#19325c" d="M34 6v8h8z"/></svg>
-          WordPad
-        </div>
-        <div class="start-item" onclick="handleStartItem('facturador')">
-          <svg viewBox="0 0 48 48"><path fill="#107c41" d="M8 4h24l8 8v32H8z"/><path fill="#fff" d="M14 16h20v2H14zm0 6h20v2H14zm0 6h12v2H14z"/><path fill="#0b532c" d="M32 4v10h10z"/></svg>
-          Facturador Digital
-        </div>
-        <div class="start-item" onclick="handleStartItem('correo')">
-          <svg viewBox="0 0 48 48"><path fill="#EA4335" d="M24 24L4 10v24l20 4 20-4V10L24 24z"/><path fill="#FBBC04" d="M4 10l20 14 20-14H4z"/><path fill="#34A853" d="M44 10v24l-20 4V24l20-14z"/><path fill="#4285F4" d="M4 34l20-4V24L4 10v24z"/></svg>
-          Correo
-        </div>
-        <div class="start-item" onclick="handleStartItem('este-equipo')">
-          <svg viewBox="0 0 48 48"><path fill="#0078d7" d="M40 8H8a4 4 0 00-4 4v20a4 4 0 004 4h14l-2 4h-4v2h16v-2h-4l-2-4h14a4 4 0 004-4V12a4 4 0 00-4-4zm0 22H8V12h32z"/></svg>
-          Este Equipo
-        </div>
-        <div class="start-item" onclick="handleStartItem('papelera')">
-          <svg viewBox="0 0 48 48"><path fill="#6c757d" d="M14 10h20v30H14z"/><path fill="#495057" d="M10 6h28v4H10z"/><path fill="#adb5bd" d="M18 4h12v3H18z"/><path fill="#ced4da" d="M16 12v24h16V12H16z"/><path fill="#6c757d" d="M18 12h12v2H18z"/><rect x="20" y="15" width="2" height="18" fill="#ced4da"/><rect x="24" y="15" width="2" height="18" fill="#ced4da"/><rect x="28" y="15" width="2" height="18" fill="#ced4da"/></svg>
-          Papelera de Reciclaje
-        </div>
-      </div>
-    </div>
-
-    <footer class="taskbar">
-      <div class="taskbar-left">
-        <button class="start-btn" id="start-btn" onclick="toggleStartMenu(event)" title="Inicio">
-          <svg viewBox="0 0 88 88" width="20" height="20">
-            <path fill="#00b4d8" d="M0 12.402l35.687-4.86.016 34.423-35.703.203zm35.687 34.93l.031 34.531-35.718-4.937-.016-29.75zm5.797-40.407L87.89 0l-.016 41.563-42.39.313zm42.422 41.141l.016 42.188-42.438-6.094-.031-36.438z"/>
-          </svg>
-        </button>
-      </div>
-      <div class="taskbar-clock">
-        <div id="clock-time">23:18</div>
-        <div id="clock-date">17/08/2026</div>
-      </div>
-    </footer>
-  </main>
-</div>
-
-<script>
-// ============================================================
-// 0. SONIDO DE CLIC (sintético)
-// ============================================================
-function playClickSound() {
-  try {
-    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    const oscillator = audioCtx.createOscillator();
-    const gainNode = audioCtx.createGain();
-    oscillator.connect(gainNode);
-    gainNode.connect(audioCtx.destination);
-    oscillator.frequency.value = 800;
-    oscillator.type = 'sine';
-    gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
-    oscillator.start(audioCtx.currentTime);
-    oscillator.stop(audioCtx.currentTime + 0.1);
-  } catch (e) {}
-}
-
-// ============================================================
-// 1. BANCO DE PREGUNTAS (Módulo 6)
-// ============================================================
-const bank = {
-  1: [
-    { type: 'mcq', q: '¿Qué acción abre un programa?', opts: ['Clic simple', 'Doble clic', 'Clic derecho'], answer: 1 },
-    { type: 'mcq', q: '¿Qué hace un clic simple?', opts: ['Abrir', 'Seleccionar', 'Cerrar'], answer: 1 },
-    { type: 'tf', q: 'El doble clic se usa para abrir archivos.', answer: true },
-    { type: 'tf', q: 'El clic derecho siempre abre un programa.', answer: false },
-    { type: 'order', q: 'Ordena los pasos para abrir WordPad:', steps: ['Ubicar ícono', 'Hacer doble clic', 'Esperar que cargue'], correct: [0,1,2] },
-    { type: 'mcq', q: '¿Qué es un gesto táctil?', opts: ['Tocar la pantalla', 'Mover el mouse', 'Presionar teclas'], answer: 0 },
-    { type: 'mcq', q: '¿Con qué dedo se hace clic izquierdo?', opts: ['Índice', 'Pulgar', 'Anular'], answer: 0 },
-    { type: 'tf', q: 'El clic derecho muestra opciones adicionales.', answer: true },
-    { type: 'tf', q: 'Para seleccionar un archivo se usa doble clic.', answer: false },
-    { type: 'order', q: 'Ordena los pasos para seleccionar un icono:', steps: ['Ubicar el icono', 'Hacer clic simple', 'Ver que se resalte'], correct: [0,1,2] },
-    { type: 'mcq', q: '¿Cómo se llama el movimiento de deslizar dos dedos?', opts: ['Desplazamiento', 'Zoom', 'Giro'], answer: 0 },
-    { type: 'mcq', q: '¿Qué significa "clic"?', opts: ['Presionar y soltar', 'Presionar y mantener', 'Deslizar'], answer: 0 },
-    { type: 'tf', q: 'El panel táctil reemplaza al mouse.', answer: true },
-    { type: 'tf', q: 'El doble clic debe ser lento para funcionar.', answer: false },
-    { type: 'order', q: 'Ordena los pasos para usar el panel táctil:', steps: ['Colocar dedo', 'Deslizar para mover cursor', 'Hacer clic para seleccionar'], correct: [0,1,2] },
-    { type: 'mcq', q: '¿Qué acción abre el menú contextual?', opts: ['Clic derecho', 'Clic izquierdo', 'Doble clic'], answer: 0 },
-    { type: 'mcq', q: '¿Qué dedo se usa para clic derecho?', opts: ['Índice', 'Medio', 'Anular'], answer: 0 },
-    { type: 'tf', q: 'El panel táctil solo funciona con un dedo.', answer: false },
-    { type: 'tf', q: 'El cursor se mueve deslizando el dedo.', answer: true },
-    { type: 'order', q: 'Ordena los pasos para abrir un programa:', steps: ['Ubicar icono', 'Hacer doble clic', 'Esperar que cargue'], correct: [0,1,2] },
-    { type: 'mcq', q: '¿Qué significa "arrastrar"?', opts: ['Mover manteniendo clic', 'Clic rápido', 'Deslizar sin clic'], answer: 0 },
-    { type: 'tf', q: 'El panel táctil necesita calibración constante.', answer: false }
-  ],
-  2: [
-    { type: 'mcq', q: '¿Cómo cierras una ventana?', opts: ['Botón [X]', 'Botón Inicio', 'Doble clic'], answer: 0 },
-    { type: 'tf', q: 'Para mover una ventana, arrastras la barra superior.', answer: true },
-    { type: 'mcq', q: '¿Qué hace el botón "Minimizar"?', opts: ['Cierra la ventana', 'Oculta en la barra', 'Agranda la ventana'], answer: 1 },
-    { type: 'order', q: 'Ordena los pasos para cerrar una ventana:', steps: ['Ubicar la cruz [X]', 'Hacer clic en [X]', 'Confirmar si pregunta'], correct: [0,1,2] },
-    { type: 'mcq', q: '¿Qué botón agranda la ventana?', opts: ['Maximizar', 'Minimizar', 'Cerrar'], answer: 0 },
-    { type: 'tf', q: 'Todas las ventanas tienen barra de título.', answer: true },
-    { type: 'tf', q: 'No se puede mover una ventana minimizada.', answer: true },
-    { type: 'order', q: 'Ordena los pasos para minimizar una ventana:', steps: ['Ubicar botón minimizar', 'Hacer clic en el botón', 'Ver que se oculta en la barra'], correct: [0,1,2] },
-    { type: 'mcq', q: '¿Qué indica la barra de título?', opts: ['Nombre de la ventana', 'Contenido', 'Botones de control'], answer: 0 },
-    { type: 'mcq', q: '¿Cómo se restaura una ventana minimizada?', opts: ['Clic en la barra', 'Doble clic en el icono', 'Clic derecho'], answer: 1 },
-    { type: 'tf', q: 'El botón [X] cierra la ventana.', answer: true },
-    { type: 'tf', q: 'Una ventana maximizada no se puede mover.', answer: true },
-    { type: 'order', q: 'Ordena los pasos para maximizar una ventana:', steps: ['Ubicar botón maximizar', 'Hacer clic en el botón', 'Ver que ocupa toda la pantalla'], correct: [0,1,2] },
-    { type: 'mcq', q: '¿Qué hace el botón "Restaurar"?', opts: ['Vuelve al tamaño anterior', 'Cierra la ventana', 'Minimiza'], answer: 0 },
-    { type: 'mcq', q: '¿Dónde están los botones de control?', opts: ['Esquina superior derecha', 'Esquina inferior izquierda', 'Centro'], answer: 0 },
-    { type: 'tf', q: 'Las ventanas se pueden superponer.', answer: true },
-    { type: 'tf', q: 'El botón de inicio abre el menú.', answer: true },
-    { type: 'order', q: 'Ordena los pasos para cambiar entre ventanas:', steps: ['Hacer clic en la barra', 'Ubicar la ventana deseada', 'Seleccionar la ventana'], correct: [1,0,2] },
-    { type: 'mcq', q: '¿Qué significa "ventana activa"?', opts: ['La que está en primer plano', 'La que está cerrada', 'La que está minimizada'], answer: 0 },
-    { type: 'mcq', q: '¿Cómo se cierra una ventana desde el teclado?', opts: ['Alt+F4', 'Ctrl+C', 'Windows+D'], answer: 0 },
-    { type: 'tf', q: 'Todas las ventanas tienen el mismo tamaño.', answer: false },
-    { type: 'tf', q: 'Se puede tener varias ventanas abiertas a la vez.', answer: true }
-  ],
-  3: [
-    { type: 'mcq', q: '¿Dónde se guardan las descargas?', opts: ['Documentos', 'Descargas', 'Escritorio'], answer: 1 },
-    { type: 'tf', q: '"Este Equipo" muestra las unidades de la PC.', answer: true },
-    { type: 'mcq', q: '¿Qué carpeta contiene los archivos del usuario?', opts: ['Windows', 'Usuarios', 'Sistema'], answer: 1 },
-    { type: 'order', q: 'Ordena los pasos para abrir Descargas:', steps: ['Abrir Este Equipo', 'Ubicar la carpeta Descargas', 'Hacer doble clic en Descargas'], correct: [0,1,2] },
-    { type: 'mcq', q: '¿Qué icono muestra los discos de la PC?', opts: ['Este Equipo', 'Papelera', 'Correo'], answer: 0 },
-    { type: 'tf', q: 'La papelera guarda archivos eliminados.', answer: true },
-    { type: 'tf', q: 'Los archivos de la papelera se eliminan automáticamente.', answer: false },
-    { type: 'order', q: 'Ordena los pasos para vaciar la papelera:', steps: ['Abrir Papelera', 'Hacer clic en Vaciar', 'Confirmar eliminación'], correct: [0,1,2] },
-    { type: 'mcq', q: '¿Cómo se abre un archivo en el explorador?', opts: ['Doble clic', 'Clic simple', 'Clic derecho'], answer: 0 },
-    { type: 'mcq', q: '¿Qué muestra el explorador de archivos?', opts: ['Carpetas y archivos', 'Correos', 'Facturas'], answer: 0 },
-    { type: 'tf', q: 'Se pueden crear carpetas dentro de Descargas.', answer: true },
-    { type: 'tf', q: 'El explorador solo muestra archivos de texto.', answer: false },
-    { type: 'order', q: 'Ordena los pasos para crear una carpeta:', steps: ['Abrir la ubicación', 'Clic derecho', 'Seleccionar Nueva Carpeta'], correct: [0,1,2] },
-    { type: 'mcq', q: '¿Qué significa "unidad C:"?', opts: ['Disco local', 'Unidad de red', 'Memoria USB'], answer: 0 },
-    { type: 'mcq', q: '¿Cómo se cambia el nombre de un archivo?', opts: ['Clic derecho > Cambiar nombre', 'Doble clic', 'Arrastrar'], answer: 0 },
-    { type: 'tf', q: 'Los archivos se pueden copiar de una carpeta a otra.', answer: true },
-    { type: 'tf', q: 'La papelera se encuentra en el escritorio.', answer: true },
-    { type: 'order', q: 'Ordena los pasos para eliminar un archivo:', steps: ['Seleccionar archivo', 'Presionar Supr', 'Confirmar eliminación'], correct: [0,1,2] },
-    { type: 'mcq', q: '¿Qué hace el botón "Atrás" en el explorador?', opts: ['Volver a la carpeta anterior', 'Cerrar la ventana', 'Actualizar'], answer: 0 },
-    { type: 'mcq', q: '¿Qué icono representa la papelera?', opts: ['Cubo de basura', 'Carpeta', 'Disco'], answer: 0 },
-    { type: 'tf', q: 'El explorador permite buscar archivos.', answer: true },
-    { type: 'tf', q: 'Todos los archivos se guardan en el escritorio.', answer: false }
-  ],
-  4: [
-    { type: 'mcq', q: '¿Qué programa usamos para emitir facturas?', opts: ['WordPad', 'Facturador Digital', 'Correo'], answer: 1 },
-    { type: 'tf', q: 'El Facturador permite agregar productos con cantidad y precio.', answer: true },
-    { type: 'mcq', q: '¿Dónde se guarda la factura después de emitirla?', opts: ['Descargas', 'Documentos', 'Escritorio'], answer: 0 },
-    { type: 'order', q: 'Ordena los pasos para emitir una factura:', steps: ['Completar datos del cliente', 'Agregar productos', 'Emitir y guardar'], correct: [0,1,2] },
-    { type: 'mcq', q: '¿Qué botón usamos para guardar una factura?', opts: ['Emitir y Guardar', 'Adjuntar', 'Enviar'], answer: 0 },
-    { type: 'tf', q: 'El subtotal incluye el IVA.', answer: false },
-    { type: 'mcq', q: '¿Qué campo es obligatorio en una factura?', opts: ['Cliente', 'Color de fondo', 'Fecha de emisión'], answer: 0 },
-    { type: 'order', q: 'Ordena los pasos para cargar un producto:', steps: ['Escribir nombre', 'Poner cantidad', 'Poner precio', 'Agregar'], correct: [0,1,2,3] },
-    { type: 'mcq', q: '¿Cómo se calcula el IVA en el facturador?', opts: ['21% del subtotal', '10% del total', 'No se calcula'], answer: 0 },
-    { type: 'tf', q: 'Se puede emitir una factura sin productos cargados.', answer: false },
-    { type: 'mcq', q: '¿Qué indica el "Subtotal"?', opts: ['Suma de productos sin IVA', 'Total con IVA', 'Descuento aplicado'], answer: 0 },
-    { type: 'tf', q: 'Las facturas se guardan automáticamente en la Papelera.', answer: false },
-    { type: 'order', q: 'Ordena los pasos para verificar factura en Descargas:', steps: ['Abrir Este Equipo', 'Entrar en Descargas', 'Buscar el archivo'], correct: [0,1,2] },
-    { type: 'mcq', q: '¿Qué permite agregar el botón "➕ Agregar"?', opts: ['Añadir un producto', 'Añadir un cliente', 'Guardar la factura'], answer: 0 },
-    { type: 'mcq', q: '¿Qué ocurre si no hay productos cargados?', opts: ['No se puede emitir', 'Se emite vacía', 'Se guarda igual'], answer: 0 },
-    { type: 'tf', q: 'El Facturador permite modificar productos cargados.', answer: true },
-    { type: 'tf', q: 'La factura se puede enviar por correo desde el Facturador.', answer: false },
-    { type: 'order', q: 'Ordena los pasos para adjuntar factura desde Descargas:', steps: ['Abrir Este Equipo', 'Entrar en Descargas', 'Seleccionar factura', 'Adjuntar al Correo'], correct: [0,1,2,3] },
-    { type: 'mcq', q: '¿Qué dato NO es necesario para una factura?', opts: ['CUIT del cliente', 'Productos', 'Color de fondo'], answer: 2 },
-    { type: 'mcq', q: '¿Cuál es el último paso para completar una factura?', opts: ['Emitir y Guardar', 'Agregar productos', 'Cerrar el programa'], answer: 0 },
-    { type: 'tf', q: 'El Facturador permite imprimir facturas.', answer: true },
-    { type: 'tf', q: 'La factura guardada se puede adjuntar a un correo.', answer: true }
-  ],
-  5: [
-    { type: 'mcq', q: '¿Qué programa usamos para enviar correos?', opts: ['WordPad', 'Facturador', 'Correo'], answer: 2 },
-    { type: 'tf', q: 'Para enviar un correo necesitas un destinatario.', answer: true },
-    { type: 'mcq', q: '¿Cómo adjuntas un archivo en Correo?', opts: ['Botón "Adjuntar"', 'Arrastrar al correo', 'Copiar y pegar'], answer: 0 },
-    { type: 'order', q: 'Ordena los pasos para enviar un correo:', steps: ['Escribir destinatario', 'Escribir asunto', 'Escribir mensaje', 'Enviar'], correct: [0,1,2,3] },
-    { type: 'mcq', q: '¿Qué es la bandeja de entrada?', opts: ['Correos recibidos', 'Correos enviados', 'Correos borrados'], answer: 0 },
-    { type: 'tf', q: 'Se puede adjuntar más de un archivo a un correo.', answer: true },
-    { type: 'mcq', q: '¿Qué botón envía el correo?', opts: ['Enviar', 'Guardar', 'Cerrar'], answer: 0 },
-    { type: 'order', q: 'Ordena los pasos para adjuntar un archivo:', steps: ['Abrir Correo', 'Hacer clic en Adjuntar', 'Seleccionar archivo', 'Adjuntar'], correct: [0,1,2,3] },
-    { type: 'mcq', q: '¿Qué campo es obligatorio en un correo?', opts: ['Para (destinatario)', 'Asunto', 'Cuerpo'], answer: 0 },
-    { type: 'tf', q: 'El correo permite enviar archivos adjuntos.', answer: true },
-    { type: 'mcq', q: '¿Qué significa "CC" en un correo?', opts: ['Copia para otro destinatario', 'Copia oculta', 'Cerrar correo'], answer: 0 },
-    { type: 'tf', q: 'No se puede deshacer el envío de un correo.', answer: true },
-    { type: 'order', q: 'Ordena los pasos para reenviar un correo:', steps: ['Abrir correo', 'Hacer clic en Reenviar', 'Agregar destinatario', 'Enviar'], correct: [0,1,2,3] },
-    { type: 'mcq', q: '¿Qué es el asunto del correo?', opts: ['Breve descripción', 'El destinatario', 'El archivo adjunto'], answer: 0 },
-    { type: 'mcq', q: '¿Cómo se responde a un correo?', opts: ['Botón Responder', 'Botón Reenviar', 'Botón Nuevo'], answer: 0 },
-    { type: 'tf', q: 'Los correos se pueden guardar como borrador.', answer: true },
-    { type: 'tf', q: 'El correo solo funciona con internet.', answer: true },
-    { type: 'order', q: 'Ordena los pasos para enviar factura por correo:', steps: ['Adjuntar factura', 'Escribir destinatario', 'Escribir mensaje', 'Enviar'], correct: [0,1,2,3] },
-    { type: 'mcq', q: '¿Qué significa "Bandeja de salida"?', opts: ['Correos enviados', 'Correos pendientes', 'Correos borrados'], answer: 1 },
-    { type: 'mcq', q: '¿Cómo se elimina un correo?', opts: ['Seleccionar y eliminar', 'Arrastrar', 'Doble clic'], answer: 0 },
-    { type: 'tf', q: 'El correo permite organizar mensajes en carpetas.', answer: true },
-    { type: 'tf', q: 'Todos los correos enviados se guardan automáticamente.', answer: true }
-  ]
-};
-
-// ============================================================
-// 2. FUNCIONES GLOBALES PARA ÍCONOS (CORREGIDAS)
-// ============================================================
-function handleIconClick(event, iconName) {
-  if (event) event.stopPropagation();
-  console.log("handleIconClick llamado con:", iconName);
-  playClickSound();
-  clearSelections();
-  const icon = document.getElementById(`icon-${iconName}`);
-  if (icon) {
-    icon.classList.add('selected');
-    validateAction(`click-${iconName}`);
-  } else {
-    console.error("Ícono no encontrado:", iconName);
-  }
-}
-
-function handleIconDblClick(event, iconName) {
-  if (event) event.stopPropagation();
-  console.log("handleIconDblClick llamado con:", iconName);
-  playClickSound();
-  clearSelections();
-
-  const actions = {
-    'este-equipo': openEsteEquipoApp,
-    'wordpad': openWordpadApp,
-    'facturador': openFacturadorApp,
-    'correo': openCorreoApp,
-    'papelera': openPapeleraApp
-  };
-
-  if (actions[iconName]) {
-    actions[iconName]();
-    validateAction(`dblclick-${iconName}`);
-  } else {
-    console.error("Acción no encontrada para:", iconName);
-  }
-}
-
-// ============================================================
-// 3. FUNCIÓN PARA OBTENER PISTA SEGÚN ACCIÓN
-// ============================================================
-function getPista(action) {
-  const pistas = {
-    'click-wordpad': 'Hacé un clic simple sobre el ícono de WordPad.',
-    'dblclick-wordpad': 'Hacé dos clics rápidos sobre el ícono de WordPad.',
-    'click-este-equipo': 'Hacé un clic simple sobre el ícono "Este Equipo".',
-    'dblclick-este-equipo': 'Hacé doble clic sobre "Este Equipo".',
-    'click-facturador': 'Hacé un clic simple sobre el ícono del Facturador.',
-    'dblclick-facturador': 'Hacé doble clic sobre el ícono del Facturador.',
-    'click-correo': 'Hacé un clic simple sobre el ícono de Correo.',
-    'dblclick-correo': 'Hacé doble clic sobre el ícono de Correo.',
-    'click-papelera': 'Hacé un clic simple sobre la Papelera.',
-    'dblclick-papelera': 'Hacé doble clic sobre la Papelera.',
-    'click-start': 'Hacé clic en el botón de Inicio (logo de Windows).',
-    'click-desktop': 'Hacé clic en un espacio vacío del escritorio.',
-    'click-derecho': 'Hacé clic con el botón derecho sobre el ícono indicado.',
-    'click-arrastrar': 'Mantené presionado el clic y arrastrá el ícono.',
-    'click-desplazar': 'Deslizá dos dedos sobre el panel táctil (simulado).',
-    'close-window': 'Hacé clic en el botón [X] de la ventana.',
-    'click-minimizar': 'Hacé clic en el botón de minimizar (barra superior).',
-    'click-maximizar': 'Hacé clic en el botón de maximizar.',
-    'click-restore': 'Hacé clic en el botón de restaurar (dos cuadrados).',
-    'click-cambiar-ventana': 'Hacé clic en el ícono de la ventana en la barra de tareas.',
-    'click-mover-ventana': 'Arrastrá la barra de título de la ventana.',
-    'click-redimensionar': 'Arrastrá el borde de la ventana para cambiar su tamaño.',
-    'click-cerrar-todas': 'Cerrá todas las ventanas una por una.',
-    'click-mosaico': 'Hacé clic derecho en la barra de tareas y elegí mosaico.',
-    'click-ventana': 'Hacé clic sobre la ventana para activarla.',
-    'click-documentos': 'Abrí la carpeta Documentos desde Este Equipo.',
-    'click-descargas': 'Abrí la carpeta Descargas desde Este Equipo.',
-    'click-crear-carpeta': 'Hacé clic derecho > Nuevo > Carpeta.',
-    'click-renombrar': 'Seleccioná el archivo y presioná F2 o clic derecho > Cambiar nombre.',
-    'click-copiar': 'Seleccioná el archivo y presioná Ctrl+C o clic derecho > Copiar.',
-    'click-mover': 'Seleccioná el archivo y presioná Ctrl+X o clic derecho > Cortar.',
-    'click-eliminar': 'Seleccioná el archivo y presioná Supr o clic derecho > Eliminar.',
-    'click-buscar': 'Usá la barra de búsqueda del explorador.',
-    'click-propiedades': 'Clic derecho sobre el archivo > Propiedades.',
-    'click-archivo': 'Hacé un clic simple sobre el archivo.',
-    'dblclick-archivo': 'Hacé doble clic sobre el archivo.',
-    'click-ordenar': 'Hacé clic en el encabezado de fecha.',
-    'click-vista': 'Cambiá la vista desde la pestaña Vista.',
-    'click-nueva-carpeta': 'Clic derecho > Nuevo > Carpeta.',
-    'click-cliente': 'Completá los datos del cliente en el formulario.',
-    'click-agregar-item': 'Hacé clic en el botón "Agregar" después de cargar producto.',
-    'click-emitir-guardar': 'Hacé clic en "Emitir y Guardar en Descargas".',
-    'click-verificar-descargas': 'Abrí la carpeta Descargas y verificá que esté la factura.',
-    'click-adjuntar-desde-correo': 'Hacé clic en "Adjuntar archivo" dentro de Correo.',
-    'click-adjuntar-desde-descargas': 'Seleccioná el archivo y elegí "Enviar a > Correo".',
-    'click-enviar-correo': 'Hacé clic en el botón "Enviar".',
-    'click-nuevo-correo': 'Hacé clic en "Nuevo correo".',
-    'click-responder-correo': 'Seleccioná un correo y hacé clic en "Responder".',
-    'click-reenviar-correo': 'Seleccioná un correo y hacé clic en "Reenviar".',
-    'click-eliminar-correo': 'Seleccioná un correo y hacé clic en el ícono de papelera.',
-    'click-vaciar-papelera': 'Entrá a la papelera y hacé clic en "Vaciar papelera".',
-    'click-mover-correo': 'Seleccioná un correo y elegí "Mover a".',
-    'click-buscar-correo': 'Usá la barra de búsqueda de Correo.',
-    'click-archivar-correo': 'Seleccioná un correo y hacé clic en "Archivar".',
-    'click-marcar-leido': 'Clic derecho sobre el correo > Marcar como leído.',
-    'click-marcar-no-leido': 'Clic derecho sobre el correo > Marcar como no leído.',
-    'key-alt-f4': 'Presioná las teclas Alt + F4 al mismo tiempo.',
-    'key-alt-tab': 'Presioná Alt + Tab para cambiar de ventana.',
-    'press-delete': 'Presioná la tecla Supr (Delete).',
-    'press-enter': 'Presioná la tecla Enter.',
-    'ctrl-c': 'Presioná Ctrl + C para copiar.',
-    'ctrl-v': 'Presioná Ctrl + V para pegar.',
-    'ctrl-x': 'Presioná Ctrl + X para cortar.',
-    'ctrl-z': 'Presioná Ctrl + Z para deshacer.',
-    'drag-wordpad-right': 'Arrastrá el ícono de WordPad hacia la zona de la derecha.',
-    'drag-papelera-left': 'Arrastrá el ícono de la Papelera hacia la zona de la izquierda.',
-    'click-eliminar-item': 'Hacé clic en el botón ✖ al lado del producto.',
-    'change-quantity': 'Modificá la cantidad del producto y presioná actualizar.',
-    'check-iva': 'Calculá el IVA (21% del subtotal) y verificalo.',
-    'click-imprimir': 'Hacé clic en el botón "Imprimir".',
-    'click-limpiar': 'Hacé clic en el botón "Limpiar".',
-    'click-spam': 'Hacé clic en el botón "Spam" del correo.',
-    'dblclick-correo-item': 'Hacé doble clic sobre un correo de la lista.',
-    'click-add-contact': 'Hacé clic en "Agregar contacto".',
-    'search-by-sender': 'Buscá por remitente en la barra de búsqueda.',
-    'click-empty-sent': 'Vacía la carpeta de enviados.'
-  };
-  return pistas[action] || '';
-}
-
-// ============================================================
-// 4. EJERCICIOS (25 por módulo)
-// ============================================================
-const exercises = [];
-
-// ---- MÓDULO 1: PANEL TÁCTIL (25 ejercicios) ----
-for (let i = 1; i <= 25; i++) {
-  let targetAction, contexto, objetivo, desarrollo, title;
-  if (i === 1) {
-    targetAction = "click-wordpad";
-    title = "Seleccionar WordPad";
-    contexto = "Para usar la computadora, primero debemos aprender a seleccionar elementos con el panel táctil o el mouse.";
-    objetivo = "Seleccionar el ícono de WordPad con un clic simple.";
-    desarrollo = ["Ubicá el ícono de WordPad en el escritorio.", "Hacé un clic simple sobre él.", "Verás que se resalta."];
-  } else if (i === 2) {
-    targetAction = "dblclick-wordpad";
-    title = "Abrir WordPad";
-    contexto = "Para abrir un programa, necesitamos hacer doble clic en su ícono.";
-    objetivo = "Abrir WordPad usando doble clic.";
-    desarrollo = ["Ubicá el ícono de WordPad.", "Hacé dos clics rápidos sobre él.", "La ventana de WordPad se abrirá."];
-  } else if (i === 3) {
-    targetAction = "click-este-equipo";
-    title = "Seleccionar Este Equipo";
-    contexto = "Para explorar archivos, seleccionamos 'Este Equipo'.";
-    objetivo = "Seleccionar 'Este Equipo' con un clic simple.";
-    desarrollo = ["Ubicá 'Este Equipo'.", "Hacé un clic simple.", "El ícono se resaltará."];
-  } else if (i === 4) {
-    targetAction = "click-facturador";
-    title = "Seleccionar Facturador";
-    contexto = "Para emitir facturas, seleccionamos el Facturador Digital.";
-    objetivo = "Seleccionar el Facturador con un clic simple.";
-    desarrollo = ["Ubicá el Facturador.", "Hacé un clic simple.", "El ícono se resaltará."];
-  } else if (i === 5) {
-    targetAction = "click-correo";
-    title = "Seleccionar Correo";
-    contexto = "Para enviar mensajes, seleccionamos Correo.";
-    objetivo = "Seleccionar Correo con un clic simple.";
-    desarrollo = ["Ubicá Correo.", "Hacé un clic simple.", "El ícono se resaltará."];
-  } else if (i === 6) {
-    targetAction = "click-start";
-    title = "Abrir Menú Inicio";
-    contexto = "El Menú Inicio da acceso a todas las aplicaciones.";
-    objetivo = "Abrir el Menú Inicio desde la barra de tareas.";
-    desarrollo = ["Ubicá el botón de Windows abajo a la izquierda.", "Hacé un clic simple.", "Se desplegará el menú."];
-  } else if (i === 7) {
-    targetAction = "click-desktop";
-    title = "Enfocar Escritorio";
-    contexto = "A veces necesitamos despejar la vista.";
-    objetivo = "Hacer clic en un espacio vacío del escritorio.";
-    desarrollo = ["Buscá un lugar vacío.", "Hacé un clic simple.", "El foco volverá al escritorio."];
-  } else if (i === 8) {
-    targetAction = "click-papelera";
-    title = "Seleccionar Papelera";
-    contexto = "La Papelera guarda archivos eliminados.";
-    objetivo = "Seleccionar la Papelera con un clic simple.";
-    desarrollo = ["Ubicá la Papelera.", "Hacé un clic simple.", "El ícono se resaltará."];
-  } else if (i === 9) {
-    targetAction = "click-derecho";
-    title = "Usar clic derecho";
-    contexto = "El clic derecho abre un menú contextual.";
-    objetivo = "Hacer clic derecho sobre WordPad.";
-    desarrollo = ["Ubicá WordPad.", "Hacé clic con el botón derecho.", "Se abrirá un menú."];
-  } else if (i === 10) {
-    targetAction = "click-arrastrar";
-    title = "Arrastrar un ícono";
-    contexto = "Arrastrar mueve el ícono.";
-    objetivo = "Arrastrar WordPad a la derecha.";
-    desarrollo = ["Mantené presionado sobre WordPad.", "Arrastrá hacia la derecha.", "Soltá."];
-  } else if (i === 11) {
-    targetAction = "click-desplazar";
-    title = "Desplazarse con dos dedos";
-    contexto = "El desplazamiento con dos dedos mueve el contenido.";
-    objetivo = "Simular desplazamiento vertical.";
-    desarrollo = ["Abrí WordPad.", "Colocá dos dedos en el panel táctil.", "Deslizá hacia arriba/abajo."];
-  } else if (i === 12) {
-    targetAction = "click-wordpad";
-    title = "Seleccionar WordPad (repaso)";
-    contexto = "Repaso de selección con clic simple.";
-    objetivo = "Seleccionar WordPad.";
-    desarrollo = ["Ubicá WordPad.", "Hacé clic simple.", "El ícono se resaltará."];
-  } else if (i === 13) {
-    targetAction = "click-facturador";
-    title = "Seleccionar Facturador (repaso)";
-    contexto = "Repaso de selección del Facturador.";
-    objetivo = "Seleccionar Facturador.";
-    desarrollo = ["Ubicá Facturador.", "Hacé clic simple.", "El ícono se resaltará."];
-  } else if (i === 14) {
-    targetAction = "click-correo";
-    title = "Seleccionar Correo (repaso)";
-    contexto = "Repaso de selección de Correo.";
-    objetivo = "Seleccionar Correo.";
-    desarrollo = ["Ubicá Correo.", "Hacé clic simple.", "El ícono se resaltará."];
-  } else if (i === 15) {
-    targetAction = "click-start";
-    title = "Abrir Menú Inicio (repaso)";
-    contexto = "Repaso de apertura del menú.";
-    objetivo = "Abrir Menú Inicio.";
-    desarrollo = ["Ubicá el botón de Windows.", "Hacé clic.", "Se desplegará el menú."];
-  } else if (i === 16) {
-    targetAction = "click-desktop";
-    title = "Enfocar Escritorio (repaso)";
-    contexto = "Repaso de enfoque de escritorio.";
-    objetivo = "Hacer clic en el fondo.";
-    desarrollo = ["Hacé clic en un espacio vacío.", "El foco volverá al escritorio."];
-  } else if (i === 17) {
-    targetAction = "click-papelera";
-    title = "Seleccionar Papelera (repaso)";
-    contexto = "Repaso de selección de Papelera.";
-    objetivo = "Seleccionar Papelera.";
-    desarrollo = ["Ubicá Papelera.", "Hacé clic simple.", "Se resaltará."];
-  } else if (i === 18) {
-    targetAction = "dblclick-wordpad";
-    title = "Abrir WordPad (repaso)";
-    contexto = "Repaso de apertura de WordPad.";
-    objetivo = "Abrir WordPad con doble clic.";
-    desarrollo = ["Doble clic en WordPad.", "Se abrirá."];
-  } else if (i === 19) {
-    targetAction = "dblclick-facturador";
-    title = "Abrir Facturador (repaso)";
-    contexto = "Repaso de apertura del Facturador.";
-    objetivo = "Abrir Facturador.";
-    desarrollo = ["Doble clic en Facturador.", "Se abrirá."];
-  } else if (i === 20) {
-    targetAction = "dblclick-correo";
-    title = "Abrir Correo (repaso)";
-    contexto = "Repaso de apertura de Correo.";
-    objetivo = "Abrir Correo.";
-    desarrollo = ["Doble clic en Correo.", "Se abrirá."];
-  } else if (i === 21) {
-    targetAction = "drag-wordpad-right";
-    title = "Arrastrar WordPad a la derecha";
-    contexto = "Vamos a practicar arrastrar un ícono hacia una zona específica.";
-    objetivo = "Arrastrar el ícono de WordPad hasta la zona punteada de la derecha.";
-    desarrollo = ["Mantené presionado sobre WordPad.", "Arrastrá hacia la zona punteada.", "Soltá dentro de la zona."];
-  } else if (i === 22) {
-    targetAction = "drag-papelera-left";
-    title = "Arrastrar Papelera a la izquierda";
-    contexto = "Arrastrar la Papelera a la izquierda.";
-    objetivo = "Arrastrar la Papelera a la zona punteada de la izquierda.";
-    desarrollo = ["Mantené presionado sobre Papelera.", "Arrastrá hacia la zona punteada.", "Soltá dentro."];
-  } else if (i === 23) {
-    targetAction = "rightclick-desktop";
-    title = "Clic derecho en escritorio";
-    contexto = "El clic derecho en el escritorio abre opciones.";
-    objetivo = "Hacer clic derecho en un espacio vacío.";
-    desarrollo = ["Ubicá un espacio vacío.", "Hacé clic con botón derecho.", "Aparecerá un menú contextual."];
-    // Se valida con evento contextmenu
-  } else if (i === 24) {
-    targetAction = "press-enter";
-    title = "Usar tecla Enter";
-    contexto = "La tecla Enter confirma acciones.";
-    objetivo = "Presionar Enter después de seleccionar un ícono.";
-    desarrollo = ["Seleccioná un ícono con clic simple.", "Presioná Enter."];
-  } else if (i === 25) {
-    targetAction = "press-delete";
-    title = "Usar tecla Supr";
-    contexto = "La tecla Supr elimina archivos seleccionados.";
-    objetivo = "Seleccionar un archivo y presionar Supr.";
-    desarrollo = ["Seleccioná un archivo (simulado).", "Presioná Supr."];
-  }
-
-  exercises.push({
-    id: i, module: "1", modName: "Módulo 1: Panel Táctil",
-    title: `${String(i).padStart(2, '0')} – ${title}`,
-    contexto, objetivo, desarrollo,
-    pista: getPista(targetAction),
-    targetAction
-  });
-}
-
-// ---- MÓDULO 2: GESTIÓN DE VENTANAS (25 ejercicios) ----
-for (let i = 1; i <= 25; i++) {
-  let targetAction, contexto, objetivo, desarrollo, title;
-  if (i === 1) {
-    targetAction = "dblclick-wordpad";
-    title = "Abrir WordPad";
-    contexto = "Abrir un programa es el primer paso.";
-    objetivo = "Abrir WordPad.";
-    desarrollo = ["Doble clic en WordPad."];
-  } else if (i === 2) {
-    targetAction = "close-window";
-    title = "Cerrar ventana";
-    contexto = "Cerrar ventanas mantiene orden.";
-    objetivo = "Cerrar WordPad con [X].";
-    desarrollo = ["Clic en [X]."];
-  } else if (i === 3) {
-    targetAction = "dblclick-facturador";
-    title = "Abrir Facturador";
-    contexto = "Abrir Facturador.";
-    objetivo = "Abrir Facturador.";
-    desarrollo = ["Doble clic en Facturador."];
-  } else if (i === 4) {
-    targetAction = "close-window";
-    title = "Cerrar Facturador";
-    contexto = "Cerrar Facturador.";
-    objetivo = "Cerrar Facturador con [X].";
-    desarrollo = ["Clic en [X]."];
-  } else if (i === 5) {
-    targetAction = "dblclick-correo";
-    title = "Abrir Correo";
-    contexto = "Abrir Correo.";
-    objetivo = "Abrir Correo.";
-    desarrollo = ["Doble clic en Correo."];
-  } else if (i === 6) {
-    targetAction = "close-window";
-    title = "Cerrar Correo";
-    contexto = "Cerrar Correo.";
-    objetivo = "Cerrar Correo.";
-    desarrollo = ["Clic en [X]."];
-  } else if (i === 7) {
-    targetAction = "click-minimizar";
-    title = "Minimizar y restaurar";
-    contexto = "Minimizar oculta en barra de tareas.";
-    objetivo = "Minimizar WordPad y restaurarlo.";
-    desarrollo = ["Clic en botón minimizar.", "Luego clic en la barra de tareas."];
-  } else if (i === 8) {
-    targetAction = "click-maximizar";
-    title = "Maximizar y restaurar";
-    contexto = "Maximizar agranda la ventana.";
-    objetivo = "Maximizar WordPad y restaurar.";
-    desarrollo = ["Clic en maximizar.", "Luego en restaurar."];
-  } else if (i === 9) {
-    targetAction = "click-cambiar-ventana";
-    title = "Cambiar entre ventanas";
-    contexto = "Alternar entre WordPad y Facturador.";
-    objetivo = "Cambiar entre ventanas usando barra de tareas.";
-    desarrollo = ["Abrí WordPad y Facturador.", "Hacé clic en el icono de WordPad en la barra."];
-  } else if (i === 10) {
-    targetAction = "click-mover-ventana";
-    title = "Mover una ventana";
-    contexto = "Mover una ventana.";
-    objetivo = "Mover WordPad a otra ubicación.";
-    desarrollo = ["Arrastrá la barra de título."];
-  } else if (i === 11) {
-    targetAction = "click-redimensionar";
-    title = "Redimensionar una ventana";
-    contexto = "Cambiar tamaño de ventana.";
-    objetivo = "Hacer WordPad más ancho.";
-    desarrollo = ["Arrastrá el borde derecho."];
-  } else if (i === 12) {
-    targetAction = "click-cerrar-todas";
-    title = "Cerrar todas las ventanas";
-    contexto = "Cerrar todas las ventanas abiertas.";
-    objetivo = "Cerrar WordPad, Facturador y Correo.";
-    desarrollo = ["Cerrá cada una con [X]."];
-  } else if (i === 13) {
-    targetAction = "click-mosaico";
-    title = "Organizar en mosaico";
-    contexto = "Organizar ventanas en mosaico.";
-    objetivo = "Organizar WordPad y Facturador en mosaico.";
-    desarrollo = ["Clic derecho en barra de tareas > Mosaico horizontal."];
-  } else if (i === 14) {
-    targetAction = "click-ventana";
-    title = "Activar ventana (clic)";
-    contexto = "Activar ventana con clic.";
-    objetivo = "Activar WordPad.";
-    desarrollo = ["Abrí WordPad y Facturador.", "Hacé clic en WordPad."];
-  } else if (i === 15) {
-    targetAction = "click-ventana";
-    title = "Activar ventana (clic)";
-    contexto = "Activar ventana con clic.";
-    objetivo = "Activar Facturador.";
-    desarrollo = ["Hacé clic en Facturador."];
-  } else if (i === 16) {
-    targetAction = "close-window";
-    title = "Cerrar WordPad y Facturador";
-    contexto = "Cerrar dos ventanas.";
-    objetivo = "Cerrar WordPad y Facturador.";
-    desarrollo = ["Clic en [X] de cada una."];
-  } else if (i === 17) {
-    targetAction = "click-minimizar";
-    title = "Minimizar WordPad y Facturador";
-    contexto = "Minimizar dos ventanas.";
-    objetivo = "Minimizar WordPad y Facturador.";
-    desarrollo = ["Clic en botón minimizar de cada una."];
-  } else if (i === 18) {
-    targetAction = "click-maximizar";
-    title = "Maximizar Facturador";
-    contexto = "Maximizar una ventana.";
-    objetivo = "Maximizar Facturador.";
-    desarrollo = ["Clic en maximizar de Facturador."];
-  } else if (i === 19) {
-    targetAction = "click-mover-ventana";
-    title = "Mover Facturador a la izquierda";
-    contexto = "Mover ventana a la izquierda.";
-    objetivo = "Mover Facturador a la izquierda.";
-    desarrollo = ["Arrastrá la barra de título hacia la izquierda."];
-  } else if (i === 20) {
-    targetAction = "click-redimensionar";
-    title = "Redimensionar Facturador (alto)";
-    contexto = "Cambiar alto de Facturador.";
-    objetivo = "Hacer Facturador más alto.";
-    desarrollo = ["Arrastrá el borde inferior hacia abajo."];
-  } else if (i === 21) {
-    targetAction = "key-alt-f4";
-    title = "Cerrar ventana con Alt+F4";
-    contexto = "Atajo de teclado para cerrar.";
-    objetivo = "Cerrar WordPad con Alt+F4.";
-    desarrollo = ["Abrí WordPad.", "Presioná Alt+F4."];
-  } else if (i === 22) {
-    targetAction = "click-taskbar-minimize";
-    title = "Minimizar desde barra de tareas";
-    contexto = "Alternativa para minimizar.";
-    objetivo = "Minimizar WordPad desde la barra de tareas.";
-    desarrollo = ["Abrí WordPad.", "Hacé clic en su icono en la barra de tareas."];
-  } else if (i === 23) {
-    targetAction = "click-restore";
-    title = "Restaurar ventana maximizada";
-    contexto = "Volver al tamaño anterior.";
-    objetivo = "Restaurar WordPad maximizado.";
-    desarrollo = ["Maximizar WordPad.", "Hacé clic en el botón restaurar."];
-  } else if (i === 24) {
-    targetAction = "move-window-topleft";
-    title = "Mover ventana a esquina superior izquierda";
-    contexto = "Mover ventana a una esquina.";
-    objetivo = "Mover WordPad a la esquina superior izquierda.";
-    desarrollo = ["Arrastrá la ventana hasta la esquina."];
-  } else if (i === 25) {
-    targetAction = "key-alt-tab";
-    title = "Cambiar de ventana con Alt+Tab";
-    contexto = "Atajo para cambiar ventanas.";
-    objetivo = "Usar Alt+Tab para cambiar entre WordPad y Facturador.";
-    desarrollo = ["Abrí ambas.", "Presioná Alt+Tab."];
-  }
-
-  exercises.push({
-    id: i + 25, module: "2", modName: "Módulo 2: Ventanas",
-    title: `${String(i + 25).padStart(2, '0')} – ${title}`,
-    contexto, objetivo, desarrollo,
-    pista: getPista(targetAction),
-    targetAction
-  });
-}
-
-// ---- MÓDULO 3: EXPLORADOR DE ARCHIVOS (25 ejercicios) ----
-for (let i = 1; i <= 25; i++) {
-  let targetAction, contexto, objetivo, desarrollo, title;
-  if (i === 1) {
-    targetAction = "dblclick-este-equipo";
-    title = "Abrir Este Equipo";
-    contexto = "Explorar archivos.";
-    objetivo = "Abrir Este Equipo.";
-    desarrollo = ["Doble clic en Este Equipo."];
-  } else if (i === 2) {
-    targetAction = "close-window";
-    title = "Cerrar Explorador";
-    contexto = "Cerrar ventana.";
-    objetivo = "Cerrar Este Equipo.";
-    desarrollo = ["Clic en [X]."];
-  } else if (i === 3) {
-    targetAction = "click-descargas";
-    title = "Abrir Descargas";
-    contexto = "Abrir carpeta Descargas.";
-    objetivo = "Abrir Descargas desde Este Equipo.";
-    desarrollo = ["Dentro de Este Equipo, doble clic en Descargas."];
-  } else if (i === 4) {
-    targetAction = "close-window";
-    title = "Cerrar Descargas";
-    contexto = "Cerrar ventana.";
-    objetivo = "Cerrar Descargas.";
-    desarrollo = ["Clic en [X]."];
-  } else if (i === 5) {
-    targetAction = "click-documentos";
-    title = "Abrir Documentos";
-    contexto = "Abrir carpeta Documentos.";
-    objetivo = "Abrir Documentos.";
-    desarrollo = ["Doble clic en Documentos."];
-  } else if (i === 6) {
-    targetAction = "click-crear-carpeta";
-    title = "Crear carpeta en Descargas";
-    contexto = "Crear carpeta nueva.";
-    objetivo = "Crear carpeta 'Mis facturas' en Descargas.";
-    desarrollo = ["Abrí Descargas.", "Clic derecho > Nuevo > Carpeta.", "Nombrala."];
-  } else if (i === 7) {
-    targetAction = "click-renombrar";
-    title = "Renombrar archivo";
-    contexto = "Cambiar nombre de archivo.";
-    objetivo = "Renombrar 'Informe.txt' a 'Informe_final.txt'.";
-    desarrollo = ["Clic derecho > Cambiar nombre.", "Escribí el nuevo nombre.", "Enter."];
-  } else if (i === 8) {
-    targetAction = "click-copiar";
-    title = "Copiar archivo";
-    contexto = "Copiar archivo.";
-    objetivo = "Copiar 'Informe.txt' de Documentos a Descargas.";
-    desarrollo = ["Seleccioná, Ctrl+C, abrí destino, Ctrl+V."];
-  } else if (i === 9) {
-    targetAction = "click-mover";
-    title = "Mover archivo";
-    contexto = "Mover archivo.";
-    objetivo = "Mover 'Informe.txt' a Documentos.";
-    desarrollo = ["Seleccioná, Ctrl+X, abrí destino, Ctrl+V."];
-  } else if (i === 10) {
-    targetAction = "click-eliminar";
-    title = "Eliminar y vaciar Papelera";
-    contexto = "Eliminar archivo y vaciar papelera.";
-    objetivo = "Eliminar 'Informe.txt' y vaciar Papelera.";
-    desarrollo = ["Seleccioná, Supr, abrí Papelera, Vaciar."];
-  } else if (i === 11) {
-    targetAction = "click-buscar";
-    title = "Buscar archivo";
-    contexto = "Buscar archivo.";
-    objetivo = "Buscar 'Factura_001'.";
-    desarrollo = ["Usá la barra de búsqueda."];
-  } else if (i === 12) {
-    targetAction = "click-propiedades";
-    title = "Ver propiedades";
-    contexto = "Ver propiedades de archivo.";
-    objetivo = "Ver tamaño y fecha de 'Factura_001.pdf'.";
-    desarrollo = ["Clic derecho > Propiedades."];
-  } else if (i === 13) {
-    targetAction = "click-archivo";
-    title = "Seleccionar archivo";
-    contexto = "Seleccionar archivo.";
-    objetivo = "Seleccionar 'Factura_001.pdf'.";
-    desarrollo = ["Clic simple sobre el archivo."];
-  } else if (i === 14) {
-    targetAction = "dblclick-archivo";
-    title = "Abrir archivo PDF";
-    contexto = "Abrir archivo.";
-    objetivo = "Abrir 'Factura_001.pdf'.";
-    desarrollo = ["Doble clic sobre el archivo."];
-  } else if (i === 15) {
-    targetAction = "click-ordenar";
-    title = "Ordenar por fecha";
-    contexto = "Ordenar archivos.";
-    objetivo = "Ordenar por fecha en Descargas.";
-    desarrollo = ["Clic en encabezado 'Fecha'."];
-  } else if (i === 16) {
-    targetAction = "click-vista";
-    title = "Cambiar vista a Detalles";
-    contexto = "Cambiar vista de carpeta.";
-    objetivo = "Cambiar vista a Detalles en Descargas.";
-    desarrollo = ["Pestaña Vista > Detalles."];
-  } else if (i === 17) {
-    targetAction = "click-nueva-carpeta";
-    title = "Crear carpeta en Documentos";
-    contexto = "Crear carpeta 'Proyectos'.";
-    objetivo = "Crear carpeta 'Proyectos'.";
-    desarrollo = ["Clic derecho > Nuevo > Carpeta."];
-  } else if (i === 18) {
-    targetAction = "click-eliminar";
-    title = "Eliminar y vaciar (repaso)";
-    contexto = "Eliminar archivo.";
-    objetivo = "Eliminar 'Informe_final.txt' y vaciar Papelera.";
-    desarrollo = ["Seleccioná, Supr, vaciar Papelera."];
-  } else if (i === 19) {
-    targetAction = "click-copiar";
-    title = "Copiar a 'Mis facturas'";
-    contexto = "Copiar archivo a carpeta.";
-    objetivo = "Copiar 'Factura_001.pdf' a 'Mis facturas'.";
-    desarrollo = ["Copiar y pegar en 'Mis facturas'."];
-  } else if (i === 20) {
-    targetAction = "click-mover";
-    title = "Mover a 'Mis facturas'";
-    contexto = "Mover archivo.";
-    objetivo = "Mover 'Factura_001.pdf' a 'Mis facturas'.";
-    desarrollo = ["Cortar y pegar en 'Mis facturas'."];
-  } else if (i === 21) {
-    targetAction = "ctrl-click-files";
-    title = "Seleccionar varios archivos";
-    contexto = "Selección múltiple.";
-    objetivo = "Seleccionar dos archivos con Ctrl.";
-    desarrollo = ["Mantené Ctrl y hacé clic en dos archivos."];
-  } else if (i === 22) {
-    targetAction = "create-shortcut";
-    title = "Crear acceso directo";
-    contexto = "Crear acceso directo en escritorio.";
-    objetivo = "Crear acceso directo de WordPad.";
-    desarrollo = ["Clic derecho sobre WordPad > Crear acceso directo."];
-  } else if (i === 23) {
-    targetAction = "rename-folder";
-    title = "Renombrar carpeta";
-    contexto = "Cambiar nombre de carpeta.";
-    objetivo = "Renombrar 'Mis facturas' a 'Facturas 2024'.";
-    desarrollo = ["Clic derecho > Cambiar nombre."];
-  } else if (i === 24) {
-    targetAction = "click-search-icon";
-    title = "Buscar con lupa";
-    contexto = "Buscar usando el ícono de lupa.";
-    objetivo = "Hacer clic en la lupa y escribir.";
-    desarrollo = ["Clic en la lupa, escribí el término."];
-  } else if (i === 25) {
-    targetAction = "click-sort-size";
-    title = "Ordenar por tamaño";
-    contexto = "Ordenar por tamaño.";
-    objetivo = "Ordenar archivos por tamaño.";
-    desarrollo = ["Clic en encabezado 'Tamaño'."];
-  }
-
-  exercises.push({
-    id: i + 50, module: "3", modName: "Módulo 3: Explorador",
-    title: `${String(i + 50).padStart(2, '0')} – ${title}`,
-    contexto, objetivo, desarrollo,
-    pista: getPista(targetAction),
-    targetAction
-  });
-}
-
-// ---- MÓDULO 4: FACTURADOR DIGITAL (25 ejercicios) ----
-for (let i = 1; i <= 25; i++) {
-  let targetAction, contexto, objetivo, desarrollo, title;
-  if (i === 1) {
-    targetAction = "dblclick-facturador";
-    title = "Abrir Facturador";
-    contexto = "Abrir Facturador.";
-    objetivo = "Abrir Facturador.";
-    desarrollo = ["Doble clic en Facturador."];
-  } else if (i === 2) {
-    targetAction = "click-cliente";
-    title = "Cargar datos del cliente";
-    contexto = "Completar datos del cliente.";
-    objetivo = "Cargar nombre, CUIT y domicilio.";
-    desarrollo = ["Completá los campos."];
-  } else if (i === 3) {
-    targetAction = "click-agregar-item";
-    title = "Agregar producto";
-    contexto = "Agregar producto con cantidad y precio.";
-    objetivo = "Agregar un producto a la lista.";
-    desarrollo = ["Cargá nombre, cantidad, precio y clic en Agregar."];
-  } else if (i === 4) {
-    targetAction = "click-emitir-guardar";
-    title = "Emitir y guardar factura";
-    contexto = "Emitir factura.";
-    objetivo = "Emitir y guardar en Descargas.";
-    desarrollo = ["Clic en 'Emitir y Guardar'."];
-  } else if (i === 5) {
-    targetAction = "click-verificar-descargas";
-    title = "Verificar factura en Descargas";
-    contexto = "Verificar factura guardada.";
-    objetivo = "Abrir Descargas y verificar.";
-    desarrollo = ["Abrí Este Equipo > Descargas."];
-  } else if (i === 6) {
-    targetAction = "click-cliente";
-    title = "Cargar cliente (María)";
-    contexto = "Cargar cliente.";
-    objetivo = "Cargar datos de María García.";
-    desarrollo = ["Completá los campos."];
-  } else if (i === 7) {
-    targetAction = "click-agregar-item";
-    title = "Agregar dos productos";
-    contexto = "Agregar dos productos.";
-    objetivo = "Agregar Teclado y Mouse.";
-    desarrollo = ["Cargá ambos."];
-  } else if (i === 8) {
-    targetAction = "click-emitir-guardar";
-    title = "Emitir factura (con productos)";
-    contexto = "Emitir factura.";
-    objetivo = "Emitir factura con productos.";
-    desarrollo = ["Clic en Emitir."];
-  } else if (i === 9) {
-    targetAction = "click-verificar-descargas";
-    title = "Verificar factura (con productos)";
-    contexto = "Verificar factura.";
-    objetivo = "Verificar en Descargas.";
-    desarrollo = ["Abrí Descargas."];
-  } else if (i === 10) {
-    targetAction = "click-cliente";
-    title = "Cargar cliente (Juan)";
-    contexto = "Cargar cliente.";
-    objetivo = "Cargar Juan Pérez.";
-    desarrollo = ["Completá."];
-  } else if (i === 11) {
-    targetAction = "click-agregar-item";
-    title = "Agregar productos (papelería)";
-    contexto = "Agregar productos.";
-    objetivo = "Agregar Lápices y Cuadernos.";
-    desarrollo = ["Cargá."];
-  } else if (i === 12) {
-    targetAction = "click-emitir-guardar";
-    title = "Emitir factura (papelería)";
-    contexto = "Emitir factura.";
-    objetivo = "Emitir factura con papelería.";
-    desarrollo = ["Emitir."];
-  } else if (i === 13) {
-    targetAction = "click-verificar-descargas";
-    title = "Verificar factura (papelería)";
-    contexto = "Verificar factura.";
-    objetivo = "Verificar Descargas.";
-    desarrollo = ["Abrí Descargas."];
-  } else if (i === 14) {
-    targetAction = "click-cliente";
-    title = "Cargar cliente (empresa)";
-    contexto = "Cargar empresa.";
-    objetivo = "Cargar Comercial López S.A.";
-    desarrollo = ["Completá."];
-  } else if (i === 15) {
-    targetAction = "click-agregar-item";
-    title = "Agregar productos (computación)";
-    contexto = "Agregar productos.";
-    objetivo = "Agregar Computadoras y Monitores.";
-    desarrollo = ["Cargá."];
-  } else if (i === 16) {
-    targetAction = "click-emitir-guardar";
-    title = "Emitir factura (empresa)";
-    contexto = "Emitir factura.";
-    objetivo = "Emitir factura para empresa.";
-    desarrollo = ["Emitir."];
-  } else if (i === 17) {
-    targetAction = "click-verificar-descargas";
-    title = "Verificar factura (empresa)";
-    contexto = "Verificar.";
-    objetivo = "Verificar Descargas.";
-    desarrollo = ["Abrí."];
-  } else if (i === 18) {
-    targetAction = "click-agregar-item";
-    title = "Agregar productos (precios decimales)";
-    contexto = "Precios con decimales.";
-    objetivo = "Agregar Regla y Compás.";
-    desarrollo = ["Cargá."];
-  } else if (i === 19) {
-    targetAction = "click-emitir-guardar";
-    title = "Emitir factura (geometría)";
-    contexto = "Emitir.";
-    objetivo = "Emitir factura.";
-    desarrollo = ["Emitir."];
-  } else if (i === 20) {
-    targetAction = "click-verificar-descargas";
-    title = "Verificar factura final";
-    contexto = "Verificar.";
-    objetivo = "Verificar todas las facturas.";
-    desarrollo = ["Abrí Descargas."];
-  } else if (i === 21) {
-    targetAction = "click-eliminar-item";
-    title = "Eliminar un producto";
-    contexto = "Eliminar producto de la lista.";
-    objetivo = "Eliminar un producto del Facturador.";
-    desarrollo = ["Hacé clic en el botón ✖ de un producto."];
-  } else if (i === 22) {
-    targetAction = "change-quantity";
-    title = "Modificar cantidad";
-    contexto = "Cambiar cantidad.";
-    objetivo = "Modificar cantidad de un producto.";
-    desarrollo = ["Editá el campo cantidad y presioná actualizar."];
-  } else if (i === 23) {
-    targetAction = "check-iva";
-    title = "Verificar cálculo de IVA";
-    contexto = "Comprobar IVA.";
-    objetivo = "Verificar que IVA = 21% del subtotal.";
-    desarrollo = ["Calculá y comprobá."];
-  } else if (i === 24) {
-    targetAction = "click-imprimir";
-    title = "Imprimir factura";
-    contexto = "Imprimir factura.";
-    objetivo = "Hacer clic en Imprimir.";
-    desarrollo = ["Clic en botón Imprimir."];
-  } else if (i === 25) {
-    targetAction = "click-limpiar";
-    title = "Limpiar formulario";
-    contexto = "Limpiar campos.";
-    objetivo = "Limpiar todos los campos.";
-    desarrollo = ["Clic en Limpiar."];
-  }
-
-  exercises.push({
-    id: i + 75, module: "4", modName: "Módulo 4: Facturador",
-    title: `${String(i + 75).padStart(2, '0')} – ${title}`,
-    contexto, objetivo, desarrollo,
-    pista: getPista(targetAction),
-    targetAction
-  });
-}
-
-// ---- MÓDULO 5: GESTIÓN DE CORREO (25 ejercicios) ----
-for (let i = 1; i <= 25; i++) {
-  let targetAction, contexto, objetivo, desarrollo, title;
-  if (i === 1) {
-    targetAction = "dblclick-correo";
-    title = "Abrir Correo";
-    contexto = "Abrir Correo.";
-    objetivo = "Abrir Correo.";
-    desarrollo = ["Doble clic en Correo."];
-  } else if (i === 2) {
-    targetAction = "click-adjuntar-desde-correo";
-    title = "Adjuntar desde Correo";
-    contexto = "Adjuntar archivo.";
-    objetivo = "Adjuntar factura desde Correo.";
-    desarrollo = ["Clic en Adjuntar archivo."];
-  } else if (i === 3) {
-    targetAction = "click-adjuntar-desde-descargas";
-    title = "Adjuntar desde Descargas";
-    contexto = "Adjuntar desde carpeta.";
-    objetivo = "Adjuntar factura desde Descargas.";
-    desarrollo = ["Enviar a > Correo."];
-  } else if (i === 4) {
-    targetAction = "click-enviar-correo";
-    title = "Enviar correo";
-    contexto = "Enviar correo.";
-    objetivo = "Enviar correo con adjunto.";
-    desarrollo = ["Completá destinatario y enviá."];
-  } else if (i === 5) {
-    targetAction = "close-window";
-    title = "Cerrar Correo";
-    contexto = "Cerrar.";
-    objetivo = "Cerrar Correo.";
-    desarrollo = ["Clic en [X]."];
-  } else if (i === 6) {
-    targetAction = "dblclick-correo";
-    title = "Abrir Correo (revisar)";
-    contexto = "Revisar bandeja.";
-    objetivo = "Abrir Correo y revisar mensajes.";
-    desarrollo = ["Doble clic en Correo."];
-  } else if (i === 7) {
-    targetAction = "click-nuevo-correo";
-    title = "Nuevo correo";
-    contexto = "Crear nuevo correo.";
-    objetivo = "Escribir nuevo correo.";
-    desarrollo = ["Clic en Nuevo correo."];
-  } else if (i === 8) {
-    targetAction = "click-adjuntar-desde-correo";
-    title = "Adjuntar foto";
-    contexto = "Adjuntar foto.";
-    objetivo = "Adjuntar una foto.";
-    desarrollo = ["Clic en Adjuntar archivo."];
-  } else if (i === 9) {
-    targetAction = "click-enviar-correo";
-    title = "Enviar correo (completo)";
-    contexto = "Enviar.";
-    objetivo = "Enviar correo completo.";
-    desarrollo = ["Completá y enviá."];
-  } else if (i === 10) {
-    targetAction = "click-responder-correo";
-    title = "Responder correo";
-    contexto = "Responder.";
-    objetivo = "Responder un correo.";
-    desarrollo = ["Seleccioná y Responder."];
-  } else if (i === 11) {
-    targetAction = "click-reenviar-correo";
-    title = "Reenviar correo";
-    contexto = "Reenviar.";
-    objetivo = "Reenviar correo.";
-    desarrollo = ["Seleccioná y Reenviar."];
-  } else if (i === 12) {
-    targetAction = "click-eliminar-correo";
-    title = "Eliminar correo";
-    contexto = "Eliminar.";
-    objetivo = "Eliminar correo.";
-    desarrollo = ["Seleccioná y eliminá."];
-  } else if (i === 13) {
-    targetAction = "click-vaciar-papelera";
-    title = "Vaciar papelera de correos";
-    contexto = "Vaciar papelera.";
-    objetivo = "Vaciar papelera de correo.";
-    desarrollo = ["Entrá a papelera y vaciar."];
-  } else if (i === 14) {
-    targetAction = "click-crear-carpeta";
-    title = "Crear carpeta 'Facturas'";
-    contexto = "Crear carpeta.";
-    objetivo = "Crear carpeta 'Facturas'.";
-    desarrollo = ["Nueva carpeta > Facturas."];
-  } else if (i === 15) {
-    targetAction = "click-mover-correo";
-    title = "Mover correo a 'Facturas'";
-    contexto = "Mover correo.";
-    objetivo = "Mover correo a carpeta Facturas.";
-    desarrollo = ["Seleccioná > Mover a > Facturas."];
-  } else if (i === 16) {
-    targetAction = "click-buscar-correo";
-    title = "Buscar correo ('factura')";
-    contexto = "Buscar.";
-    objetivo = "Buscar 'factura'.";
-    desarrollo = ["Usá barra de búsqueda."];
-  } else if (i === 17) {
-    targetAction = "click-archivar-correo";
-    title = "Archivar correo";
-    contexto = "Archivar.";
-    objetivo = "Archivar correo.";
-    desarrollo = ["Seleccioná y Archivar."];
-  } else if (i === 18) {
-    targetAction = "click-marcar-leido";
-    title = "Marcar como leído";
-    contexto = "Marcar leído.";
-    objetivo = "Marcar correo como leído.";
-    desarrollo = ["Clic derecho > Marcar como leído."];
-  } else if (i === 19) {
-    targetAction = "click-marcar-no-leido";
-    title = "Marcar como no leído";
-    contexto = "Marcar no leído.";
-    objetivo = "Marcar correo como no leído.";
-    desarrollo = ["Clic derecho > Marcar como no leído."];
-  } else if (i === 20) {
-    targetAction = "close-window";
-    title = "Cerrar Correo (final)";
-    contexto = "Cerrar.";
-    objetivo = "Cerrar Correo.";
-    desarrollo = ["Clic en [X]."];
-  } else if (i === 21) {
-    targetAction = "click-spam";
-    title = "Marcar como spam";
-    contexto = "Marcar spam.";
-    objetivo = "Marcar un correo como spam.";
-    desarrollo = ["Seleccioná y clic en Spam."];
-  } else if (i === 22) {
-    targetAction = "dblclick-correo-item";
-    title = "Abrir correo en ventana nueva";
-    contexto = "Abrir correo.";
-    objetivo = "Abrir correo con doble clic.";
-    desarrollo = ["Doble clic sobre un correo."];
-  } else if (i === 23) {
-    targetAction = "click-add-contact";
-    title = "Agregar contacto";
-    contexto = "Agregar contacto.";
-    objetivo = "Agregar un contacto.";
-    desarrollo = ["Clic en Agregar contacto."];
-  } else if (i === 24) {
-    targetAction = "search-by-sender";
-    title = "Buscar por remitente";
-    contexto = "Buscar por remitente.";
-    objetivo = "Buscar correos de un remitente.";
-    desarrollo = ["Usá búsqueda con el nombre."];
-  } else if (i === 25) {
-    targetAction = "click-empty-sent";
-    title = "Vaciar carpeta de enviados";
-    contexto = "Vaciar enviados.";
-    objetivo = "Vaciar carpeta de enviados.";
-    desarrollo = ["Entrá a enviados y vaciar."];
-  }
-
-  exercises.push({
-    id: i + 100, module: "5", modName: "Módulo 5: Correo",
-    title: `${String(i + 100).padStart(2, '0')} – ${title}`,
-    contexto, objetivo, desarrollo,
-    pista: getPista(targetAction),
-    targetAction
-  });
-}
-
-// ---- MÓDULO 6: EVALUACIÓN GENERAL ----
-exercises.push({
-  id: 126,
-  module: "6",
-  modName: "Módulo 6: Evaluación General",
-  title: "126 – Examen final",
-  contexto: "Evaluación general de todos los módulos.",
-  objetivo: "Respondé las 25 preguntas.",
-  desarrollo: [],
-  pista: "",
-  targetAction: "examen"
-});
-
-// ============================================================
-// 4. VARIABLES GLOBALES
-// ============================================================
-let currentIdx = 0;
-let facturaGuardada = false;
-let itemsFactura = [];
-let facturaPDF = null;
-let facturaSeleccionada = null;
-let examenActual = [];
-let respuestasExamen = [];
-let examenCompletado = false;
-let ejerciciosCompletados = JSON.parse(localStorage.getItem('ejerciciosCompletados') || '{}');
-
-// ============================================================
-// 5. INICIALIZACIÓN Y NAVEGACIÓN
-// ============================================================
-function init() {
-  populateExerciseDropdown();
-  loadExercise(0);
-  actualizarProgreso();
-}
-
-function populateExerciseDropdown() {
-  const selectedModule = document.getElementById('module-select').value;
-  const dropdown = document.getElementById('exercise-dropdown-select');
-  dropdown.innerHTML = '';
-  exercises.forEach((ex, idx) => {
-    if (selectedModule === 'all' || ex.module === selectedModule) {
-      const opt = document.createElement('option');
-      opt.value = idx;
-      opt.textContent = ex.title;
-      dropdown.appendChild(opt);
-    }
-  });
-}
-
-function changeModuleFilter(modVal) {
-  populateExerciseDropdown();
-  const firstOpt = document.getElementById('exercise-dropdown-select').options[0];
-  if (firstOpt) loadExercise(parseInt(firstOpt.value, 10));
-}
-
-function loadExercise(idx) {
-  currentIdx = idx;
-  const ex = exercises[currentIdx];
-  if (!ex) return;
-
-  document.getElementById('exercise-dropdown-select').value = currentIdx;
-  document.getElementById('module-select').value = ex.module;
-
-  renderizarDetalleEjercicio(ex);
-
-  if (ex.module === '6') {
-    mostrarExamen();
-  } else {
-    document.getElementById('app-window').style.display = 'none';
-    // Ocultar zonas de drop
-    document.getElementById('drop-zone-right').style.display = 'none';
-    document.getElementById('drop-zone-left').style.display = 'none';
-  }
-
-  clearSelections();
-  document.getElementById('start-menu').style.display = 'none';
-
-  document.getElementById('btn-prev').disabled = currentIdx === 0;
-  document.getElementById('btn-next').disabled = currentIdx === exercises.length - 1;
-
-  document.getElementById('feedback').className = '';
-  document.getElementById('feedback').style.display = 'none';
-}
-
-function selectExercise(val) {
-  loadExercise(parseInt(val, 10));
-}
-
-function navigate(dir) {
-  const next = currentIdx + dir;
-  if (next >= 0 && next < exercises.length) {
-    const targetEx = exercises[next];
-    const moduleSelect = document.getElementById('module-select');
-    if (moduleSelect.value !== 'all' && targetEx.module !== moduleSelect.value) {
-      moduleSelect.value = targetEx.module;
-      populateExerciseDropdown();
-    }
-    loadExercise(next);
-  }
-}
-
-function renderizarDetalleEjercicio(ex) {
-  const contenedor = document.getElementById('ejercicio-detalle');
-  if (!ex) {
-    contenedor.innerHTML = '<p style="color:#8d99ae;">Seleccioná un ejercicio.</p>';
-    return;
-  }
-
-  if (ex.module === '6') {
-    contenedor.innerHTML = `
-      <div class="bloque-examen">
-        <div class="examen-icono">📝</div>
-        <div class="examen-texto">Evaluación General - 25 preguntas</div>
-        <div style="font-size:0.8rem; color:#8d99ae; margin-top:4px;">Respondé en la ventana de la derecha</div>
-      </div>
-    `;
-    return;
-  }
-
-  let html = '';
-  if (ex.contexto) {
-    html += `<div class="bloque"><div class="bloque-titulo">📖 Contexto</div><div class="bloque-contenido">${ex.contexto}</div></div>`;
-  }
-  if (ex.objetivo) {
-    html += `<div class="bloque" style="border-left-color: #ffb703;"><div class="bloque-titulo">🎯 Objetivo</div><div class="bloque-contenido">${ex.objetivo}</div></div>`;
-  }
-  if (ex.desarrollo && ex.desarrollo.length > 0) {
-    html += `<div class="bloque" style="border-left-color: #28a745;"><div class="bloque-titulo">📋 Desarrollo</div><div class="bloque-contenido"><ol>${ex.desarrollo.map(paso => `<li>${paso}</li>`).join('')}</ol></div></div>`;
-  }
-  if (ex.pista) {
-    html += `<div class="bloque" style="border-left-color: #9d4edd;"><div class="bloque-titulo">💡 Pista</div><div class="bloque-contenido">${ex.pista}</div></div>`;
-  }
-  contenedor.innerHTML = html;
-}
-
-// ============================================================
-// 6. PROGRESO
-// ============================================================
-function actualizarProgreso() {
-  const total = exercises.filter(ex => ex.module !== '6').length;
-  const completados = Object.keys(ejerciciosCompletados).filter(key => ejerciciosCompletados[key] === true).length;
-  const porcentaje = total > 0 ? Math.round((completados / total) * 100) : 0;
-  document.getElementById('progreso-barra').style.width = porcentaje + '%';
-  document.getElementById('progreso-texto').textContent = completados + ' / ' + total + ' (' + porcentaje + '%)';
-}
-
-function marcarCompletado(id) {
-  ejerciciosCompletados[id] = true;
-  localStorage.setItem('ejerciciosCompletados', JSON.stringify(ejerciciosCompletados));
-  actualizarProgreso();
-}
-
-// ============================================================
-// 7. VALIDACIÓN DE EJERCICIOS
-// ============================================================
-function validateAction(actionName) {
-  const currentEx = exercises[currentIdx];
-  if (!currentEx || currentEx.module === '6') return; // No evaluar en examen o sin ejercicio
-
-  const feedback = document.getElementById('feedback');
-
-  if (currentEx.targetAction === actionName) {
-    feedback.textContent = '✅ ¡Ejercicio completado!';
-    feedback.className = 'exito';
-    feedback.style.display = 'block';
-    playClickSound();
-    marcarCompletado(currentEx.id);
-    if (currentIdx < exercises.length - 1) {
-      document.getElementById('btn-next').disabled = false;
-    }
-  } else {
-    const mensajes = [
-      '¡Casi! Seguí intentando, lo vas a lograr.',
-      'No te rindas, ¡estás cerca!',
-      'Un paso más y lo tenés. ¡Vamos!',
-      '¡Ánimo! La práctica hace al maestro.',
-      'Seguí así, ya casi lo tenés.'
-    ];
-    const mensajeAleatorio = mensajes[Math.floor(Math.random() * mensajes.length)];
-    let mensajeFinal = '❌ ' + mensajeAleatorio;
-    if (currentEx.pista) mensajeFinal += ' 💡 ' + currentEx.pista;
-    feedback.textContent = mensajeFinal;
-    feedback.className = 'error';
-    feedback.style.display = 'block';
-    playClickSound();
-  }
-}
-
-// ============================================================
-// 8. MANEJO DE TECLADO GLOBAL
-// ============================================================
-document.addEventListener('keydown', (e) => {
-  const currentEx = exercises[currentIdx];
-  if (!currentEx || currentEx.module === '6') return;
-
-  let action = null;
-  if (e.altKey && e.key === 'F4') action = 'key-alt-f4';
-  else if (e.altKey && e.key === 'Tab') action = 'key-alt-tab';
-  else if (e.key === 'Delete') action = 'press-delete';
-  else if (e.key === 'Enter') action = 'press-enter';
-  else if (e.ctrlKey && e.key.toLowerCase() === 'c') action = 'ctrl-c';
-  else if (e.ctrlKey && e.key.toLowerCase() === 'v') action = 'ctrl-v';
-  else if (e.ctrlKey && e.key.toLowerCase() === 'x') action = 'ctrl-x';
-  else if (e.ctrlKey && e.key.toLowerCase() === 'z') action = 'ctrl-z';
-
-  if (action) validateAction(action);
-});
-
-// ============================================================
-// 9. DRAG & DROP DE ICONOS EN ESCRITORIO
-// ============================================================
-let draggedIcon = null;
-document.querySelectorAll('.desktop-icon').forEach(icon => {
-  icon.addEventListener('dragstart', (e) => {
-    draggedIcon = icon;
-    e.dataTransfer.setData('text/plain', icon.id);
-    e.target.classList.add('dragging');
-  });
-  icon.addEventListener('dragend', (e) => {
-    e.target.classList.remove('dragging');
-    draggedIcon = null;
-  });
-});
-
-const dropZoneRight = document.getElementById('drop-zone-right');
-const dropZoneLeft = document.getElementById('drop-zone-left');
-
-function showDropZones(showRight, showLeft) {
-  dropZoneRight.style.display = showRight ? 'block' : 'none';
-  dropZoneLeft.style.display = showLeft ? 'block' : 'none';
-}
-
-dropZoneRight.addEventListener('dragover', (e) => { e.preventDefault(); });
-dropZoneRight.addEventListener('drop', (e) => {
-  e.preventDefault();
-  if (draggedIcon && draggedIcon.id === 'icon-wordpad') {
-    validateAction('drag-wordpad-right');
-  }
-});
-dropZoneLeft.addEventListener('dragover', (e) => { e.preventDefault(); });
-dropZoneLeft.addEventListener('drop', (e) => {
-  e.preventDefault();
-  if (draggedIcon && draggedIcon.id === 'icon-papelera') {
-    validateAction('drag-papelera-left');
-  }
-});
-
-// ============================================================
-// 10. FUNCIONES DEL ESCRITORIO Y APLICACIONES
-// ============================================================
-function handleDesktopClick(e) {
-  clearSelections();
-  document.getElementById('start-menu').style.display = 'none';
-  validateAction('click-desktop');
-}
-
-function toggleStartMenu(e) {
-  e.stopPropagation();
-  const menu = document.getElementById('start-menu');
-  menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
-  validateAction('click-start');
-}
-
-function handleStartItem(itemName) {
-  document.getElementById('start-menu').style.display = 'none';
-  const actions = {
-    'este-equipo': openEsteEquipoApp,
-    'wordpad': openWordpadApp,
-    'facturador': openFacturadorApp,
-    'correo': openCorreoApp,
-    'papelera': openPapeleraApp
-  };
-  if (actions[itemName]) {
-    actions[itemName]();
-    validateAction(`start-${itemName}`);
-  }
-}
-
-function closeAppWindow() {
-  document.getElementById('app-window').style.display = 'none';
-  validateAction('close-window');
-}
-
-function clearSelections() {
-  document.querySelectorAll('.desktop-icon.selected').forEach(el => el.classList.remove('selected'));
-}
-
-function openWordpadApp() {
-  const win = document.getElementById('app-window');
-  if (!win) return;
-  document.getElementById('window-title').textContent = 'WordPad - Editor de Texto';
-  document.getElementById('window-body').innerHTML = `
-    <div style="border-bottom:1px solid #dee2e6; padding-bottom:6px; margin-bottom:10px; font-size:0.75rem; color:#6c757d;">
-      Archivo | Edición | Ver | Insertar | Formato
-    </div>
-    <textarea class="app-form-control" style="height:180px; resize:none;" placeholder="Escriba su texto aquí..."></textarea>
-  `;
-  win.style.display = 'flex';
-}
-
-function openFacturadorApp() {
-  const win = document.getElementById('app-window');
-  if (!win) return;
-  document.getElementById('window-title').textContent = 'Facturador Digital';
-  document.getElementById('window-body').innerHTML = `
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:12px;">
-      <div class="app-form-group">
-        <label>Cliente / Razón Social:</label>
-        <input type="text" class="app-form-control" id="fac-cliente" value="Guillermo López" onchange="validateAction('click-cliente')">
-      </div>
-      <div class="app-form-group">
-        <label>CUIT / DNI:</label>
-        <input type="text" class="app-form-control" id="fac-cuit" value="30-12345678-9">
-      </div>
-      <div class="app-form-group" style="grid-column: span 2;">
-        <label>Domicilio:</label>
-        <input type="text" class="app-form-control" id="fac-domicilio" value="Calle Falsa 123, CABA">
-      </div>
-    </div>
-    <div style="border-top:1px solid #ced4da; padding-top:10px; margin-top:8px;">
-      <div style="display:flex; gap:8px; margin-bottom:8px;">
-        <input type="text" class="app-form-control" id="fac-producto" placeholder="Producto/Servicio" style="flex:3;">
-        <input type="number" class="app-form-control" id="fac-cantidad" placeholder="Cant." style="flex:1;" value="1">
-        <input type="number" class="app-form-control" id="fac-precio" placeholder="Precio $" style="flex:1;" value="15000">
-        <button class="app-btn" onclick="agregarItemFactura()">➕ Agregar</button>
-      </div>
-      <div id="fac-items-lista" style="max-height:110px; overflow-y:auto; border:1px solid #dee2e6; border-radius:4px; padding:4px; background:#f8f9fa; font-size:0.8rem;">
-        <em style="color:#6c757d;">No hay productos cargados</em>
-      </div>
-    </div>
-    <div style="display:flex; justify-content:space-between; margin-top:12px; padding:10px; background:#e9ecef; border-radius:6px;">
-      <span style="font-weight:bold;">Subtotal: $<span id="fac-subtotal">0.00</span></span>
-      <span style="font-weight:bold;">IVA (21%): $<span id="fac-iva">0.00</span></span>
-      <span style="font-weight:bold; color:#0077b6;">TOTAL: $<span id="fac-total">0.00</span></span>
-    </div>
-    <button class="app-btn" onclick="emitirYGuardarFactura()" style="margin-top:12px;">💾 Emitir y Guardar en Descargas</button>
-    <button class="app-btn" onclick="validateAction('click-imprimir')" style="margin-top:8px;">🖨️ Imprimir</button>
-    <button class="app-btn" onclick="validateAction('click-limpiar')" style="margin-top:8px; background:#6c757d;">🧹 Limpiar</button>
-    <div id="fac-mensaje" style="margin-top:8px; font-size:0.85rem; font-weight:bold; text-align:center;"></div>
-  `;
-  win.style.display = 'flex';
-  itemsFactura = [];
-  facturaPDF = null;
-}
-
-function agregarItemFactura() {
-  const prodInput = document.getElementById('fac-producto');
-  const cantInput = document.getElementById('fac-cantidad');
-  const precioInput = document.getElementById('fac-precio');
-  if (!prodInput || !cantInput || !precioInput) return; // Evita error si no está abierta
-
-  const producto = prodInput.value.trim();
-  const cantidad = parseInt(cantInput.value, 10) || 1;
-  const precio = parseFloat(precioInput.value) || 0;
-  if (!producto || precio <= 0) { alert("Completa el producto y el precio."); return; }
-  itemsFactura.push({ producto, cantidad, precio });
-  actualizarListaFactura();
-  calcularTotalesFactura();
-  prodInput.value = '';
-  precioInput.value = '';
-  cantInput.value = '1';
-  validateAction('click-agregar-item');
-}
-
-function actualizarListaFactura() {
-  const lista = document.getElementById('fac-items-lista');
-  if (!lista) return;
-  if (itemsFactura.length === 0) {
-    lista.innerHTML = '<em style="color:#6c757d;">No hay productos cargados</em>';
-    return;
-  }
-  lista.innerHTML = itemsFactura.map((item, idx) =>
-    `<div style="display:flex; justify-content:space-between; padding:2px 4px; border-bottom:1px solid #dee2e6;">
-      <span>${item.cantidad}x ${item.producto}</span>
-      <span>$${(item.cantidad * item.precio).toFixed(2)}</span>
-      <button onclick="eliminarItemFactura(${idx})" style="background:none; border:none; color:#dc3545; cursor:pointer;">✖</button>
-    </div>`
-  ).join('');
-}
-
-function eliminarItemFactura(idx) {
-  itemsFactura.splice(idx, 1);
-  actualizarListaFactura();
-  calcularTotalesFactura();
-  validateAction('click-eliminar-item');
-}
-
-function calcularTotalesFactura() {
-  const subtotal = itemsFactura.reduce((sum, item) => sum + (item.cantidad * item.precio), 0);
-  const iva = subtotal * 0.21;
-  const total = subtotal + iva;
-  const subtotalEl = document.getElementById('fac-subtotal');
-  const ivaEl = document.getElementById('fac-iva');
-  const totalEl = document.getElementById('fac-total');
-  if (subtotalEl) subtotalEl.textContent = subtotal.toFixed(2);
-  if (ivaEl) ivaEl.textContent = iva.toFixed(2);
-  if (totalEl) totalEl.textContent = total.toFixed(2);
-}
-
-function emitirYGuardarFactura() {
-  if (itemsFactura.length === 0) { alert("Agrega al menos un producto."); return; }
-  const cliente = document.getElementById('fac-cliente')?.value || "Cliente";
-  const cuit = document.getElementById('fac-cuit')?.value || "N/A";
-  const domicilio = document.getElementById('fac-domicilio')?.value || "N/A";
-  const total = document.getElementById('fac-total')?.textContent || "0";
-  facturaPDF = {
-    numero: `F-${String(Math.floor(Math.random() * 10000)).padStart(4, '0')}`,
-    fecha: new Date().toLocaleDateString('es-AR'),
-    cliente, cuit, domicilio,
-    items: [...itemsFactura],
-    total
-  };
-  facturaGuardada = true;
-  const facturasGuardadas = JSON.parse(localStorage.getItem('facturas_guardadas') || '[]');
-  facturasGuardadas.push(facturaPDF);
-  localStorage.setItem('facturas_guardadas', JSON.stringify(facturasGuardadas));
-  const mensajeEl = document.getElementById('fac-mensaje');
-  if (mensajeEl) mensajeEl.innerHTML = `<span style="color:#28a745;">✅ Factura ${facturaPDF.numero} emitida y guardada en Descargas.</span>`;
-  validateAction('click-emitir-guardar');
-}
-
-function openCorreoApp() {
-  const win = document.getElementById('app-window');
-  if (!win) return;
-  document.getElementById('window-title').textContent = 'Correo - Cliente de Mail';
-  document.getElementById('window-body').innerHTML = `
-    <div class="app-form-group">
-      <label>Para:</label>
-      <input type="text" class="app-form-control" id="mail-to" value="cliente@empresa.com">
-    </div>
-    <div class="app-form-group">
-      <label>Asunto:</label>
-      <input type="text" class="app-form-control" id="mail-sub" value="Envío de Factura Digital">
-    </div>
-    <div style="margin-bottom:10px;">
-      <button class="app-btn" onclick="simularAdjuntarDesdeCorreo()" style="background:#6c757d;">📎 Adjuntar archivo</button>
-    </div>
-    <div id="correo-adjunto" style="margin-bottom:10px; font-size:0.8rem; color:#495057; border:1px dashed #ced4da; padding:6px; border-radius:4px; min-height:30px;">
-      📎 Archivos adjuntos: <em>Ninguno</em>
-    </div>
-    <button class="app-btn" onclick="enviarCorreoFinal()" style="background:#28a745;">📤 Enviar Correo</button>
-  `;
-  win.style.display = 'flex';
-}
-
-function simularAdjuntarDesdeCorreo() {
-  const facturasGuardadas = JSON.parse(localStorage.getItem('facturas_guardadas') || '[]');
-  if (facturasGuardadas.length === 0) { alert("❌ No hay facturas en Descargas. Emite una primero."); return; }
-  const ultima = facturasGuardadas[facturasGuardadas.length - 1];
-  const adj = document.getElementById('correo-adjunto');
-  if (adj) adj.innerHTML = `📎 Archivos adjuntos: <strong style="color:green;">${ultima.numero}.pdf</strong> (Adjuntado desde Descargas)`;
-  validateAction('click-adjuntar-desde-correo');
-  alert("✅ Factura adjuntada correctamente.");
-}
-
-function enviarCorreoFinal() {
-  const adj = document.getElementById('correo-adjunto');
-  if (!adj || !adj.innerHTML.includes('.pdf')) { alert("❌ No hay factura adjunta."); return; }
-  const para = document.getElementById('mail-to')?.value.trim();
-  if (!para) { alert("❌ Escribe un destinatario."); return; }
-  alert("✅ ¡Correo enviado exitosamente!");
-  validateAction('click-enviar-correo');
-  closeAppWindow();
-}
-
-function openEsteEquipoApp() {
-  const win = document.getElementById('app-window');
-  if (!win) return;
-  document.getElementById('window-title').textContent = 'Este Equipo';
-  document.getElementById('window-body').innerHTML = `
-    <div style="font-weight:bold; margin-bottom:10px;">Carpetas y Unidades:</div>
-    <ul style="list-style:none; padding-left:0;">
-      <li style="padding:6px; background:#f1f3f5; border-radius:4px; cursor:pointer;" onclick="abrirDescargas()">📁 Descargas</li>
-      <li style="padding:6px; background:#f1f3f5; border-radius:4px; cursor:pointer;" onclick="alert('Abriendo Documentos')">📄 Documentos</li>
-      <li style="padding:6px; background:#f1f3f5; border-radius:4px; cursor:pointer;" onclick="alert('Abriendo Música')">🎵 Música</li>
-    </ul>
-  `;
-  win.style.display = 'flex';
-}
-
-function abrirDescargas() {
-  const facturasGuardadas = JSON.parse(localStorage.getItem('facturas_guardadas') || '[]');
-  const tiene = facturasGuardadas.length > 0;
-  const body = document.getElementById('window-body');
-  if (!body) return;
-  if (!tiene) {
-    body.innerHTML = `<div style="text-align:center; color:#6c757d;">📭 No hay facturas guardadas. Emite una primero.</div>`;
-    return;
-  }
-  const ultima = facturasGuardadas[facturasGuardadas.length - 1];
-  facturaSeleccionada = ultima;
-  body.innerHTML = `
-    <div style="font-weight:bold; color:#0077b6;">Descargas</div>
-    <div style="padding:8px; background:#d4edda; border:1px solid #c3e6cb; border-radius:4px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;">
-      <span>📄 <strong>${ultima.numero}.pdf</strong> (${ultima.fecha})</span>
-      <button class="app-btn" onclick="adjuntarDesdeDescargas()" style="background:#0077b6;">📎 Adjuntar al Correo</button>
-    </div>
-  `;
-  validateAction('click-verificar-descargas');
-}
-
-function adjuntarDesdeDescargas() {
-  if (!facturaSeleccionada) { alert("Primero selecciona una factura."); return; }
-  openCorreoApp();
-  setTimeout(() => {
-    const adj = document.getElementById('correo-adjunto');
-    if (adj) adj.innerHTML = `📎 Archivos adjuntos: <strong style="color:green;">${facturaSeleccionada.numero}.pdf</strong> (Adjuntado desde Descargas)`;
-    const to = document.getElementById('mail-to');
-    if (to) to.value = 'cliente@empresa.com';
-    const sub = document.getElementById('mail-sub');
-    if (sub) sub.value = `Factura ${facturaSeleccionada.numero}`;
-  }, 300);
-  validateAction('click-adjuntar-desde-descargas');
-  alert("✅ Factura adjuntada al correo.");
-}
-
-function openPapeleraApp() {
-  const win = document.getElementById('app-window');
-  if (!win) return;
-  document.getElementById('window-title').textContent = 'Papelera de Reciclaje';
-  document.getElementById('window-body').innerHTML = `<div style="color:#6c757d; text-align:center; padding:20px;">🗑️ La papelera está vacía.</div>`;
-  win.style.display = 'flex';
-}
-
-// ============================================================
-// 11. MÓDULO 6: EVALUACIÓN GENERAL
-// ============================================================
-function generarExamen() {
-  const preguntas = [];
-  const modulos = ['1','2','3','4','5'];
-  modulos.forEach(mod => {
-    const pool = bank[mod] || [];
-    const shuffled = pool.sort(() => Math.random() - 0.5);
-    const seleccionadas = shuffled.slice(0, 5);
-    preguntas.push(...seleccionadas.map(p => ({ ...p, modulo: mod })));
-  });
-  return preguntas.sort(() => Math.random() - 0.5);
-}
-
-function mostrarExamen() {
-  examenActual = generarExamen();
-  respuestasExamen = [];
-  examenCompletado = false;
-  const body = document.getElementById('window-body');
-  let html = `<div style="margin-bottom:15px; font-weight:bold; font-size:1.1rem;">📝 Evaluación General (25 preguntas)</div>`;
-  html += `<div style="font-size:0.8rem; color:#6c757d; margin-bottom:10px;">Seleccioná la respuesta correcta para cada pregunta.</div>`;
-  examenActual.forEach((p, idx) => {
-    html += `<div style="margin-bottom:20px; padding:10px; background:#f8f9fa; border-radius:6px; border-left:4px solid #0077b6;">`;
-    html += `<div style="font-weight:600; margin-bottom:6px; color:#212529;">${idx+1}. ${p.q}</div>`;
-    if (p.type === 'mcq') {
-      p.opts.forEach((opt, oi) => {
-        html += `<label style="display:block; margin:4px 0; cursor:pointer; color:#333;">
-          <input type="radio" name="q${idx}" value="${oi}" onchange="guardarRespuesta(${idx}, ${oi})"> ${opt}
-        </label>`;
-      });
-    } else if (p.type === 'tf') {
-      html += `<label style="display:block; margin:4px 0; cursor:pointer; color:#333;">
-        <input type="radio" name="q${idx}" value="true" onchange="guardarRespuesta(${idx}, true)"> Verdadero
-      </label>
-      <label style="display:block; margin:4px 0; cursor:pointer; color:#333;">
-        <input type="radio" name="q${idx}" value="false" onchange="guardarRespuesta(${idx}, false)"> Falso
-      </label>`;
-    } else if (p.type === 'order') {
-      html += `<div class="drop-zone" id="dropzone-${idx}" ondrop="soltarItem(event, ${idx})" ondragover="permitirDrop(event)" ondragleave="limpiarDrag(event)">
-        <span style="color:#6c757d;">Arrastra los pasos en orden:</span>
-      </div>
-      <div id="items-${idx}" style="display:flex; flex-wrap:wrap; gap:6px; margin-top:8px;">`;
-      p.steps.forEach((step, si) => {
-        html += `<span class="drop-item" draggable="true" data-idx="${idx}" data-step="${si}" ondragstart="iniciarDrag(event)">${step}</span>`;
-      });
-      html += `</div>`;
-    }
-    html += `</div>`;
-  });
-  html += `<div class="examen-botones">
-    <button class="app-btn" onclick="corregirExamen()" style="background:#28a745;">✅ Corregir Examen</button>
-    <button class="app-btn" onclick="actualizarExamen()" style="background:#0077b6;">🔄 Actualizar</button>
+      </footer>
+    </main>
   </div>
-  <div id="resultado-examen" style="margin-top:15px; font-weight:bold; text-align:center;"></div>`;
-  body.innerHTML = html;
-  document.getElementById('app-window').style.display = 'flex';
-  document.getElementById('window-title').textContent = 'Evaluación General';
-}
 
-function guardarRespuesta(idx, valor) {
-  respuestasExamen[idx] = valor;
-}
+  <script>
+    // GENERADOR AUTOMÁTICO DE LOS 100 EJERCICIOS CON AUTOEVALUACIONES Y PRÁCTICAS DIVERSAS
+    const exercises = [];
 
-function iniciarDrag(e) {
-  e.dataTransfer.setData('text/plain', JSON.stringify({
-    idx: e.target.dataset.idx,
-    step: e.target.dataset.step,
-    text: e.target.textContent
-  }));
-  e.target.classList.add('dragging');
-}
+    // MÓDULO 1: Manejo del Mouse y Selección (01 al 14)
+    for(let i=1; i<=13; i++) {
+      let targets = ['click-wordpad', 'click-facturador', 'click-este-equipo', 'click-correo', 'click-start', 'click-desktop'];
+      let target = targets[(i-1) % targets.length];
+      let titles = [
+        "Seleccionar WordPad", "Seleccionar el Facturador", "Seleccionar Este Equipo", 
+        "Seleccionar Correo", "Abrir el Menú Inicio", "Limpiar selección en el fondo",
+        "Marcar ícono de WordPad", "Marcar Facturador", "Marcar Este Equipo",
+        "Marcar Correo", "Verificar Botón Inicio", "Relajar pantalla en escritorio", "Practicar clic simple"
+      ];
+      exercises.push({
+        id: i, module: "1", modName: "Módulo 1: Manejo del Mouse",
+        title: `Ej ${i < 10 ? '0'+i : i}: ${titles[i-1]}`,
+        context: "📌 Pantalla Principal",
+        instruction: `Práctica ${i} de pulso y selección: Realice un clic simple sobre el elemento indicado en pantalla para seleccionarlo con seguridad.`,
+        hint: `Paso 1: Localice visualmente el elemento.\nPaso 2: Haga un clic con el botón izquierdo del ratón.`,
+        targetAction: target
+      });
+    }
+    exercises.push({
+      id: 14, module: "1", modName: "Módulo 1: Manejo del Mouse",
+      title: "Ej 14: AUTOEVALUACIÓN M1 - Abrir WordPad",
+      context: "📌 Pantalla Principal",
+      instruction: "Autoevaluación del Módulo 1: Abra el programa WordPad haciendo doble clic rápido sobre su ícono.",
+      hint: "Paso 1: Coloque el cursor sobre WordPad.\nPaso 2: Haga dos clics seguidos rápidamente para abrir la aplicación.",
+      targetAction: "dblclick-wordpad"
+    });
 
-function permitirDrop(e) { e.preventDefault(); e.currentTarget.classList.add('drag-over'); }
-function limpiarDrag(e) { e.currentTarget.classList.remove('drag-over'); }
+    // MÓDULO 2: Escritorio y Ventanas (15 al 27)
+    for(let i=15; i<=26; i++) {
+      let targets = ['close-window', 'dblclick-facturador', 'dblclick-correo', 'click-start', 'start-facturador'];
+      let target = targets[(i-15) % targets.length];
+      exercises.push({
+        id: i, module: "2", modName: "Módulo 2: Escritorio y Ventanas",
+        title: `Ej ${i}: Gestión y control de ventanas ${i}`,
+        context: "📌 Entorno de Ventanas",
+        instruction: `Práctica ${i} de ventanas: Aprenda a manipular y cerrar correctamente las aplicaciones abiertas en la pantalla.`,
+        hint: `Paso 1: Observe el estado de la ventana.\nPaso 2: Ejecute la acción requerida (cerrar con [X] o abrir con doble clic).`,
+        targetAction: target
+      });
+    }
+    exercises.push({
+      id: 27, module: "2", modName: "Módulo 2: Escritorio y Ventanas",
+      title: "Ej 27: AUTOEVALUACIÓN M2 - Cierre limpio",
+      context: "📌 Ventana Activa",
+      instruction: "Autoevaluación del Módulo 2: Cierre la ventana actual pulsando el botón con la cruz [X] superior.",
+      hint: "Paso 1: Busque la cruz [X] arriba a la derecha.\nPaso 2: Haga clic para cerrar la ventana.",
+      targetAction: "close-window"
+    });
 
-function soltarItem(e, idx) {
-  e.preventDefault();
-  e.currentTarget.classList.remove('drag-over');
-  const data = JSON.parse(e.dataTransfer.getData('text/plain'));
-  if (parseInt(data.idx) !== idx) return;
-  const dropZone = document.getElementById(`dropzone-${idx}`);
-  const item = document.createElement('span');
-  item.className = 'drop-item';
-  item.textContent = data.text;
-  item.style.cursor = 'default';
-  item.draggable = false;
-  dropZone.appendChild(item);
-  const itemsContainer = document.getElementById(`items-${idx}`);
-  const original = itemsContainer.querySelector(`[data-step="${data.step}"]`);
-  if (original) original.remove();
-  const orden = Array.from(dropZone.querySelectorAll('.drop-item')).map(el => el.textContent);
-  const originalSteps = examenActual[idx].steps;
-  const ordenNumeros = orden.map(text => originalSteps.indexOf(text));
-  respuestasExamen[idx] = ordenNumeros;
-}
+    // MÓDULO 3: Explorador de Archivos (28 al 41)
+    for(let i=28; i<=40; i++) {
+      let targets = ['dblclick-este-equipo', 'close-window', 'start-este-equipo', 'click-este-equipo'];
+      let target = targets[(i-28) % targets.length];
+      exercises.push({
+        id: i, module: "3", modName: "Módulo 3: Explorador de Archivos",
+        title: `Ej ${i}: Exploración de directorios ${i}`,
+        context: "📌 Mis Archivos",
+        instruction: `Práctica ${i} de archivos: Navegue por el sistema de almacenamiento para ubicar carpetas y unidades de la PC.`,
+        hint: `Paso 1: Acceda a 'Este Equipo'.\nPaso 2: Explore las opciones disponibles.`,
+        targetAction: target
+      });
+    }
+    exercises.push({
+      id: 41, module: "3", modName: "Módulo 3: Explorador de Archivos",
+      title: "Ej 41: AUTOEVALUACIÓN M3 - Abrir Papelera",
+      context: "📌 Pantalla Principal",
+      instruction: "Autoevaluación del Módulo 3: Abra la Papelera de Reciclaje haciendo doble clic en su ícono.",
+      hint: "Paso 1: Vaya al ícono de la Papelera.\nPaso 2: Haga doble clic para verificar su contenido.",
+      targetAction: "dblclick-papelera"
+    });
 
-function corregirExamen() {
-  if (examenCompletado) return;
-  let correctas = 0;
-  const total = examenActual.length;
-  examenActual.forEach((p, idx) => {
-    let resp = respuestasExamen[idx];
-    if (resp === undefined) return;
-    let esCorrecto = false;
-    if (p.type === 'mcq' || p.type === 'tf') {
-      esCorrecto = (resp === p.answer);
-    } else if (p.type === 'order') {
-      if (Array.isArray(resp) && resp.length === p.correct.length) {
-        esCorrecto = resp.every((v, i) => v === p.correct[i]);
+    // MÓDULO 4: Redacción en WordPad (42 al 54)
+    for(let i=42; i<=53; i++) {
+      let targets = ['start-wordpad', 'close-window', 'dblclick-wordpad', 'click-wordpad'];
+      let target = targets[(i-42) % targets.length];
+      exercises.push({
+        id: i, module: "4", modName: "Módulo 4: Redacción en WordPad",
+        title: `Ej ${i}: Práctica de notas y textos ${i}`,
+        context: "📌 WordPad",
+        instruction: `Práctica ${i} de redacción: Utilice el editor de texto para crear cartas y notas personales de forma sencilla.`,
+        hint: `Paso 1: Abra WordPad.\nPaso 2: Escriba su texto y gestione el archivo.`,
+        targetAction: target
+      });
+    }
+    exercises.push({
+      id: 54, module: "4", modName: "Módulo 4: Redacción en WordPad",
+      title: "Ej 54: AUTOEVALUACIÓN M4 - Cierre de WordPad",
+      context: "📌 Ventana de WordPad",
+      instruction: "Autoevaluación del Módulo 4: Cierre la aplicación WordPad pulsando el botón [X].",
+      hint: "Paso 1: Haga clic en la cruz [X] superior de la ventana.",
+      targetAction: "close-window"
+    });
+
+    // MÓDULO 5: Facturador Digital (55 al 69)
+    for(let i=55; i<=68; i++) {
+      let targets = ['dblclick-facturador', 'emitir-factura', 'close-window', 'click-facturador'];
+      let target = targets[(i-55) % targets.length];
+      exercises.push({
+        id: i, module: "5", modName: "Módulo 5: Facturador Digital",
+        title: `Ej ${i}: Gestión de trámites y comprobantes ${i}`,
+        context: "📌 Facturador",
+        instruction: `Práctica ${i} de facturación: Cargue datos fiscales y emita comprobantes que se guardan automáticamente en la PC[span_14](start_span)[span_14](end_span).`,
+        hint: `Paso 1: Abra el Facturador.\nPaso 2: Complete los campos y emita el comprobante[span_15](start_span)[span_15](end_span).`,
+        targetAction: target
+      });
+    }
+    exercises.push({
+      id: 69, module: "5", modName: "Módulo 5: Facturador Digital",
+      title: "Ej 69: AUTOEVALUACIÓN M5 - Cierre de caja",
+      context: "📌 Ventana del Facturador",
+      instruction: "Autoevaluación del Módulo 5: Cierre la ventana del Facturador con la cruz [X].",
+      hint: "Paso 1: Haga clic en el botón [X].",
+      targetAction: "close-window"
+    });
+
+    // MÓDULO 6: Correo Electrónico (70 al 81)
+    for(let i=70; i<=80; i++) {
+      let targets = ['dblclick-correo', 'enviar-correo', 'close-window', 'click-correo'];
+      let target = targets[(i-70) % targets.length];
+      exercises.push({
+        id: i, module: "6", modName: "Módulo 6: Correo Electrónico",
+        title: `Ej ${i}: Comunicación y mensajes ${i}`,
+        context: "📌 Correo",
+        instruction: `Práctica ${i} de correo: Redacte mensajes claros, escriba destinatarios y adjunte archivos guardados[span_16](start_span)[span_16](end_span).`,
+        hint: `Paso 1: Abra el Correo.\nPaso 2: Envíe su mensaje de prueba[span_17](start_span)[span_17](end_span).`,
+        targetAction: target
+      });
+    }
+    exercises.push({
+      id: 81, module: "6", modName: "Módulo 6: Correo Electrónico",
+      title: "Ej 81: AUTOEVALUACIÓN M6 - Salir del Correo",
+      context: "📌 Ventana de Correo",
+      instruction: "Autoevaluación del Módulo 6: Cierre la ventana de Correo con [X].",
+      hint: "Paso 1: Haga clic en la cruz [X].",
+      targetAction: "close-window"
+    });
+
+    // MÓDULO 7: Primeros Auxilios de la PC (82 al 97)
+    for(let i=82; i<=96; i++) {
+      let targets = ['click-desktop', 'click-este-equipo', 'click-start', 'dblclick-facturador'];
+      let target = targets[(i-82) % targets.length];
+      exercises.push({
+        id: i, module: "7", modName: "Módulo 7: Primeros Auxilios",
+        title: `Ej ${i}: Verificación y mantenimiento ${i}`,
+        context: "📌 Sistema",
+        instruction: `Práctica ${i} de mantenimiento: Compruebe el estado del reloj, la barra de tareas y la estabilidad del equipo.`,
+        hint: `Paso 1: Revise la interfaz de la PC.\nPaso 2: Ejecute la validación solicitada.`,
+        targetAction: target
+      });
+    }
+    exercises.push({
+      id: 97, module: "7", modName: "Módulo 7: Primeros Auxilios",
+      title: "Ej 97: AUTOEVALUACIÓN M7 - Estabilidad final",
+      context: "📌 Pantalla Principal",
+      instruction: "Autoevaluación del Módulo 7: Haga clic en el fondo libre para asegurar el sistema.",
+      hint: "Paso 1: Haga clic en un espacio vacío de la pantalla.",
+      targetAction: "click-desktop"
+    });
+
+    // MÓDULO 8: Examen Integrador Final (98 al 100)
+    exercises.push({
+      id: 98, module: "8", modName: "Módulo 8: Examen Integrador Final",
+      title: "Ej 98: EXAMEN FINAL - Emitir factura y enviarla por mail",
+      context: "📌 Pantalla Principal",
+      instruction: "Examen Integrador de Autonomía: 1) Abra el Facturador y emita la factura (se guarda sola en Descargas)[span_18](start_span)[span_18](end_span). 2) Búsquela en 'Este Equipo' > Descargas. 3) Adjúntela y envíela por Correo[span_19](start_span)[span_19](end_span).",
+      hint: "Paso 1: Haga doble clic en el ícono del Facturador para iniciar la prueba final de punta a punta.",
+      targetAction: "dblclick-facturador"
+    });
+    exercises.push({
+      id: 99, module: "8", modName: "Módulo 8: Examen Integrador Final",
+      title: "Ej 99: EXAMEN FINAL - Auditoría de archivos",
+      context: "📌 Ventana Activa",
+      instruction: "Examen Integrador: Cierre la ventana del Facturador para aprobar el control operativo de archivos.",
+      hint: "Paso 1: Haga clic en la cruz [X] de la ventana.",
+      targetAction: "close-window"
+    });
+    exercises.push({
+      id: 100, module: "8", modName: "Módulo 8: Examen Integrador Final",
+      title: "Ej 100: EXAMEN FINAL - Certificación y Cierre",
+      context: "📌 Pantalla Principal",
+      instruction: "Examen Integrador: Cierre la última ventana abierta tocando [X] para completar con éxito los 100 ejercicios y obtener su certificación.",
+      hint: "Paso 1: Cierre cualquier ventana activa tocando [X] para finalizar el curso integral.",
+      targetAction: "close-window"
+    });
+
+    let currentIdx = 0;
+    let facturaGuardada = false;
+
+    const moduleSelectElem = document.getElementById('module-select');
+    const exerciseDropdownElem = document.getElementById('exercise-dropdown-select');
+    const badgeElem = document.getElementById('badge-module');
+    const titleElem = document.getElementById('exercise-title');
+    const contextElem = document.getElementById('location-text');
+    const instructionElem = document.getElementById('instruction-text');
+    const hintBox = document.getElementById('hint-box');
+    const appWindow = document.getElementById('app-window');
+    const windowTitle = document.getElementById('window-title');
+    const windowBody = document.getElementById('window-body');
+    const startMenu = document.getElementById('start-menu');
+    const btnPrev = document.getElementById('btn-prev');
+    const btnNext = document.getElementById('btn-next');
+
+    function init() {
+      populateExerciseDropdown();
+      loadExercise(0);
+    }
+
+    function populateExerciseDropdown() {
+      const selectedModule = moduleSelectElem.value;
+      exerciseDropdownElem.innerHTML = '';
+
+      exercises.forEach((ex, idx) => {
+        if (selectedModule === 'all' || ex.module === selectedModule) {
+          const opt = document.createElement('option');
+          opt.value = idx;
+          opt.textContent = ex.title;
+          exerciseDropdownElem.appendChild(opt);
+        }
+      });
+    }
+
+    function changeModuleFilter(modVal) {
+      populateExerciseDropdown();
+      const firstOpt = exerciseDropdownElem.options[0];
+      if (firstOpt) {
+        loadExercise(parseInt(firstOpt.value, 10));
       }
     }
-    if (esCorrecto) correctas++;
-    const container = document.querySelector(`#app-window .window-body > div:nth-child(${idx+2})`);
-    if (container) {
-      container.style.borderLeftColor = esCorrecto ? '#28a745' : '#dc3545';
-      container.style.background = esCorrecto ? '#d4edda' : '#f8d7da';
+
+    function loadExercise(idx) {
+      currentIdx = idx;
+      const ex = exercises[currentIdx];
+
+      exerciseDropdownElem.value = currentIdx;
+
+      badgeElem.textContent = ex.modName;
+      titleElem.textContent = ex.title;
+      contextElem.textContent = ex.context;
+      instructionElem.innerHTML = ex.instruction;
+      hintBox.innerHTML = ex.hint;
+      hintBox.style.display = 'none';
+
+      clearSelections();
+      startMenu.style.display = 'none';
+      appWindow.style.display = 'none';
+
+      btnPrev.disabled = currentIdx === 0;
+      btnNext.disabled = currentIdx === exercises.length - 1;
     }
-  });
-  examenCompletado = true;
-  const mensaje = correctas >= 9 ? '¡Excelente! Bien logrado' :
-                  correctas >= 6 ? 'Bien logrado' :
-                  'Estuviste muy cerca, hay que seguir practicando';
-  document.getElementById('resultado-examen').innerHTML = `
-    <span style="font-size:1.2rem;">${correctas}/${total} - ${mensaje}</span>
-  `;
-}
 
-function actualizarExamen() {
-  if (!examenCompletado) { alert("Completa el examen antes de actualizar."); return; }
-  mostrarExamen();
-}
+    function selectExercise(val) {
+      loadExercise(parseInt(val, 10));
+    }
 
-// ============================================================
-// 12. RELOJ Y ARRANQUE
-// ============================================================
-function updateClock() {
-  const now = new Date();
-  document.getElementById('clock-time').textContent = now.toLocaleTimeString('es-AR', {hour:'2-digit',minute:'2-digit'});
-  document.getElementById('clock-date').textContent = now.toLocaleDateString('es-AR');
-}
-setInterval(updateClock, 1000);
-updateClock();
+    function navigate(dir) {
+      const next = currentIdx + dir;
+      if (next >= 0 && next < exercises.length) {
+        const targetEx = exercises[next];
+        if (moduleSelectElem.value !== 'all' && targetEx.module !== moduleSelectElem.value) {
+          moduleSelectElem.value = targetEx.module;
+          populateExerciseDropdown();
+        }
+        loadExercise(next);
+      }
+    }
 
-init();
-</script>
+    function toggleHint() {
+      hintBox.style.display = hintBox.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function clearSelections() {
+      document.querySelectorAll('.desktop-icon').forEach(icon => icon.classList.remove('selected'));
+    }
+
+    function validateAction(actionName) {
+      const currentEx = exercises[currentIdx];
+      if (currentEx.targetAction === actionName) {
+        if (currentIdx === 97) { // Ejercicio 98: Examen Final
+          if (actionName === 'dblclick-facturador') {
+            openFacturadorApp();
+            return;
+          }
+        }
+        alert("¡Excelente! Ejercicio aprobado correctamente.");
+        if (currentIdx < exercises.length - 1) {
+          navigate(1);
+        }
+      }
+    }
+
+    function handleIconClick(e, iconName) {
+      e.stopPropagation();
+      clearSelections();
+      document.getElementById(`icon-${iconName}`).classList.add('selected');
+      validateAction(`click-${iconName}`);
+    }
+
+    function handleIconDblClick(iconName) {
+      clearSelections();
+      if (iconName === 'este-equipo') openEsteEquipoApp();
+      else if (iconName === 'wordpad') openWordpadApp();
+      else if (iconName === 'facturador') openFacturadorApp();
+      else if (iconName === 'correo') openCorreoApp();
+      else if (iconName === 'papelera') openPapeleraApp();
+      validateAction(`dblclick-${iconName}`);
+    }
+
+    function handleDesktopClick(e) {
+      clearSelections();
+      startMenu.style.display = 'none';
+      validateAction('click-desktop');
+    }
+
+    function toggleStartMenu(e) {
+      e.stopPropagation();
+      startMenu.style.display = startMenu.style.display === 'block' ? 'none' : 'block';
+      validateAction('click-start');
+    }
+
+    function handleStartItem(itemName) {
+      startMenu.style.display = 'none';
+      if (itemName === 'este-equipo') openEsteEquipoApp();
+      else if (itemName === 'wordpad') openWordpadApp();
+      else if (itemName === 'facturador') openFacturadorApp();
+      else if (itemName === 'correo') openCorreoApp();
+      else if (itemName === 'papelera') openPapeleraApp();
+      validateAction(`start-${itemName}`);
+    }
+
+    function closeAppWindow() {
+      appWindow.style.display = 'none';
+      validateAction('close-window');
+    }
+
+    // APLICACIONES INTERACTIVAS REALES
+    function openEsteEquipoApp() {
+      windowTitle.textContent = "Este Equipo - Mis Archivos";
+      windowBody.innerHTML = `
+        <div style="font-weight:bold; margin-bottom:10px;">Carpetas de la computadora:</div>
+        <ul style="list-style:none; padding-left:0;">
+          <li style="padding:8px; background:#f1f3f5; margin-bottom:6px; border-radius:4px; cursor:pointer;" onclick="alert('Abriendo Disco Local (C:)')">💻 Disco Local (C:)</li>
+          <li style="padding:8px; background:#e2f0d9; margin-bottom:6px; border-radius:4px; cursor:pointer; font-weight:600;" onclick="openCarpetaDescargas()">📁 Descargas ${facturaGuardada ? '<span style="color:green; float:right;">[Factura_001.pdf lista]</span>' : ''}</li>
+          <li style="padding:8px; background:#f1f3f5; margin-bottom:6px; border-radius:4px; cursor:pointer;" onclick="alert('Abriendo Documentos')">📄 Documentos</li>
+        </ul>
+      `;
+      appWindow.style.display = 'flex';
+    }
+
+    function openCarpetaDescargas() {
+      if (currentIdx === 97 && facturaGuardada) {
+        windowBody.innerHTML = `
+          <div style="font-weight:bold; color:#0077b6; margin-bottom:10px;">Carpeta: Descargas</div>
+          <div style="padding:10px; background:#d4edda; border:1px solid #c3e6cb; border-radius:4px; display:flex; justify-content:space-between; align-items:center;">
+            <span>📄 Factura_001.pdf (Guardada correctamente)[span_20](start_span)[span_20](end_span)</span>
+            <button class="app-btn" onclick="abrirCorreoParaAdjuntar()">Enviar por Mail</button>
+          </div>
+        `;
+      } else {
+        alert("Carpeta Descargas abierta.");
+      }
+    }
+
+    function openWordpadApp() {
+      windowTitle.textContent = "WordPad - Escribir Textos";
+      windowBody.innerHTML = `
+        <div style="border-bottom:1px solid #dee2e6; padding-bottom:6px; margin-bottom:10px; font-size:0.8rem; color:#6c757d;">
+          Archivo | Editar | Ver | Insertar | Formato
+        </div>
+        <textarea class="app-form-control" style="height:180px; resize:none;" placeholder="Escriba aquí su carta o nota personal..."></textarea>
+      `;
+      appWindow.style.display = 'flex';
+    }
+
+    function openFacturadorApp() {
+      windowTitle.textContent = "Facturador Digital - Cargar Comprobante";
+      windowBody.innerHTML = `
+        <div class="app-form-group">
+          <label>Nombre del Cliente o Comercio:</label>
+          <input type="text" class="app-form-control" id="fac-cliente" value="Guillermo López">
+        </div>
+        <div class="app-form-group">
+          <label>Monto Total ($):</label>
+          <input type="text" class="app-form-control" id="fac-total" value="15000">
+        </div>
+        <button class="app-btn" onclick="emitirYGuardarFactura()">Emitir Factura y Guardar</button>
+      `;
+      appWindow.style.display = 'flex';
+    }
+
+    function emitirYGuardarFactura() {
+      facturaGuardada = true;
+      alert("¡Factura emitida con éxito! Se ha guardado en la carpeta Descargas[span_21](start_span)[span_21](end_span).");
+      closeAppWindow();
+      if (currentIdx === 97) {
+        setTimeout(() => {
+          openEsteEquipoApp();
+        }, 500);
+      }
+    }
+
+    function openCorreoApp() {
+      windowTitle.textContent = "Correo Electrónico";
+      windowBody.innerHTML = `
+        <div class="app-form-group">
+          <label>Para:</label>
+          <input type="text" class="app-form-control" id="mail-to" value="contacto@comercio.com">
+        </div>
+        <div class="app-form-group">
+          <label>Asunto:</label>
+          <input type="text" class="app-form-control" id="mail-sub" value="Envío de Factura">
+        </div>
+        <div id="mail-adjunto-container" style="margin-bottom:10px; font-size:0.85rem; color:#495057;">
+          📎 Archivos adjuntos: <em>Ninguno</em>
+        </div>
+        <button class="app-btn" onclick="enviarCorreoFinal()">Enviar Correo</button>
+      `;
+      appWindow.style.display = 'flex';
+    }
+
+    function abrirCorreoParaAdjuntar() {
+      openCorreoApp();
+      setTimeout(() => {
+        const adjContainer = document.getElementById('mail-adjunto-container');
+        if (adjContainer) {
+          adjContainer.innerHTML = `📎 Archivos adjuntos: <strong style="color:green;">Factura_001.pdf</strong> (Adjuntado desde Descargas)[span_22](start_span)[span_22](end_span)`;
+        }
+      }, 200);
+    }
+
+    function enviarCorreoFinal() {
+      alert("¡Correo enviado con éxito junto con la factura adjunta[span_23](start_span)[span_23](end_span)!");
+      closeAppWindow();
+      if (currentIdx === 97) {
+        alert("¡Felicitaciones! Ha aprobado el Examen Integrador Final y completado los 100 ejercicios.");
+        navigate(1);
+      }
+    }
+
+    function openPapeleraApp() {
+      windowTitle.textContent = "Papelera de Reciclaje";
+      windowBody.innerHTML = `
+        <div style="color:#6c757d; font-size:0.95rem; text-align:center; padding:25px;">
+          🗑️ La papelera está vacía en este momento.
+        </div>
+      `;
+      appWindow.style.display = 'flex';
+    }
+
+    init();
+  </script>
 </body>
 </html>
