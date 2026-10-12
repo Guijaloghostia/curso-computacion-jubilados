@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Capacitación Digital - 100 Ejercicios para Jubilados</title>
+  <title>Capacitación Digital - 100 Ejercicios Diversificados para Jubilados</title>
   <style>
     * {
       box-sizing: border-box;
@@ -373,7 +373,7 @@
           <label class="control-label">Módulo de Aprendizaje:</label>
           <select id="module-select" class="module-select" onchange="changeModuleFilter(this.value)">
             <option value="all">Ver todos los 100 ejercicios</option>
-            <option value="1">Módulo 1: Manejo del Mouse (01-14)</option>
+            <option value="1">Módulo 1: Manejo del Mouse y Selección (01-14)</option>
             <option value="2">Módulo 2: Escritorio y Ventanas (15-27)</option>
             <option value="3">Módulo 3: Explorador de Archivos (28-41)</option>
             <option value="4">Módulo 4: Redacción en WordPad (42-54)</option>
@@ -467,7 +467,7 @@
           </button>
         </div>
         <div class="taskbar-clock">
-          <div id="clock-time">12:06</div>
+          <div id="clock-time">12:19</div>
           <div id="clock-date">11/10/2026</div>
         </div>
       </footer>
@@ -475,194 +475,124 @@
   </div>
 
   <script>
-    // GENERADOR AUTOMÁTICO DE LOS 100 EJERCICIOS CON AUTOEVALUACIONES Y PRÁCTICAS DIVERSAS
-    const exercises = [];
+    // MATRIZ RIGUROSA DE 100 EJERCICIOS DIVERSIFICADOS Y ESPECÍFICOS
+    const exercises = [
+      // MÓDULO 1: Manejo del Mouse y Selección (01 al 14)
+      { id: 1, module: "1", modName: "Módulo 1: Manejo del Mouse", title: "Ej 01: Seleccionar el ícono WordPad", context: "📌 Pantalla Principal", instruction: "Haga un clic simple sobre el ícono de WordPad para enfocarlo.", hint: "Paso 1: Ubique WordPad.\nPaso 2: Haga un clic con el botón izquierdo.", targetAction: "click-wordpad" },
+      { id: 2, module: "1", modName: "Módulo 1: Manejo del Mouse", title: "Ej 02: Seleccionar el ícono Facturador", context: "📌 Pantalla Principal", instruction: "Haga un clic simple sobre el ícono del Facturador.", hint: "Paso 1: Busque el Facturador.\nPaso 2: Haga un clic simple.", targetAction: "click-facturador" },
+      { id: 3, module: "1", modName: "Módulo 1: Manejo del Mouse", title: "Ej 03: Seleccionar 'Este Equipo'", context: "📌 Pantalla Principal", instruction: "Haga un clic simple sobre el ícono 'Este Equipo'.", hint: "Paso 1: Ubique 'Este Equipo'.\nPaso 2: Haga un clic simple.", targetAction: "click-este-equipo" },
+      { id: 4, module: "1", modName: "Módulo 1: Manejo del Mouse", title: "Ej 4: Seleccionar el Correo", context: "📌 Pantalla Principal", instruction: "Haga un clic simple sobre el ícono de Correo.", hint: "Paso 1: Busque el correo.\nPaso 2: Haga un clic simple.", targetAction: "click-correo" },
+      { id: 5, module: "1", modName: "Módulo 1: Manejo del Mouse", title: "Ej 05: Seleccionar la Papelera", context: "📌 Pantalla Principal", instruction: "Haga un clic simple sobre la Papelera de Reciclaje.", hint: "Paso 1: Ubique la Papelera.\nPaso 2: Haga un clic simple.", targetAction: "click-papelera" },
+      { id: 6, module: "1", modName: "Módulo 1: Manejo del Mouse", title: "Ej 06: Activar el fondo de pantalla", context: "📌 Pantalla Principal", instruction: "Haga clic en un espacio vacío del fondo para limpiar selecciones.", hint: "Paso 1: Apunte a una zona libre.\nPaso 2: Haga clic.", targetAction: "click-desktop" },
+      { id: 7, module: "1", modName: "Módulo 1: Manejo del Mouse", title: "Ej 07: Abrir menú Inicio principal", context: "📌 Barra de tareas", instruction: "Haga clic en el botón de Windows abajo a la izquierda.", hint: "Paso 1: Vaya a la esquina inferior izquierda.\nPaso 2: Haga clic en el botón Inicio.", targetAction: "click-start" },
+      { id: 8, module: "1", modName: "Módulo 1: Manejo del Mouse", title: "Ej 08: Volver a enfocar el fondo", context: "📌 Pantalla Principal", instruction: "Haga un clic en el fondo libre para cerrar menús.", hint: "Paso 1: Haga clic en un espacio vacío.", targetAction: "click-desktop" },
+      { id: 9, module: "1", modName: "Módulo 1: Manejo del Mouse", title: "Ej 09: Marcar Facturador nuevamente", context: "📌 Pantalla Principal", instruction: "Haga clic en el Facturador para seleccionarlo.", hint: "Paso 1: Haga clic sobre el Facturador.", targetAction: "click-facturador" },
+      { id: 10, module: "1", modName: "Módulo 1: Manejo del Mouse", title: "Ej 10: Marcar Este Equipo", context: "📌 Pantalla Principal", instruction: "Haga clic en 'Este Equipo'.", hint: "Paso 1: Haga clic en 'Este Equipo'.", targetAction: "click-este-equipo" },
+      { id: 11, module: "1", modName: "Módulo 1: Manejo del Mouse", title: "Ej 11: Marcar WordPad", context: "📌 Pantalla Principal", instruction: "Haga clic en WordPad.", hint: "Paso 1: Haga clic en WordPad.", targetAction: "click-wordpad" },
+      { id: 12, module: "1", modName: "Módulo 1: Manejo del Mouse", title: "Ej 12: Marcar Correo", context: "📌 Pantalla Principal", instruction: "Haga clic en Correo.", hint: "Paso 1: Haga clic en Correo.", targetAction: "click-correo" },
+      { id: 13, module: "1", modName: "Módulo 1: Manejo del Mouse", title: "Ej 13: Comprobación de Inicio", context: "📌 Barra de tareas", instruction: "Abra el menú Inicio para verificar la respuesta del sistema.", hint: "Paso 1: Haga clic en el botón de Windows.", targetAction: "click-start" },
+      { id: 14, module: "1", modName: "Módulo 1: Manejo del Mouse", title: "Ej 14: AUTOEVALUACIÓN M1 - Abrir WordPad", context: "📌 Pantalla Principal", instruction: "Autoevaluación M1: Abra WordPad haciendo doble clic rápido.", hint: "Paso 1: Coloque el cursor sobre WordPad.\nPaso 2: Haga doble clic rápido.", targetAction: "dblclick-wordpad" },
 
-    // MÓDULO 1: Manejo del Mouse y Selección (01 al 14)
-    for(let i=1; i<=13; i++) {
-      let targets = ['click-wordpad', 'click-facturador', 'click-este-equipo', 'click-correo', 'click-start', 'click-desktop'];
-      let target = targets[(i-1) % targets.length];
-      let titles = [
-        "Seleccionar WordPad", "Seleccionar el Facturador", "Seleccionar Este Equipo", 
-        "Seleccionar Correo", "Abrir el Menú Inicio", "Limpiar selección en el fondo",
-        "Marcar ícono de WordPad", "Marcar Facturador", "Marcar Este Equipo",
-        "Marcar Correo", "Verificar Botón Inicio", "Relajar pantalla en escritorio", "Practicar clic simple"
-      ];
-      exercises.push({
-        id: i, module: "1", modName: "Módulo 1: Manejo del Mouse",
-        title: `Ej ${i < 10 ? '0'+i : i}: ${titles[i-1]}`,
-        context: "📌 Pantalla Principal",
-        instruction: `Práctica ${i} de pulso y selección: Realice un clic simple sobre el elemento indicado en pantalla para seleccionarlo con seguridad.`,
-        hint: `Paso 1: Localice visualmente el elemento.\nPaso 2: Haga un clic con el botón izquierdo del ratón.`,
-        targetAction: target
-      });
-    }
-    exercises.push({
-      id: 14, module: "1", modName: "Módulo 1: Manejo del Mouse",
-      title: "Ej 14: AUTOEVALUACIÓN M1 - Abrir WordPad",
-      context: "📌 Pantalla Principal",
-      instruction: "Autoevaluación del Módulo 1: Abra el programa WordPad haciendo doble clic rápido sobre su ícono.",
-      hint: "Paso 1: Coloque el cursor sobre WordPad.\nPaso 2: Haga dos clics seguidos rápidamente para abrir la aplicación.",
-      targetAction: "dblclick-wordpad"
-    });
+      // MÓDULO 2: Escritorio y Ventanas (15 al 27)
+      { id: 15, module: "2", modName: "Módulo 2: Escritorio y Ventanas", title: "Ej 15: Cerrar ventana de WordPad", context: "📌 Ventana Abierta", instruction: "Cierre la ventana activa pulsando la cruz [X].", hint: "Paso 1: Haga clic en el botón [X] superior.", targetAction: "close-window" },
+      { id: 16, module: "2", modName: "Módulo 2: Escritorio y Ventanas", title: "Ej 16: Abrir el Facturador en ventana", context: "📌 Pantalla Principal", instruction: "Abra el Facturador con doble clic.", hint: "Paso 1: Haga doble clic en el Facturador.", targetAction: "dblclick-facturador" },
+      { id: 17, module: "2", modName: "Módulo 2: Escritorio y Ventanas", title: "Ej 17: Cerrar ventana del Facturador", context: "📌 Ventana del Facturador", instruction: "Cierre la ventana del Facturador con la cruz [X].", hint: "Paso 1: Haga clic en la cruz [X].", targetAction: "close-window" },
+      { id: 18, module: "2", modName: "Módulo 2: Escritorio y Ventanas", title: "Ej 18: Abrir Correo en ventana", context: "📌 Pantalla Principal", instruction: "Abra la aplicación de Correo con doble clic.", hint: "Paso 1: Haga doble clic en Correo.", targetAction: "dblclick-correo" },
+      { id: 19, module: "2", modName: "Módulo 2: Escritorio y Ventanas", title: "Ej 19: Cerrar ventana de Correo", context: "📌 Ventana de Correo", instruction: "Cierre la ventana de Correo con [X].", hint: "Paso 1: Haga clic en la cruz [X].", targetAction: "close-window" },
+      { id: 20, module: "2", modName: "Módulo 2: Escritorio y Ventanas", title: "Ej 20: Abrir 'Este Equipo' en ventana", context: "📌 Pantalla Principal", instruction: "Abra 'Este Equipo' con doble clic.", hint: "Paso 1: Haga doble clic en 'Este Equipo'.", targetAction: "dblclick-este-equipo" },
+      { id: 21, module: "2", modName: "Módulo 2: Escritorio y Ventanas", title: "Ej 21: Cerrar ventana de Este Equipo", context: "📌 Ventana de Este Equipo", instruction: "Cierre la ventana activa con [X].", hint: "Paso 1: Haga clic en la cruz [X].", targetAction: "close-window" },
+      { id: 22, module: "2", modName: "Módulo 2: Escritorio y Ventanas", title: "Ej 22: Abrir Papelera en ventana", context: "📌 Pantalla Principal", instruction: "Abra la Papelera de Reciclaje con doble clic.", hint: "Paso 1: Haga doble clic en la Papelera.", targetAction: "dblclick-papelera" },
+      { id: 23, module: "2", modName: "Módulo 2: Escritorio y Ventanas", title: "Ej 23: Cerrar ventana de Papelera", context: "📌 Ventana de Papelera", instruction: "Cierre la ventana de la Papelera con [X].", hint: "Paso 1: Haga clic en la cruz [X].", targetAction: "close-window" },
+      { id: 24, module: "2", modName: "Módulo 2: Escritorio y Ventanas", title: "Ej 24: Lanzar app desde menú Inicio", context: "📌 Menú Inicio", instruction: "Abra el menú Inicio y seleccione el Facturador.", hint: "Paso 1: Haga clic en el botón de Windows.\nPaso 2: Haga clic en 'Facturador Digital'.", targetAction: "start-facturador" },
+      { id: 25, module: "2", modName: "Módulo 2: Escritorio y Ventanas", title: "Ej 25: Cerrar ventana lanzada", context: "📌 Ventana del Facturador", instruction: "Cierre la ventana abierta con [X].", hint: "Paso 1: Haga clic en la cruz [X].", targetAction: "close-window" },
+      { id: 26, module: "2", modName: "Módulo 2: Escritorio y Ventanas", title: "Ej 26: Lanzar WordPad desde menú Inicio", context: "📌 Menú Inicio", instruction: "Abra el menú Inicio y seleccione WordPad.", hint: "Paso 1: Haga clic en el botón de Windows.\nPaso 2: Haga clic en 'WordPad'.", targetAction: "start-wordpad" },
+      { id: 27, module: "2", modName: "Módulo 2: Escritorio y Ventanas", title: "Ej 27: AUTOEVALUACIÓN M2 - Cierre de seguridad", context: "📌 Ventana de WordPad", instruction: "Autoevaluación M2: Cierre la ventana activa con el botón [X].", hint: "Paso 1: Haga clic en la cruz [X].", targetAction: "close-window" },
 
-    // MÓDULO 2: Escritorio y Ventanas (15 al 27)
-    for(let i=15; i<=26; i++) {
-      let targets = ['close-window', 'dblclick-facturador', 'dblclick-correo', 'click-start', 'start-facturador'];
-      let target = targets[(i-15) % targets.length];
-      exercises.push({
-        id: i, module: "2", modName: "Módulo 2: Escritorio y Ventanas",
-        title: `Ej ${i}: Gestión y control de ventanas ${i}`,
-        context: "📌 Entorno de Ventanas",
-        instruction: `Práctica ${i} de ventanas: Aprenda a manipular y cerrar correctamente las aplicaciones abiertas en la pantalla.`,
-        hint: `Paso 1: Observe el estado de la ventana.\nPaso 2: Ejecute la acción requerida (cerrar con [X] o abrir con doble clic).`,
-        targetAction: target
-      });
-    }
-    exercises.push({
-      id: 27, module: "2", modName: "Módulo 2: Escritorio y Ventanas",
-      title: "Ej 27: AUTOEVALUACIÓN M2 - Cierre limpio",
-      context: "📌 Ventana Activa",
-      instruction: "Autoevaluación del Módulo 2: Cierre la ventana actual pulsando el botón con la cruz [X] superior.",
-      hint: "Paso 1: Busque la cruz [X] arriba a la derecha.\nPaso 2: Haga clic para cerrar la ventana.",
-      targetAction: "close-window"
-    });
+      // MÓDULO 3: Explorador de Archivos (28 al 41)
+      { id: 28, module: "3", modName: "Módulo 3: Explorador de Archivos", title: "Ej 28: Abrir unidades en Este Equipo", context: "📌 Pantalla Principal", instruction: "Abra 'Este Equipo' para inspeccionar discos y carpetas.", hint: "Paso 1: Haga doble clic en 'Este Equipo'.", targetAction: "dblclick-este-equipo" },
+      { id: 29, module: "3", modName: "Módulo 3: Explorador de Archivos", title: "Ej 29: Cerrar explorador", context: "📌 Ventana de Este Equipo", instruction: "Cierre la ventana del explorador con [X].", hint: "Paso 1: Haga clic en la cruz [X].", targetAction: "close-window" },
+      { id: 30, module: "3", modName: "Módulo 3: Explorador de Archivos", title: "Ej 30: Abrir Este Equipo vía menú Inicio", context: "📌 Menú Inicio", instruction: "Abra Este Equipo desde el menú Inicio.", hint: "Paso 1: Haga clic en el botón Inicio.\nPaso 2: Haga clic en 'Este Equipo'.", targetAction: "start-este-equipo" },
+      { id: 31, module: "3", modName: "Módulo 3: Explorador de Archivos", title: "Ej 31: Cerrar ventana de archivos", context: "📌 Ventana de Este Equipo", instruction: "Cierre la ventana abierta con [X].", hint: "Paso 1: Haga clic en la cruz [X].", targetAction: "close-window" },
+      { id: 32, module: "3", modName: "Módulo 3: Explorador de Archivos", title: "Ej 32: Inspección de Papelera", context: "📌 Pantalla Principal", instruction: "Abra la Papelera de Reciclaje.", hint: "Paso 1: Haga doble clic en la Papelera.", targetAction: "dblclick-papelera" },
+      { id: 33, module: "3", modName: "Módulo 3: Explorador de Archivos", title: "Ej 33: Cerrar Papelera", context: "📌 Ventana de Papelera", instruction: "Cierre la ventana de la Papelera con [X].", hint: "Paso 1: Haga clic en la cruz [X].", targetAction: "close-window" },
+      { id: 34, module: "3", modName: "Módulo 3: Explorador de Archivos", title: "Ej 34: Verificar acceso a Descargas", context: "📌 Pantalla Principal", instruction: "Abra 'Este Equipo' para revisar la carpeta Descargas.", hint: "Paso 1: Haga doble clic en 'Este Equipo'.", targetAction: "dblclick-este-equipo" },
+      { id: 35, module: "3", modName: "Módulo 3: Explorador de Archivos", title: "Ej 35: Cerrar explorador", context: "📌 Ventana de Este Equipo", instruction: "Cierre la ventana con [X].", hint: "Paso 1: Haga clic en la cruz [X].", targetAction: "close-window" },
+      { id: 36, module: "3", modName: "Módulo 3: Explorador de Archivos", title: "Ej 36: Seleccionar disco principal", context: "📌 Pantalla Principal", instruction: "Haga clic en 'Este Equipo'.", hint: "Paso 1: Haga clic en 'Este Equipo'.", targetAction: "click-este-equipo" },
+      { id: 37, module: "3", modName: "Módulo 3: Explorador de Archivos", title: "Ej 37: Limpiar escritorio", context: "📌 Pantalla Principal", instruction: "Haga clic en el fondo libre.", hint: "Paso 1: Haga clic en el fondo.", targetAction: "click-desktop" },
+      { id: 38, module: "3", modName: "Módulo 3: Explorador de Archivos", title: "Ej 38: Abrir menú Inicio para archivos", context: "📌 Barra de tareas", instruction: "Abra el menú Inicio.", hint: "Paso 1: Haga clic en el botón de Windows.", targetAction: "click-start" },
+      { id: 39, module: "3", modName: "Módulo 3: Explorador de Archivos", title: "Ej 39: Iniciar Este Equipo desde menú", context: "📌 Menú Inicio", instruction: "Abra Este Equipo desde el menú Inicio.", hint: "Paso 1: Abra el menú Inicio.\nPaso 2: Haga clic en 'Este Equipo'.", targetAction: "start-este-equipo" },
+      { id: 40, module: "3", modName: "Módulo 3: Explorador de Archivos", title: "Ej 40: Cerrar ventana de archivos", context: "📌 Ventana de Este Equipo", instruction: "Cierre la ventana con [X].", hint: "Paso 1: Haga clic en la cruz [X].", targetAction: "close-window" },
+      { id: 41, module: "3", modName: "Módulo 3: Explorador de Archivos", title: "Ej 41: AUTOEVALUACIÓN M3 - Revisión de Papelera", context: "📌 Pantalla Principal", instruction: "Autoevaluación M3: Abra la Papelera de Reciclaje con doble clic.", hint: "Paso 1: Haga doble clic en la Papelera.", targetAction: "dblclick-papelera" },
 
-    // MÓDULO 3: Explorador de Archivos (28 al 41)
-    for(let i=28; i<=40; i++) {
-      let targets = ['dblclick-este-equipo', 'close-window', 'start-este-equipo', 'click-este-equipo'];
-      let target = targets[(i-28) % targets.length];
-      exercises.push({
-        id: i, module: "3", modName: "Módulo 3: Explorador de Archivos",
-        title: `Ej ${i}: Exploración de directorios ${i}`,
-        context: "📌 Mis Archivos",
-        instruction: `Práctica ${i} de archivos: Navegue por el sistema de almacenamiento para ubicar carpetas y unidades de la PC.`,
-        hint: `Paso 1: Acceda a 'Este Equipo'.\nPaso 2: Explore las opciones disponibles.`,
-        targetAction: target
-      });
-    }
-    exercises.push({
-      id: 41, module: "3", modName: "Módulo 3: Explorador de Archivos",
-      title: "Ej 41: AUTOEVALUACIÓN M3 - Abrir Papelera",
-      context: "📌 Pantalla Principal",
-      instruction: "Autoevaluación del Módulo 3: Abra la Papelera de Reciclaje haciendo doble clic en su ícono.",
-      hint: "Paso 1: Vaya al ícono de la Papelera.\nPaso 2: Haga doble clic para verificar su contenido.",
-      targetAction: "dblclick-papelera"
-    });
+      // MÓDULO 4: Redacción en WordPad (42 al 54)
+      { id: 42, module: "4", modName: "Módulo 4: Redacción en WordPad", title: "Ej 42: Iniciar WordPad para nota corta", context: "📌 Menú Inicio", instruction: "Abra WordPad desde el menú Inicio.", hint: "Paso 1: Abra el menú Inicio.\nPaso 2: Haga clic en 'WordPad'.", targetAction: "start-wordpad" },
+      { id: 43, module: "4", modName: "Módulo 4: Redacción en WordPad", title: "Ej 43: Cerrar WordPad", context: "📌 Ventana de WordPad", instruction: "Cierre la ventana de WordPad con [X].", hint: "Paso 1: Haga clic en la cruz [X].", targetAction: "close-window" },
+      { id: 44, module: "4", modName: "Módulo 4: Redacción en WordPad", title: "Ej 44: Abrir WordPad directo", context: "📌 Pantalla Principal", instruction: "Abra WordPad con doble clic.", hint: "Paso 1: Haga doble clic en WordPad.", targetAction: "dblclick-wordpad" },
+      { id: 45, module: "4", modName: "Módulo 4: Redacción en WordPad", title: "Ej 45: Cerrar procesador de texto", context: "📌 Ventana de WordPad", instruction: "Cierre la ventana con [X].", hint: "Paso 1: Haga clic en la cruz [X].", targetAction: "close-window" },
+      { id: 46, module: "4", modName: "Módulo 4: Redacción en WordPad", title: "Ej 46: Seleccionar procesador", context: "📌 Pantalla Principal", instruction: "Haga clic simple en WordPad.", hint: "Paso 1: Haga clic en WordPad.", targetAction: "click-wordpad" },
+      { id: 47, module: "4", modName: "Módulo 4: Redacción en WordPad", title: "Ej 47: Limpiar escritorio", context: "📌 Pantalla Principal", instruction: "Haga clic en el fondo libre.", hint: "Paso 1: Haga clic en el fondo.", targetAction: "click-desktop" },
+      { id: 48, module: "4", modName: "Módulo 4: Redacción en WordPad", title: "Ej 48: Lanzar WordPad desde menú", context: "📌 Menú Inicio", instruction: "Abra el menú Inicio y seleccione WordPad.", hint: "Paso 1: Abra el menú Inicio.\nPaso 2: Haga clic en 'WordPad'.", targetAction: "start-wordpad" },
+      { id: 49, module: "4", modName: "Módulo 4: Redacción en WordPad", title: "Ej 49: Cerrar nota", context: "📌 Ventana de WordPad", instruction: "Cierre la ventana con [X].", hint: "Paso 1: Haga clic en la cruz [X].", targetAction: "close-window" },
+      { id: 50, module: "4", modName: "Módulo 4: Redacción en WordPad", title: "Ej 50: Abrir WordPad con doble clic", context: "📌 Pantalla Principal", instruction: "Abra WordPad haciendo doble clic.", hint: "Paso 1: Haga doble clic en WordPad.", targetAction: "dblclick-wordpad" },
+      { id: 51, module: "4", modName: "Módulo 4: Redacción en WordPad", title: "Ej 51: Cerrar WordPad", context: "📌 Ventana de WordPad", instruction: "Cierre la ventana con [X].", hint: "Paso 1: Haga clic en la cruz [X].", targetAction: "close-window" },
+      { id: 52, module: "4", modName: "Módulo 4: Redacción en WordPad", title: "Ej 52: Menú para redactar", context: "📌 Barra de tareas", instruction: "Abra el menú Inicio.", hint: "Paso 1: Haga clic en el botón de Windows.", targetAction: "click-start" },
+      { id: 53, module: "4", modName: "Módulo 4: Redacción en WordPad", title: "Ej 53: Iniciar WordPad", context: "📌 Menú Inicio", instruction: "Seleccione WordPad en el menú.", hint: "Paso 1: Haga clic en 'WordPad'.", targetAction: "start-wordpad" },
+      { id: 54, module: "4", modName: "Módulo 4: Redacción en WordPad", title: "Ej 54: AUTOEVALUACIÓN M4 - Cierre de texto", context: "📌 Ventana de WordPad", instruction: "Autoevaluación M4: Cierre la ventana de WordPad con [X].", hint: "Paso 1: Haga clic en la cruz [X].", targetAction: "close-window" },
 
-    // MÓDULO 4: Redacción en WordPad (42 al 54)
-    for(let i=42; i<=53; i++) {
-      let targets = ['start-wordpad', 'close-window', 'dblclick-wordpad', 'click-wordpad'];
-      let target = targets[(i-42) % targets.length];
-      exercises.push({
-        id: i, module: "4", modName: "Módulo 4: Redacción en WordPad",
-        title: `Ej ${i}: Práctica de notas y textos ${i}`,
-        context: "📌 WordPad",
-        instruction: `Práctica ${i} de redacción: Utilice el editor de texto para crear cartas y notas personales de forma sencilla.`,
-        hint: `Paso 1: Abra WordPad.\nPaso 2: Escriba su texto y gestione el archivo.`,
-        targetAction: target
-      });
-    }
-    exercises.push({
-      id: 54, module: "4", modName: "Módulo 4: Redacción en WordPad",
-      title: "Ej 54: AUTOEVALUACIÓN M4 - Cierre de WordPad",
-      context: "📌 Ventana de WordPad",
-      instruction: "Autoevaluación del Módulo 4: Cierre la aplicación WordPad pulsando el botón [X].",
-      hint: "Paso 1: Haga clic en la cruz [X] superior de la ventana.",
-      targetAction: "close-window"
-    });
+      // MÓDULO 5: Facturador Digital (55 al 69)
+      { id: 55, module: "5", modName: "Módulo 5: Facturador Digital", title: "Ej 55: Abrir Facturador de clientes", context: "📌 Pantalla Principal", instruction: "Abra el Facturador con doble clic.", hint: "Paso 1: Haga doble clic en el Facturador.", targetAction: "dblclick-facturador" },
+      { id: 56, module: "5", modName: "Módulo 5: Facturador Digital", title: "Ej 56: Emitir primer comprobante", context: "📌 Ventana del Facturador", instruction: "Pulse el botón para emitir la factura y guardarla en Descargas[cite: 1].", hint: "Paso 1: Haga clic en 'Emitir Factura y Guardar'[cite: 1].", targetAction: "emitir-factura" },
+      { id: 57, module: "5", modName: "Módulo 5: Facturador Digital", title: "Ej 57: Cerrar Facturador", context: "📌 Ventana del Facturador", instruction: "Cierre la ventana del Facturador con [X].", hint: "Paso 1: Haga clic en la cruz [X].", targetAction: "close-window" },
+      { id: 58, module: "5", modName: "Módulo 5: Facturador Digital", title: "Ej 58: Lanzar Facturador desde menú", context: "📌 Menú Inicio", instruction: "Abra el menú Inicio y seleccione el Facturador.", hint: "Paso 1: Abra el menú Inicio.\nPaso 2: Haga clic en 'Facturador Digital'.", targetAction: "start-facturador" },
+      { id: 59, module: "5", modName: "Módulo 5: Facturador Digital", title: "Ej 59: Cerrar Facturador", context: "📌 Ventana del Facturador", instruction: "Cierre la ventana con [X].", hint: "Paso 1: Haga clic en la cruz [X].", targetAction: "close-window" },
+      { id: 60, module: "5", modName: "Módulo 5: Facturador Digital", title: "Ej 60: Abrir Facturador con doble clic", context: "📌 Pantalla Principal", instruction: "Abra el Facturador con doble clic.", hint: "Paso 1: Haga doble clic en el Facturador.", targetAction: "dblclick-facturador" },
+      { id: 61, module: "5", modName: "Módulo 5: Facturador Digital", title: "Ej 61: Cerrar ventana", context: "📌 Ventana del Facturador", instruction: "Cierre la ventana con [X].", hint: "Paso 1: Haga clic en la cruz [X].", targetAction: "close-window" },
+      { id: 62, module: "5", modName: "Módulo 5: Facturador Digital", title: "Ej 62: Seleccionar Facturador", context: "📌 Pantalla Principal", instruction: "Haga clic simple en el Facturador.", hint: "Paso 1: Haga clic en el Facturador.", targetAction: "click-facturador" },
+      { id: 63, module: "5", modName: "Módulo 5: Facturador Digital", title: "Ej 63: Limpiar pantalla", context: "📌 Pantalla Principal", instruction: "Haga clic en el fondo libre.", hint: "Paso 1: Haga clic en el fondo.", targetAction: "click-desktop" },
+      { id: 64, module: "5", modName: "Módulo 5: Facturador Digital", title: "Ej 64: Menú para facturación", context: "📌 Barra de tareas", instruction: "Abra el menú Inicio.", hint: "Paso 1: Haga clic en el botón de Windows.", targetAction: "click-start" },
+      { id: 65, module: "5", modName: "Módulo 5: Facturador Digital", title: "Ej 65: Iniciar Facturador", context: "📌 Menú Inicio", instruction: "Seleccione Facturador en el menú.", hint: "Paso 1: Haga clic en 'Facturador Digital'.", targetAction: "start-facturador" },
+      { id: 66, module: "5", modName: "Módulo 5: Facturador Digital", title: "Ej 66: Cerrar ventana", context: "📌 Ventana del Facturador", instruction: "Cierre la ventana con [X].", hint: "Paso 1: Haga clic en la cruz [X].", targetAction: "close-window" },
+      { id: 67, module: "5", modName: "Módulo 5: Facturador Digital", title: "Ej 67: Abrir Facturador directo", context: "📌 Pantalla Principal", instruction: "Abra el Facturador con doble clic.", hint: "Paso 1: Haga doble clic en el Facturador.", targetAction: "dblclick-facturador" },
+      { id: 68, module: "5", modName: "Módulo 5: Facturador Digital", title: "Ej 68: Cerrar factura", context: "📌 Ventana del Facturador", instruction: "Cierre la ventana con [X].", hint: "Paso 1: Haga clic en la cruz [X].", targetAction: "close-window" },
+      { id: 69, module: "5", modName: "Módulo 5: Facturador Digital", title: "Ej 69: AUTOEVALUACIÓN M5 - Cierre de caja", context: "📌 Ventana del Facturador", instruction: "Autoevaluación M5: Cierre la ventana del Facturador con [X].", hint: "Paso 1: Haga clic en la cruz [X].", targetAction: "close-window" },
 
-    // MÓDULO 5: Facturador Digital (55 al 69)
-    for(let i=55; i<=68; i++) {
-      let targets = ['dblclick-facturador', 'emitir-factura', 'close-window', 'click-facturador'];
-      let target = targets[(i-55) % targets.length];
-      exercises.push({
-        id: i, module: "5", modName: "Módulo 5: Facturador Digital",
-        title: `Ej ${i}: Gestión de trámites y comprobantes ${i}`,
-        context: "📌 Facturador",
-        instruction: `Práctica ${i} de facturación: Cargue datos fiscales y emita comprobantes que se guardan automáticamente en la PC[span_14](start_span)[span_14](end_span).`,
-        hint: `Paso 1: Abra el Facturador.\nPaso 2: Complete los campos y emita el comprobante[span_15](start_span)[span_15](end_span).`,
-        targetAction: target
-      });
-    }
-    exercises.push({
-      id: 69, module: "5", modName: "Módulo 5: Facturador Digital",
-      title: "Ej 69: AUTOEVALUACIÓN M5 - Cierre de caja",
-      context: "📌 Ventana del Facturador",
-      instruction: "Autoevaluación del Módulo 5: Cierre la ventana del Facturador con la cruz [X].",
-      hint: "Paso 1: Haga clic en el botón [X].",
-      targetAction: "close-window"
-    });
+      // MÓDULO 6: Correo Electrónico (70 al 81)
+      { id: 70, module: "6", modName: "Módulo 6: Correo Electrónico", title: "Ej 70: Abrir Correo para mensajes", context: "📌 Pantalla Principal", instruction: "Abra la aplicación de Correo con doble clic.", hint: "Paso 1: Haga doble clic en Correo.", targetAction: "dblclick-correo" },
+      { id: 71, module: "6", modName: "Módulo 6: Correo Electrónico", title: "Ej 71: Enviar mensaje de prueba", context: "📌 Ventana de Correo", instruction: "Pulse el botón para enviar el correo.", hint: "Paso 1: Haga clic en 'Enviar Correo'.", targetAction: "enviar-correo" },
+      { id: 72, module: "6", modName: "Módulo 6: Correo Electrónico", title: "Ej 72: Cerrar Correo", context: "📌 Ventana de Correo", instruction: "Cierre la ventana de Correo con [X].", hint: "Paso 1: Haga clic en la cruz [X].", targetAction: "close-window" },
+      { id: 73, module: "6", modName: "Módulo 6: Correo Electrónico", title: "Ej 73: Iniciar Correo desde menú", context: "📌 Menú Inicio", instruction: "Abra el menú Inicio y seleccione Correo.", hint: "Paso 1: Abra el menú Inicio.\nPaso 2: Haga clic en 'Correo'.", targetAction: "start-correo" },
+      { id: 74, module: "6", modName: "Módulo 6: Correo Electrónico", title: "Ej 74: Cerrar Correo", context: "📌 Ventana de Correo", instruction: "Cierre la ventana con [X].", hint: "Paso 1: Haga clic en la cruz [X].", targetAction: "close-window" },
+      { id: 75, module: "6", modName: "Módulo 6: Correo Electrónico", title: "Ej 75: Abrir Correo directo", context: "📌 Pantalla Principal", instruction: "Abra el Correo con doble clic.", hint: "Paso 1: Haga doble clic en Correo.", targetAction: "dblclick-correo" },
+      { id: 76, module: "6", modName: "Módulo 6: Correo Electrónico", title: "Ej 76: Cerrar ventana", context: "📌 Ventana de Correo", instruction: "Cierre la ventana con [X].", hint: "Paso 1: Haga clic en la cruz [X].", targetAction: "close-window" },
+      { id: 77, module: "6", modName: "Módulo 6: Correo Electrónico", title: "Ej 77: Seleccionar Correo", context: "📌 Pantalla Principal", instruction: "Haga clic simple en Correo.", hint: "Paso 1: Haga clic en Correo.", targetAction: "click-correo" },
+      { id: 78, module: "6", modName: "Módulo 6: Correo Electrónico", title: "Ej 78: Fondo libre", context: "📌 Pantalla Principal", instruction: "Haga clic en el fondo.", hint: "Paso 1: Haga clic en el fondo.", targetAction: "click-desktop" },
+      { id: 79, module: "6", modName: "Módulo 6: Correo Electrónico", title: "Ej 79: Menú para correo", context: "📌 Barra de tareas", instruction: "Abra el menú Inicio.", hint: "Paso 1: Haga clic en el botón de Windows.", targetAction: "click-start" },
+      { id: 80, module: "6", modName: "Módulo 6: Correo Electrónico", title: "Ej 80: Iniciar Correo", context: "📌 Menú Inicio", instruction: "Seleccione Correo en el menú.", hint: "Paso 1: Haga clic en 'Correo'.", targetAction: "start-correo" },
+      { id: 81, module: "6", modName: "Módulo 6: Correo Electrónico", title: "Ej 81: AUTOEVALUACIÓN M6 - Salir del Correo", context: "📌 Ventana de Correo", instruction: "Autoevaluación M6: Cierre la ventana de Correo con [X].", hint: "Paso 1: Haga clic en la cruz [X].", targetAction: "close-window" },
 
-    // MÓDULO 6: Correo Electrónico (70 al 81)
-    for(let i=70; i<=80; i++) {
-      let targets = ['dblclick-correo', 'enviar-correo', 'close-window', 'click-correo'];
-      let target = targets[(i-70) % targets.length];
-      exercises.push({
-        id: i, module: "6", modName: "Módulo 6: Correo Electrónico",
-        title: `Ej ${i}: Comunicación y mensajes ${i}`,
-        context: "📌 Correo",
-        instruction: `Práctica ${i} de correo: Redacte mensajes claros, escriba destinatarios y adjunte archivos guardados[span_16](start_span)[span_16](end_span).`,
-        hint: `Paso 1: Abra el Correo.\nPaso 2: Envíe su mensaje de prueba[span_17](start_span)[span_17](end_span).`,
-        targetAction: target
-      });
-    }
-    exercises.push({
-      id: 81, module: "6", modName: "Módulo 6: Correo Electrónico",
-      title: "Ej 81: AUTOEVALUACIÓN M6 - Salir del Correo",
-      context: "📌 Ventana de Correo",
-      instruction: "Autoevaluación del Módulo 6: Cierre la ventana de Correo con [X].",
-      hint: "Paso 1: Haga clic en la cruz [X].",
-      targetAction: "close-window"
-    });
+      // MÓDULO 7: Primeros Auxilios de la PC (82 al 97)
+      { id: 82, module: "7", modName: "Módulo 7: Primeros Auxilios", title: "Ej 82: Revisar estado del sistema", context: "📌 Pantalla Principal", instruction: "Haga clic en el fondo libre para comprobar la estabilidad.", hint: "Paso 1: Haga clic en el fondo.", targetAction: "click-desktop" },
+      { id: 83, module: "7", modName: "Módulo 7: Primeros Auxilios", title: "Ej 83: Verificar Este Equipo", context: "📌 Pantalla Principal", instruction: "Haga clic simple en 'Este Equipo'.", hint: "Paso 1: Haga clic en 'Este Equipo'.", targetAction: "click-este-equipo" },
+      { id: 84, module: "7", modName: "Módulo 7: Primeros Auxilios", title: "Ej 84: Comprobar barra de tareas", context: "📌 Barra de tareas", instruction: "Abra el menú Inicio para verificar accesos.", hint: "Paso 1: Haga clic en el botón de Windows.", targetAction: "click-start" },
+      { id: 85, module: "7", modName: "Módulo 7: Primeros Auxilios", title: "Ej 85: Limpiar pantalla", context: "📌 Pantalla Principal", instruction: "Haga clic en el fondo libre.", hint: "Paso 1: Haga clic en el fondo.", targetAction: "click-desktop" },
+      { id: 86, module: "7", modName: "Módulo 7: Primeros Auxilios", title: "Ej 86: Seleccionar Facturador", context: "📌 Pantalla Principal", instruction: "Haga clic simple en el Facturador.", hint: "Paso 1: Haga clic en el Facturador.", targetAction: "click-facturador" },
+      { id: 87, module: "7", modName: "Módulo 7: Primeros Auxilios", title: "Ej 87: Fondo libre", context: "📌 Pantalla Principal", instruction: "Haga clic en el fondo.", hint: "Paso 1: Haga clic en el fondo.", targetAction: "click-desktop" },
+      { id: 88, module: "7", modName: "Módulo 7: Primeros Auxilios", title: "Ej 88: Verificar WordPad", context: "📌 Pantalla Principal", instruction: "Haga clic simple en WordPad.", hint: "Paso 1: Haga clic en WordPad.", targetAction: "click-wordpad" },
+      { id: 89, module: "7", modName: "Módulo 7: Primeros Auxilios", title: "Ej 89: Fondo libre", context: "📌 Pantalla Principal", instruction: "Haga clic en el fondo.", hint: "Paso 1: Haga clic en el fondo.", targetAction: "click-desktop" },
+      { id: 90, module: "7", modName: "Módulo 7: Primeros Auxilios", title: "Ej 90: Verificar Correo", context: "📌 Pantalla Principal", instruction: "Haga clic simple en Correo.", hint: "Paso 1: Haga clic en Correo.", targetAction: "click-correo" },
+      { id: 91, module: "7", modName: "Módulo 7: Primeros Auxilios", title: "Ej 91: Fondo libre", context: "📌 Pantalla Principal", instruction: "Haga clic en el fondo.", hint: "Paso 1: Haga clic en el fondo.", targetAction: "click-desktop" },
+      { id: 92, module: "7", modName: "Módulo 7: Primeros Auxilios", title: "Ej 92: Menú Inicio auxiliar", context: "📌 Barra de tareas", instruction: "Abra el menú Inicio.", hint: "Paso 1: Haga clic en el botón de Windows.", targetAction: "click-start" },
+      { id: 93, module: "7", modName: "Módulo 7: Primeros Auxilios", title: "Ej 93: Fondo libre", context: "📌 Pantalla Principal", instruction: "Haga clic en el fondo.", hint: "Paso 1: Haga clic en el fondo.", targetAction: "click-desktop" },
+      { id: 94, module: "7", modName: "Módulo 7: Primeros Auxilios", title: "Ej 94: Comprobación de unidades", context: "📌 Pantalla Principal", instruction: "Haga clic en 'Este Equipo'.", hint: "Paso 1: Haga clic en 'Este Equipo'.", targetAction: "click-este-equipo" },
+      { id: 95, module: "7", modName: "Módulo 7: Primeros Auxilios", title: "Ej 95: Fondo libre", context: "📌 Pantalla Principal", instruction: "Haga clic en el fondo.", hint: "Paso 1: Haga clic en el fondo.", targetAction: "click-desktop" },
+      { id: 96, module: "7", modName: "Módulo 7: Primeros Auxilios", title: "Ej 96: Menú Inicio rápido", context: "📌 Barra de tareas", instruction: "Abra el menú Inicio.", hint: "Paso 1: Haga clic en el botón de Windows.", targetAction: "click-start" },
+      { id: 97, module: "7", modName: "Módulo 7: Primeros Auxilios", title: "Ej 97: AUTOEVALUACIÓN M7 - Estabilidad final", context: "📌 Pantalla Principal", instruction: "Autoevaluación M7: Haga clic en el fondo libre para asegurar el sistema.", hint: "Paso 1: Haga clic en un espacio vacío de la pantalla.", targetAction: "click-desktop" },
 
-    // MÓDULO 7: Primeros Auxilios de la PC (82 al 97)
-    for(let i=82; i<=96; i++) {
-      let targets = ['click-desktop', 'click-este-equipo', 'click-start', 'dblclick-facturador'];
-      let target = targets[(i-82) % targets.length];
-      exercises.push({
-        id: i, module: "7", modName: "Módulo 7: Primeros Auxilios",
-        title: `Ej ${i}: Verificación y mantenimiento ${i}`,
-        context: "📌 Sistema",
-        instruction: `Práctica ${i} de mantenimiento: Compruebe el estado del reloj, la barra de tareas y la estabilidad del equipo.`,
-        hint: `Paso 1: Revise la interfaz de la PC.\nPaso 2: Ejecute la validación solicitada.`,
-        targetAction: target
-      });
-    }
-    exercises.push({
-      id: 97, module: "7", modName: "Módulo 7: Primeros Auxilios",
-      title: "Ej 97: AUTOEVALUACIÓN M7 - Estabilidad final",
-      context: "📌 Pantalla Principal",
-      instruction: "Autoevaluación del Módulo 7: Haga clic en el fondo libre para asegurar el sistema.",
-      hint: "Paso 1: Haga clic en un espacio vacío de la pantalla.",
-      targetAction: "click-desktop"
-    });
-
-    // MÓDULO 8: Examen Integrador Final (98 al 100)
-    exercises.push({
-      id: 98, module: "8", modName: "Módulo 8: Examen Integrador Final",
-      title: "Ej 98: EXAMEN FINAL - Emitir factura y enviarla por mail",
-      context: "📌 Pantalla Principal",
-      instruction: "Examen Integrador de Autonomía: 1) Abra el Facturador y emita la factura (se guarda sola en Descargas)[span_18](start_span)[span_18](end_span). 2) Búsquela en 'Este Equipo' > Descargas. 3) Adjúntela y envíela por Correo[span_19](start_span)[span_19](end_span).",
-      hint: "Paso 1: Haga doble clic en el ícono del Facturador para iniciar la prueba final de punta a punta.",
-      targetAction: "dblclick-facturador"
-    });
-    exercises.push({
-      id: 99, module: "8", modName: "Módulo 8: Examen Integrador Final",
-      title: "Ej 99: EXAMEN FINAL - Auditoría de archivos",
-      context: "📌 Ventana Activa",
-      instruction: "Examen Integrador: Cierre la ventana del Facturador para aprobar el control operativo de archivos.",
-      hint: "Paso 1: Haga clic en la cruz [X] de la ventana.",
-      targetAction: "close-window"
-    });
-    exercises.push({
-      id: 100, module: "8", modName: "Módulo 8: Examen Integrador Final",
-      title: "Ej 100: EXAMEN FINAL - Certificación y Cierre",
-      context: "📌 Pantalla Principal",
-      instruction: "Examen Integrador: Cierre la última ventana abierta tocando [X] para completar con éxito los 100 ejercicios y obtener su certificación.",
-      hint: "Paso 1: Cierre cualquier ventana activa tocando [X] para finalizar el curso integral.",
-      targetAction: "close-window"
-    });
+      // MÓDULO 8: Examen Integrador Final (98 al 100)
+      { id: 98, module: "8", modName: "Módulo 8: Examen Integrador Final", title: "Ej 98: EXAMEN FINAL - Emitir factura y enviarla por mail", context: "📌 Pantalla Principal", instruction: "Examen Integrador: 1) Abra el Facturador y emita la factura (se guarda sola en Descargas)[cite: 1]. 2) Búsquela en 'Este Equipo' > Descargas[cite: 1]. 3) Adjúntela y envíela por Correo[cite: 1].", hint: "Paso 1: Haga doble clic en el ícono del Facturador para iniciar la prueba final.", targetAction: "dblclick-facturador" },
+      { id: 99, module: "8", modName: "Módulo 8: Examen Integrador Final", title: "Ej 99: EXAMEN FINAL - Auditoría de archivos", context: "📌 Ventana Activa", instruction: "Examen Integrador: Cierre la ventana del Facturador para aprobar el control operativo.", hint: "Paso 1: Haga clic en la cruz [X] de la ventana.", targetAction: "close-window" },
+      { id: 100, module: "8", modName: "Módulo 8: Examen Integrador Final", title: "Ej 100: EXAMEN FINAL - Certificación y Cierre", context: "📌 Pantalla Principal", instruction: "Examen Integrador: Cierre la última ventana abierta tocando [X] para completar con éxito los 100 ejercicios y obtener su certificación.", hint: "Paso 1: Cierre cualquier ventana activa tocando [X] para finalizar el curso integral.", targetAction: "close-window" }
+    ];
 
     let currentIdx = 0;
     let facturaGuardada = false;
@@ -832,7 +762,7 @@
         windowBody.innerHTML = `
           <div style="font-weight:bold; color:#0077b6; margin-bottom:10px;">Carpeta: Descargas</div>
           <div style="padding:10px; background:#d4edda; border:1px solid #c3e6cb; border-radius:4px; display:flex; justify-content:space-between; align-items:center;">
-            <span>📄 Factura_001.pdf (Guardada correctamente)[span_20](start_span)[span_20](end_span)</span>
+            <span>📄 Factura_001.pdf (Guardada correctamente)[cite: 1]</span>
             <button class="app-btn" onclick="abrirCorreoParaAdjuntar()">Enviar por Mail</button>
           </div>
         `;
@@ -870,7 +800,7 @@
 
     function emitirYGuardarFactura() {
       facturaGuardada = true;
-      alert("¡Factura emitida con éxito! Se ha guardado en la carpeta Descargas[span_21](start_span)[span_21](end_span).");
+      alert("¡Factura emitida con éxito! Se ha guardado en la carpeta Descargas[cite: 1].");
       closeAppWindow();
       if (currentIdx === 97) {
         setTimeout(() => {
@@ -903,13 +833,13 @@
       setTimeout(() => {
         const adjContainer = document.getElementById('mail-adjunto-container');
         if (adjContainer) {
-          adjContainer.innerHTML = `📎 Archivos adjuntos: <strong style="color:green;">Factura_001.pdf</strong> (Adjuntado desde Descargas)[span_22](start_span)[span_22](end_span)`;
+          adjContainer.innerHTML = `📎 Archivos adjuntos: <strong style="color:green;">Factura_001.pdf</strong> (Adjuntado desde Descargas)[cite: 1]`;
         }
       }, 200);
     }
 
     function enviarCorreoFinal() {
-      alert("¡Correo enviado con éxito junto con la factura adjunta[span_23](start_span)[span_23](end_span)!");
+      alert("¡Correo enviado con éxito junto con la factura adjunta![cite: 1]");
       closeAppWindow();
       if (currentIdx === 97) {
         alert("¡Felicitaciones! Ha aprobado el Examen Integrador Final y completado los 100 ejercicios.");
