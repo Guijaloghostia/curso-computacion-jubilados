@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Capacitación Digital - 100 Ejercicios Interactivos para Jubilados</title>
+  <title>Curso Integral de Alfabetización Digital</title>
   <style>
     * {
       box-sizing: border-box;
@@ -40,7 +40,7 @@
     }
 
     .sidebar-header h2 {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       color: #00b4d8;
       margin-bottom: 8px;
       text-align: center;
@@ -391,7 +391,7 @@
     <aside class="sidebar">
       <div class="sidebar-top">
         <div class="sidebar-header">
-          <h2>Computación Fácil (Jubilados)</h2>
+          <h2>Curso Integral de Alfabetización Digital</h2>
         </div>
 
         <div class="control-group">
@@ -496,7 +496,7 @@
           </button>
         </div>
         <div class="taskbar-clock">
-          <div id="clock-time">09:34</div>
+          <div id="clock-time">10:25</div>
           <div id="clock-date">12/10/2026</div>
         </div>
       </footer>
@@ -504,7 +504,7 @@
   </div>
 
   <script>
-    // MATRIZ COMPLETA DE 100 EJERCICIOS DIVERSIFICADOS Y FUNCIONALES
+    // MATRIZ COMPLETA Y AUDITADA DE 100 EJERCICIOS
     const exercises = [
       // MÓDULO 1: Escritorio y Puntero (01 a 12)
       { id: 1, module: "1", modName: "Módulo 1: Escritorio y Puntero", title: "Ej 01: Ajustar tamaño de íconos", context: "📌 Pantalla Principal", instruction: "Haga clic derecho en el fondo libre para configurar la vista de íconos.", hint: "Paso 1: Apunte a una zona vacía del fondo.\nPaso 2: Haga clic con el botón derecho del mouse.", targetAction: "click-desktop" },
@@ -618,7 +618,7 @@
       { id: 97, module: "7", modName: "Módulo 7: Primeros Auxilios", title: "Ej 97: AUTOEVALUACIÓN M7 - Estabilidad final", context: "📌 Pantalla Principal", instruction: "Autoevaluación M7: Haga clic en el fondo libre para asegurar el sistema.", hint: "Paso 1: Haga clic en un espacio vacío de la pantalla.", targetAction: "click-desktop" },
 
       // MÓDULO 8: Evaluador Dinámico y Actualizable (98 al 100)
-      { id: 98, module: "8", modName: "Módulo 8: Evaluador Dinámico", title: "Ej 98: Fase 1 - Tramitación Fiscal Dinámica", context: "📌 Pantalla Principal", instruction: "Evaluador Dinámico: 1) Abra el Facturador y emita la factura (se guarda sola en Descargas). Utilice el botón de actualización a la izquierda si desea generar nuevos datos de prueba.", hint: "Paso 1: Haga doble clic en el ícono del Facturador para iniciar la prueba fiscal.", targetAction: "dblclick-facturador" },
+      { id: 98, module: "8", modName: "Módulo 8: Evaluador Dinámico", title: "Ej 98: Fase 1 - Tramitación Fiscal Dinámica", context: "📌 Pantalla Principal", instruction: "Evaluador Dinámico: 1) Abra el Facturador y emita la factura (se guarda sola en Descargas). Utilice el botón de actualización si desea generar nuevos datos de prueba.", hint: "Paso 1: Haga doble clic en el ícono del Facturador para iniciar la prueba fiscal.", targetAction: "dblclick-facturador" },
       { id: 99, module: "8", modName: "Módulo 8: Evaluador Dinámico", title: "Ej 99: Fase 2 - Auditoría y Depuración de Archivos", context: "📌 Ventana Activa", instruction: "Evaluador Dinámico: Cierre la ventana activa del Facturador para aprobar el control operativo y pasar al envío final.", hint: "Paso 1: Haga clic en la cruz [X] de la ventana.", targetAction: "close-window" },
       { id: 100, module: "8", modName: "Módulo 8: Evaluador Dinámico", title: "Ej 100: Fase 3 - Envío Institucional y Certificación", context: "📌 Pantalla Principal", instruction: "Evaluador Dinámico: Cierre la última ventana abierta tocando [X] para completar con éxito la auditoría cruzada de los 100 ejercicios y obtener su certificación.", hint: "Paso 1: Cierre cualquier ventana activa tocando [X] para finalizar la evaluación integral.", targetAction: "close-window" }
     ];
@@ -681,7 +681,7 @@
       hintBox.innerHTML = ex.hint;
       hintBox.style.display = 'none';
 
-      // Mostrar controles de evaluación dinámica solo en Módulo 8
+      // Mostrar controles del evaluador solo en el Módulo 8
       if (ex.module === "8") {
         evalControls.style.display = 'block';
       } else {
@@ -726,7 +726,7 @@
       if (currentIdx === 97) {
         loadExercise(97);
       }
-      alert(`🔄 ¡Desafío actualizado con éxito!\nNuevo caso generado:\nCliente: ${cR}\nMonto:$${mR}`);
+      alert(`🔄 ¡Desafío actualizado con éxito!\nNuevo caso generado:\nCliente: ${cR}\nMonto: $${mR}`);
     }
 
     function clearSelections() {
@@ -735,8 +735,8 @@
 
     function validateAction(actionName) {
       const currentEx = exercises[currentIdx];
-      if (currentEx.targetAction === actionName) {
-        if (currentIdx === 97) { // Ejercicio 98: Examen Final
+      if (currentEx && currentEx.targetAction === actionName) {
+        if (currentIdx === 97) { // Ejercicio 98
           if (actionName === 'dblclick-facturador') {
             openFacturadorApp();
             return;
@@ -870,4 +870,45 @@
           <label>Asunto:</label>
           <input type="text" class="app-form-control" id="mail-sub" value="Envío de Factura">
         </div>
-        <div id="mail-adjunto-container" style="margin
+        <div id="mail-adjunto-container" style="margin-bottom:10px; font-size:0.85rem; color:#495057;">
+          📎 Archivos adjuntos: <em>Ninguno</em>
+        </div>
+        <button class="app-btn" onclick="enviarCorreoFinal()">Enviar Correo</button>
+      `;
+      appWindow.style.display = 'flex';
+    }
+
+    function abrirCorreoParaAdjuntar() {
+      openCorreoApp();
+      setTimeout(() => {
+        const adjContainer = document.getElementById('mail-adjunto-container');
+        if (adjContainer) {
+          adjContainer.innerHTML = `📎 Archivos adjuntos: <strong style="color:green;">Factura_001.pdf</strong> (Adjuntado desde Descargas)`;
+        }
+      }, 200);
+    }
+
+    function enviarCorreoFinal() {
+      alert("¡Correo enviado con éxito junto con la factura adjunta!");
+      closeAppWindow();
+      if (currentIdx === 97) {
+        alert("¡Felicitaciones! Ha aprobado la auditoría del Módulo Evaluador Dinámico y completado los 100 ejercicios.");
+        navigate(1);
+      }
+    }
+
+    function openPapeleraApp() {
+      windowTitle.textContent = "Papelera de Reciclaje";
+      windowBody.innerHTML = `
+        <div style="color:#6c757d; font-size:0.95rem; text-align:center; padding:25px;">
+          🗑️ La papelera está vacía en este momento.
+        </div>
+      `;
+      appWindow.style.display = 'flex';
+    }
+
+    // Inicializar al cargar el script
+    init();
+  </script>
+</body>
+</html>
