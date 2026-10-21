@@ -1,914 +1,1121 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Curso Integral de Alfabetización Digital</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Curso Integral de Alfabetización Digital</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+  body { display: flex; height: 100vh; background-color: #0d1117; color: #fff; overflow: hidden; }
+  .app-container { display: flex; width: 100%; height: 100%; }
 
-    body {
-      display: flex;
-      height: 100vh;
-      background-color: #0d1117;
-      color: #ffffff;
-      overflow: hidden;
-      user-select: none;
-    }
+  .sidebar { width: 410px; background-color: #0b132b; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; border-right: 2px solid #1c2541; z-index: 20; overflow-y: auto; }
+  .sidebar-header h2 { font-size: 1.1rem; color: #00b4d8; margin-bottom: 8px; text-align: center; }
+  .control-group { margin-bottom: 8px; }
+  .control-label { font-size: 0.78rem; color: #8d99ae; margin-bottom: 3px; display: block; font-weight: 600; }
+  .module-select, .exercise-dropdown-select { width: 100%; padding: 7px; background: #1c2541; color: #fff; border: 1px solid #3a506b; border-radius: 6px; font-size: 0.8rem; cursor: pointer; }
+  .badge-module { display: inline-block; background-color: #0077b6; color: #fff; font-size: 0.7rem; font-weight: bold; padding: 3px 6px; border-radius: 4px; margin-bottom: 4px; text-transform: uppercase; }
+  .exercise-title { font-size: 0.9rem; margin-bottom: 5px; color: #fff; }
+  .instruction-card { background-color: #1c2541; border-left: 4px solid #00b4d8; padding: 7px; border-radius: 4px; margin-bottom: 5px; font-size: 0.75rem; }
+  .instruction-text { font-size: 0.82rem; line-height: 1.3; margin-bottom: 6px; color: #e0e1dd; max-height: 95px; overflow-y: auto; }
+  .hint-btn { width: 100%; background: rgba(255,183,3,0.15); border: 1px solid #ffb703; color: #ffb703; padding: 6px; border-radius: 6px; cursor: pointer; font-weight: bold; text-align: left; font-size: 0.78rem; margin-bottom: 4px; }
+  .hint-box { display: none; background: rgba(255,183,3,0.1); border: 1px dashed #ffb703; padding: 6px; border-radius: 6px; font-size: 0.75rem; color: #ffb703; margin-bottom: 6px; max-height: 85px; overflow-y: auto; }
+  .eval-controls { display: none; background: rgba(0,180,216,0.15); border: 1px solid #00b4d8; padding: 8px; border-radius: 6px; margin-bottom: 6px; text-align: center; }
+  .eval-btn { background: #00b4d8; color: #000; border: none; padding: 6px 10px; font-weight: bold; border-radius: 4px; cursor: pointer; font-size: 0.78rem; width: 100%; }
+  .eval-btn:hover { background: #90e0ef; }
+  .nav-buttons { display: flex; gap: 8px; }
+  .btn-nav { flex: 1; padding: 7px; border: none; border-radius: 6px; background-color: #00b4d8; color: #000; font-weight: bold; cursor: pointer; font-size: 0.8rem; }
+  .btn-nav:disabled { background-color: #3a506b; color: #8d99ae; cursor: not-allowed; }
+  .mode-indicator { font-size: 0.65rem; color: #8d99ae; margin-top: 4px; display: flex; align-items: center; gap: 6px; }
+  .mode-indicator input { cursor: pointer; }
+  .skip-btn { display: none; width: 100%; background: rgba(255,183,3,0.2); border: 1px solid #ffb703; color: #ffb703; padding: 5px; border-radius: 6px; font-size: 0.72rem; font-weight: bold; cursor: pointer; margin-bottom: 6px; }
+  .skip-btn:hover { background: rgba(255,183,3,0.35); }
 
-    .app-container {
-      display: flex;
-      width: 100%;
-      height: 100%;
-    }
+  .exam-ready-banner { display: none; background: linear-gradient(135deg, #ffb703, #fb8500); color: #000; padding: 10px; border-radius: 8px; margin-bottom: 10px; font-size: 0.78rem; font-weight: bold; text-align: center; }
+  .exam-ready-banner button { background: #000; color: #ffb703; border: none; padding: 5px 10px; border-radius: 4px; font-weight: bold; cursor: pointer; margin-top: 5px; font-size: 0.75rem; }
 
-    /* Panel Izquierdo */
-    .sidebar {
-      width: 410px;
-      background-color: #0b132b;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      border-right: 2px solid #1c2541;
-      z-index: 20;
-    }
+  .exam-mode { display: none; }
+  .exam-mode h3 { color: #ffb703; font-size: 1rem; margin-bottom: 8px; }
+  .exam-propuesta { background: #1c2541; padding: 8px; border-radius: 6px; margin-bottom: 8px; font-size: 0.8rem; color: #ffb703; font-weight: bold; }
+  .exam-datos { background: #1c2541; padding: 6px 8px; border-radius: 6px; margin-bottom: 8px; font-size: 0.72rem; color: #e0e1dd; }
+  .exam-progress { background: #1c2541; padding: 6px 8px; border-radius: 6px; margin-bottom: 8px; font-size: 0.72rem; color: #00b4d8; font-weight: bold; text-align: center; }
+  .exam-steps { list-style: none; padding: 0; margin-bottom: 10px; max-height: 280px; overflow-y: auto; }
+  .exam-step { padding: 5px 8px; font-size: 0.75rem; border-radius: 4px; margin-bottom: 3px; display: flex; align-items: center; gap: 6px; }
+  .exam-step.done { background: rgba(25,135,84,0.2); color: #198754; }
+  .exam-step.current { background: rgba(255,183,3,0.2); color: #ffb703; font-weight: bold; }
+  .exam-step.pending { color: #8d99ae; }
+  .exam-cancel-btn { width: 100%; background: #dc3545; color: #fff; border: none; padding: 7px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 0.78rem; margin-top: 6px; }
+  .exam-result { background: #1c2541; padding: 10px; border-radius: 6px; margin-bottom: 8px; font-size: 0.8rem; text-align: center; }
+  .exam-result.ok { border: 2px solid #198754; color: #198754; }
+  .exam-result.fail { border: 2px solid #dc3545; color: #dc3545; }
 
-    .sidebar-header h2 {
-      font-size: 1.1rem;
-      color: #00b4d8;
-      margin-bottom: 8px;
-      text-align: center;
-    }
+  .desktop-container { flex: 1; display: flex; flex-direction: column; position: relative; background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat; }
+  .desktop-workspace { flex: 1; position: relative; padding: 15px; }
+  .desktop-icons { display: flex; flex-direction: column; gap: 15px; width: 90px; }
+  .desktop-icon { display: flex; flex-direction: column; align-items: center; text-align: center; color: #fff; font-size: 0.75rem; text-shadow: 1px 1px 3px rgba(0,0,0,0.9); cursor: pointer; padding: 6px; border-radius: 4px; border: 1px solid transparent; }
+  .desktop-icon:hover { background-color: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); }
+  .desktop-icon.selected { background-color: rgba(0,180,216,0.3); border: 1px solid #00b4d8; }
+  .desktop-icon svg, .desktop-icon img { width: 38px; height: 38px; margin-bottom: 4px; }
+  .desktop-icon.blink { animation: blinkIcon 0.5s ease-in-out 2; }
+  @keyframes blinkIcon { 0%,100% { transform: scale(1); } 50% { transform: scale(1.25); } }
 
-    .control-group {
-      margin-bottom: 8px;
-    }
+  .window { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 560px; height: 390px; background-color: #f8f9fa; color: #333; border-radius: 6px; box-shadow: 0 10px 30px rgba(0,0,0,0.6); overflow: hidden; display: none; z-index: 10; flex-direction: column; }
+  .window-header { background-color: #e9ecef; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ced4da; }
+  .window-title { font-size: 0.85rem; color: #212529; font-weight: 600; }
+  .btn-close { background: transparent; border: none; font-size: 1rem; font-weight: bold; color: #495057; cursor: pointer; padding: 2px 8px; border-radius: 3px; }
+  .btn-close:hover { background-color: #dc3545; color: #fff; }
+  .window-body { padding: 15px; font-size: 0.85rem; flex: 1; overflow-y: auto; background-color: #fff; color: #212529; }
+  .app-form-group { margin-bottom: 10px; }
+  .app-form-group label { display: block; font-size: 0.8rem; margin-bottom: 3px; font-weight: 600; }
+  .app-form-control { width: 100%; padding: 6px; border: 1px solid #ced4da; border-radius: 4px; font-size: 0.85rem; }
+  .app-btn { background: #0077b6; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.85rem; font-weight: 600; }
+  .app-btn:hover { background: #0096c7; }
 
-    .control-label {
-      font-size: 0.78rem;
-      color: #8d99ae;
-      margin-bottom: 3px;
-      display: block;
-      font-weight: 600;
-    }
+  .start-menu { position: absolute; bottom: 45px; left: 0; width: 260px; background-color: rgba(15,23,42,0.96); border-top-right-radius: 8px; border: 1px solid rgba(255,255,255,0.1); padding: 10px; display: none; z-index: 15; }
+  .start-item { padding: 8px 12px; color: #fff; font-size: 0.85rem; cursor: pointer; border-radius: 4px; display: flex; align-items: center; gap: 10px; }
+  .start-item:hover { background-color: #00b4d8; color: #000; }
 
-    .module-select, .exercise-dropdown-select {
-      width: 100%;
-      padding: 7px;
-      background: #1c2541;
-      color: #fff;
-      border: 1px solid #3a506b;
-      border-radius: 6px;
-      font-size: 0.8rem;
-      cursor: pointer;
-    }
+  .taskbar { height: 45px; background-color: rgba(15,23,42,0.9); backdrop-filter: blur(8px); display: flex; justify-content: space-between; align-items: center; padding: 0 10px; border-top: 1px solid rgba(255,255,255,0.1); z-index: 20; }
+  .taskbar-left { display: flex; align-items: center; gap: 8px; }
+  .start-btn { background: transparent; border: none; color: #00b4d8; cursor: pointer; padding: 5px 8px; border-radius: 4px; display: flex; align-items: center; }
+  .start-btn:hover { background-color: rgba(255,255,255,0.1); }
+  .taskbar-clock { font-size: 0.75rem; text-align: right; color: #fff; }
 
-    .badge-module {
-      display: inline-block;
-      background-color: #0077b6;
-      color: #fff;
-      font-size: 0.7rem;
-      font-weight: bold;
-      padding: 3px 6px;
-      border-radius: 4px;
-      margin-bottom: 4px;
-      text-transform: uppercase;
-    }
+  .trophy-btn { background: transparent; border: none; cursor: pointer; font-size: 1.1rem; padding: 4px 8px; border-radius: 4px; position: relative; }
+  .trophy-btn:hover { background-color: rgba(255,255,255,0.1); }
+  .trophy-dot { position: absolute; top: 2px; right: 2px; width: 8px; height: 8px; border-radius: 50%; background: #dc3545; display: none; }
+  .trophy-btn.gold .trophy-dot { display: block; background: #ffb703; }
+  .trophy-btn.orange .trophy-dot { display: block; background: #fd7e14; }
 
-    .exercise-title {
-      font-size: 0.9rem;
-      margin-bottom: 5px;
-      color: #ffffff;
-    }
+  .achievements-panel { position: fixed; top: 0; right: -320px; width: 300px; height: 100vh; background: #0b132b; border-left: 2px solid #1c2541; padding: 15px; z-index: 50; transition: right 0.3s ease; overflow-y: auto; font-size: 0.8rem; }
+  .achievements-panel.open { right: 0; }
+  .achievements-panel h3 { color: #00b4d8; font-size: 1rem; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+  .ach-close { background: transparent; border: none; color: #fff; font-size: 1.1rem; cursor: pointer; }
+  .ach-stat { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #1c2541; }
+  .ach-stat span:last-child { color: #00b4d8; font-weight: bold; }
+  .ach-logros { margin-top: 10px; }
+  .ach-logro { padding: 4px 0; color: #8d99ae; }
+  .ach-logro.unlocked { color: #ffb703; }
+  .ach-btns { margin-top: 15px; display: flex; flex-direction: column; gap: 6px; }
+  .ach-btn { padding: 7px; border: none; border-radius: 6px; cursor: pointer; font-size: 0.78rem; font-weight: bold; }
+  .ach-btn.repeat { background: #fd7e14; color: #fff; }
+  .ach-btn.repeat-block { background: #dc3545; color: #fff; }
+  .ach-btn.skip { background: #ffb703; color: #000; }
+  .ach-btn.resume { background: #00b4d8; color: #000; }
+  .ach-btn.exam { background: linear-gradient(135deg,#ffb703,#fb8500); color: #000; font-size: 0.85rem; padding: 10px; }
+  .ach-btn.exam.locked { background: #3a506b; color: #8d99ae; cursor: not-allowed; pointer-events: none; }
+  .ach-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .maestria-box { background: #1c2541; padding: 8px; border-radius: 6px; margin-top: 10px; font-size: 0.75rem; }
+  .maestria-box .props { display: flex; gap: 8px; margin-top: 4px; }
+  .maestria-box .prop { padding: 3px 8px; border-radius: 4px; background: #0b132b; color: #8d99ae; }
+  .maestria-box .prop.ok { background: #198754; color: #fff; }
 
-    .instruction-card {
-      background-color: #1c2541;
-      border-left: 4px solid #00b4d8;
-      padding: 7px;
-      border-radius: 4px;
-      margin-bottom: 5px;
-      font-size: 0.75rem;
-    }
-
-    .instruction-text {
-      font-size: 0.82rem;
-      line-height: 1.3;
-      margin-bottom: 6px;
-      color: #e0e1dd;
-      max-height: 95px;
-      overflow-y: auto;
-    }
-
-    .hint-btn {
-      width: 100%;
-      background: rgba(255, 183, 3, 0.15);
-      border: 1px solid #ffb703;
-      color: #ffb703;
-      padding: 6px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-      text-align: left;
-      font-size: 0.78rem;
-      margin-bottom: 4px;
-    }
-
-    .hint-box {
-      display: none;
-      background: rgba(255, 183, 3, 0.1);
-      border: 1px dashed #ffb703;
-      padding: 6px;
-      border-radius: 6px;
-      font-size: 0.75rem;
-      color: #ffb703;
-      margin-bottom: 6px;
-      max-height: 85px;
-      overflow-y: auto;
-    }
-
-    .eval-controls {
-      display: none;
-      background: rgba(0, 180, 216, 0.15);
-      border: 1px solid #00b4d8;
-      padding: 8px;
-      border-radius: 6px;
-      margin-bottom: 6px;
-      text-align: center;
-    }
-
-    .eval-btn {
-      background: #00b4d8;
-      color: #000;
-      border: none;
-      padding: 6px 10px;
-      font-weight: bold;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 0.78rem;
-      width: 100%;
-    }
-    .eval-btn:hover {
-      background: #90e0ef;
-    }
-
-    .nav-buttons {
-      display: flex;
-      gap: 8px;
-    }
-
-    .btn-nav {
-      flex: 1;
-      padding: 7px;
-      border: none;
-      border-radius: 6px;
-      background-color: #00b4d8;
-      color: #000000;
-      font-weight: bold;
-      cursor: pointer;
-      font-size: 0.8rem;
-    }
-
-    .btn-nav:disabled {
-      background-color: #3a506b;
-      color: #8d99ae;
-      cursor: not-allowed;
-    }
-
-    /* Panel Derecho: Escritorio */
-    .desktop-container {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
-    }
-
-    .desktop-workspace {
-      flex: 1;
-      position: relative;
-      padding: 15px;
-    }
-
-    .desktop-icons {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      width: 90px;
-    }
-
-    .desktop-icon {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      color: #ffffff;
-      font-size: 0.75rem;
-      text-shadow: 1px 1px 3px rgba(0,0,0,0.9);
-      cursor: pointer;
-      padding: 6px;
-      border-radius: 4px;
-      border: 1px solid transparent;
-    }
-
-    .desktop-icon:hover {
-      background-color: rgba(255, 255, 255, 0.15);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-    }
-
-    .desktop-icon.selected {
-      background-color: rgba(0, 180, 216, 0.3);
-      border: 1px solid #00b4d8;
-    }
-
-    .desktop-icon svg, .desktop-icon img {
-      width: 38px;
-      height: 38px;
-      margin-bottom: 4px;
-    }
-
-    /* Ventanas */
-    .window {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 560px;
-      height: 390px;
-      background-color: #f8f9fa;
-      color: #333333;
-      border-radius: 6px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-      overflow: hidden;
-      display: none;
-      z-index: 10;
-      flex-direction: column;
-    }
-
-    .window-header {
-      background-color: #e9ecef;
-      padding: 8px 12px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #ced4da;
-    }
-
-    .window-title {
-      font-size: 0.85rem;
-      color: #212529;
-      font-weight: 600;
-    }
-
-    .btn-close {
-      background: transparent;
-      border: none;
-      font-size: 1rem;
-      font-weight: bold;
-      color: #495057;
-      cursor: pointer;
-      padding: 2px 8px;
-      border-radius: 3px;
-    }
-
-    .btn-close:hover {
-      background-color: #dc3545;
-      color: #ffffff;
-    }
-
-    .window-body {
-      padding: 15px;
-      font-size: 0.85rem;
-      flex: 1;
-      overflow-y: auto;
-      background-color: #ffffff;
-      color: #212529;
-    }
-
-    .app-form-group {
-      margin-bottom: 10px;
-    }
-    .app-form-group label {
-      display: block;
-      font-size: 0.8rem;
-      margin-bottom: 3px;
-      font-weight: 600;
-    }
-    .app-form-control {
-      width: 100%;
-      padding: 6px;
-      border: 1px solid #ced4da;
-      border-radius: 4px;
-      font-size: 0.85rem;
-    }
-    .app-btn {
-      background: #0077b6;
-      color: white;
-      border: none;
-      padding: 6px 12px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 0.85rem;
-      font-weight: 600;
-    }
-    .app-btn:hover {
-      background: #0096c7;
-    }
-
-    /* Menú Inicio */
-    .start-menu {
-      position: absolute;
-      bottom: 45px;
-      left: 0;
-      width: 260px;
-      background-color: rgba(15, 23, 42, 0.96);
-      border-top-right-radius: 8px;
-      border: 1px solid rgba(255,255,255,0.1);
-      padding: 10px;
-      display: none;
-      z-index: 15;
-    }
-
-    .start-item {
-      padding: 8px 12px;
-      color: #fff;
-      font-size: 0.85rem;
-      cursor: pointer;
-      border-radius: 4px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .start-item:hover {
-      background-color: #00b4d8;
-      color: #000;
-    }
-
-    /* Barra de tareas */
-    .taskbar {
-      height: 45px;
-      background-color: rgba(15, 23, 42, 0.9);
-      backdrop-filter: blur(8px);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 10px;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      z-index: 20;
-    }
-
-    .start-btn {
-      background: transparent;
-      border: none;
-      color: #00b4d8;
-      cursor: pointer;
-      padding: 5px 8px;
-      border-radius: 4px;
-      display: flex;
-      align-items: center;
-    }
-
-    .start-btn:hover {
-      background-color: rgba(255, 255, 255, 0.1);
-    }
-
-    .taskbar-clock {
-      font-size: 0.75rem;
-      text-align: right;
-      color: #ffffff;
-    }
-  </style>
+  .feedback-banner { position: fixed; top: 15px; left: 50%; transform: translateX(-50%) translateY(-80px); background: #198754; color: #fff; padding: 10px 20px; border-radius: 8px; font-weight: bold; font-size: 0.85rem; z-index: 100; transition: transform 0.3s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
+  .feedback-banner.show { transform: translateX(-50%) translateY(0); }
+  .feedback-banner.error { background: #dc3545; }
+  .feedback-banner.logro { background: #ffb703; color: #000; }
+</style>
 </head>
 <body>
 
-  <div class="app-container">
-    <aside class="sidebar">
-      <div class="sidebar-top">
-        <div class="sidebar-header">
-          <h2>Curso Integral de Alfabetización Digital</h2>
+<div class="feedback-banner" id="feedback-banner"></div>
+
+<div class="app-container">
+  <aside class="sidebar">
+    <div class="sidebar-top" id="sidebar-normal">
+      <div class="sidebar-header">
+        <h2>Curso Integral de Alfabetización Digital</h2>
+      </div>
+
+      <div id="exam-ready-banner" class="exam-ready-banner">
+        🎓 ¡Estás listo para el Examen Final!<br>
+        <button type="button" onclick="verLogros()">Ver logros</button>
+        <button type="button" onclick="iniciarExamen()">Empezar examen</button>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label">Módulo de Aprendizaje:</label>
+        <select id="module-select" class="module-select" onchange="changeModuleFilter()">
+          <option value="all">Ver los 100 ejercicios integrales</option>
+          <option value="1">Módulo 1: Conocer la PC (01-15)</option>
+          <option value="2">Módulo 2: Archivos (16-25)</option>
+          <option value="3">Módulo 3: WordPad (26-40) — opcional</option>
+          <option value="4">Módulo 4: Correo (41-55)</option>
+          <option value="5">Módulo 5: Facturador (56-70) — opcional</option>
+          <option value="6">Módulo 6: Integración (71-90)</option>
+          <option value="7">Módulo 7: Refuerzo (91-95) — opcional</option>
+          <option value="8">Módulo 8: Repasamos (96-100)</option>
+        </select>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label">Seleccionar Ejercicio:</label>
+        <select id="exercise-dropdown-select" class="exercise-dropdown-select" onchange="selectExercise(this.value)"></select>
+      </div>
+
+      <span id="badge-module" class="badge-module">Módulo 1</span>
+      <h3 id="exercise-title" class="exercise-title">Ejercicio 1</h3>
+
+      <div class="instruction-card">
+        📌 <span id="location-text">Pantalla Principal</span>
+      </div>
+
+      <p id="instruction-text" class="instruction-text">Cargando...</p>
+
+      <button class="skip-btn" id="skip-btn" onclick="skipModule()">⏭️ Saltar este módulo opcional</button>
+
+      <button class="hint-btn" id="hint-btn" onclick="requestHint()">💡 Pista 1/3</button>
+      <div id="hint-box" class="hint-box"></div>
+
+      <div id="eval-controls" class="eval-controls">
+        <button class="eval-btn" onclick="actualizarDesafioEvaluador()">🔄 Actualizar Desafío Dinámico</button>
+      </div>
+
+      <div class="mode-indicator">
+        <input type="checkbox" id="auto-help-toggle" onchange="toggleAutoHelp(this.checked)">
+        <label for="auto-help-toggle">Ayuda automática</label>
+      </div>
+    </div>
+
+    <div class="sidebar-top exam-mode" id="sidebar-exam">
+      <h3>🎓 Examen Final Integrador</h3>
+      <div class="exam-propuesta" id="exam-propuesta">Propuesta</div>
+      <div class="exam-datos" id="exam-datos"></div>
+      <div class="exam-progress" id="exam-progress">Paso 1 de 10</div>
+      <div id="exam-result-box" style="display:none;"></div>
+      <ul class="exam-steps" id="exam-steps-list"></ul>
+      <button class="exam-cancel-btn" type="button" onclick="cancelarExamen()">Cancelar examen</button>
+      <div id="exam-extra-btns"></div>
+    </div>
+
+    <div class="nav-buttons" id="nav-normal">
+      <button id="btn-prev" class="btn-nav" onclick="navigate(-1)">Anterior</button>
+      <button id="btn-next" class="btn-nav" onclick="navigate(1)">Siguiente</button>
+    </div>
+  </aside>
+
+  <main class="desktop-container" id="desktop-main">
+    <div class="desktop-workspace">
+
+      <div class="desktop-icons">
+        <div class="desktop-icon" id="icon-este-equipo" onclick="handleIconClick(event,'este-equipo')" ondblclick="handleIconDblClick('este-equipo')">
+          <svg viewBox="0 0 48 48" width="38" height="38"><defs><linearGradient id="monGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#4a9eff"/><stop offset="100%" stop-color="#0078d7"/></linearGradient></defs><path fill="url(#monGrad)" d="M40 8H8a4 4 0 00-4 4v20a4 4 0 004 4h14l-2 4h-4v2h16v-2h-4l-2-4h14a4 4 0 004-4V12a4 4 0 00-4-4zm0 22H8V12h32z"/><rect x="12" y="16" width="24" height="12" fill="#cfe8ff" opacity="0.5" rx="1"/></svg>
+          <span>Este Equipo</span>
         </div>
 
-        <div class="control-group">
-          <label class="control-label">Módulo de Aprendizaje:</label>
-          <select id="module-select" class="module-select" onchange="changeModuleFilter(this.value)">
-            <option value="all">Ver los 100 ejercicios integrales</option>
-            <option value="1">Módulo 1: Escritorio y Puntero (01-12)</option>
-            <option value="2">Módulo 2: Gestión de Ventanas (13-25)</option>
-            <option value="3">Módulo 3: Explorador de Archivos (26-40)</option>
-            <option value="4">Módulo 4: WordPad y Textos (41-55)</option>
-            <option value="5">Módulo 5: Facturador Digital (56-72)</option>
-            <option value="6">Módulo 6: Correo Electrónico (73-86)</option>
-            <option value="7">Módulo 7: Primeros Auxilios de la PC (87-97)</option>
-            <option value="8">Módulo 8: Evaluador Dinámico y Actualizable (98-100)</option>
-          </select>
+        <div class="desktop-icon" id="icon-wordpad" onclick="handleIconClick(event,'wordpad')" ondblclick="handleIconDblClick('wordpad')">
+          <svg viewBox="0 0 48 48" width="38" height="38"><defs><linearGradient id="wpGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#4a7dd6"/><stop offset="100%" stop-color="#2b579a"/></linearGradient></defs><path fill="url(#wpGrad)" d="M6 6h28l8 8v28H6z"/><path fill="#19325c" d="M34 6v8h8z"/><text x="24" y="36" font-size="18" font-weight="bold" fill="#fff" text-anchor="middle" font-family="Segoe UI">W</text></svg>
+          <span>WordPad</span>
         </div>
 
-        <div class="control-group">
-          <label class="control-label">Seleccionar Ejercicio:</label>
-          <select id="exercise-dropdown-select" class="exercise-dropdown-select" onchange="selectExercise(this.value)"></select>
+        <div class="desktop-icon" id="icon-facturador" onclick="handleIconClick(event,'facturador')" ondblclick="handleIconDblClick('facturador')">
+          <svg viewBox="0 0 48 48" width="38" height="38"><defs><linearGradient id="facGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#2aa86e"/><stop offset="100%" stop-color="#107c41"/></linearGradient></defs><path fill="url(#facGrad)" d="M8 4h24l8 8v32H8z"/><path fill="#0b532c" d="M32 4v10h10z"/><text x="24" y="32" font-size="20" font-weight="bold" fill="#fff" text-anchor="middle" font-family="Segoe UI">$</text><circle cx="36" cy="40" r="5" fill="#fff" opacity="0.85"/><text x="36" y="42" font-size="5" fill="#107c41" text-anchor="middle" font-weight="bold">OK</text></svg>
+          <span>Facturador</span>
         </div>
 
-        <span id="badge-module" class="badge-module">Módulo 1</span>
-        <h3 id="exercise-title" class="exercise-title">Ejercicio 1</h3>
-        
-        <div class="instruction-card">
-          📌 <span id="location-text">Pantalla Principal</span>
+        <div class="desktop-icon" id="icon-correo" onclick="handleIconClick(event,'correo')" ondblclick="handleIconDblClick('correo')">
+          <img src="https://img.icons8.com/color/48/gmail-new.png" alt="Correo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+          <svg viewBox="0 0 48 48" width="38" height="38" style="display:none;"><path fill="#0078d7" d="M6 12h36v24H6z"/><path fill="#fff" d="M6 12l18 14L42 12"/><text x="24" y="40" font-size="10" fill="#0078d7" text-anchor="middle" font-weight="bold">@</text></svg>
+          <span>Correo</span>
         </div>
-        
-        <p id="instruction-text" class="instruction-text">Cargando...</p>
-        
-        <button class="hint-btn" onclick="toggleHint()">💡 Ayuda paso a paso</button>
-        <div id="hint-box" class="hint-box"></div>
 
-        <div id="eval-controls" class="eval-controls">
-          <button class="eval-btn" onclick="actualizarDesafioEvaluador()">🔄 Actualizar Desafío Dinámico</button>
+        <div class="desktop-icon" id="icon-papelera" onclick="handleIconClick(event,'papelera')" ondblclick="handleIconDblClick('papelera')">
+          <svg viewBox="0 0 48 48" width="38" height="38"><defs><linearGradient id="papGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8d99ae"/><stop offset="100%" stop-color="#6c757d"/></linearGradient></defs><path fill="url(#papGrad)" d="M12 12h24v30H12z"/><path fill="#495057" d="M10 8h28v4H10z"/><path fill="#adb5bd" d="M20 4h8v4h-8z"/><path fill="none" stroke="#fff" stroke-width="1.5" d="M18 22l-3 4h4v6h-4l3 4M30 22l3 4h-4v6h4l-3 4" opacity="0.6"/></svg>
+          <span>Papelera</span>
         </div>
       </div>
 
-      <div class="nav-buttons">
-        <button id="btn-prev" class="btn-nav" onclick="navigate(-1)">Anterior</button>
-        <button id="btn-next" class="btn-nav" onclick="navigate(1)">Siguiente</button>
-      </div>
-    </aside>
-
-    <main class="desktop-container" onclick="handleDesktopClick(event)">
-      <div class="desktop-workspace">
-        
-        <div class="desktop-icons">
-          <div class="desktop-icon" id="icon-este-equipo" onclick="handleIconClick(event, 'este-equipo')" ondblclick="handleIconDblClick('este-equipo')">
-            <svg viewBox="0 0 48 48" width="38" height="38"><path fill="#0078d7" d="M40 8H8a4 4 0 00-4 4v20a4 4 0 004 4h14l-2 4h-4v2h16v-2h-4l-2-4h14a4 4 0 004-4V12a4 4 0 00-4-4zm0 22H8V12h32z"/></svg>
-            <span>Este Equipo</span>
-          </div>
-
-          <div class="desktop-icon" id="icon-wordpad" onclick="handleIconClick(event, 'wordpad')" ondblclick="handleIconDblClick('wordpad')">
-            <svg viewBox="0 0 48 48" width="38" height="38"><path fill="#2b579a" d="M6 6h28l8 8v28H6z"/><path fill="#fff" d="M14 18h20v2H14zm0 6h20v2H14zm0 6h14v2H14z"/><path fill="#19325c" d="M34 6v8h8z"/></svg>
-            <span>WordPad</span>
-          </div>
-
-          <div class="desktop-icon" id="icon-facturador" onclick="handleIconClick(event, 'facturador')" ondblclick="handleIconDblClick('facturador')">
-            <svg viewBox="0 0 48 48" width="38" height="38"><path fill="#107c41" d="M8 4h24l8 8v32H8z"/><path fill="#fff" d="M14 16h20v2H14zm0 6h20v2H14zm0 6h12v2H14z"/><path fill="#0b532c" d="M32 4v10h10z"/></svg>
-            <span>Facturador</span>
-          </div>
-
-          <div class="desktop-icon" id="icon-correo" onclick="handleIconClick(event, 'correo')" ondblclick="handleIconDblClick('correo')">
-            <img src="https://img.icons8.com/color/48/gmail-new.png" alt="Correo">
-            <span>Correo</span>
-          </div>
-
-          <div class="desktop-icon" id="icon-papelera" onclick="handleIconClick(event, 'papelera')" ondblclick="handleIconDblClick('papelera')">
-            <svg viewBox="0 0 48 48" width="38" height="38"><path fill="#6c757d" d="M12 12h24v30H12z"/><path fill="#495057" d="M10 8h28v4H10z"/><path fill="#adb5bd" d="M20 4h8v4h-8z"/></svg>
-            <span>Papelera</span>
-          </div>
+      <div class="window" id="app-window">
+        <div class="window-header">
+          <span class="window-title" id="window-title">Ventana</span>
+          <button class="btn-close" type="button" onclick="closeAppWindow()" title="Cerrar">[X]</button>
         </div>
-
-        <div class="window" id="app-window">
-          <div class="window-header">
-            <span class="window-title" id="window-title">Ventana</span>
-            <button class="btn-close" onclick="closeAppWindow()" title="Cerrar">[X]</button>
-          </div>
-          <div class="window-body" id="window-body">
-            Contenido...
-          </div>
-        </div>
-
-        <div class="start-menu" id="start-menu">
-          <div class="start-item" onclick="handleStartItem('wordpad')">📝 Escribir en WordPad</div>
-          <div class="start-item" onclick="handleStartItem('facturador')">🧮 Abrir Facturador</div>
-          <div class="start-item" onclick="handleStartItem('correo')">✉️ Revisar Correo</div>
-          <div class="start-item" onclick="handleStartItem('este-equipo')">💻 Ver Mis Archivos</div>
-          <div class="start-item" onclick="handleStartItem('papelera')">🗑️ Papelera de Reciclaje</div>
-        </div>
-
+        <div class="window-body" id="window-body">Contenido...</div>
       </div>
 
-      <footer class="taskbar">
-        <div class="taskbar-left">
-          <button class="start-btn" id="start-btn" onclick="toggleStartMenu(event)" title="Menú Inicio">
-            <svg viewBox="0 0 88 88" width="20" height="20">
-              <path fill="#00b4d8" d="M0 12.402l35.687-4.86.016 34.423-35.703.203zm35.687 34.93l.031 34.531-35.718-4.937-.016-29.75zm5.797-40.407L87.89 0l-.016 41.563-42.39.313zm42.422 41.141l.016 42.188-42.438-6.094-.031-36.438z"/>
-            </svg>
-          </button>
-        </div>
-        <div class="taskbar-clock">
-          <div id="clock-time">10:25</div>
-          <div id="clock-date">12/10/2026</div>
-        </div>
-      </footer>
-    </main>
+      <div class="start-menu" id="start-menu">
+        <div class="start-item" onclick="handleStartItem('wordpad')">📝 Escribir en WordPad</div>
+        <div class="start-item" onclick="handleStartItem('facturador')">🧮 Abrir Facturador</div>
+        <div class="start-item" onclick="handleStartItem('correo')">✉️ Revisar Correo</div>
+        <div class="start-item" onclick="handleStartItem('este-equipo')">💻 Ver Mis Archivos</div>
+        <div class="start-item" onclick="handleStartItem('papelera')">🗑️ Papelera de Reciclaje</div>
+      </div>
+
+    </div>
+
+    <footer class="taskbar" onclick="event.stopPropagation()">
+      <div class="taskbar-left">
+        <button class="start-btn" id="start-btn" type="button" onclick="toggleStartMenu(event)" title="Menú Inicio">
+          <svg viewBox="0 0 88 88" width="20" height="20"><defs><linearGradient id="iniGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#4a9eff"/><stop offset="100%" stop-color="#0078d7"/></linearGradient></defs><path fill="url(#iniGrad)" d="M0 12.402l35.687-4.86.016 34.423-35.703.203zm35.687 34.93l.031 34.531-35.718-4.937-.016-29.75zm5.797-40.407L87.89 0l-.016 41.563-42.39.313zm42.422 41.141l.016 42.188-42.438-6.094-.031-36.438z"/></svg>
+        </button>
+        <button class="trophy-btn" id="trophy-btn" type="button" onclick="toggleAchievements(event)" title="Mi progreso">🏆<span class="trophy-dot"></span></button>
+        <button class="trophy-btn" id="repeat-quick-btn" type="button" onclick="quickRepeat()" title="Repetir ejercicio fallado" style="display:none;">🔁</button>
+      </div>
+      <div class="taskbar-clock">
+        <div id="clock-time">--:--</div>
+        <div id="clock-date">--/--/----</div>
+      </div>
+    </footer>
+  </main>
+</div>
+
+<div class="achievements-panel" id="achievements-panel">
+  <h3>🏆 Mi Progreso <button class="ach-close" type="button" onclick="toggleAchievements(event)">✕</button></h3>
+  <div class="ach-stat"><span>✅ Completados</span><span id="ach-completed">0/100</span></div>
+  <div class="ach-stat"><span>🔁 A repetir</span><span id="ach-failed">0</span></div>
+  <div class="ach-stat"><span>🏆 Módulo actual</span><span id="ach-block">1</span></div>
+  <div class="ach-stat"><span>📊 Tiempo</span><span id="ach-time">0 min</span></div>
+  <div class="ach-stat"><span>🎯 Próximo</span><span id="ach-next">Ej. 1</span></div>
+  <div class="ach-stat"><span>🏅 Autonomía</span><span id="ach-autonomy">0</span></div>
+  <div class="ach-stat"><span>⚠️ Omitidos</span><span id="ach-skipped">—</span></div>
+  <div class="ach-logros" id="ach-logros-list"></div>
+  <div class="maestria-box" id="maestria-box" style="display:none;">
+    🏅 Maestría: Exámenes aprobados
+    <div class="props">
+      <span class="prop" id="prop-A">A</span>
+      <span class="prop" id="prop-B">B</span>
+      <span class="prop" id="prop-C">C</span>
+    </div>
   </div>
+  <div class="ach-btns">
+    <button class="ach-btn exam" type="button" onclick="iniciarExamen()" id="btn-exam-final" style="display:none;">🎓 Examen Final Integrador</button>
+    <button class="ach-btn repeat" type="button" onclick="repeatExercise()" id="btn-repeat-ex">🔁 Repetir ejercicio</button>
+    <button class="ach-btn repeat-block" type="button" onclick="repeatBlock()" id="btn-repeat-block">🔁 Repetir módulo</button>
+    <button class="ach-btn skip" type="button" onclick="skipModule()" id="btn-skip-module">⏭️ Saltar módulo</button>
+    <button class="ach-btn resume" type="button" onclick="resumeModule()" id="btn-resume-module">▶️ Retomar módulo</button>
+  </div>
+</div>
 
-  <script>
-    // MATRIZ COMPLETA Y AUDITADA DE 100 EJERCICIOS
-    const exercises = [
-      // MÓDULO 1: Escritorio y Puntero (01 a 12)
-      { id: 1, module: "1", modName: "Módulo 1: Escritorio y Puntero", title: "Ej 01: Ajustar tamaño de íconos", context: "📌 Pantalla Principal", instruction: "Haga clic derecho en el fondo libre para configurar la vista de íconos.", hint: "Paso 1: Apunte a una zona vacía del fondo.\nPaso 2: Haga clic con el botón derecho del mouse.", targetAction: "click-desktop" },
-      { id: 2, module: "1", modName: "Módulo 1: Escritorio y Puntero", title: "Ej 02: Seleccionar WordPad", context: "📌 Pantalla Principal", instruction: "Haga un clic simple sobre el ícono de WordPad.", hint: "Paso 1: Ubique WordPad.\nPaso 2: Haga clic izquierdo.", targetAction: "click-wordpad" },
-      { id: 3, module: "1", modName: "Módulo 1: Escritorio y Puntero", title: "Ej 03: Seleccionar Facturador", context: "📌 Pantalla Principal", instruction: "Haga un clic simple sobre el Facturador.", hint: "Paso 1: Busque el Facturador.\nPaso 2: Haga clic izquierdo.", targetAction: "click-facturador" },
-      { id: 4, module: "1", modName: "Módulo 1: Escritorio y Puntero", title: "Ej 04: Seleccionar Este Equipo", context: "📌 Pantalla Principal", instruction: "Haga clic simple en 'Este Equipo'.", hint: "Paso 1: Haga clic sobre 'Este Equipo'.", targetAction: "click-este-equipo" },
-      { id: 5, module: "1", modName: "Módulo 1: Escritorio y Puntero", title: "Ej 05: Menú contextual de Facturador", context: "📌 Pantalla Principal", instruction: "Haga clic derecho en el Facturador para ver sus opciones.", hint: "Paso 1: Apunte al Facturador.\nPaso 2: Haga clic derecho.", targetAction: "click-facturador" },
-      { id: 6, module: "1", modName: "Módulo 1: Escritorio y Puntero", title: "Ej 06: Seleccionar Correo", context: "📌 Pantalla Principal", instruction: "Haga clic simple en Correo.", hint: "Paso 1: Haga clic sobre el ícono de Correo.", targetAction: "click-correo" },
-      { id: 7, module: "1", modName: "Módulo 1: Escritorio y Puntero", title: "Ej 07: Abrir menú Inicio", context: "📌 Barra de tareas", instruction: "Haga clic en el botón de Windows inferior izquierdo.", hint: "Paso 1: Vaya a la esquina inferior izquierda.\nPaso 2: Haga clic en el botón Inicio.", targetAction: "click-start" },
-      { id: 8, module: "1", modName: "Módulo 1: Escritorio y Puntero", title: "Ej 08: Limpiar selección de pantalla", context: "📌 Pantalla Principal", instruction: "Haga clic en un espacio vacío del fondo.", hint: "Paso 1: Haga clic en el fondo libre.", targetAction: "click-desktop" },
-      { id: 9, module: "1", modName: "Módulo 1: Escritorio y Puntero", title: "Ej 09: Marcar Papelera", context: "📌 Pantalla Principal", instruction: "Haga clic simple en la Papelera.", hint: "Paso 1: Haga clic en la Papelera.", targetAction: "click-papelera" },
-      { id: 10, module: "1", modName: "Módulo 1: Escritorio y Puntero", title: "Ej 10: Comprobación de acceso rápido", context: "📌 Barra de tareas", instruction: "Abra el menú Inicio para verificar la respuesta del sistema.", hint: "Paso 1: Haga clic en el botón Inicio.", targetAction: "click-start" },
-      { id: 11, module: "1", modName: "Módulo 1: Escritorio y Puntero", title: "Ej 11: Fondo libre de escritorio", context: "📌 Pantalla Principal", instruction: "Haga clic en el fondo.", hint: "Paso 1: Haga clic en el fondo.", targetAction: "click-desktop" },
-      { id: 12, module: "1", modName: "Módulo 1: Escritorio y Puntero", title: "Ej 12: AUTOEVALUACIÓN M1 - Abrir WordPad", context: "📌 Pantalla Principal", instruction: "Autoevaluación M1: Abra WordPad con doble clic rápido.", hint: "Paso 1: Doble clic rápido sobre WordPad.", targetAction: "dblclick-wordpad" },
+<script>
+/* ============================================================
+   EJERCICIOS: 100 en 8 MÓDULOS (Camino A) — SIN window-open en steps
+   ============================================================ */
+const exercises = [
+  { id:1, module:"1", moduleName:"Módulo 1: Conocer la PC", title:"Ej 01: Clic en fondo", context:"📌 Pantalla Principal", instruction:"Haga clic en una zona vacía del escritorio.", steps:["click-desktop"], hints:["¿Dónde no hay íconos?","En el fondo","Clic en zona vacía"], skippable:false },
+  { id:2, module:"1", moduleName:"Módulo 1: Conocer la PC", title:"Ej 02: Clic en barra de tareas", context:"📌 Barra de tareas", instruction:"Haga clic en la barra inferior.", steps:["click-taskbar"], hints:["¿Dónde está el reloj?","Abajo","Clic en la barra inferior"], skippable:false },
+  { id:3, module:"1", moduleName:"Módulo 1: Conocer la PC", title:"Ej 03: Clic en Inicio", context:"📌 Barra de tareas", instruction:"Haga clic en el botón Inicio.", steps:["click-start"], hints:["¿Dónde está el logo de Windows?","Abajo a la izquierda","Clic en el botón Inicio"], skippable:false },
+  { id:4, module:"1", moduleName:"Módulo 1: Conocer la PC", title:"Ej 04: Abrir menú Inicio", context:"📌 Barra de tareas", instruction:"Abra el menú Inicio.", steps:["click-start","menu-open"], hints:["¿Qué botón abre el menú?","El de Windows","Clic en Inicio"], skippable:false },
+  { id:5, module:"1", moduleName:"Módulo 1: Conocer la PC", title:"Ej 05: Seleccionar WordPad", context:"📌 Pantalla Principal", instruction:"Haga clic simple en WordPad.", steps:["click-wordpad"], hints:["¿Qué ícono tiene W?","El azul","Clic en WordPad"], skippable:false },
+  { id:6, module:"1", moduleName:"Módulo 1: Conocer la PC", title:"Ej 06: Seleccionar Facturador", context:"📌 Pantalla Principal", instruction:"Haga clic simple en Facturador.", steps:["click-facturador"], hints:["¿Qué ícono tiene $?","El verde","Clic en Facturador"], skippable:false },
+  { id:7, module:"1", moduleName:"Módulo 1: Conocer la PC", title:"Ej 07: Seleccionar Correo", context:"📌 Pantalla Principal", instruction:"Haga clic simple en Correo.", steps:["click-correo"], hints:["¿Qué ícono tiene sobre?","El de Gmail","Clic en Correo"], skippable:false },
+  { id:8, module:"1", moduleName:"Módulo 1: Conocer la PC", title:"Ej 08: Seleccionar Papelera", context:"📌 Pantalla Principal", instruction:"Haga clic simple en Papelera.", steps:["click-papelera"], hints:["¿Dónde va lo que borrás?","El tacho","Clic en Papelera"], skippable:false },
+  { id:9, module:"1", moduleName:"Módulo 1: Conocer la PC", title:"Ej 09: Abrir WordPad", context:"📌 Pantalla Principal", instruction:"Abra WordPad con doble clic.", steps:["dblclick-wordpad"], hints:["¿Cómo se abre un programa?","Doble clic","Dos clics rápidos en WordPad"], skippable:false },
+  { id:10, module:"1", moduleName:"Módulo 1: Conocer la PC", title:"Ej 10: Cerrar WordPad", context:"📌 Ventana Abierta", instruction:"Cierre la ventana con [X].", steps:["close-window"], hints:["¿Dónde está la cruz?","Arriba a la derecha","Clic en [X]"], skippable:false },
+  { id:11, module:"1", moduleName:"Módulo 1: Conocer la PC", title:"Ej 11: Abrir Facturador", context:"📌 Pantalla Principal", instruction:"Abra Facturador con doble clic.", steps:["dblclick-facturador"], hints:["Doble clic en el verde","El de $","Dos clics en Facturador"], skippable:false },
+  { id:12, module:"1", moduleName:"Módulo 1: Conocer la PC", title:"Ej 12: Cerrar Facturador", context:"📌 Ventana Abierta", instruction:"Cierre la ventana con [X].", steps:["close-window"], hints:["Clic en [X]","Arriba derecha","Cruz de la ventana"], skippable:false },
+  { id:13, module:"1", moduleName:"Módulo 1: Conocer la PC", title:"Ej 13: Abrir Correo", context:"📌 Pantalla Principal", instruction:"Abra Correo con doble clic.", steps:["dblclick-correo"], hints:["Doble clic en el sobre","El de Gmail","Dos clics en Correo"], skippable:false },
+  { id:14, module:"1", moduleName:"Módulo 1: Conocer la PC", title:"Ej 14: Cerrar Correo", context:"📌 Ventana Abierta", instruction:"Cierre la ventana con [X].", steps:["close-window"], hints:["Clic en [X]","Arriba derecha","Cruz"], skippable:false },
+  { id:15, module:"1", moduleName:"Módulo 1: Conocer la PC", title:"Ej 15: Autoevaluación M1", context:"📌 Pantalla Principal", instruction:"Inicio → WordPad → cerrar.", steps:["click-start","start-wordpad","close-window"], hints:["Repasá los pasos","Inicio, WordPad, [X]","1) Inicio 2) WordPad 3) [X]"], skippable:false },
 
-      // MÓDULO 2: Gestión de Ventanas (13 a 25)
-      { id: 13, module: "2", modName: "Módulo 2: Gestión de Ventanas", title: "Ej 13: Cerrar ventana activa", context: "📌 Ventana Abierta", instruction: "Cierre la ventana con la cruz [X].", hint: "Paso 1: Haga clic en [X].", targetAction: "close-window" },
-      { id: 14, module: "2", modName: "Módulo 2: Gestión de Ventanas", title: "Ej 14: Abrir Facturador", context: "📌 Pantalla Principal", instruction: "Abra el Facturador con doble clic.", hint: "Paso 1: Doble clic en el Facturador.", targetAction: "dblclick-facturador" },
-      { id: 15, module: "2", modName: "Módulo 2: Gestión de Ventanas", title: "Ej 15: Cerrar Facturador", context: "📌 Ventana del Facturador", instruction: "Cierre la ventana con [X].", hint: "Paso 1: Haga clic en [X].", targetAction: "close-window" },
-      { id: 16, module: "2", modName: "Módulo 2: Gestión de Ventanas", title: "Ej 16: Abrir Correo", context: "📌 Pantalla Principal", instruction: "Abra Correo con doble clic.", hint: "Paso 1: Doble clic en Correo.", targetAction: "dblclick-correo" },
-      { id: 17, module: "2", modName: "Módulo 2: Gestión de Ventanas", title: "Ej 17: Cerrar Correo", context: "📌 Ventana de Correo", instruction: "Cierre la ventana con [X].", hint: "Paso 1: Haga clic en [X].", targetAction: "close-window" },
-      { id: 18, module: "2", modName: "Módulo 2: Gestión de Ventanas", title: "Ej 18: Abrir Este Equipo", context: "📌 Pantalla Principal", instruction: "Abra 'Este Equipo' con doble clic.", hint: "Paso 1: Doble clic en 'Este Equipo'.", targetAction: "dblclick-este-equipo" },
-      { id: 19, module: "2", modName: "Módulo 2: Gestión de Ventanas", title: "Ej 19: Cerrar Este Equipo", context: "📌 Ventana de Este Equipo", instruction: "Cierre la ventana con [X].", hint: "Paso 1: Haga clic en [X].", targetAction: "close-window" },
-      { id: 20, module: "2", modName: "Módulo 2: Gestión de Ventanas", title: "Ej 20: Abrir Papelera", context: "📌 Pantalla Principal", instruction: "Abra la Papelera con doble clic.", hint: "Paso 1: Doble clic en la Papelera.", targetAction: "dblclick-papelera" },
-      { id: 21, module: "2", modName: "Módulo 2: Gestión de Ventanas", title: "Ej 21: Cerrar Papelera", context: "📌 Ventana de Papelera", instruction: "Cierre la ventana con [X].", hint: "Paso 1: Haga clic en [X].", targetAction: "close-window" },
-      { id: 22, module: "2", modName: "Módulo 2: Gestión de Ventanas", title: "Ej 22: Lanzar app vía menú Inicio", context: "📌 Menú Inicio", instruction: "Abra el menú Inicio y seleccione Facturador.", hint: "Paso 1: Abra el menú Inicio.\nPaso 2: Haga clic en 'Facturador Digital'.", targetAction: "start-facturador" },
-      { id: 23, module: "2", modName: "Módulo 2: Gestión de Ventanas", title: "Ej 23: Cerrar app lanzada", context: "📌 Ventana del Facturador", instruction: "Cierre la ventana con [X].", hint: "Paso 1: Haga clic en [X].", targetAction: "close-window" },
-      { id: 24, module: "2", modName: "Módulo 2: Gestión de Ventanas", title: "Ej 24: Lanzar WordPad vía menú", context: "📌 Menú Inicio", instruction: "Abra el menú Inicio y seleccione WordPad.", hint: "Paso 1: Abra el menú Inicio.\nPaso 2: Haga clic en 'WordPad'.", targetAction: "start-wordpad" },
-      { id: 25, module: "2", modName: "Módulo 2: Gestión de Ventanas", title: "Ej 25: AUTOEVALUACIÓN M2 - Cierre de entorno", context: "📌 Ventana de WordPad", instruction: "Autoevaluación M2: Cierre la ventana con [X].", hint: "Paso 1: Haga clic en [X].", targetAction: "close-window" },
+  { id:16, module:"2", moduleName:"Módulo 2: Archivos", title:"Ej 16: Abrir Este Equipo", context:"📌 Pantalla Principal", instruction:"Abra 'Este Equipo' con doble clic.", steps:["dblclick-este-equipo"], hints:["Doble clic en el monitor","El ícono de la PC","Dos clics en 'Este Equipo'"], skippable:false },
+  { id:17, module:"2", moduleName:"Módulo 2: Archivos", title:"Ej 17: Entrar a Descargas", context:"📌 Ventana de Este Equipo", instruction:"Haga clic en la carpeta Descargas.", steps:["open-descargas"], hints:["¿Dónde están los archivos?","En Descargas","Clic en 'Descargas'"], skippable:false },
+  { id:18, module:"2", moduleName:"Módulo 2: Archivos", title:"Ej 18: Volver atrás", context:"📌 Ventana de Descargas", instruction:"Vuelva atrás con la flecha ←.", steps:["go-back"], hints:["¿Cómo volvés?","Flecha izquierda","Clic en ←"], skippable:false },
+  { id:19, module:"2", moduleName:"Módulo 2: Archivos", title:"Ej 19: Crear carpeta", context:"📌 Ventana de Este Equipo", instruction:"Cree una carpeta nueva.", steps:["create-folder"], hints:["¿Cómo creás carpeta?","Botón derecho → Nuevo","Clic derecho → Nueva carpeta"], skippable:false },
+  { id:20, module:"2", moduleName:"Módulo 2: Archivos", title:"Ej 20: Renombrar carpeta", context:"📌 Ventana de Este Equipo", instruction:"Renombre la carpeta creada.", steps:["rename-folder"], hints:["¿Cómo renombrás?","Clic derecho → Renombrar","Clic derecho → Renombrar → escribí"], skippable:false },
+  { id:21, module:"2", moduleName:"Módulo 2: Archivos", title:"Ej 21: Mover archivo", context:"📌 Ventana de Este Equipo", instruction:"Mueva un archivo a la carpeta.", steps:["move-file"], hints:["¿Cómo movés?","Arrastrar","Arrastrá el archivo a la carpeta"], skippable:false },
+  { id:22, module:"2", moduleName:"Módulo 2: Archivos", title:"Ej 22: Eliminar archivo", context:"📌 Ventana de Este Equipo", instruction:"Elimine un archivo (tecla Supr).", steps:["delete-file"], hints:["¿Cómo borrás?","Tecla Supr","Seleccioná y apretá Supr"], skippable:false },
+  { id:23, module:"2", moduleName:"Módulo 2: Archivos", title:"Ej 23: Verificar Papelera", context:"📌 Pantalla Principal", instruction:"Abra la Papelera y verifique.", steps:["dblclick-papelera","verify-trash"], hints:["¿Dónde está lo borrado?","En Papelera","Doble clic en Papelera"], skippable:false },
+  { id:24, module:"2", moduleName:"Módulo 2: Archivos", title:"Ej 24: Repetir crear→renombrar→mover", context:"📌 Ventana de Este Equipo", instruction:"Cree, renombre y mueva una carpeta.", steps:["create-folder","rename-folder","move-file"], hints:["Como los ej. 19-21","Paso a paso","1) Crear 2) Renombrar 3) Mover"], skippable:false },
+  { id:25, module:"2", moduleName:"Módulo 2: Archivos", title:"Ej 25: Autoevaluación M2", context:"📌 Pantalla Principal", instruction:"Este Equipo → Descargas → verificar.", steps:["dblclick-este-equipo","open-descargas","go-back"], hints:["Repasá","Archivos y carpetas","1) Este Equipo 2) Descargas 3) Volver"], skippable:false },
 
-      // MÓDULO 3: Explorador de Archivos (26 a 40)
-      { id: 26, module: "3", modName: "Módulo 3: Explorador de Archivos", title: "Ej 26: Inspeccionar Este Equipo", context: "📌 Pantalla Principal", instruction: "Abra 'Este Equipo' para ver unidades.", hint: "Paso 1: Doble clic en 'Este Equipo'.", targetAction: "dblclick-este-equipo" },
-      { id: 27, module: "3", modName: "Módulo 3: Explorador de Archivos", title: "Ej 27: Cerrar explorador", context: "📌 Ventana de Este Equipo", instruction: "Cierre la ventana con [X].", hint: "Paso 1: Haga clic en [X].", targetAction: "close-window" },
-      { id: 28, module: "3", modName: "Módulo 3: Explorador de Archivos", title: "Ej 28: Abrir archivos desde menú", context: "📌 Menú Inicio", instruction: "Abra Este Equipo desde el menú Inicio.", hint: "Paso 1: Abra Inicio.\nPaso 2: Haga clic en 'Este Equipo'.", targetAction: "start-este-equipo" },
-      { id: 29, module: "3", modName: "Módulo 3: Explorador de Archivos", title: "Ej 29: Cerrar ventana de archivos", context: "📌 Ventana de Este Equipo", instruction: "Cierre la ventana con [X].", hint: "Paso 1: Haga clic en [X].", targetAction: "close-window" },
-      { id: 30, module: "3", modName: "Módulo 3: Explorador de Archivos", title: "Ej 30: Abrir Papelera", context: "📌 Pantalla Principal", instruction: "Abra la Papelera de Reciclaje.", hint: "Paso 1: Doble clic en la Papelera.", targetAction: "dblclick-papelera" },
-      { id: 31, module: "3", modName: "Módulo 3: Explorador de Archivos", title: "Ej 31: Cerrar Papelera", context: "📌 Ventana de Papelera", instruction: "Cierre la ventana con [X].", hint: "Paso 1: Haga clic en [X].", targetAction: "close-window" },
-      { id: 32, module: "3", modName: "Módulo 3: Explorador de Archivos", title: "Ej 32: Revisar carpeta Descargas", context: "📌 Pantalla Principal", instruction: "Abra 'Este Equipo' para revisar Descargas.", hint: "Paso 1: Doble clic en 'Este Equipo'.", targetAction: "dblclick-este-equipo" },
-      { id: 33, module: "3", modName: "Módulo 3: Explorador de Archivos", title: "Ej 33: Cerrar explorador", context: "📌 Ventana de Este Equipo", instruction: "Cierre la ventana con [X].", hint: "Paso 1: Haga clic en [X].", targetAction: "close-window" },
-      { id: 34, module: "3", modName: "Módulo 3: Explorador de Archivos", title: "Ej 34: Seleccionar unidad", context: "📌 Pantalla Principal", instruction: "Haga clic en 'Este Equipo'.", hint: "Paso 1: Haga clic en 'Este Equipo'.", targetAction: "click-este-equipo" },
-      { id: 35, module: "3", modName: "Módulo 3: Explorador de Archivos", title: "Ej 35: Limpiar pantalla", context: "📌 Pantalla Principal", instruction: "Haga clic en el fondo.", hint: "Paso 1: Haga clic en el fondo.", targetAction: "click-desktop" },
-      { id: 36, module: "3", modName: "Módulo 3: Explorador de Archivos", title: "Ej 36: Menú para archivos", context: "📌 Barra de tareas", instruction: "Abra el menú Inicio.", hint: "Paso 1: Haga clic en el botón de Windows.", targetAction: "click-start" },
-      { id: 37, module: "3", modName: "Módulo 3: Explorador de Archivos", title: "Ej 37: Iniciar Este Equipo", context: "📌 Menú Inicio", instruction: "Abra Este Equipo desde el menú.", hint: "Paso 1: Abra Inicio.\nPaso 2: Haga clic en 'Este Equipo'.", targetAction: "start-este-equipo" },
-      { id: 38, module: "3", modName: "Módulo 3: Explorador de Archivos", title: "Ej 38: Cerrar ventana", context: "📌 Ventana de Este Equipo", instruction: "Cierre la ventana con [X].", hint: "Paso 1: Haga clic en [X].", targetAction: "close-window" },
-      { id: 39, module: "3", modName: "Módulo 3: Explorador de Archivos", title: "Ej 39: Seleccionar Papelera", context: "📌 Pantalla Principal", instruction: "Haga clic simple en la Papelera.", hint: "Paso 1: Haga clic en la Papelera.", targetAction: "click-papelera" },
-      { id: 40, module: "3", modName: "Módulo 3: Explorador de Archivos", title: "Ej 40: AUTOEVALUACIÓN M3 - Abrir Papelera", context: "📌 Pantalla Principal", instruction: "Autoevaluación M3: Abra la Papelera con doble clic.", hint: "Paso 1: Doble clic en la Papelera.", targetAction: "dblclick-papelera" },
+  { id:26, module:"3", moduleName:"Módulo 3: WordPad", title:"Ej 26: Abrir WordPad desde Inicio", context:"📌 Menú Inicio", instruction:"Abra WordPad desde el menú Inicio.", steps:["click-start","start-wordpad"], hints:["¿Dónde están los programas?","En Inicio","Inicio → WordPad"], skippable:true },
+  { id:27, module:"3", moduleName:"Módulo 3: WordPad", title:"Ej 27: Escribir palabra", context:"📌 Ventana de WordPad", instruction:"Escriba una palabra en el área de texto.", steps:["type-word"], hints:["¿Dónde escribís?","En el área blanca","Clic y escribí 'Hola'"], skippable:true },
+  { id:28, module:"3", moduleName:"Módulo 3: WordPad", title:"Ej 28: Escribir frase", context:"📌 Ventana de WordPad", instruction:"Escriba una frase corta.", steps:["type-phrase"], hints:["Escribí más","Una oración","Ej: 'Estoy aprendiendo'"], skippable:true },
+  { id:29, module:"3", moduleName:"Módulo 3: WordPad", title:"Ej 29: Borrar con Backspace", context:"📌 Ventana de WordPad", instruction:"Borre una letra con Backspace.", steps:["backspace"], hints:["¿Qué tecla borra?","La de arriba","Backspace"], skippable:true },
+  { id:30, module:"3", moduleName:"Módulo 3: WordPad", title:"Ej 30: Seleccionar todo", context:"📌 Ventana de WordPad", instruction:"Seleccione todo con Ctrl+A.", steps:["select-all"], hints:["¿Cómo seleccionás todo?","Ctrl+A","Mantené Ctrl y apretá A"], skippable:true },
+  { id:31, module:"3", moduleName:"Módulo 3: WordPad", title:"Ej 31: Guardar con nombre", context:"📌 Ventana de WordPad", instruction:"Guarde el archivo con un nombre.", steps:["save-file"], hints:["¿Dónde guardás?","Archivo → Guardar","Archivo → Guardar como → nombre"], skippable:true },
+  { id:32, module:"3", moduleName:"Módulo 3: WordPad", title:"Ej 32: Cerrar WordPad", context:"📌 Ventana de WordPad", instruction:"Cierre la ventana con [X].", steps:["close-window"], hints:["Clic en [X]","Arriba derecha","Cruz"], skippable:true },
+  { id:33, module:"3", moduleName:"Módulo 3: WordPad", title:"Ej 33: Aplicar negrita", context:"📌 Ventana de WordPad", instruction:"Aplique negrita al texto.", steps:["bold"], hints:["¿Qué botón pone negrita?","La B","Seleccioná y clic en B"], skippable:true },
+  { id:34, module:"3", moduleName:"Módulo 3: WordPad", title:"Ej 34: Aplicar cursiva", context:"📌 Ventana de WordPad", instruction:"Aplique cursiva.", steps:["italic"], hints:["¿Qué botón?","La I","Seleccioná y clic en I"], skippable:true },
+  { id:35, module:"3", moduleName:"Módulo 3: WordPad", title:"Ej 35: Aplicar subrayado", context:"📌 Ventana de WordPad", instruction:"Aplique subrayado.", steps:["underline"], hints:["¿Qué botón?","La U","Seleccioná y clic en U"], skippable:true },
+  { id:36, module:"3", moduleName:"Módulo 3: WordPad", title:"Ej 36: Cambiar tamaño fuente", context:"📌 Ventana de WordPad", instruction:"Cambie el tamaño a 18 o más.", steps:["font-size"], hints:["¿Dónde cambia el tamaño?","Arriba, el número","Seleccioná y elegí 18"], skippable:true },
+  { id:37, module:"3", moduleName:"Módulo 3: WordPad", title:"Ej 37: Centrar texto", context:"📌 Ventana de WordPad", instruction:"Centre el texto.", steps:["center"], hints:["¿Cómo centrás?","Botón de centrar","Seleccioná y clic en centrar"], skippable:true },
+  { id:38, module:"3", moduleName:"Módulo 3: WordPad", title:"Ej 38: Alinear izquierda", context:"📌 Ventana de WordPad", instruction:"Alinee a la izquierda.", steps:["align-left"], hints:["¿Cómo alineás?","Botón izquierda","Seleccioná y clic en izquierda"], skippable:true },
+  { id:39, module:"3", moduleName:"Módulo 3: WordPad", title:"Ej 39: Guardar con formato", context:"📌 Ventana de WordPad", instruction:"Guarde el archivo con formato.", steps:["save-file"], hints:["¿Cómo guardás?","Archivo → Guardar","Archivo → Guardar como → nombre"], skippable:true },
+  { id:40, module:"3", moduleName:"Módulo 3: WordPad", title:"Ej 40: Autoevaluación M3", context:"📌 Ventana de WordPad", instruction:"Escribir → negrita → centrar → guardar.", steps:["type-word","bold","center","save-file"], hints:["Repasá","Formato y guardar","1) Escribir 2) Negrita 3) Centrar 4) Guardar"], skippable:true },
 
-      // MÓDULO 4: WordPad y Textos (41 a 55)
-      { id: 41, module: "4", modName: "Módulo 4: WordPad y Textos", title: "Ej 41: Iniciar WordPad", context: "📌 Menú Inicio", instruction: "Abra WordPad desde el menú Inicio.", hint: "Paso 1: Abra el menú Inicio.\nPaso 2: Haga clic en 'WordPad'.", targetAction: "start-wordpad" },
-      { id: 42, module: "4", modName: "Módulo 4: WordPad y Textos", title: "Ej 42: Cerrar procesador", context: "📌 Ventana de WordPad", instruction: "Cierre la ventana con [X].", hint: "Paso 1: Haga clic en [X].", targetAction: "close-window" },
-      { id: 43, module: "4", modName: "Módulo 4: WordPad y Textos", title: "Ej 43: Abrir WordPad directo", context: "📌 Pantalla Principal", instruction: "Abra WordPad con doble clic.", hint: "Paso 1: Doble clic en WordPad.", targetAction: "dblclick-wordpad" },
-      { id: 44, module: "4", modName: "Módulo 4: WordPad y Textos", title: "Ej 44: Cerrar WordPad", context: "📌 Ventana de WordPad", instruction: "Cierre la ventana con [X].", hint: "Paso 1: Haga clic en [X].", targetAction: "close-window" },
-      { id: 45, module: "4", modName: "Módulo 4: WordPad y Textos", title: "Ej 45: Seleccionar WordPad", context: "📌 Pantalla Principal", instruction: "Haga clic simple en WordPad.", hint: "Paso 1: Haga clic en WordPad.", targetAction: "click-wordpad" },
-      { id: 46, module: "4", modName: "Módulo 4: WordPad y Textos", title: "Ej 46: Fondo libre", context: "📌 Pantalla Principal", instruction: "Haga clic en el fondo.", hint: "Paso 1: Haga clic en el fondo.", targetAction: "click-desktop" },
-      { id: 47, module: "4", modName: "Módulo 4: WordPad y Textos", title: "Ej 47: Lanzar WordPad vía menú", context: "📌 Menú Inicio", instruction: "Abra el menú y seleccione WordPad.", hint: "Paso 1: Abra el menú Inicio.\nPaso 2: Haga clic en 'WordPad'.", targetAction: "start-wordpad" },
-      { id: 48, module: "4", modName: "Módulo 4: WordPad y Textos", title: "Ej 48: Cerrar nota", context: "📌 Ventana de WordPad", instruction: "Cierre la ventana con [X].", hint: "Paso 1: Haga clic en [X].", targetAction: "close-window" },
-      { id: 49, module: "4", modName: "Módulo 4: WordPad y Textos", title: "Ej 49: Abrir WordPad con doble clic", context: "📌 Pantalla Principal", instruction: "Abra WordPad haciendo doble clic.", hint: "Paso 1: Doble clic en WordPad.", targetAction: "dblclick-wordpad" },
-      { id: 50, module: "4", modName: "Módulo 4: WordPad y Textos", title: "Ej 50: Cerrar WordPad", context: "📌 Ventana de WordPad", instruction: "Cierre la ventana con [X].", hint: "Paso 1: Haga clic en [X].", targetAction: "close-window" },
-      { id: 51, module: "4", modName: "Módulo 4: WordPad y Textos", title: "Ej 51: Menú para redactar", context: "📌 Barra de tareas", instruction: "Abra el menú Inicio.", hint: "Paso 1: Haga clic en el botón de Windows.", targetAction: "click-start" },
-      { id: 52, module: "4", modName: "Módulo 4: WordPad y Textos", title: "Ej 52: Iniciar WordPad", context: "📌 Menú Inicio", instruction: "Seleccione WordPad en el menú.", hint: "Paso 1: Haga clic en 'WordPad'.", targetAction: "start-wordpad" },
-      { id: 53, module: "4", modName: "Módulo 4: WordPad y Textos", title: "Ej 53: Cerrar ventana", context: "📌 Ventana de WordPad", instruction: "Cierre la ventana con [X].", hint: "Paso 1: Haga clic en [X].", targetAction: "close-window" },
-      { id: 54, module: "4", modName: "Módulo 4: WordPad y Textos", title: "Ej 54: Seleccionar WordPad", context: "📌 Pantalla Principal", instruction: "Haga clic en WordPad.", hint: "Paso 1: Haga clic en WordPad.", targetAction: "click-wordpad" },
-      { id: 55, module: "4", modName: "Módulo 4: WordPad y Textos", title: "Ej 55: AUTOEVALUACIÓN M4 - Cierre de texto", context: "📌 Ventana de WordPad", instruction: "Autoevaluación M4: Cierre la ventana de WordPad con [X].", hint: "Paso 1: Haga clic en [X].", targetAction: "close-window" },
+  { id:41, module:"4", moduleName:"Módulo 4: Correo", title:"Ej 41: Abrir Correo", context:"📌 Pantalla Principal", instruction:"Abra Correo con doble clic.", steps:["dblclick-correo"], hints:["Doble clic en sobre","El de Gmail","Dos clics en Correo"], skippable:false },
+  { id:42, module:"4", moduleName:"Módulo 4: Correo", title:"Ej 42: Escribir destinatario", context:"📌 Ventana de Correo", instruction:"Escriba el destinatario.", steps:["mail-to"], hints:["¿Dónde va el destinatario?","Primer campo","Clic en 'Para' y escribí"], skippable:false },
+  { id:43, module:"4", moduleName:"Módulo 4: Correo", title:"Ej 43: Escribir asunto", context:"📌 Ventana de Correo", instruction:"Escriba el asunto.", steps:["mail-subject"], hints:["¿Dónde va el asunto?","Segundo campo","Clic en 'Asunto' y escribí"], skippable:false },
+  { id:44, module:"4", moduleName:"Módulo 4: Correo", title:"Ej 44: Escribir cuerpo", context:"📌 Ventana de Correo", instruction:"Escriba el cuerpo del mensaje.", steps:["mail-body"], hints:["¿Dónde escribís el mensaje?","Área grande","Clic en el cuerpo y escribí"], skippable:false },
+  { id:45, module:"4", moduleName:"Módulo 4: Correo", title:"Ej 45: Adjuntar archivo", context:"📌 Ventana de Correo", instruction:"Adjunte un archivo con 📎.", steps:["attach-file"], hints:["¿Cómo adjuntás?","El clip","Clic en 📎 → elegí archivo"], skippable:false },
+  { id:46, module:"4", moduleName:"Módulo 4: Correo", title:"Ej 46: Enviar correo", context:"📌 Ventana de Correo", instruction:"Envíe el correo.", steps:["send-mail"], hints:["¿Cómo enviás?","Botón Enviar","Clic en 'Enviar'"], skippable:false },
+  { id:47, module:"4", moduleName:"Módulo 4: Correo", title:"Ej 47: Verificar Enviados", context:"📌 Ventana de Correo", instruction:"Verifique en la carpeta Enviados.", steps:["check-sent"], hints:["¿Dónde está el enviado?","En Enviados","Clic en 'Enviados'"], skippable:false },
+  { id:48, module:"4", moduleName:"Módulo 4: Correo", title:"Ej 48: Cerrar Correo", context:"📌 Ventana de Correo", instruction:"Cierre la ventana con [X].", steps:["close-window"], hints:["Clic en [X]","Arriba derecha","Cruz"], skippable:false },
+  { id:49, module:"4", moduleName:"Módulo 4: Correo", title:"Ej 49: Repetir escribir→adjuntar→enviar", context:"📌 Ventana de Correo", instruction:"Repita: escribir → adjuntar → enviar.", steps:["mail-to","mail-subject","mail-body","attach-file","send-mail"], hints:["Como ej. 42-46","Correo completo","1) Para 2) Asunto 3) Cuerpo 4) Adjuntar 5) Enviar"], skippable:false },
+  { id:50, module:"4", moduleName:"Módulo 4: Correo", title:"Ej 50: Repetir verificar Enviados", context:"📌 Ventana de Correo", instruction:"Repita: verificar en Enviados.", steps:["check-sent"], hints:["Como ej. 47","Enviados","Clic en 'Enviados'"], skippable:false },
+  { id:51, module:"4", moduleName:"Módulo 4: Correo", title:"Ej 51: Adjuntar dos archivos", context:"📌 Ventana de Correo", instruction:"Adjunte dos archivos.", steps:["attach-file","attach-file"], hints:["¿Cómo adjuntás dos?","📎 dos veces","Clic en 📎 → archivo 1 → 📎 → archivo 2"], skippable:false },
+  { id:52, module:"4", moduleName:"Módulo 4: Correo", title:"Ej 52: Enviar con dos adjuntos", context:"📌 Ventana de Correo", instruction:"Envíe con dos adjuntos.", steps:["attach-file","attach-file","send-mail"], hints:["¿Cómo enviás dos?","Adjuntá ambos y enviá","📎 dos veces → Enviar"], skippable:false },
+  { id:53, module:"4", moduleName:"Módulo 4: Correo", title:"Ej 53: Reenviar correo", context:"📌 Ventana de Correo", instruction:"Reenvíe el correo.", steps:["forward-mail"], hints:["¿Cómo reenviás?","Botón Reenviar","Clic en 'Reenviar'"], skippable:false },
+  { id:54, module:"4", moduleName:"Módulo 4: Correo", title:"Ej 54: Verificar reenvío", context:"📌 Ventana de Correo", instruction:"Verifique el reenvío en Enviados.", steps:["check-sent"], hints:["¿Dónde está?","En Enviados","Clic en 'Enviados'"], skippable:false },
+  { id:55, module:"4", moduleName:"Módulo 4: Correo", title:"Ej 55: Autoevaluación M4", context:"📌 Ventana de Correo", instruction:"Correo completo con dos adjuntos.", steps:["mail-to","mail-subject","mail-body","attach-file","attach-file","send-mail","check-sent"], hints:["Repasá","Correo con dos archivos","1) Para 2) Asunto 3) Cuerpo 4) 📎 5) 📎 6) Enviar 7) Enviados"], skippable:false },
 
-      // MÓDULO 5: Facturador Digital (56 a 72)
-      { id: 56, module: "5", modName: "Módulo 5: Facturador Digital", title: "Ej 56: Apertura del Facturador", context: "📌 Pantalla Principal", instruction: "Abra el Facturador con doble clic.", hint: "Paso 1: Doble clic en el Facturador.", targetAction: "dblclick-facturador" },
-      { id: 57, module: "5", modName: "Módulo 5: Facturador Digital", title: "Ej 57: Emitir factura y guardar en Descargas", context: "📌 Ventana del Facturador", instruction: "Pulse el botón para emitir la factura y guardarla en Descargas.", hint: "Paso 1: Haga clic en 'Emitir Factura y Guardar'.", targetAction: "emitir-factura" },
-      { id: 58, module: "5", modName: "Módulo 5: Facturador Digital", title: "Ej 58: Cerrar Facturador", context: "📌 Ventana del Facturador", instruction: "Cierre la ventana con [X].", hint: "Paso 1: Haga clic en [X].", targetAction: "close-window" },
-      { id: 59, module: "5", modName: "Módulo 5: Facturador Digital", title: "Ej 59: Lanzar Facturador desde menú", context: "📌 Menú Inicio", instruction: "Abra el menú y seleccione el Facturador.", hint: "Paso 1: Abra Inicio.\nPaso 2: Haga clic en 'Facturador Digital'.", targetAction: "start-facturador" },
-      { id: 60, module: "5", modName: "Módulo 5: Facturador Digital", title: "Ej 60: Cerrar Facturador", context: "📌 Ventana del Facturador", instruction: "Cierre la ventana con [X].", hint: "Paso 1: Haga clic en [X].", targetAction: "close-window" },
-      { id: 61, module: "5", modName: "Módulo 5: Facturador Digital", title: "Ej 61: Abrir Facturador directo", context: "📌 Pantalla Principal", instruction: "Abra el Facturador con doble clic.", hint: "Paso 1: Doble clic en el Facturador.", targetAction: "dblclick-facturador" },
-      { id: 62, module: "5", modName: "Módulo 5: Facturador Digital", title: "Ej 62: Cerrar ventana", context: "📌 Ventana del Facturador", instruction: "Cierre la ventana con [X].", hint: "Paso 1: Haga clic en [X].", targetAction: "close-window" },
-      { id: 63, module: "5", modName: "Módulo 5: Facturador Digital", title: "Ej 63: Seleccionar Facturador", context: "📌 Pantalla Principal", instruction: "Haga clic simple en el Facturador.", hint: "Paso 1: Haga clic en el Facturador.", targetAction: "click-facturador" },
-      { id: 64, module: "5", modName: "Módulo 5: Facturador Digital", title: "Ej 64: Fondo libre", context: "📌 Pantalla Principal", instruction: "Haga clic en el fondo.", hint: "Paso 1: Haga clic en el fondo.", targetAction: "click-desktop" },
-      { id: 65, module: "5", modName: "Módulo 5: Facturador Digital", title: "Ej 65: Menú para facturación", context: "📌 Barra de tareas", instruction: "Abra el menú Inicio.", hint: "Paso 1: Haga clic en el botón de Windows.", targetAction: "click-start" },
-      { id: 66, module: "5", modName: "Módulo 5: Facturador Digital", title: "Ej 66: Iniciar Facturador", context: "📌 Menú Inicio", instruction: "Seleccione Facturador en el menú.", hint: "Paso 1: Haga clic en 'Facturador Digital'.", targetAction: "start-facturador" },
-      { id: 67, module: "5", modName: "Módulo 5: Facturador Digital", title: "Ej 67: Cerrar ventana", context: "📌 Ventana del Facturador", instruction: "Cierre la ventana con [X].", hint: "Paso 1: Haga clic en [X].", targetAction: "close-window" },
-      { id: 68, module: "5", modName: "Módulo 5: Facturador Digital", title: "Ej 68: Abrir Facturador directo", context: "📌 Pantalla Principal", instruction: "Abra el Facturador con doble clic.", hint: "Paso 1: Doble clic en el Facturador.", targetAction: "dblclick-facturador" },
-      { id: 69, module: "5", modName: "Módulo 5: Facturador Digital", title: "Ej 69: Cerrar comprobante", context: "📌 Ventana del Facturador", instruction: "Cierre la ventana con [X].", hint: "Paso 1: Haga clic en [X].", targetAction: "close-window" },
-      { id: 70, module: "5", modName: "Módulo 5: Facturador Digital", title: "Ej 70: Seleccionar Facturador", context: "📌 Pantalla Principal", instruction: "Haga clic en el Facturador.", hint: "Paso 1: Haga clic en el Facturador.", targetAction: "click-facturador" },
-      { id: 71, module: "5", modName: "Módulo 5: Facturador Digital", title: "Ej 71: Fondo libre", context: "📌 Pantalla Principal", instruction: "Haga clic en el fondo.", hint: "Paso 1: Haga clic en el fondo.", targetAction: "click-desktop" },
-      { id: 72, module: "5", modName: "Módulo 5: Facturador Digital", title: "Ej 72: AUTOEVALUACIÓN M5 - Cierre de caja", context: "📌 Ventana del Facturador", instruction: "Autoevaluación M5: Cierre la ventana del Facturador con [X].", hint: "Paso 1: Haga clic en [X].", targetAction: "close-window" },
+  { id:56, module:"5", moduleName:"Módulo 5: Facturador", title:"Ej 56: Abrir Facturador", context:"📌 Pantalla Principal", instruction:"Abra Facturador con doble clic.", steps:["dblclick-facturador"], hints:["Doble clic","El verde","Dos clics en Facturador"], skippable:true },
+  { id:57, module:"5", moduleName:"Módulo 5: Facturador", title:"Ej 57: Escribir cliente", context:"📌 Ventana del Facturador", instruction:"Escriba el nombre del cliente.", steps:["fac-client"], hints:["¿Dónde va el nombre?","Primer campo","Clic en 'Cliente' y escribí"], skippable:true },
+  { id:58, module:"5", moduleName:"Módulo 5: Facturador", title:"Ej 58: Escribir monto", context:"📌 Ventana del Facturador", instruction:"Escriba el monto.", steps:["fac-amount"], hints:["¿Dónde va el monto?","Segundo campo","Clic en 'Monto' y escribí 15000"], skippable:true },
+  { id:59, module:"5", moduleName:"Módulo 5: Facturador", title:"Ej 59: Emitir factura", context:"📌 Ventana del Facturador", instruction:"Pulse 'Emitir Factura'.", steps:["emit-invoice"], hints:["¿Qué botón genera?","El verde","Clic en 'Emitir Factura'"], skippable:true },
+  { id:60, module:"5", moduleName:"Módulo 5: Facturador", title:"Ej 60: Verificar en Descargas", context:"📌 Pantalla Principal", instruction:"Verifique el archivo en Descargas.", steps:["dblclick-este-equipo","open-descargas","verify-file"], hints:["¿Dónde quedó?","En Descargas","Este Equipo → Descargas"], skippable:true },
+  { id:61, module:"5", moduleName:"Módulo 5: Facturador", title:"Ej 61: Cerrar Facturador", context:"📌 Ventana del Facturador", instruction:"Cierre la ventana con [X].", steps:["close-window"], hints:["Clic en [X]","Arriba derecha","Cruz"], skippable:true },
+  { id:62, module:"5", moduleName:"Módulo 5: Facturador", title:"Ej 62: Repetir emitir→verificar→cerrar", context:"📌 Ventana del Facturador", instruction:"Repita: emitir → verificar → cerrar.", steps:["emit-invoice","dblclick-este-equipo","open-descargas","verify-file","close-window"], hints:["Como ej. 59-61","Factura y verificar","1) Emitir 2) Descargas 3) Cerrar"], skippable:true },
+  { id:63, module:"5", moduleName:"Módulo 5: Facturador", title:"Ej 63: Emitir con otro cliente", context:"📌 Ventana del Facturador", instruction:"Emita con otro cliente.", steps:["fac-client","fac-amount","emit-invoice"], hints:["Cambiá datos","Otro cliente","Escribí otro nombre y monto"], skippable:true },
+  { id:64, module:"5", moduleName:"Módulo 5: Facturador", title:"Ej 64: Verificar nuevo archivo", context:"📌 Pantalla Principal", instruction:"Verifique el nuevo archivo.", steps:["dblclick-este-equipo","open-descargas","verify-file"], hints:["¿Dónde está?","En Descargas","Este Equipo → Descargas"], skippable:true },
+  { id:65, module:"5", moduleName:"Módulo 5: Facturador", title:"Ej 65: Abrir Correo", context:"📌 Pantalla Principal", instruction:"Abra Correo.", steps:["dblclick-correo"], hints:["Doble clic en sobre","El de Gmail","Dos clics"], skippable:true },
+  { id:66, module:"5", moduleName:"Módulo 5: Facturador", title:"Ej 66: Adjuntar factura", context:"📌 Ventana de Correo", instruction:"Adjunte la factura.", steps:["attach-file"], hints:["¿Qué archivo?","La factura","Clic en 📎 → Factura"], skippable:true },
+  { id:67, module:"5", moduleName:"Módulo 5: Facturador", title:"Ej 67: Enviar factura", context:"📌 Ventana de Correo", instruction:"Envíe el correo con la factura.", steps:["send-mail"], hints:["¿Cómo enviás?","Botón Enviar","Clic en 'Enviar'"], skippable:true },
+  { id:68, module:"5", moduleName:"Módulo 5: Facturador", title:"Ej 68: Verificar en Enviados", context:"📌 Ventana de Correo", instruction:"Verifique en Enviados.", steps:["check-sent"], hints:["¿Dónde está?","En Enviados","Clic en 'Enviados'"], skippable:true },
+  { id:69, module:"5", moduleName:"Módulo 5: Facturador", title:"Ej 69: Repetir factura→correo→enviar", context:"📌 Pantalla Principal", instruction:"Repita: factura → correo → enviar.", steps:["emit-invoice","dblclick-correo","attach-file","send-mail"], hints:["Como ej. 59-67","Factura y correo","1) Factura 2) Correo 3) Adjuntar 4) Enviar"], skippable:true },
+  { id:70, module:"5", moduleName:"Módulo 5: Facturador", title:"Ej 70: Autoevaluación M5", context:"📌 Pantalla Principal", instruction:"Factura completa → adjuntar → enviar.", steps:["emit-invoice","dblclick-correo","mail-to","mail-subject","attach-file","send-mail","check-sent"], hints:["Repasá","Factura completa","1) Factura 2) Correo 3) Para 4) Asunto 5) Adjuntar 6) Enviar 7) Enviados"], skippable:true },
 
-      // MÓDULO 6: Correo Electrónico (73 a 86)
-      { id: 73, module: "6", modName: "Módulo 6: Correo Electrónico", title: "Ej 73: Apertura de Correo", context: "📌 Pantalla Principal", instruction: "Abra la aplicación de Correo con doble clic.", hint: "Paso 1: Doble clic en Correo.", targetAction: "dblclick-correo" },
-      { id: 74, module: "6", modName: "Módulo 6: Correo Electrónico", title: "Ej 74: Enviar mensaje", context: "📌 Ventana de Correo", instruction: "Pulse el botón para enviar el correo.", hint: "Paso 1: Haga clic en 'Enviar Correo'.", targetAction: "enviar-correo" },
-      { id: 75, module: "6", modName: "Módulo 6: Correo Electrónico", title: "Ej 75: Cerrar Correo", context: "📌 Ventana de Correo", instruction: "Cierre la ventana de Correo con [X].", hint: "Paso 1: Haga clic en [X].", targetAction: "close-window" },
-      { id: 76, module: "6", modName: "Módulo 6: Correo Electrónico", title: "Ej 76: Iniciar Correo desde menú", context: "📌 Menú Inicio", instruction: "Abra el menú Inicio y seleccione Correo.", hint: "Paso 1: Abra Inicio.\nPaso 2: Haga clic en 'Correo'.", targetAction: "start-correo" },
-      { id: 77, module: "6", modName: "Módulo 6: Correo Electrónico", title: "Ej 77: Cerrar Correo", context: "📌 Ventana de Correo", instruction: "Cierre la ventana con [X].", hint: "Paso 1: Haga clic en [X].", targetAction: "close-window" },
-      { id: 78, module: "6", modName: "Módulo 6: Correo Electrónico", title: "Ej 78: Abrir Correo directo", context: "📌 Pantalla Principal", instruction: "Abra el Correo con doble clic.", hint: "Paso 1: Doble clic en Correo.", targetAction: "dblclick-correo" },
-      { id: 79, module: "6", modName: "Módulo 6: Correo Electrónico", title: "Ej 79: Cerrar ventana", context: "📌 Ventana de Correo", instruction: "Cierre la ventana con [X].", hint: "Paso 1: Haga clic en [X].", targetAction: "close-window" },
-      { id: 80, module: "6", modName: "Módulo 6: Correo Electrónico", title: "Ej 80: Seleccionar Correo", context: "📌 Pantalla Principal", instruction: "Haga clic simple en Correo.", hint: "Paso 1: Haga clic en Correo.", targetAction: "click-correo" },
-      { id: 81, module: "6", modName: "Módulo 6: Correo Electrónico", title: "Ej 81: Fondo libre", context: "📌 Pantalla Principal", instruction: "Haga clic en el fondo.", hint: "Paso 1: Haga clic en el fondo.", targetAction: "click-desktop" },
-      { id: 82, module: "6", modName: "Módulo 6: Correo Electrónico", title: "Ej 82: Menú para correo", context: "📌 Barra de tareas", instruction: "Abra el menú Inicio.", hint: "Paso 1: Haga clic en el botón de Windows.", targetAction: "click-start" },
-      { id: 83, module: "6", modName: "Módulo 6: Correo Electrónico", title: "Ej 83: Iniciar Correo", context: "📌 Menú Inicio", instruction: "Seleccione Correo en el menú.", hint: "Paso 1: Haga clic en 'Correo'.", targetAction: "start-correo" },
-      { id: 84, module: "6", modName: "Módulo 6: Correo Electrónico", title: "Ej 84: Cerrar ventana", context: "📌 Ventana de Correo", instruction: "Cierre la ventana con [X].", hint: "Paso 1: Haga clic en [X].", targetAction: "close-window" },
-      { id: 85, module: "6", modName: "Módulo 6: Correo Electrónico", title: "Ej 85: Seleccionar Correo", context: "📌 Pantalla Principal", instruction: "Haga clic en Correo.", hint: "Paso 1: Haga clic en Correo.", targetAction: "click-correo" },
-      { id: 86, module: "6", modName: "Módulo 6: Correo Electrónico", title: "Ej 86: AUTOEVALUACIÓN M6 - Salir del Correo", context: "📌 Ventana de Correo", instruction: "Autoevaluación M6: Cierre la ventana de Correo con [X].", hint: "Paso 1: Haga clic en [X].", targetAction: "close-window" },
+  { id:71, module:"6", moduleName:"Módulo 6: Integración", title:"Ej 71: Escribir nota en WordPad", context:"📌 Ventana de WordPad", instruction:"Escriba una nota en WordPad.", steps:["type-phrase"], hints:["Escribí una nota","En WordPad","Abrí WordPad y escribí"], skippable:false },
+  { id:72, module:"6", moduleName:"Módulo 6: Integración", title:"Ej 72: Formato a la nota", context:"📌 Ventana de WordPad", instruction:"Aplique negrita y centrado.", steps:["bold","center"], hints:["¿Cómo formateás?","Negrita y centrar","Seleccioná → B → centrar"], skippable:false },
+  { id:73, module:"6", moduleName:"Módulo 6: Integración", title:"Ej 73: Guardar nota", context:"📌 Ventana de WordPad", instruction:"Guarde la nota en Descargas.", steps:["save-file"], hints:["¿Dónde guardás?","En Descargas","Archivo → Guardar como → Descargas"], skippable:false },
+  { id:74, module:"6", moduleName:"Módulo 6: Integración", title:"Ej 74: Cerrar WordPad", context:"📌 Ventana de WordPad", instruction:"Cierre WordPad con [X].", steps:["close-window"], hints:["Clic en [X]","Arriba derecha","Cruz"], skippable:false },
+  { id:75, module:"6", moduleName:"Módulo 6: Integración", title:"Ej 75: Abrir Facturador", context:"📌 Pantalla Principal", instruction:"Abra Facturador.", steps:["dblclick-facturador"], hints:["Doble clic","El verde","Dos clics"], skippable:false },
+  { id:76, module:"6", moduleName:"Módulo 6: Integración", title:"Ej 76: Emitir factura", context:"📌 Ventana del Facturador", instruction:"Emita una factura.", steps:["emit-invoice"], hints:["¿Cómo emitís?","Botón Emitir","Clic en 'Emitir Factura'"], skippable:false },
+  { id:77, module:"6", moduleName:"Módulo 6: Integración", title:"Ej 77: Verificar factura", context:"📌 Pantalla Principal", instruction:"Verifique la factura en Descargas.", steps:["dblclick-este-equipo","open-descargas","verify-file"], hints:["¿Dónde está?","En Descargas","Este Equipo → Descargas"], skippable:false },
+  { id:78, module:"6", moduleName:"Módulo 6: Integración", title:"Ej 78: Abrir Correo", context:"📌 Pantalla Principal", instruction:"Abra Correo.", steps:["dblclick-correo"], hints:["Doble clic en sobre","El de Gmail","Dos clics"], skippable:false },
+  { id:79, module:"6", moduleName:"Módulo 6: Integración", title:"Ej 79: Escribir correo", context:"📌 Ventana de Correo", instruction:"Complete Para, Asunto y Cuerpo.", steps:["mail-to","mail-subject","mail-body"], hints:["Completá los campos","Para, Asunto, Cuerpo","Escribí en cada campo"], skippable:false },
+  { id:80, module:"6", moduleName:"Módulo 6: Integración", title:"Ej 80: Adjuntar nota y factura", context:"📌 Ventana de Correo", instruction:"Adjunte nota y factura.", steps:["attach-file","attach-file"], hints:["¿Cómo adjuntás dos?","📎 dos veces","Clic en 📎 → nota → 📎 → factura"], skippable:false },
+  { id:81, module:"6", moduleName:"Módulo 6: Integración", title:"Ej 81: Enviar correo", context:"📌 Ventana de Correo", instruction:"Envíe el correo.", steps:["send-mail"], hints:["¿Cómo enviás?","Botón Enviar","Clic en 'Enviar'"], skippable:false },
+  { id:82, module:"6", moduleName:"Módulo 6: Integración", title:"Ej 82: Verificar en Enviados", context:"📌 Ventana de Correo", instruction:"Verifique en Enviados.", steps:["check-sent"], hints:["¿Dónde está?","En Enviados","Clic en 'Enviados'"], skippable:false },
+  { id:83, module:"6", moduleName:"Módulo 6: Integración", title:"Ej 83: Cerrar Correo", context:"📌 Ventana de Correo", instruction:"Cierre Correo con [X].", steps:["close-window"], hints:["Clic en [X]","Arriba derecha","Cruz"], skippable:false },
+  { id:84, module:"6", moduleName:"Módulo 6: Integración", title:"Ej 84: Repetir flujo completo", context:"📌 Pantalla Principal", instruction:"Repita el flujo completo.", steps:["type-phrase","bold","center","save-file","dblclick-facturador","emit-invoice","dblclick-correo","attach-file","send-mail","check-sent"], hints:["Como ej. 71-82","Todo el flujo","1) WordPad 2) Formato 3) Guardar 4) Facturador 5) Emitir 6) Correo 7) Adjuntar 8) Enviar 9) Enviados"], skippable:false },
+  { id:85, module:"6", moduleName:"Módulo 6: Integración", title:"Ej 85: Repetir con otro cliente", context:"📌 Pantalla Principal", instruction:"Repita con otro cliente/monto.", steps:["fac-client","fac-amount","emit-invoice","dblclick-correo","attach-file","send-mail"], hints:["Cambiá datos","Otro cliente","Repetí con otros datos"], skippable:false },
+  { id:86, module:"6", moduleName:"Módulo 6: Integración", title:"Ej 86: Abrir archivo guardado", context:"📌 Pantalla Principal", instruction:"Abra un archivo guardado.", steps:["dblclick-este-equipo","open-descargas","verify-file"], hints:["¿Cómo abrís?","Doble clic en el archivo","Doble clic en Descargas"], skippable:false },
+  { id:87, module:"6", moduleName:"Módulo 6: Integración", title:"Ej 87: Verificar contenido", context:"📌 Ventana de Este Equipo", instruction:"Verifique el contenido del archivo.", steps:["verify-file"], hints:["¿Qué contiene?","El texto","Abrí el archivo y verificá"], skippable:false },
+  { id:88, module:"6", moduleName:"Módulo 6: Integración", title:"Ej 88: Organizar archivos", context:"📌 Ventana de Este Equipo", instruction:"Mueva un archivo a una carpeta.", steps:["move-file"], hints:["¿Cómo organizás?","Arrastrar","Arrastrá el archivo a la carpeta"], skippable:false },
+  { id:89, module:"6", moduleName:"Módulo 6: Integración", title:"Ej 89: Verificar organización", context:"📌 Ventana de Este Equipo", instruction:"Verifique la organización.", steps:["verify-file"], hints:["¿Está en la carpeta?","Sí","Abrí la carpeta y verificá"], skippable:false },
+  { id:90, module:"6", moduleName:"Módulo 6: Integración", title:"Ej 90: Autoevaluación M6", context:"📌 Pantalla Principal", instruction:"Flujo completo con verificación.", steps:["type-phrase","bold","center","save-file","emit-invoice","dblclick-correo","attach-file","attach-file","send-mail","check-sent"], hints:["Repasá","Todo el ciclo","Paso a paso como ej. 84"], skippable:false },
 
-      // MÓDULO 7: Primeros Auxilios de la PC (87 a 97)
-      { id: 87, module: "7", modName: "Módulo 7: Primeros Auxilios", title: "Ej 87: Revisión de estado del sistema", context: "📌 Pantalla Principal", instruction: "Haga clic en el fondo libre para comprobar la estabilidad.", hint: "Paso 1: Haga clic en el fondo.", targetAction: "click-desktop" },
-      { id: 88, module: "7", modName: "Módulo 7: Primeros Auxilios", title: "Ej 88: Verificación de Este Equipo", context: "📌 Pantalla Principal", instruction: "Haga clic simple en 'Este Equipo'.", hint: "Paso 1: Haga clic en 'Este Equipo'.", targetAction: "click-este-equipo" },
-      { id: 89, module: "7", modName: "Módulo 7: Primeros Auxilios", title: "Ej 89: Comprobación de barra de tareas", context: "📌 Barra de tareas", instruction: "Abra el menú Inicio para verificar accesos.", hint: "Paso 1: Haga clic en el botón de Windows.", targetAction: "click-start" },
-      { id: 90, module: "7", modName: "Módulo 7: Primeros Auxilios", title: "Ej 90: Limpieza de pantalla", context: "📌 Pantalla Principal", instruction: "Haga clic en el fondo libre.", hint: "Paso 1: Haga clic en el fondo.", targetAction: "click-desktop" },
-      { id: 91, module: "7", modName: "Módulo 7: Primeros Auxilios", title: "Ej 91: Selección de Facturador", context: "📌 Pantalla Principal", instruction: "Haga clic simple en el Facturador.", hint: "Paso 1: Haga clic en el Facturador.", targetAction: "click-facturador" },
-      { id: 92, module: "7", modName: "Módulo 7: Primeros Auxilios", title: "Ej 92: Fondo libre", context: "📌 Pantalla Principal", instruction: "Haga clic en el fondo.", hint: "Paso 1: Haga clic en el fondo.", targetAction: "click-desktop" },
-      { id: 93, module: "7", modName: "Módulo 7: Primeros Auxilios", title: "Ej 93: Verificación de WordPad", context: "📌 Pantalla Principal", instruction: "Haga clic simple en WordPad.", hint: "Paso 1: Haga clic en WordPad.", targetAction: "click-wordpad" },
-      { id: 94, module: "7", modName: "Módulo 7: Primeros Auxilios", title: "Ej 94: Fondo libre", context: "📌 Pantalla Principal", instruction: "Haga clic en el fondo.", hint: "Paso 1: Haga clic en el fondo.", targetAction: "click-desktop" },
-      { id: 95, module: "7", modName: "Módulo 7: Primeros Auxilios", title: "Ej 95: Verificación de Correo", context: "📌 Pantalla Principal", instruction: "Haga clic simple en Correo.", hint: "Paso 1: Haga clic en Correo.", targetAction: "click-correo" },
-      { id: 96, module: "7", modName: "Módulo 7: Primeros Auxilios", title: "Ej 96: Menú Inicio auxiliar", context: "📌 Barra de tareas", instruction: "Abra el menú Inicio.", hint: "Paso 1: Haga clic en el botón de Windows.", targetAction: "click-start" },
-      { id: 97, module: "7", modName: "Módulo 7: Primeros Auxilios", title: "Ej 97: AUTOEVALUACIÓN M7 - Estabilidad final", context: "📌 Pantalla Principal", instruction: "Autoevaluación M7: Haga clic en el fondo libre para asegurar el sistema.", hint: "Paso 1: Haga clic en un espacio vacío de la pantalla.", targetAction: "click-desktop" },
+  { id:91, module:"7", moduleName:"Módulo 7: Refuerzo", title:"Ej 91: Cerrar ventana trabada", context:"📌 Ventana Abierta", instruction:"Cierre una ventana que no responde.", steps:["close-window"], hints:["¿Cómo cerrás una ventana trabada?","Clic en [X]","Si no cierra, usá 'Forzar cierre'"], skippable:true },
+  { id:92, module:"7", moduleName:"Módulo 7: Refuerzo", title:"Ej 92: Forzar cierre", context:"📌 Ventana Abierta", instruction:"Use el botón 'Forzar cierre'.", steps:["force-close"], hints:["¿Qué botón aparece?","El rojo","Clic en 'Forzar cierre'"], skippable:true },
+  { id:93, module:"7", moduleName:"Módulo 7: Refuerzo", title:"Ej 93: Resetear ejercicio", context:"📌 Pantalla Principal", instruction:"Reinicie el ejercicio actual.", steps:["reset-exercise"], hints:["¿Cómo reiniciás?","Botón Reiniciar","Clic en 'Reiniciar'"], skippable:true },
+  { id:94, module:"7", moduleName:"Módulo 7: Refuerzo", title:"Ej 94: Repetir ejercicio fallado", context:"📌 Pantalla Principal", instruction:"Repita el ejercicio fallado.", steps:["repeat-exercise"], hints:["¿Cómo repetís?","Botón Repetir","Clic en 'Repetir'"], skippable:true },
+  { id:95, module:"7", moduleName:"Módulo 7: Refuerzo", title:"Ej 95: Ver panel de logros", context:"📌 Barra de tareas", instruction:"Abra el panel de logros.", steps:["open-achievements"], hints:["¿Dónde ves tu progreso?","Panel de logros","Clic en 🏆"], skippable:true },
 
-      // MÓDULO 8: Evaluador Dinámico y Actualizable (98 al 100)
-      { id: 98, module: "8", modName: "Módulo 8: Evaluador Dinámico", title: "Ej 98: Fase 1 - Tramitación Fiscal Dinámica", context: "📌 Pantalla Principal", instruction: "Evaluador Dinámico: 1) Abra el Facturador y emita la factura (se guarda sola en Descargas). Utilice el botón de actualización si desea generar nuevos datos de prueba.", hint: "Paso 1: Haga doble clic en el ícono del Facturador para iniciar la prueba fiscal.", targetAction: "dblclick-facturador" },
-      { id: 99, module: "8", modName: "Módulo 8: Evaluador Dinámico", title: "Ej 99: Fase 2 - Auditoría y Depuración de Archivos", context: "📌 Ventana Activa", instruction: "Evaluador Dinámico: Cierre la ventana activa del Facturador para aprobar el control operativo y pasar al envío final.", hint: "Paso 1: Haga clic en la cruz [X] de la ventana.", targetAction: "close-window" },
-      { id: 100, module: "8", modName: "Módulo 8: Evaluador Dinámico", title: "Ej 100: Fase 3 - Envío Institucional y Certificación", context: "📌 Pantalla Principal", instruction: "Evaluador Dinámico: Cierre la última ventana abierta tocando [X] para completar con éxito la auditoría cruzada de los 100 ejercicios y obtener su certificación.", hint: "Paso 1: Cierre cualquier ventana activa tocando [X] para finalizar la evaluación integral.", targetAction: "close-window" }
-    ];
+  { id:96, module:"8", moduleName:"Módulo 8: Repasamos", title:"Ej 96: Repasamos M1-M2", context:"📌 Pantalla Principal", instruction:"Repaso: PC + Archivos. Abra Este Equipo → Descargas → volver.", steps:["dblclick-este-equipo","open-descargas","go-back"], hints:["Repaso de PC y Archivos","Este Equipo → Descargas","1) Este Equipo 2) Descargas 3) Volver"], skippable:false },
+  { id:97, module:"8", moduleName:"Módulo 8: Repasamos", title:"Ej 97: Repasamos M3 (WordPad)", context:"📌 Ventana de WordPad", instruction:"Repaso: WordPad. Escriba → negrita → guardar.", steps:["type-phrase","bold","save-file"], hints:["Repaso de WordPad","Escribir y formatear","1) Escribir 2) Negrita 3) Guardar"], skippable:true },
+  { id:98, module:"8", moduleName:"Módulo 8: Repasamos", title:"Ej 98: Repasamos M4 (Correo)", context:"📌 Ventana de Correo", instruction:"Repaso: Correo. Escriba → adjuntar → enviar.", steps:["mail-to","mail-subject","attach-file","send-mail"], hints:["Repaso de Correo","Correo completo","1) Para 2) Asunto 3) Adjuntar 4) Enviar"], skippable:false },
+  { id:99, module:"8", moduleName:"Módulo 8: Repasamos", title:"Ej 99: Repasamos M5 (Facturador)", context:"📌 Pantalla Principal", instruction:"Repaso: Facturador. Emita → verificar.", steps:["emit-invoice","dblclick-este-equipo","open-descargas","verify-file"], hints:["Repaso de Facturador","Emitir y verificar","1) Emitir 2) Descargas 3) Verificar"], skippable:true },
+  { id:100, module:"8", moduleName:"Módulo 8: Repasamos", title:"Ej 100: Repasamos M6 (Integración)", context:"📌 Pantalla Principal", instruction:"Repaso: Integración. Flujo completo.", steps:["type-phrase","bold","save-file","emit-invoice","dblclick-correo","attach-file","send-mail","check-sent"], hints:["Repaso de Integración","Todo el flujo","1) WordPad 2) Guardar 3) Factura 4) Correo 5) Adjuntar 6) Enviar 7) Enviados"], skippable:false }
+];
 
-    let currentIdx = 0;
-    let facturaGuardada = false;
+const examenesFinales = [
+  { id:'A', nombre:'Trámite simple', datos:{ cliente:'María Pérez', monto:'12000' },
+    steps:[
+      {label:'Abrir WordPad', key:'dblclick-wordpad'},
+      {label:'Escribir nota', key:'type-phrase'},
+      {label:'Aplicar negrita', key:'bold'},
+      {label:'Centrar texto', key:'center'},
+      {label:'Guardar en Descargas', key:'save-file'},
+      {label:'Abrir Correo', key:'dblclick-correo'},
+      {label:'Escribir destinatario', key:'mail-to'},
+      {label:'Adjuntar nota', key:'attach-file'},
+      {label:'Enviar correo', key:'send-mail'},
+      {label:'Verificar en Enviados', key:'check-sent'}
+    ]},
+  { id:'B', nombre:'Factura y envío', datos:{ cliente:'Comercio Don Pepe', monto:'45000' },
+    steps:[
+      {label:'Abrir Facturador', key:'dblclick-facturador'},
+      {label:'Escribir cliente', key:'fac-client'},
+      {label:'Escribir monto', key:'fac-amount'},
+      {label:'Emitir factura', key:'emit-invoice'},
+      {label:'Verificar en Descargas', key:'verify-file'},
+      {label:'Abrir Correo', key:'dblclick-correo'},
+      {label:'Escribir destinatario', key:'mail-to'},
+      {label:'Adjuntar factura', key:'attach-file'},
+      {label:'Enviar correo', key:'send-mail'},
+      {label:'Verificar en Enviados', key:'check-sent'}
+    ]},
+  { id:'C', nombre:'Flujo completo', datos:{ cliente:'Estudio Jurídico Gómez', monto:'78000' },
+    steps:[
+      {label:'Abrir WordPad', key:'dblclick-wordpad'},
+      {label:'Escribir nota', key:'type-phrase'},
+      {label:'Guardar nota', key:'save-file'},
+      {label:'Abrir Facturador', key:'dblclick-facturador'},
+      {label:'Emitir factura', key:'emit-invoice'},
+      {label:'Verificar en Descargas', key:'verify-file'},
+      {label:'Abrir Correo', key:'dblclick-correo'},
+      {label:'Escribir correo', key:'mail-to'},
+      {label:'Adjuntar nota y factura', key:'attach-file'},
+      {label:'Enviar y verificar', key:'send-mail'}
+    ]}
+];
 
-    const moduleSelectElem = document.getElementById('module-select');
-    const exerciseDropdownElem = document.getElementById('exercise-dropdown-select');
-    const badgeElem = document.getElementById('badge-module');
-    const titleElem = document.getElementById('exercise-title');
-    const contextElem = document.getElementById('location-text');
-    const instructionElem = document.getElementById('instruction-text');
-    const hintBox = document.getElementById('hint-box');
-    const evalControls = document.getElementById('eval-controls');
-    const appWindow = document.getElementById('app-window');
-    const windowTitle = document.getElementById('window-title');
-    const windowBody = document.getElementById('window-body');
-    const startMenu = document.getElementById('start-menu');
-    const btnPrev = document.getElementById('btn-prev');
-    const btnNext = document.getElementById('btn-next');
+let currentIdx = 0, currentStepIdx = 0, hintLevel = 1, hintTimer = null;
+let examMode = false, examActual = null, examStepIdx = 0, examUsadaPista3 = false;
 
-    function init() {
-      populateExerciseDropdown();
-      loadExercise(0);
-    }
+let state = {
+  completed: [], failed: [], skipped: [], logros: [], autonomy: 0,
+  mode: 'auto', timeStart: Date.now(),
+  facturaGuardada: false, facturaCliente: 'Guillermo López', facturaMonto: '15000',
+  mailData: { to:'', subject:'', body:'', attached:[] },
+  wordpadText: '', folderCreated: false,
+  examenesAprobados: [], ultimaPropuesta: null
+};
+function saveState() { try { localStorage.setItem('cursoDigitalState', JSON.stringify(state)); } catch(e) {} }
+function loadState() { try { const s = localStorage.getItem('cursoDigitalState'); if (s) state = Object.assign(state, JSON.parse(s)); } catch(e) {} }
+loadState();
 
-    function populateExerciseDropdown() {
-      const selectedModule = moduleSelectElem.value;
-      exerciseDropdownElem.innerHTML = '';
+const moduleSelectElem = document.getElementById('module-select');
+const exerciseDropdownElem = document.getElementById('exercise-dropdown-select');
+const badgeElem = document.getElementById('badge-module');
+const titleElem = document.getElementById('exercise-title');
+const contextElem = document.getElementById('location-text');
+const instructionElem = document.getElementById('instruction-text');
+const hintBox = document.getElementById('hint-box');
+const hintBtn = document.getElementById('hint-btn');
+const evalControls = document.getElementById('eval-controls');
+const appWindow = document.getElementById('app-window');
+const windowTitle = document.getElementById('window-title');
+const windowBody = document.getElementById('window-body');
+const startMenu = document.getElementById('start-menu');
+const btnPrev = document.getElementById('btn-prev');
+const btnNext = document.getElementById('btn-next');
+const skipBtn = document.getElementById('skip-btn');
+const autoHelpToggle = document.getElementById('auto-help-toggle');
+const feedbackBanner = document.getElementById('feedback-banner');
+const trophyBtn = document.getElementById('trophy-btn');
+const repeatQuickBtn = document.getElementById('repeat-quick-btn');
+const achPanel = document.getElementById('achievements-panel');
+const sidebarNormal = document.getElementById('sidebar-normal');
+const sidebarExam = document.getElementById('sidebar-exam');
+const navNormal = document.getElementById('nav-normal');
+const examReadyBanner = document.getElementById('exam-ready-banner');
+const examProgressElem = document.getElementById('exam-progress');
 
-      exercises.forEach((ex, idx) => {
-        if (selectedModule === 'all' || ex.module === selectedModule) {
-          const opt = document.createElement('option');
-          opt.value = idx;
-          opt.textContent = ex.title;
-          exerciseDropdownElem.appendChild(opt);
-        }
-      });
-    }
+function updateClock() {
+  const now = new Date();
+  document.getElementById('clock-time').textContent = String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
+  document.getElementById('clock-date').textContent = String(now.getDate()).padStart(2,'0')+'/'+String(now.getMonth()+1).padStart(2,'0')+'/'+now.getFullYear();
+}
+setInterval(updateClock, 1000); updateClock();
 
-    function changeModuleFilter(modVal) {
-      populateExerciseDropdown();
-      const firstOpt = exerciseDropdownElem.options[0];
-      if (firstOpt) {
-        loadExercise(parseInt(firstOpt.value, 10));
-      }
-    }
+let bannerTimer = null;
+function showBanner(msg, type) {
+  feedbackBanner.textContent = msg;
+  feedbackBanner.className = 'feedback-banner show' + (type ? ' '+type : '');
+  clearTimeout(bannerTimer);
+  bannerTimer = setTimeout(() => { feedbackBanner.classList.remove('show'); }, 3000);
+}
 
-    function loadExercise(idx) {
-      currentIdx = idx;
-      const ex = exercises[currentIdx];
+function moduloHecho(mod) {
+  if (state.skipped.includes(mod)) return true;
+  const ejercicios = exercises.filter(e => e.module === mod);
+  return ejercicios.every(e => state.completed.includes(e.id));
+}
+function moduloSaltado(mod) { return state.skipped.includes(mod); }
+function moduloHechoReal(mod) {
+  const ejercicios = exercises.filter(e => e.module === mod);
+  return ejercicios.every(e => state.completed.includes(e.id));
+}
 
-      exerciseDropdownElem.value = currentIdx;
-
-      badgeElem.textContent = ex.modName;
-      titleElem.textContent = ex.title;
-      contextElem.textContent = ex.context;
-      instructionElem.innerHTML = ex.instruction;
-      hintBox.innerHTML = ex.hint;
-      hintBox.style.display = 'none';
-
-      // Mostrar controles del evaluador solo en el Módulo 8
-      if (ex.module === "8") {
-        evalControls.style.display = 'block';
+function populateExerciseDropdown() {
+  const sel = moduleSelectElem.value;
+  exerciseDropdownElem.innerHTML = '';
+  exercises.forEach((ex, idx) => {
+    if (sel === 'all' || ex.module === sel) {
+      const opt = document.createElement('option');
+      opt.value = idx;
+      let omitido = false;
+      if (ex.id === 97 && !moduloHechoReal('3') && !moduloSaltado('3')) omitido = true;
+      if (ex.id === 99 && !moduloHechoReal('5') && !moduloSaltado('5')) omitido = true;
+      if (ex.id === 97 && moduloSaltado('3')) omitido = true;
+      if (ex.id === 99 && moduloSaltado('5')) omitido = true;
+      if (omitido) {
+        opt.textContent = ex.title + ' — omitido';
+        opt.style.color = '#6c757d';
+        opt.disabled = true;
       } else {
-        evalControls.style.display = 'none';
+        opt.textContent = ex.title;
       }
-
-      clearSelections();
-      startMenu.style.display = 'none';
-      appWindow.style.display = 'none';
-
-      btnPrev.disabled = currentIdx === 0;
-      btnNext.disabled = currentIdx === exercises.length - 1;
+      exerciseDropdownElem.appendChild(opt);
     }
+  });
+}
+function changeModuleFilter() {
+  populateExerciseDropdown();
+  let opt = exerciseDropdownElem.options[0];
+  let i = 0;
+  while (opt && opt.disabled && i < exerciseDropdownElem.options.length) {
+    i++; opt = exerciseDropdownElem.options[i];
+  }
+  if (opt) loadExercise(parseInt(opt.value,10));
+}
 
-    function selectExercise(val) {
-      loadExercise(parseInt(val, 10));
+function loadExercise(idx) {
+  if (idx < 0 || idx >= exercises.length) return;
+  if (examMode) cancelarExamen();
+  currentIdx = idx; currentStepIdx = 0; hintLevel = 1;
+  const ex = exercises[idx];
+  state.facturaGuardada = false;
+  state.mailData = { to:'', subject:'', body:'', attached:[] };
+  state.wordpadText = '';
+  exerciseDropdownElem.value = currentIdx;
+  badgeElem.textContent = ex.moduleName;
+  titleElem.textContent = ex.title;
+  contextElem.textContent = ex.context;
+  instructionElem.innerHTML = ex.instruction;
+  hintBox.style.display = 'none';
+  hintBtn.textContent = '💡 Pista 1/3';
+  clearTimeout(hintTimer);
+  if (state.mode === 'auto' && ex.hints && ex.hints[0]) {
+    hintTimer = setTimeout(() => { showHint(1); }, 15000);
+  }
+  evalControls.style.display = (ex.module === '5' && ex.steps.includes('emit-invoice')) ? 'block' : 'none';
+  const isStart = (ex.id === 26 || ex.id === 56 || ex.id === 91);
+  skipBtn.style.display = (ex.skippable && isStart) ? 'block' : 'none';
+  clearSelections();
+  startMenu.style.display = 'none';
+  appWindow.style.display = 'none';
+  btnPrev.disabled = currentIdx === 0;
+  btnNext.disabled = currentIdx === exercises.length - 1;
+  if ([9,11,13,16,26,41,56].includes(ex.id)) {
+    const map = {9:'icon-wordpad',11:'icon-facturador',13:'icon-correo',16:'icon-este-equipo',26:'icon-wordpad',41:'icon-correo',56:'icon-facturador'};
+    const el = document.getElementById(map[ex.id]);
+    if (el) { el.classList.add('blink'); setTimeout(()=>el.classList.remove('blink'),1200); }
+  }
+  checkExamReady();
+  saveState();
+}
+function selectExercise(val) {
+  if (exercises[val]) loadExercise(parseInt(val,10));
+}
+function navigate(dir) {
+  const next = currentIdx + dir;
+  if (next >= 0 && next < exercises.length) {
+    const t = exercises[next];
+    if (t.id === 97 && !moduloHechoReal('3') && !moduloSaltado('3')) { navigate(1); return; }
+    if (t.id === 99 && !moduloHechoReal('5') && !moduloSaltado('5')) { navigate(1); return; }
+    if (t.id === 97 && moduloSaltado('3')) { navigate(1); return; }
+    if (t.id === 99 && moduloSaltado('5')) { navigate(1); return; }
+    if (moduleSelectElem.value !== 'all' && t.module !== moduleSelectElem.value) {
+      moduleSelectElem.value = t.module; populateExerciseDropdown();
     }
+    loadExercise(next);
+  }
+}
 
-    function navigate(dir) {
-      const next = currentIdx + dir;
-      if (next >= 0 && next < exercises.length) {
-        const targetEx = exercises[next];
-        if (moduleSelectElem.value !== 'all' && targetEx.module !== moduleSelectElem.value) {
-          moduleSelectElem.value = targetEx.module;
-          populateExerciseDropdown();
-        }
-        loadExercise(next);
+function requestHint() {
+  if (examMode) {
+    if (hintLevel >= 3) { showBanner('Ya usaste todas las pistas','error'); return; }
+    hintLevel++;
+    if (hintLevel === 3) examUsadaPista3 = true;
+    hintBtn.textContent = '💡 Ayuda del paso ' + (examStepIdx+1);
+    hintBox.textContent = 'Pista: seguí el paso ' + (examStepIdx+1) + ' de ' + examActual.steps.length;
+    hintBox.style.display = 'block';
+    return;
+  }
+  if (hintLevel >= 3) { showHint(3); return; }
+  hintLevel++; showHint(hintLevel);
+}
+function showHint(level) {
+  const ex = exercises[currentIdx];
+  if (!ex.hints || !ex.hints[level-1]) return;
+  hintBox.textContent = ex.hints[level-1];
+  hintBox.style.display = 'block';
+  hintBtn.textContent = '💡 Pista ' + level + '/3';
+  if (level === 3) state.autonomy = Math.max(0, state.autonomy - 1);
+  saveState();
+}
+function toggleAutoHelp(c) {
+  state.mode = c ? 'auto' : 'manual'; saveState();
+  showBanner(c ? 'Ayuda automática activada' : 'Ayuda automática desactivada','');
+}
+
+function validateAction(actionName) {
+  if (examMode) { validateExamStep(actionName); return; }
+  const ex = exercises[currentIdx];
+  if (!ex) return;
+  const expected = ex.steps[currentStepIdx];
+  if (expected === actionName) {
+    currentStepIdx++;
+    if (currentStepIdx >= ex.steps.length) {
+      if (!state.completed.includes(ex.id)) state.completed.push(ex.id);
+      state.failed = state.failed.filter(id => id !== ex.id);
+      if (hintLevel === 1) state.autonomy++;
+      saveState(); showBanner('✅ ¡Muy bien! Ejercicio ' + ex.id + ' completado','');
+      checkLogros();
+      setTimeout(() => { if (currentIdx < exercises.length - 1) navigate(1); }, 800);
+    } else saveState();
+  } else {
+    if (!state.failed.includes(ex.id)) state.failed.push(ex.id);
+    saveState(); showBanner('❌ Probá de nuevo','error');
+  }
+}
+
+const LOGROS_DEF = [
+  {id:'first', name:'🏅 Primer ejercicio completado', cond:()=>state.completed.length>=1},
+  {id:'mod1', name:'🏅 Módulo 1 completo', cond:()=>[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15].every(id=>state.completed.includes(id))},
+  {id:'factura', name:'🏅 Primera factura emitida', cond:()=>state.facturaGuardada||state.completed.includes(59)},
+  {id:'mail', name:'🏅 Primer correo enviado', cond:()=>state.completed.includes(46)},
+  {id:'attach', name:'🏅 Primer correo con adjunto', cond:()=>state.completed.includes(45)},
+  {id:'autonomy10', name:'🏅 10 ejercicios sin pista', cond:()=>state.autonomy>=10},
+  {id:'integration', name:'🏅 Primera integración completa', cond:()=>state.completed.includes(84)},
+  {id:'optional', name:'🏅 Módulo opcional completado', cond:()=>moduloHechoReal('3')||moduloHechoReal('5')},
+  {id:'repaso', name:'🏅 Módulo 8: Repasamos completo', cond:()=>repasoCompleto()},
+  {id:'maestria', name:'🏅 Maestría: 3 exámenes aprobados', cond:()=>state.examenesAprobados.length>=3}
+];
+function checkLogros() {
+  LOGROS_DEF.forEach(l => {
+    if (!state.logros.includes(l.id) && l.cond()) {
+      state.logros.push(l.id); showBanner('🏅 Nuevo logro: ' + l.name,'logro');
+    }
+  });
+  updateAchievementsUI();
+}
+
+function toggleAchievements(e) {
+  if (e) e.stopPropagation();
+  achPanel.classList.toggle('open');
+  updateAchievementsUI();
+}
+function verLogros() { achPanel.classList.add('open'); updateAchievementsUI(); }
+
+function updateAchievementsUI() {
+  document.getElementById('ach-completed').textContent = state.completed.length + '/100';
+  document.getElementById('ach-failed').textContent = state.failed.length;
+  document.getElementById('ach-block').textContent = exercises[currentIdx]?.module || '1';
+  document.getElementById('ach-time').textContent = Math.floor((Date.now()-state.timeStart)/60000) + ' min';
+  document.getElementById('ach-next').textContent = 'Ej. ' + (exercises[currentIdx]?.id || 1);
+  document.getElementById('ach-autonomy').textContent = state.autonomy;
+  document.getElementById('ach-skipped').textContent = state.skipped.length ? state.skipped.join(', ') : '—';
+
+  const list = document.getElementById('ach-logros-list');
+  list.innerHTML = '';
+  LOGROS_DEF.forEach(l => {
+    const div = document.createElement('div');
+    div.className = 'ach-logro' + (state.logros.includes(l.id) ? ' unlocked' : '');
+    div.textContent = l.name;
+    list.appendChild(div);
+  });
+
+  const mBox = document.getElementById('maestria-box');
+  if (state.examenesAprobados.length > 0 || estadoExamenDesbloqueado()) {
+    mBox.style.display = 'block';
+    ['A','B','C'].forEach(p => {
+      const el = document.getElementById('prop-'+p);
+      if (el) el.className = 'prop' + (state.examenesAprobados.includes(p) ? ' ok' : '');
+    });
+  }
+
+  document.getElementById('btn-repeat-ex').disabled = state.failed.length === 0;
+  const blockFails = state.failed.filter(id => exercises.find(e=>e.id===id)?.module === exercises[currentIdx]?.module);
+  document.getElementById('btn-repeat-block').disabled = blockFails.length < 3;
+  const ex = exercises[currentIdx];
+  document.getElementById('btn-skip-module').style.display = (ex?.skippable && !state.skipped.includes(ex.module)) ? 'block' : 'none';
+  document.getElementById('btn-resume-module').style.display = state.skipped.length ? 'block' : 'none';
+
+  const examBtn = document.getElementById('btn-exam-final');
+  examBtn.style.display = 'block';
+  if (estadoExamenDesbloqueado()) {
+    examBtn.classList.remove('locked');
+    examBtn.textContent = '🎓 Examen Final Integrador';
+  } else if (!repasoCompleto()) {
+    examBtn.classList.add('locked');
+    examBtn.textContent = '🎓 Examen Final (completá Repasamos)';
+  } else {
+    examBtn.classList.add('locked');
+    examBtn.textContent = '🎓 Examen Final (requisitos incompletos)';
+  }
+
+  trophyBtn.className = 'trophy-btn';
+  if (state.failed.length > 0) trophyBtn.classList.add('orange');
+  else if (state.logros.length > 0) trophyBtn.classList.add('gold');
+  repeatQuickBtn.style.display = state.failed.length > 0 ? 'block' : 'none';
+}
+
+function repeatExercise() {
+  if (state.failed.length === 0) return;
+  const last = state.failed[state.failed.length-1];
+  const idx = exercises.findIndex(e => e.id === last);
+  if (idx >= 0) { loadExercise(idx); achPanel.classList.remove('open'); showBanner('🔁 Repitiendo ejercicio ' + last,''); }
+}
+function repeatBlock() {
+  const ex = exercises[currentIdx];
+  const fails = state.failed.filter(id => exercises.find(e=>e.id===id)?.module === ex.module);
+  if (fails.length < 3) return;
+  const first = exercises.findIndex(e => e.module === ex.module);
+  if (first >= 0) { loadExercise(first); achPanel.classList.remove('open'); showBanner('🔁 Repitiendo módulo ' + ex.module,''); }
+}
+function skipModule() {
+  const ex = exercises[currentIdx];
+  if (!ex.skippable) return;
+  if (!confirm('¿Querés saltear este módulo? Podés retomarlo después desde el panel de logros.')) return;
+  if (!state.skipped.includes(ex.module)) state.skipped.push(ex.module);
+  saveState();
+  populateExerciseDropdown();
+  const next = exercises.findIndex(e => e.module !== ex.module);
+  if (next >= 0) loadExercise(next);
+  achPanel.classList.remove('open');
+  showBanner('⏭️ Módulo omitido por elección','');
+}
+function resumeModule() {
+  if (state.skipped.length === 0) return;
+  const mod = state.skipped[0];
+  state.skipped = state.skipped.filter(m => m !== mod);
+  saveState();
+  populateExerciseDropdown();
+  const first = exercises.findIndex(e => e.module === mod);
+  if (first >= 0) loadExercise(first);
+  achPanel.classList.remove('open');
+  showBanner('▶️ Módulo retomado','');
+}
+function quickRepeat() { repeatExercise(); }
+
+function clearSelections() { document.querySelectorAll('.desktop-icon').forEach(i => i.classList.remove('selected')); }
+function handleIconClick(e, name) {
+  e.stopPropagation(); clearSelections();
+  document.getElementById('icon-'+name).classList.add('selected');
+  validateAction('click-'+name);
+}
+function handleIconDblClick(name) {
+  if (name === 'este-equipo') openEsteEquipoApp();
+  else if (name === 'wordpad') openWordpadApp();
+  else if (name === 'facturador') openFacturadorApp();
+  else if (name === 'correo') openCorreoApp();
+  else if (name === 'papelera') openPapeleraApp();
+  validateAction('dblclick-'+name);
+}
+function handleDesktopClick(e) {
+  clearSelections(); startMenu.style.display = 'none';
+  validateAction('click-desktop');
+}
+function toggleStartMenu(e) {
+  e.stopPropagation();
+  const wasOpen = startMenu.style.display === 'block';
+  startMenu.style.display = wasOpen ? 'none' : 'block';
+  // Solo validar click-start si el ejercicio actual lo espera
+  const ex = exercises[currentIdx];
+  if (!examMode && ex && ex.steps[currentStepIdx] === 'click-start') {
+    validateAction('click-start');
+  }
+  if (!examMode && ex && ex.steps[currentStepIdx] === 'menu-open') {
+    validateAction('menu-open');
+  }
+}
+function handleStartItem(item) {
+  startMenu.style.display = 'none';
+  if (item === 'este-equipo') openEsteEquipoApp();
+  else if (item === 'wordpad') openWordpadApp();
+  else if (item === 'facturador') openFacturadorApp();
+  else if (item === 'correo') openCorreoApp();
+  else if (item === 'papelera') openPapeleraApp();
+  const ex = exercises[currentIdx];
+  if (!examMode && ex && ex.steps[currentStepIdx] === 'start-'+item) {
+    validateAction('start-'+item);
+  }
+}
+function closeAppWindow() { appWindow.style.display = 'none'; validateAction('close-window'); }
+
+function openEsteEquipoApp() {
+  windowTitle.textContent = 'Este Equipo - Mis Archivos';
+  windowBody.innerHTML = `
+    <div style="font-weight:bold;margin-bottom:10px;">Carpetas de la computadora:</div>
+    <ul style="list-style:none;padding-left:0;">
+      <li style="padding:8px;background:#f1f3f5;margin-bottom:6px;border-radius:4px;cursor:pointer;" onclick="validateAction('open-disk')">💻 Disco Local (C:)</li>
+      <li style="padding:8px;background:#e2f0d9;margin-bottom:6px;border-radius:4px;cursor:pointer;font-weight:600;" onclick="openDescargasApp()">📁 Descargas ${state.facturaGuardada?'<span style="color:green;float:right;">[Factura lista]</span>':''}</li>
+      <li style="padding:8px;background:#f1f3f5;margin-bottom:6px;border-radius:4px;cursor:pointer;" onclick="validateAction('open-docs')">📄 Documentos</li>
+      <li style="padding:8px;background:#f1f3f5;margin-bottom:6px;border-radius:4px;cursor:pointer;" onclick="createFolder()">➕ Nueva carpeta</li>
+    </ul>`;
+  appWindow.style.display = 'flex';
+}
+function openDescargasApp() {
+  if (!examMode) validateAction('open-descargas');
+  windowTitle.textContent = 'Descargas';
+  let c = '<div style="font-weight:bold;color:#0077b6;margin-bottom:10px;">Carpeta: Descargas</div>';
+  if (state.facturaGuardada) c += `<div style="padding:10px;background:#d4edda;border:1px solid #c3e6cb;border-radius:4px;display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><span>📄 Factura_001.pdf</span><button class="app-btn" type="button" onclick="abrirCorreoParaAdjuntar()">Enviar por Mail</button></div>`;
+  if (state.wordpadText) c += `<div style="padding:10px;background:#cfe2ff;border:1px solid #b6d4fe;border-radius:4px;margin-bottom:6px;">📝 Nota.txt (${state.wordpadText.length} caracteres)</div>`;
+  if (!state.facturaGuardada && !state.wordpadText) c += '<div style="color:#6c757d;">Carpeta vacía</div>';
+  if (state.facturaGuardada || state.wordpadText) {
+    c += '<button class="app-btn" type="button" style="margin-top:8px;" onclick="validarVerify()">✅ Verificar archivo</button>';
+  }
+  windowBody.innerHTML = c;
+  appWindow.style.display = 'flex';
+}
+function validarVerify() {
+  validateAction('verify-file');
+  showBanner('Archivo verificado','');
+}
+function createFolder() { state.folderCreated = true; validateAction('create-folder'); showBanner('Carpeta creada',''); }
+
+function openWordpadApp() {
+  windowTitle.textContent = 'WordPad - Escribir Textos';
+  const instrExtra = examMode && examActual.steps[examStepIdx]?.key === 'type-phrase'
+    ? `<div style="background:#fff3cd;border:1px solid #ffc107;padding:6px;border-radius:4px;margin-bottom:6px;font-size:0.78rem;">📝 Escribí una nota para <strong>${examActual.datos.cliente}</strong></div>` : '';
+  windowBody.innerHTML = `
+    <div style="border-bottom:1px solid #dee2e6;padding-bottom:6px;margin-bottom:10px;font-size:0.8rem;color:#6c757d;">Archivo | Editar | Ver | Insertar | Formato</div>
+    ${instrExtra}
+    <div style="margin-bottom:6px;display:flex;gap:4px;">
+      <button class="app-btn" type="button" onclick="wpFormat('bold')"><b>B</b></button>
+      <button class="app-btn" type="button" onclick="wpFormat('italic')"><i>I</i></button>
+      <button class="app-btn" type="button" onclick="wpFormat('underline')"><u>U</u></button>
+      <button class="app-btn" type="button" onclick="wpFormat('center')">Centrar</button>
+      <button class="app-btn" type="button" onclick="wpFormat('left')">Izquierda</button>
+      <button class="app-btn" type="button" onclick="wpFormat('size')">A+</button>
+      <button class="app-btn" type="button" onclick="wpSave()">Guardar</button>
+    </div>
+    <div id="wp-area" contenteditable="true" style="min-height:160px;border:1px solid #ced4da;border-radius:4px;padding:8px;font-size:14px;background:#fff;" oninput="wpInput()"></div>`;
+  appWindow.style.display = 'flex';
+}
+function wpInput() {
+  const area = document.getElementById('wp-area');
+  state.wordpadText = area.textContent;
+  // Solo validar el paso que el ejercicio actual espera
+  const ex = exercises[currentIdx];
+  if (!examMode && ex) {
+    const expected = ex.steps[currentStepIdx];
+    if (expected === 'type-word' && area.textContent.trim().length >= 1) validateAction('type-word');
+    if (expected === 'type-phrase' && area.textContent.trim().length >= 10) validateAction('type-phrase');
+  } else if (examMode) {
+    const step = examActual.steps[examStepIdx];
+    if (step && step.key === 'type-phrase' && area.textContent.trim().length >= 10) validateAction('type-phrase');
+  }
+  saveState();
+}
+function wpFormat(fmt) {
+  if (fmt === 'bold') { document.execCommand('bold'); validateAction('bold'); }
+  if (fmt === 'italic') { document.execCommand('italic'); validateAction('italic'); }
+  if (fmt === 'underline') { document.execCommand('underline'); validateAction('underline'); }
+  if (fmt === 'center') { document.execCommand('justifyCenter'); validateAction('center'); }
+  if (fmt === 'left') { document.execCommand('justifyLeft'); validateAction('align-left'); }
+  if (fmt === 'size') { document.execCommand('fontSize', false, '5'); validateAction('font-size'); }
+}
+function wpSave() { if (state.wordpadText.trim().length > 0) { validateAction('save-file'); showBanner('Archivo guardado',''); } }
+
+function openFacturadorApp() {
+  windowTitle.textContent = 'Facturador Digital';
+  const clienteVal = examMode ? examActual.datos.cliente : state.facturaCliente;
+  const montoVal = examMode ? examActual.datos.monto : state.facturaMonto;
+  windowBody.innerHTML = `
+    <div class="app-form-group"><label>Cliente:</label><input type="text" class="app-form-control" id="fac-cliente" value="${clienteVal}" oninput="validateAction('fac-client')"></div>
+    <div class="app-form-group"><label>Monto ($):</label><input type="text" class="app-form-control" id="fac-monto" value="${montoVal}" oninput="validateAction('fac-amount')"></div>
+    <button class="app-btn" type="button" onclick="emitirFactura()">Emitir Factura y Guardar</button>`;
+  appWindow.style.display = 'flex';
+  // En examen, si el paso es fac-client o fac-amount, validar AMBOS (están precargados)
+  if (examMode) {
+    const step = examActual.steps[examStepIdx];
+    if (step && step.key === 'fac-client') {
+      validateAction('fac-client');
+      // Después de validar cliente, si el siguiente paso es fac-amount, validarlo también (precargado)
+      if (examActual.steps[examStepIdx]?.key === 'fac-amount') {
+        validateAction('fac-amount');
       }
+    } else if (step && step.key === 'fac-amount') {
+      validateAction('fac-amount');
     }
+  }
+}
+function emitirFactura() {
+  state.facturaGuardada = true;
+  state.facturaCliente = document.getElementById('fac-cliente').value;
+  state.facturaMonto = document.getElementById('fac-monto').value;
+  saveState(); validateAction('emit-invoice');
+  showBanner('Factura emitida y guardada en Descargas','');
+  checkLogros();
+}
+function openCorreoApp() {
+  windowTitle.textContent = 'Correo Electrónico';
+  windowBody.innerHTML = `
+    <div class="app-form-group"><label>Para:</label><input type="text" class="app-form-control" id="mail-to" oninput="validateAction('mail-to')"></div>
+    <div class="app-form-group"><label>Asunto:</label><input type="text" class="app-form-control" id="mail-subject" oninput="validateAction('mail-subject')"></div>
+    <div class="app-form-group"><label>Mensaje:</label><textarea class="app-form-control" id="mail-body" style="height:80px;" oninput="validateAction('mail-body')"></textarea></div>
+    <div id="mail-adj" style="margin-bottom:10px;font-size:0.85rem;color:#495057;">📎 Adjuntos: <em>Ninguno</em></div>
+    <button class="app-btn" type="button" onclick="attachMail()">📎 Adjuntar</button>
+    <button class="app-btn" type="button" onclick="sendMail()">Enviar Correo</button>
+    <button class="app-btn" type="button" onclick="checkSent()">Ver Enviados</button>`;
+  appWindow.style.display = 'flex';
+}
+function attachMail() {
+  state.mailData.attached.push('archivo_'+(state.mailData.attached.length+1));
+  document.getElementById('mail-adj').innerHTML = '📎 Adjuntos: <strong style="color:green;">' + state.mailData.attached.join(', ') + '</strong>';
+  saveState(); validateAction('attach-file');
+  showBanner('Archivo adjuntado','');
+}
+function sendMail() { validateAction('send-mail'); showBanner('Correo enviado',''); checkLogros(); }
+function checkSent() {
+  windowTitle.textContent = 'Correo - Enviados';
+  windowBody.innerHTML = '<div style="color:green;font-weight:bold;">✅ Correo enviado correctamente</div>';
+  validateAction('check-sent');
+}
+function abrirCorreoParaAdjuntar() { openCorreoApp(); setTimeout(()=>{ attachMail(); }, 200); }
+function openPapeleraApp() {
+  windowTitle.textContent = 'Papelera de Reciclaje';
+  windowBody.innerHTML = '<div style="color:#6c757d;text-align:center;padding:25px;">🗑️ Papelera vacía</div>';
+  appWindow.style.display = 'flex';
+}
+function actualizarDesafioEvaluador() {
+  const montos = [15000,32000,48000,65000,92000];
+  const clientes = ['Estudio Jurídico Gómez','Comercio Don Pepe','Farmacia Central','Distribuidora Sur','Servicios Médicos San Justo'];
+  state.facturaMonto = String(montos[Math.floor(Math.random()*montos.length)]);
+  state.facturaCliente = clientes[Math.floor(Math.random()*clientes.length)];
+  saveState();
+  showBanner('🔄 Desafío actualizado: ' + state.facturaCliente + ' - $' + state.facturaMonto,'');
+}
 
-    function toggleHint() {
-      hintBox.style.display = hintBox.style.display === 'block' ? 'none' : 'block';
+function repasoCompleto() {
+  if (!state.completed.includes(96)) return false;
+  if (!state.completed.includes(98)) return false;
+  if (!state.completed.includes(100)) return false;
+  if (!moduloSaltado('3') && !state.completed.includes(97)) return false;
+  if (!moduloSaltado('5') && !state.completed.includes(99)) return false;
+  const m3ok = moduloHecho('3');
+  const m5ok = moduloHecho('5');
+  if (!m3ok && !m5ok) return false;
+  if (moduloSaltado('3') && moduloSaltado('5')) return false;
+  return true;
+}
+
+function estadoExamenDesbloqueado() {
+  const mod1 = moduloHecho('1');
+  const mod2 = moduloHecho('2');
+  const mod4 = moduloHecho('4');
+  const opcional = moduloHecho('3') || moduloHecho('5');
+  return mod1 && mod2 && mod4 && opcional && repasoCompleto();
+}
+
+function checkExamReady() {
+  examReadyBanner.style.display = estadoExamenDesbloqueado() ? 'block' : 'none';
+}
+
+function iniciarExamen() {
+  if (!estadoExamenDesbloqueado()) { showBanner('Faltan requisitos para el examen (completá Repasamos)','error'); return; }
+  const disponibles = examenesFinales.filter(e => e.id !== state.ultimaPropuesta);
+  examActual = disponibles[Math.floor(Math.random()*disponibles.length)];
+  state.ultimaPropuesta = examActual.id;
+  saveState();
+  examStepIdx = 0;
+  examUsadaPista3 = false;
+  hintLevel = 1;
+  examMode = true;
+  sidebarNormal.style.display = 'none';
+  navNormal.style.display = 'none';
+  sidebarExam.style.display = 'block';
+  achPanel.classList.remove('open');
+  document.getElementById('exam-propuesta').textContent = 'Propuesta ' + examActual.id + ': "' + examActual.nombre + '"';
+  document.getElementById('exam-datos').innerHTML = '👤 Cliente: <strong>' + examActual.datos.cliente + '</strong><br>💰 Monto: <strong>$' + examActual.datos.monto + '</strong>';
+  document.getElementById('exam-result-box').style.display = 'none';
+  document.getElementById('exam-extra-btns').innerHTML = '';
+  hintBtn.textContent = '💡 Ayuda del paso 1';
+  hintBox.style.display = 'none';
+  renderExamSteps();
+  state.facturaCliente = examActual.datos.cliente;
+  state.facturaMonto = examActual.datos.monto;
+  state.facturaGuardada = false;
+  state.mailData = { to:'', subject:'', body:'', attached:[] };
+  state.wordpadText = '';
+  appWindow.style.display = 'none';
+  const primerPaso = examActual.steps[0].key;
+  const map = {'dblclick-wordpad':'icon-wordpad','dblclick-facturador':'icon-facturador','dblclick-correo':'icon-correo'};
+  if (map[primerPaso]) { const el = document.getElementById(map[primerPaso]); if (el) { el.classList.add('blink'); setTimeout(()=>el.classList.remove('blink'),1200); } }
+  showBanner('🎓 Examen Final iniciado: Propuesta ' + examActual.id,'logro');
+}
+
+function renderExamSteps() {
+  const list = document.getElementById('exam-steps-list');
+  list.innerHTML = '';
+  examActual.steps.forEach((s, i) => {
+    const li = document.createElement('li');
+    let cls = 'exam-step ';
+    if (i < examStepIdx) cls += 'done';
+    else if (i === examStepIdx) cls += 'current';
+    else cls += 'pending';
+    li.className = cls;
+    li.innerHTML = (i < examStepIdx ? '✅ ' : (i === examStepIdx ? '⏳ ' : '⬜ ')) + (i+1) + '. ' + s.label;
+    list.appendChild(li);
+  });
+  examProgressElem.textContent = 'Paso ' + (examStepIdx+1) + ' de ' + examActual.steps.length;
+  hintBtn.textContent = '💡 Ayuda del paso ' + (examStepIdx+1);
+}
+
+function validateExamStep(actionName) {
+  const step = examActual.steps[examStepIdx];
+  if (!step) return;
+  let accion = actionName;
+  if (actionName === 'window-open' && step.key && step.key.startsWith('dblclick-')) {
+    accion = step.key;
+  }
+  if (step.key === accion || step.key === actionName) {
+    examStepIdx++;
+    renderExamSteps();
+    if (examStepIdx >= examActual.steps.length) finalizarExamen();
+  } else {
+    const posteriorIdx = examActual.steps.findIndex((s, i) => i > examStepIdx && s.key === actionName);
+    if (posteriorIdx > examStepIdx) {
+      showBanner('❌ Primero completá el paso ' + (examStepIdx+1) + ': ' + step.label,'error');
+    } else {
+      showBanner('❌ Acción incorrecta. Paso ' + (examStepIdx+1) + ': ' + step.label,'error');
     }
+  }
+}
 
-    function actualizarDesafioEvaluador() {
-      const randomMontos = [15000, 32000, 48000, 65000, 92000];
-      const randomClientes = ["Estudio Jurídico Gómez", "Comercio Don Pepe", "Farmacia Central", "Distribuidora Sur", "Servicios Médicos San Justo"];
-      const mR = randomMontos[Math.floor(Math.random() * randomMontos.length)];
-      const cR = randomClientes[Math.floor(Math.random() * randomClientes.length)];
-      
-      exercises[97].instruction = `Evaluador Dinámico Actualizado: 1) Abra el Facturador y emita una factura para <strong>${cR}</strong> por un monto de <strong>$${mR}</strong> (se guarda sola en Descargas).`;
-      if (currentIdx === 97) {
-        loadExercise(97);
-      }
-      alert(`🔄 ¡Desafío actualizado con éxito!\nNuevo caso generado:\nCliente: ${cR}\nMonto: $${mR}`);
+function finalizarExamen() {
+  const aprobado = !examUsadaPista3;
+  state.ultimaPropuesta = examActual.id;
+  let maestriaNueva = false;
+  if (aprobado && !state.examenesAprobados.includes(examActual.id)) {
+    state.examenesAprobados.push(examActual.id);
+    saveState();
+    if (state.examenesAprobados.length >= 3) {
+      maestriaNueva = true;
+      showBanner('🏅 ¡Maestría desbloqueada! 3 exámenes aprobados','logro');
+    } else {
+      showBanner('✅ Examen ' + examActual.id + ' aprobado','');
     }
+    checkLogros();
+  } else if (aprobado) {
+    showBanner('✅ Examen ' + examActual.id + ' aprobado (ya lo tenías)','');
+  } else {
+    showBanner('⚠️ Examen completado con ayuda. Reintentá sin pista 3 para aprobar','error');
+  }
+  const box = document.getElementById('exam-result-box');
+  box.style.display = 'block';
+  box.className = 'exam-result ' + (aprobado ? 'ok' : 'fail');
+  box.innerHTML = aprobado ? '✅ Examen aprobado' : '⚠️ No aprobado (usaste ayuda)';
+  document.getElementById('exam-extra-btns').innerHTML = '<button type="button" class="exam-cancel-btn" style="background:#00b4d8;color:#000;margin-top:6px;" onclick="otroExamen()">🔄 Hacer otro examen</button>';
+  if (maestriaNueva) setTimeout(()=>{ achPanel.classList.add('open'); updateAchievementsUI(); }, 500);
+  updateAchievementsUI();
+}
 
-    function clearSelections() {
-      document.querySelectorAll('.desktop-icon').forEach(icon => icon.classList.remove('selected'));
+function otroExamen() { examMode = false; iniciarExamen(); }
+
+function cancelarExamen() {
+  examMode = false;
+  examActual = null;
+  examStepIdx = 0;
+  hintLevel = 1;
+  examUsadaPista3 = false;
+  state.facturaGuardada = false;
+  state.mailData = { to:'', subject:'', body:'', attached:[] };
+  state.wordpadText = '';
+  saveState();
+  sidebarNormal.style.display = 'block';
+  navNormal.style.display = 'flex';
+  sidebarExam.style.display = 'none';
+  document.getElementById('exam-result-box').style.display = 'none';
+  document.getElementById('exam-extra-btns').innerHTML = '';
+  appWindow.style.display = 'none';
+  hintBtn.textContent = '💡 Pista 1/3';
+  hintBox.style.display = 'none';
+  document.querySelectorAll('.desktop-icon').forEach(el => el.classList.remove('blink'));
+  checkExamReady();
+  showBanner('Examen cancelado. Podés retomarlo cuando quieras.','');
+}
+
+function init() {
+  populateExerciseDropdown();
+  autoHelpToggle.checked = (state.mode === 'auto');
+  loadExercise(0);
+  updateAchievementsUI();
+  checkExamReady();
+  setInterval(updateAchievementsUI, 30000);
+  document.addEventListener('click', (e) => {
+    if (achPanel.classList.contains('open') && !achPanel.contains(e.target) && e.target !== trophyBtn && !trophyBtn.contains(e.target)) {
+      achPanel.classList.remove('open');
     }
-
-    function validateAction(actionName) {
-      const currentEx = exercises[currentIdx];
-      if (currentEx && currentEx.targetAction === actionName) {
-        if (currentIdx === 97) { // Ejercicio 98
-          if (actionName === 'dblclick-facturador') {
-            openFacturadorApp();
-            return;
-          }
-        }
-        alert("¡Excelente! Ejercicio aprobado correctamente.");
-        if (currentIdx < exercises.length - 1) {
-          navigate(1);
-        }
-      }
-    }
-
-    function handleIconClick(e, iconName) {
-      e.stopPropagation();
-      clearSelections();
-      document.getElementById(`icon-${iconName}`).classList.add('selected');
-      validateAction(`click-${iconName}`);
-    }
-
-    function handleIconDblClick(iconName) {
-      clearSelections();
-      if (iconName === 'este-equipo') openEsteEquipoApp();
-      else if (iconName === 'wordpad') openWordpadApp();
-      else if (iconName === 'facturador') openFacturadorApp();
-      else if (iconName === 'correo') openCorreoApp();
-      else if (iconName === 'papelera') openPapeleraApp();
-      validateAction(`dblclick-${iconName}`);
-    }
-
-    function handleDesktopClick(e) {
-      clearSelections();
-      startMenu.style.display = 'none';
-      validateAction('click-desktop');
-    }
-
-    function toggleStartMenu(e) {
-      e.stopPropagation();
-      startMenu.style.display = startMenu.style.display === 'block' ? 'none' : 'block';
-      validateAction('click-start');
-    }
-
-    function handleStartItem(itemName) {
-      startMenu.style.display = 'none';
-      if (itemName === 'este-equipo') openEsteEquipoApp();
-      else if (itemName === 'wordpad') openWordpadApp();
-      else if (itemName === 'facturador') openFacturadorApp();
-      else if (itemName === 'correo') openCorreoApp();
-      else if (itemName === 'papelera') openPapeleraApp();
-      validateAction(`start-${itemName}`);
-    }
-
-    function closeAppWindow() {
-      appWindow.style.display = 'none';
-      validateAction('close-window');
-    }
-
-    // APLICACIONES INTERACTIVAS REALES
-    function openEsteEquipoApp() {
-      windowTitle.textContent = "Este Equipo - Mis Archivos";
-      windowBody.innerHTML = `
-        <div style="font-weight:bold; margin-bottom:10px;">Carpetas de la computadora:</div>
-        <ul style="list-style:none; padding-left:0;">
-          <li style="padding:8px; background:#f1f3f5; margin-bottom:6px; border-radius:4px; cursor:pointer;" onclick="alert('Abriendo Disco Local (C:)')">💻 Disco Local (C:)</li>
-          <li style="padding:8px; background:#e2f0d9; margin-bottom:6px; border-radius:4px; cursor:pointer; font-weight:600;" onclick="openCarpetaDescargas()">📁 Descargas ${facturaGuardada ? '<span style="color:green; float:right;">[Factura_001.pdf lista]</span>' : ''}</li>
-          <li style="padding:8px; background:#f1f3f5; margin-bottom:6px; border-radius:4px; cursor:pointer;" onclick="alert('Abriendo Documentos')">📄 Documentos</li>
-        </ul>
-      `;
-      appWindow.style.display = 'flex';
-    }
-
-    function openCarpetaDescargas() {
-      if (currentIdx === 97 && facturaGuardada) {
-        windowBody.innerHTML = `
-          <div style="font-weight:bold; color:#0077b6; margin-bottom:10px;">Carpeta: Descargas</div>
-          <div style="padding:10px; background:#d4edda; border:1px solid #c3e6cb; border-radius:4px; display:flex; justify-content:space-between; align-items:center;">
-            <span>📄 Factura_001.pdf (Guardada correctamente)</span>
-            <button class="app-btn" onclick="abrirCorreoParaAdjuntar()">Enviar por Mail</button>
-          </div>
-        `;
-      } else {
-        alert("Carpeta Descargas abierta.");
-      }
-    }
-
-    function openWordpadApp() {
-      windowTitle.textContent = "WordPad - Escribir Textos";
-      windowBody.innerHTML = `
-        <div style="border-bottom:1px solid #dee2e6; padding-bottom:6px; margin-bottom:10px; font-size:0.8rem; color:#6c757d;">
-          Archivo | Editar | Ver | Insertar | Formato
-        </div>
-        <textarea class="app-form-control" style="height:180px; resize:none;" placeholder="Escriba aquí su carta o nota personal..."></textarea>
-      `;
-      appWindow.style.display = 'flex';
-    }
-
-    function openFacturadorApp() {
-      windowTitle.textContent = "Facturador Digital - Cargar Comprobante";
-      windowBody.innerHTML = `
-        <div class="app-form-group">
-          <label>Nombre del Cliente o Comercio:</label>
-          <input type="text" class="app-form-control" id="fac-cliente" value="Guillermo López">
-        </div>
-        <div class="app-form-group">
-          <label>Monto Total ($):</label>
-          <input type="text" class="app-form-control" id="fac-total" value="15000">
-        </div>
-        <button class="app-btn" onclick="emitirYGuardarFactura()">Emitir Factura y Guardar</button>
-      `;
-      appWindow.style.display = 'flex';
-    }
-
-    function emitirYGuardarFactura() {
-      facturaGuardada = true;
-      alert("¡Factura emitida con éxito! Se ha guardado en la carpeta Descargas.");
-      closeAppWindow();
-      if (currentIdx === 97) {
-        setTimeout(() => {
-          openEsteEquipoApp();
-        }, 500);
-      }
-    }
-
-    function openCorreoApp() {
-      windowTitle.textContent = "Correo Electrónico";
-      windowBody.innerHTML = `
-        <div class="app-form-group">
-          <label>Para:</label>
-          <input type="text" class="app-form-control" id="mail-to" value="contacto@comercio.com">
-        </div>
-        <div class="app-form-group">
-          <label>Asunto:</label>
-          <input type="text" class="app-form-control" id="mail-sub" value="Envío de Factura">
-        </div>
-        <div id="mail-adjunto-container" style="margin-bottom:10px; font-size:0.85rem; color:#495057;">
-          📎 Archivos adjuntos: <em>Ninguno</em>
-        </div>
-        <button class="app-btn" onclick="enviarCorreoFinal()">Enviar Correo</button>
-      `;
-      appWindow.style.display = 'flex';
-    }
-
-    function abrirCorreoParaAdjuntar() {
-      openCorreoApp();
-      setTimeout(() => {
-        const adjContainer = document.getElementById('mail-adjunto-container');
-        if (adjContainer) {
-          adjContainer.innerHTML = `📎 Archivos adjuntos: <strong style="color:green;">Factura_001.pdf</strong> (Adjuntado desde Descargas)`;
-        }
-      }, 200);
-    }
-
-    function enviarCorreoFinal() {
-      alert("¡Correo enviado con éxito junto con la factura adjunta!");
-      closeAppWindow();
-      if (currentIdx === 97) {
-        alert("¡Felicitaciones! Ha aprobado la auditoría del Módulo Evaluador Dinámico y completado los 100 ejercicios.");
-        navigate(1);
-      }
-    }
-
-    function openPapeleraApp() {
-      windowTitle.textContent = "Papelera de Reciclaje";
-      windowBody.innerHTML = `
-        <div style="color:#6c757d; font-size:0.95rem; text-align:center; padding:25px;">
-          🗑️ La papelera está vacía en este momento.
-        </div>
-      `;
-      appWindow.style.display = 'flex';
-    }
-
-    // Inicializar al cargar el script
-    init();
-  </script>
+  });
+}
+init();
+</script>
 </body>
 </html>
