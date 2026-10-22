@@ -17,7 +17,7 @@
   .badge-module { display: inline-block; background-color: #0077b6; color: #fff; font-size: 0.7rem; font-weight: bold; padding: 3px 6px; border-radius: 4px; margin-bottom: 4px; text-transform: uppercase; }
   .exercise-title { font-size: 0.9rem; margin-bottom: 5px; color: #fff; }
   .instruction-card { background-color: #1c2541; border-left: 4px solid #00b4d8; padding: 7px; border-radius: 4px; margin-bottom: 5px; font-size: 0.75rem; }
-  .instruction-text { font-size: 0.82rem; line-height: 1.3; margin-bottom: 6px; color: #e0e1dd; max-height: 95px; overflow-y: auto; }
+  .instruction-text { font-size: 0.82rem; line-height: 1.4; margin-bottom: 6px; color: #e0e1dd; max-height: 140px; overflow-y: auto; }
   .hint-btn { width: 100%; background: rgba(255,183,3,0.15); border: 1px solid #ffb703; color: #ffb703; padding: 6px; border-radius: 6px; cursor: pointer; font-weight: bold; text-align: left; font-size: 0.78rem; margin-bottom: 4px; }
   .hint-box { display: none; background: rgba(255,183,3,0.1); border: 1px dashed #ffb703; padding: 6px; border-radius: 6px; font-size: 0.75rem; color: #ffb703; margin-bottom: 6px; max-height: 85px; overflow-y: auto; }
   .eval-controls { display: none; background: rgba(0,180,216,0.15); border: 1px solid #00b4d8; padding: 8px; border-radius: 6px; margin-bottom: 6px; text-align: center; }
@@ -59,7 +59,7 @@
   .desktop-icon.blink { animation: blinkIcon 0.5s ease-in-out 2; }
   @keyframes blinkIcon { 0%,100% { transform: scale(1); } 50% { transform: scale(1.25); } }
 
-  .window { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 560px; height: 390px; background-color: #f8f9fa; color: #333; border-radius: 6px; box-shadow: 0 10px 30px rgba(0,0,0,0.6); overflow: hidden; display: none; z-index: 10; flex-direction: column; }
+  .window { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 560px; height: 420px; background-color: #f8f9fa; color: #333; border-radius: 6px; box-shadow: 0 10px 30px rgba(0,0,0,0.6); overflow: hidden; display: none; z-index: 10; flex-direction: column; }
   .window-header { background-color: #e9ecef; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ced4da; }
   .window-title { font-size: 0.85rem; color: #212529; font-weight: 600; }
   .btn-close { background: transparent; border: none; font-size: 1rem; font-weight: bold; color: #495057; cursor: pointer; padding: 2px 8px; border-radius: 3px; }
@@ -70,6 +70,8 @@
   .app-form-control { width: 100%; padding: 6px; border: 1px solid #ced4da; border-radius: 4px; font-size: 0.85rem; }
   .app-btn { background: #0077b6; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.85rem; font-weight: 600; }
   .app-btn:hover { background: #0096c7; }
+  .force-close-btn { display: none; margin: 10px; background: #dc3545; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 0.85rem; }
+  .force-close-btn:hover { background: #b02a37; }
 
   .start-menu { position: absolute; bottom: 45px; left: 0; width: 260px; background-color: rgba(15,23,42,0.96); border-top-right-radius: 8px; border: 1px solid rgba(255,255,255,0.1); padding: 10px; display: none; z-index: 15; }
   .start-item { padding: 8px 12px; color: #fff; font-size: 0.85rem; cursor: pointer; border-radius: 4px; display: flex; align-items: center; gap: 10px; }
@@ -143,8 +145,8 @@
           <option value="4">Módulo 4: Correo (41-55)</option>
           <option value="5">Módulo 5: Facturador (56-70) — opcional</option>
           <option value="6">Módulo 6: Integración (71-90)</option>
-          <option value="7">Módulo 7: Refuerzo (91-95) — opcional</option>
-          <option value="8">Módulo 8: Repasamos (96-100)</option>
+          <option value="7">Módulo 7: Refuerzo (91-94) — opcional</option>
+          <option value="8">Módulo 8: Repasamos (95-100)</option>
         </select>
       </div>
 
@@ -231,6 +233,7 @@
           <button class="btn-close" type="button" onclick="closeAppWindow()" title="Cerrar">[X]</button>
         </div>
         <div class="window-body" id="window-body">Contenido...</div>
+        <button class="force-close-btn" id="force-close-btn" type="button" onclick="forzarCierre()">🔴 Forzar cierre</button>
       </div>
 
       <div class="start-menu" id="start-menu">
@@ -288,7 +291,7 @@
 
 <script>
 /* ============================================================
-   EJERCICIOS: 100 en 8 MÓDULOS (Camino A) — SIN window-open en steps
+   EJERCICIOS: 100 en 8 MÓDULOS — VERSIÓN FINAL DEFINITIVA
    ============================================================ */
 const exercises = [
   // M1: Conocer la PC (1-15)
@@ -317,7 +320,7 @@ const exercises = [
   { id:21, module:"2", moduleName:"Módulo 2: Archivos", title:"Ej 21: Mover archivo", context:"📌 Ventana de Este Equipo", instruction:"<strong>Paso 1:</strong> Seleccione un archivo con clic simple.<br><strong>Paso 2:</strong> Mantenga presionado el botón izquierdo y arrástrelo.<br><strong>Paso 3:</strong> Suéltelo sobre la carpeta destino.", steps:["move-file"], hints:["¿Cómo movés?","Arrastrar","Arrastrá el archivo a la carpeta"], skippable:false },
   { id:22, module:"2", moduleName:"Módulo 2: Archivos", title:"Ej 22: Eliminar archivo", context:"📌 Ventana de Este Equipo", instruction:"<strong>Paso 1:</strong> Seleccione el archivo con clic simple.<br><strong>Paso 2:</strong> Presione la tecla <strong>Supr</strong> (Delete).<br><strong>Paso 3:</strong> El archivo se moverá a la Papelera.", steps:["delete-file"], hints:["¿Cómo borrás?","Tecla Supr","Seleccioná y apretá Supr"], skippable:false },
   { id:23, module:"2", moduleName:"Módulo 2: Archivos", title:"Ej 23: Verificar Papelera", context:"📌 Pantalla Principal", instruction:"<strong>Paso 1:</strong> En el escritorio, haga <strong>doble clic</strong> en la Papelera.<br><strong>Paso 2:</strong> Verifique que el archivo eliminado está ahí.<br><strong>Paso 3:</strong> Cierre con [X].", steps:["dblclick-papelera","verify-trash"], hints:["¿Dónde está lo borrado?","En Papelera","Doble clic en Papelera"], skippable:false },
-  { id:24, module:"2", moduleName:"Módulo 2: Archivos", title:"Ej 24: Repetir crear→renombrar→mover", context:"📌 Ventana de Este Equipo", instruction:"<strong>Paso 1:</strong> Cree una carpeta (clic derecho → Nuevo → Carpeta).<br><strong>Paso 2:</strong> Renómbrela (clic derecho → Renombrar).<br><strong>Paso 3:</strong> Mueva un archivo dentro (arrastrar).", steps:["create-folder","rename-folder","move-file"], hints:["Como los ej. 19-21","Paso a paso","1) Crear 2) Renombrar 3) Mover"], skippable:false },
+  { id:24, module:"2", moduleName:"Módulo 2: Archivos", title:"Ej 24: Repetir crear→renombrar→mover", context:"📌 Ventana de Este Equipo", instruction:"<strong>Paso 1:</strong> Cree una carpeta (clic derecho → Nuevo → Carpeta).<br><strong>Paso 2:</strong> Renómbrela (clic derecho → Renombrar).<br><strong>Paso 3:</strong> Mueva un archivo dentro (arrastrar).", steps:["create-folder","rename-folder","move-file"], hints:["Como ej. 19-21","Paso a paso","1) Crear 2) Renombrar 3) Mover"], skippable:false },
   { id:25, module:"2", moduleName:"Módulo 2: Archivos", title:"Ej 25: Autoevaluación M2", context:"📌 Pantalla Principal", instruction:"<strong>Autoevaluación M2.</strong><br><strong>Paso 1:</strong> Abra Este Equipo.<br><strong>Paso 2:</strong> Entre a Descargas.<br><strong>Paso 3:</strong> Vuelva atrás con la flecha ←.", steps:["dblclick-este-equipo","open-descargas","go-back"], hints:["Repasá","Archivos y carpetas","1) Este Equipo 2) Descargas 3) Volver"], skippable:false },
 
   // M3: WordPad (26-40)
@@ -361,51 +364,51 @@ const exercises = [
   { id:59, module:"5", moduleName:"Módulo 5: Facturador", title:"Ej 59: Emitir factura", context:"📌 Ventana del Facturador", instruction:"<strong>Paso 1:</strong> Complete Cliente y Monto.<br><strong>Paso 2:</strong> Haga clic en 'Emitir Factura y Guardar'.<br><strong>Paso 3:</strong> Verá un mensaje de confirmación.", steps:["emit-invoice"], hints:["¿Qué botón genera?","El verde","Clic en 'Emitir Factura'"], skippable:true },
   { id:60, module:"5", moduleName:"Módulo 5: Facturador", title:"Ej 60: Verificar en Descargas", context:"📌 Pantalla Principal", instruction:"<strong>Paso 1:</strong> Abra Este Equipo (doble clic).<br><strong>Paso 2:</strong> Entre a Descargas.<br><strong>Paso 3:</strong> Haga clic en '✅ Verificar archivo' para confirmar que la factura está.", steps:["dblclick-este-equipo","open-descargas","verify-file"], hints:["¿Dónde quedó?","En Descargas","Este Equipo → Descargas"], skippable:true },
   { id:61, module:"5", moduleName:"Módulo 5: Facturador", title:"Ej 61: Cerrar Facturador", context:"📌 Ventana del Facturador", instruction:"<strong>Paso 1:</strong> Mire la esquina superior derecha del Facturador.<br><strong>Paso 2:</strong> Ubique la cruz [X].<br><strong>Paso 3:</strong> Haga clic para cerrar.", steps:["close-window"], hints:["Clic en [X]","Arriba derecha","Cruz"], skippable:true },
-  { id:62, module:"5", moduleName:"Módulo 5: Facturador", title:"Ej 62: Repetir emitir→verificar→cerrar", context:"📌 Ventana del Facturador", instruction:"<strong>Paso 1:</strong> Emita una factura.<br><strong>Paso 2:</strong> Abra Este Equipo → Descargas → Verificar.<br><strong>Paso 3:</strong> Cierre la ventana con [X].", steps:["emit-invoice","dblclick-este-equipo","open-descargas","verify-file","close-window"], hints:["Como ej. 59-61","Factura y verificar","1) Emitir 2) Descargas 3) Cerrar"], skippable:true },
-  { id:63, module:"5", moduleName:"Módulo 5: Facturador", title:"Ej 63: Emitir con otro cliente", context:"📌 Ventana del Facturador", instruction:"<strong>Paso 1:</strong> Abra el Facturador.<br><strong>Paso 2:</strong> Escriba otro cliente y otro monto.<br><strong>Paso 3:</strong> Haga clic en 'Emitir Factura'.", steps:["fac-client","fac-amount","emit-invoice"], hints:["Cambiá datos","Otro cliente","Escribí otro nombre y monto"], skippable:true },
+  { id:62, module:"5", moduleName:"Módulo 5: Facturador", title:"Ej 62: Repetir emitir→verificar→cerrar", context:"📌 Pantalla Principal", instruction:"<strong>Paso 1:</strong> Abra el Facturador (doble clic).<br><strong>Paso 2:</strong> Emita una factura.<br><strong>Paso 3:</strong> Abra Este Equipo → Descargas → Verificar.<br><strong>Paso 4:</strong> Cierre la ventana con [X].", steps:["dblclick-facturador","emit-invoice","dblclick-este-equipo","open-descargas","verify-file","close-window"], hints:["Como ej. 59-61","Factura y verificar","1) Abrir Facturador 2) Emitir 3) Este Equipo 4) Descargas 5) Verificar 6) Cerrar"], skippable:true },
+  { id:63, module:"5", moduleName:"Módulo 5: Facturador", title:"Ej 63: Emitir con otro cliente", context:"📌 Ventana del Facturador", instruction:"<strong>Paso 1:</strong> Abra el Facturador (doble clic).<br><strong>Paso 2:</strong> Escriba otro cliente y otro monto.<br><strong>Paso 3:</strong> Haga clic en 'Emitir Factura'.", steps:["dblclick-facturador","fac-client","fac-amount","emit-invoice"], hints:["Cambiá datos","Otro cliente","1) Abrir Facturador 2) Cliente 3) Monto 4) Emitir"], skippable:true },
   { id:64, module:"5", moduleName:"Módulo 5: Facturador", title:"Ej 64: Verificar nuevo archivo", context:"📌 Pantalla Principal", instruction:"<strong>Paso 1:</strong> Abra Este Equipo → Descargas.<br><strong>Paso 2:</strong> Haga clic en '✅ Verificar archivo'.<br><strong>Paso 3:</strong> Verá el nuevo archivo listado.", steps:["dblclick-este-equipo","open-descargas","verify-file"], hints:["¿Dónde está?","En Descargas","Este Equipo → Descargas"], skippable:true },
   { id:65, module:"5", moduleName:"Módulo 5: Facturador", title:"Ej 65: Abrir Correo", context:"📌 Pantalla Principal", instruction:"<strong>Paso 1:</strong> Ubique el ícono de Correo.<br><strong>Paso 2:</strong> Haga <strong>doble clic</strong>.<br><strong>Paso 3:</strong> Se abrirá la ventana de Correo.", steps:["dblclick-correo"], hints:["Doble clic en sobre","El de Gmail","Dos clics"], skippable:true },
-  { id:66, module:"5", moduleName:"Módulo 5: Facturador", title:"Ej 66: Adjuntar factura", context:"📌 Ventana de Correo", instruction:"<strong>Paso 1:</strong> En Correo, haga clic en 📎.<br><strong>Paso 2:</strong> Se adjuntará la factura.<br><strong>Paso 3:</strong> Verá el nombre abajo.", steps:["attach-file"], hints:["¿Qué archivo?","La factura","Clic en 📎 → Factura"], skippable:true },
-  { id:67, module:"5", moduleName:"Módulo 5: Facturador", title:"Ej 67: Enviar factura", context:"📌 Ventana de Correo", instruction:"<strong>Paso 1:</strong> Complete Para y Asunto.<br><strong>Paso 2:</strong> Haga clic en 'Enviar Correo'.<br><strong>Paso 3:</strong> Verá confirmación.", steps:["send-mail"], hints:["¿Cómo enviás?","Botón Enviar","Clic en 'Enviar'"], skippable:true },
+  { id:66, module:"5", moduleName:"Módulo 5: Facturador", title:"Ej 66: Adjuntar factura", context:"📌 Pantalla Principal", instruction:"<strong>Paso 1:</strong> Abra Correo (doble clic).<br><strong>Paso 2:</strong> Haga clic en 📎 para adjuntar la factura.<br><strong>Paso 3:</strong> Verá el nombre abajo.", steps:["dblclick-correo","attach-file"], hints:["¿Qué archivo?","La factura","1) Abrir Correo 2) Clic en 📎"], skippable:true },
+  { id:67, module:"5", moduleName:"Módulo 5: Facturador", title:"Ej 67: Enviar factura", context:"📌 Pantalla Principal", instruction:"<strong>Paso 1:</strong> Abra Correo (doble clic).<br><strong>Paso 2:</strong> Complete Para y Asunto.<br><strong>Paso 3:</strong> Haga clic en 'Enviar Correo'.<br><strong>Paso 4:</strong> Verá confirmación.", steps:["dblclick-correo","send-mail"], hints:["¿Cómo enviás?","Botón Enviar","1) Abrir Correo 2) Enviar"], skippable:true },
   { id:68, module:"5", moduleName:"Módulo 5: Facturador", title:"Ej 68: Verificar en Enviados", context:"📌 Ventana de Correo", instruction:"<strong>Paso 1:</strong> Haga clic en 'Ver Enviados'.<br><strong>Paso 2:</strong> Verifique el correo con la factura adjunta.<br><strong>Paso 3:</strong> Cierre con [X].", steps:["check-sent"], hints:["¿Dónde está?","En Enviados","Clic en 'Enviados'"], skippable:true },
-  { id:69, module:"5", moduleName:"Módulo 5: Facturador", title:"Ej 69: Repetir factura→correo→enviar", context:"📌 Pantalla Principal", instruction:"<strong>Paso 1:</strong> Emita una factura.<br><strong>Paso 2:</strong> Abra Correo, adjunte la factura.<br><strong>Paso 3:</strong> Envíe.", steps:["emit-invoice","dblclick-correo","attach-file","send-mail"], hints:["Como ej. 59-67","Factura y correo","1) Factura 2) Correo 3) Adjuntar 4) Enviar"], skippable:true },
-  { id:70, module:"5", moduleName:"Módulo 5: Facturador", title:"Ej 70: Autoevaluación M5", context:"📌 Pantalla Principal", instruction:"<strong>Autoevaluación M5.</strong><br><strong>Paso 1:</strong> Emita una factura.<br><strong>Paso 2:</strong> Abra Correo, complete Para y Asunto.<br><strong>Paso 3:</strong> Adjunte la factura.<br><strong>Paso 4:</strong> Envíe.<br><strong>Paso 5:</strong> Verifique en Enviados.", steps:["emit-invoice","dblclick-correo","mail-to","mail-subject","attach-file","send-mail","check-sent"], hints:["Repasá","Factura completa","1) Factura 2) Correo 3) Para 4) Asunto 5) Adjuntar 6) Enviar 7) Enviados"], skippable:true },
+  { id:69, module:"5", moduleName:"Módulo 5: Facturador", title:"Ej 69: Repetir factura→correo→enviar", context:"📌 Pantalla Principal", instruction:"<strong>Paso 1:</strong> Abra el Facturador (doble clic) y emita una factura.<br><strong>Paso 2:</strong> Abra Correo (doble clic).<br><strong>Paso 3:</strong> Adjunte la factura (📎).<br><strong>Paso 4:</strong> Envíe.", steps:["dblclick-facturador","emit-invoice","dblclick-correo","attach-file","send-mail"], hints:["Como ej. 59-67","Factura y correo","1) Facturador 2) Emitir 3) Correo 4) Adjuntar 5) Enviar"], skippable:true },
+  { id:70, module:"5", moduleName:"Módulo 5: Facturador", title:"Ej 70: Autoevaluación M5", context:"📌 Pantalla Principal", instruction:"<strong>Autoevaluación M5.</strong><br><strong>Paso 1:</strong> Abra el Facturador y emita una factura.<br><strong>Paso 2:</strong> Abra Correo y complete Para y Asunto.<br><strong>Paso 3:</strong> Adjunte la factura.<br><strong>Paso 4:</strong> Envíe.<br><strong>Paso 5:</strong> Verifique en Enviados.", steps:["dblclick-facturador","emit-invoice","dblclick-correo","mail-to","mail-subject","attach-file","send-mail","check-sent"], hints:["Repasá","Factura completa","1) Facturador 2) Emitir 3) Correo 4) Para 5) Asunto 6) Adjuntar 7) Enviar 8) Enviados"], skippable:true },
 
   // M6: Integración (71-90)
-  { id:71, module:"6", moduleName:"Módulo 6: Integración", title:"Ej 71: Escribir nota en WordPad", context:"📌 Ventana de WordPad", instruction:"<strong>Paso 1:</strong> Abra WordPad (doble clic o desde Inicio).<br><strong>Paso 2:</strong> Haga clic en el área de texto.<br><strong>Paso 3:</strong> Escriba una nota (mínimo 10 caracteres).", steps:["type-phrase"], hints:["Escribí una nota","En WordPad","Abrí WordPad y escribí"], skippable:false },
+  { id:71, module:"6", moduleName:"Módulo 6: Integración", title:"Ej 71: Escribir nota en WordPad", context:"📌 Pantalla Principal", instruction:"<strong>Paso 1:</strong> Abra WordPad (doble clic).<br><strong>Paso 2:</strong> Haga clic en el área de texto.<br><strong>Paso 3:</strong> Escriba una nota (mínimo 10 caracteres).", steps:["dblclick-wordpad","type-phrase"], hints:["Escribí una nota","En WordPad","1) Abrir WordPad 2) Escribir"], skippable:false },
   { id:72, module:"6", moduleName:"Módulo 6: Integración", title:"Ej 72: Formato a la nota", context:"📌 Ventana de WordPad", instruction:"<strong>Paso 1:</strong> Seleccione el texto.<br><strong>Paso 2:</strong> Aplique negrita (B).<br><strong>Paso 3:</strong> Centre el texto (botón centrar).", steps:["bold","center"], hints:["¿Cómo formateás?","Negrita y centrar","Seleccioná → B → centrar"], skippable:false },
   { id:73, module:"6", moduleName:"Módulo 6: Integración", title:"Ej 73: Guardar nota", context:"📌 Ventana de WordPad", instruction:"<strong>Paso 1:</strong> Vaya a 'Archivo' → 'Guardar como'.<br><strong>Paso 2:</strong> Elija la carpeta Descargas.<br><strong>Paso 3:</strong> Escriba un nombre y guarde.", steps:["save-file"], hints:["¿Dónde guardás?","En Descargas","Archivo → Guardar como → Descargas"], skippable:false },
   { id:74, module:"6", moduleName:"Módulo 6: Integración", title:"Ej 74: Cerrar WordPad", context:"📌 Ventana de WordPad", instruction:"<strong>Paso 1:</strong> Mire la esquina superior derecha.<br><strong>Paso 2:</strong> Ubique la cruz [X].<br><strong>Paso 3:</strong> Haga clic para cerrar WordPad.", steps:["close-window"], hints:["Clic en [X]","Arriba derecha","Cruz"], skippable:false },
   { id:75, module:"6", moduleName:"Módulo 6: Integración", title:"Ej 75: Abrir Facturador", context:"📌 Pantalla Principal", instruction:"<strong>Paso 1:</strong> Ubique el ícono del Facturador.<br><strong>Paso 2:</strong> Haga <strong>doble clic</strong>.<br><strong>Paso 3:</strong> Se abrirá la ventana.", steps:["dblclick-facturador"], hints:["Doble clic","El verde","Dos clics"], skippable:false },
-  { id:76, module:"6", moduleName:"Módulo 6: Integración", title:"Ej 76: Emitir factura", context:"📌 Ventana del Facturador", instruction:"<strong>Paso 1:</strong> Complete Cliente y Monto.<br><strong>Paso 2:</strong> Haga clic en 'Emitir Factura y Guardar'.<br><strong>Paso 3:</strong> Verá confirmación.", steps:["emit-invoice"], hints:["¿Cómo emitís?","Botón Emitir","Clic en 'Emitir Factura'"], skippable:false },
+  { id:76, module:"6", moduleName:"Módulo 6: Integración", title:"Ej 76: Emitir factura", context:"📌 Pantalla Principal", instruction:"<strong>Paso 1:</strong> Abra el Facturador (doble clic).<br><strong>Paso 2:</strong> Complete Cliente y Monto.<br><strong>Paso 3:</strong> Haga clic en 'Emitir Factura y Guardar'.<br><strong>Paso 4:</strong> Verá confirmación.", steps:["dblclick-facturador","emit-invoice"], hints:["¿Cómo emitís?","Botón Emitir","1) Abrir Facturador 2) Emitir"], skippable:false },
   { id:77, module:"6", moduleName:"Módulo 6: Integración", title:"Ej 77: Verificar factura", context:"📌 Pantalla Principal", instruction:"<strong>Paso 1:</strong> Abra Este Equipo → Descargas.<br><strong>Paso 2:</strong> Haga clic en '✅ Verificar archivo'.<br><strong>Paso 3:</strong> Confirme que la factura está.", steps:["dblclick-este-equipo","open-descargas","verify-file"], hints:["¿Dónde está?","En Descargas","Este Equipo → Descargas"], skippable:false },
   { id:78, module:"6", moduleName:"Módulo 6: Integración", title:"Ej 78: Abrir Correo", context:"📌 Pantalla Principal", instruction:"<strong>Paso 1:</strong> Ubique el ícono de Correo.<br><strong>Paso 2:</strong> Haga <strong>doble clic</strong>.<br><strong>Paso 3:</strong> Se abrirá la ventana.", steps:["dblclick-correo"], hints:["Doble clic en sobre","El de Gmail","Dos clics"], skippable:false },
-  { id:79, module:"6", moduleName:"Módulo 6: Integración", title:"Ej 79: Escribir correo", context:"📌 Ventana de Correo", instruction:"<strong>Paso 1:</strong> Complete el campo 'Para'.<br><strong>Paso 2:</strong> Complete 'Asunto'.<br><strong>Paso 3:</strong> Escriba el cuerpo del mensaje.", steps:["mail-to","mail-subject","mail-body"], hints:["Completá los campos","Para, Asunto, Cuerpo","Escribí en cada campo"], skippable:false },
-  { id:80, module:"6", moduleName:"Módulo 6: Integración", title:"Ej 80: Adjuntar nota y factura", context:"📌 Ventana de Correo", instruction:"<strong>Paso 1:</strong> Haga clic en 📎 para adjuntar la nota.<br><strong>Paso 2:</strong> Haga clic en 📎 de nuevo para adjuntar la factura.<br><strong>Paso 3:</strong> Verá ambos en la lista.", steps:["attach-file","attach-file"], hints:["¿Cómo adjuntás dos?","📎 dos veces","Clic en 📎 → nota → 📎 → factura"], skippable:false },
-  { id:81, module:"6", moduleName:"Módulo 6: Integración", title:"Ej 81: Enviar correo", context:"📌 Ventana de Correo", instruction:"<strong>Paso 1:</strong> Revise que Para y Asunto estén completos.<br><strong>Paso 2:</strong> Haga clic en 'Enviar Correo'.<br><strong>Paso 3:</strong> Verá confirmación.", steps:["send-mail"], hints:["¿Cómo enviás?","Botón Enviar","Clic en 'Enviar'"], skippable:false },
+  { id:79, module:"6", moduleName:"Módulo 6: Integración", title:"Ej 79: Escribir correo", context:"📌 Pantalla Principal", instruction:"<strong>Paso 1:</strong> Abra Correo (doble clic).<br><strong>Paso 2:</strong> Complete el campo 'Para'.<br><strong>Paso 3:</strong> Complete 'Asunto'.<br><strong>Paso 4:</strong> Escriba el cuerpo del mensaje.", steps:["dblclick-correo","mail-to","mail-subject","mail-body"], hints:["Completá los campos","Para, Asunto, Cuerpo","1) Abrir Correo 2) Para 3) Asunto 4) Cuerpo"], skippable:false },
+  { id:80, module:"6", moduleName:"Módulo 6: Integración", title:"Ej 80: Adjuntar nota y factura", context:"📌 Pantalla Principal", instruction:"<strong>Paso 1:</strong> Abra Correo (doble clic).<br><strong>Paso 2:</strong> Haga clic en 📎 para adjuntar la nota.<br><strong>Paso 3:</strong> Haga clic en 📎 de nuevo para adjuntar la factura.<br><strong>Paso 4:</strong> Verá ambos en la lista.", steps:["dblclick-correo","attach-file","attach-file"], hints:["¿Cómo adjuntás dos?","📎 dos veces","1) Abrir Correo 2) 📎 nota 3) 📎 factura"], skippable:false },
+  { id:81, module:"6", moduleName:"Módulo 6: Integración", title:"Ej 81: Enviar correo", context:"📌 Pantalla Principal", instruction:"<strong>Paso 1:</strong> Abra Correo (doble clic).<br><strong>Paso 2:</strong> Revise que Para y Asunto estén completos.<br><strong>Paso 3:</strong> Haga clic en 'Enviar Correo'.<br><strong>Paso 4:</strong> Verá confirmación.", steps:["dblclick-correo","send-mail"], hints:["¿Cómo enviás?","Botón Enviar","1) Abrir Correo 2) Enviar"], skippable:false },
   { id:82, module:"6", moduleName:"Módulo 6: Integración", title:"Ej 82: Verificar en Enviados", context:"📌 Ventana de Correo", instruction:"<strong>Paso 1:</strong> Haga clic en 'Ver Enviados'.<br><strong>Paso 2:</strong> Verifique el correo con ambos adjuntos.<br><strong>Paso 3:</strong> Cierre con [X].", steps:["check-sent"], hints:["¿Dónde está?","En Enviados","Clic en 'Enviados'"], skippable:false },
   { id:83, module:"6", moduleName:"Módulo 6: Integración", title:"Ej 83: Cerrar Correo", context:"📌 Ventana de Correo", instruction:"<strong>Paso 1:</strong> Mire la esquina superior derecha.<br><strong>Paso 2:</strong> Ubique la cruz [X].<br><strong>Paso 3:</strong> Haga clic para cerrar Correo.", steps:["close-window"], hints:["Clic en [X]","Arriba derecha","Cruz"], skippable:false },
-  { id:84, module:"6", moduleName:"Módulo 6: Integración", title:"Ej 84: Repetir flujo completo", context:"📌 Pantalla Principal", instruction:"<strong>Paso 1:</strong> Escriba una nota en WordPad y aplique formato.<br><strong>Paso 2:</strong> Guárdela en Descargas.<br><strong>Paso 3:</strong> Abra el Facturador y emita una factura.<br><strong>Paso 4:</strong> Abra Correo, adjunte ambos y envíe.<br><strong>Paso 5:</strong> Verifique en Enviados.", steps:["type-phrase","bold","center","save-file","dblclick-facturador","emit-invoice","dblclick-correo","attach-file","send-mail","check-sent"], hints:["Como ej. 71-82","Todo el flujo","1) WordPad 2) Formato 3) Guardar 4) Facturador 5) Emitir 6) Correo 7) Adjuntar 8) Enviar 9) Enviados"], skippable:false },
-  { id:85, module:"6", moduleName:"Módulo 6: Integración", title:"Ej 85: Repetir con otro cliente", context:"📌 Pantalla Principal", instruction:"<strong>Paso 1:</strong> Abra el Facturador.<br><strong>Paso 2:</strong> Escriba otro cliente y monto.<br><strong>Paso 3:</strong> Emita la factura.<br><strong>Paso 4:</strong> Abra Correo, adjunte y envíe.", steps:["fac-client","fac-amount","emit-invoice","dblclick-correo","attach-file","send-mail"], hints:["Cambiá datos","Otro cliente","Repetí con otros datos"], skippable:false },
+  { id:84, module:"6", moduleName:"Módulo 6: Integración", title:"Ej 84: Repetir flujo completo", context:"📌 Pantalla Principal", instruction:"<strong>Paso 1:</strong> Abra WordPad (doble clic), escriba una nota y aplique formato.<br><strong>Paso 2:</strong> Guárdela en Descargas.<br><strong>Paso 3:</strong> Abra el Facturador y emita una factura.<br><strong>Paso 4:</strong> Abra Correo, adjunte ambos y envíe.<br><strong>Paso 5:</strong> Verifique en Enviados.", steps:["dblclick-wordpad","type-phrase","bold","center","save-file","dblclick-facturador","emit-invoice","dblclick-correo","attach-file","send-mail","check-sent"], hints:["Como ej. 71-82","Todo el flujo","1) WordPad 2) Escribir 3) Formato 4) Guardar 5) Facturador 6) Emitir 7) Correo 8) Adjuntar 9) Enviar 10) Enviados"], skippable:false },
+  { id:85, module:"6", moduleName:"Módulo 6: Integración", title:"Ej 85: Repetir con otro cliente", context:"📌 Pantalla Principal", instruction:"<strong>Paso 1:</strong> Abra el Facturador (doble clic).<br><strong>Paso 2:</strong> Escriba otro cliente y monto.<br><strong>Paso 3:</strong> Emita la factura.<br><strong>Paso 4:</strong> Abra Correo, adjunte y envíe.", steps:["dblclick-facturador","fac-client","fac-amount","emit-invoice","dblclick-correo","attach-file","send-mail"], hints:["Cambiá datos","Otro cliente","1) Facturador 2) Cliente 3) Monto 4) Emitir 5) Correo 6) Adjuntar 7) Enviar"], skippable:false },
   { id:86, module:"6", moduleName:"Módulo 6: Integración", title:"Ej 86: Abrir archivo guardado", context:"📌 Pantalla Principal", instruction:"<strong>Paso 1:</strong> Abra Este Equipo → Descargas.<br><strong>Paso 2:</strong> Haga clic en '✅ Verificar archivo'.<br><strong>Paso 3:</strong> Verá los archivos guardados.", steps:["dblclick-este-equipo","open-descargas","verify-file"], hints:["¿Cómo abrís?","Doble clic en el archivo","Doble clic en Descargas"], skippable:false },
-  { id:87, module:"6", moduleName:"Módulo 6: Integración", title:"Ej 87: Verificar contenido", context:"📌 Ventana de Este Equipo", instruction:"<strong>Paso 1:</strong> En Descargas, verifique que el archivo está listado.<br><strong>Paso 2:</strong> Haga clic en '✅ Verificar archivo'.<br><strong>Paso 3:</strong> Confirme que el contenido es correcto.", steps:["verify-file"], hints:["¿Qué contiene?","El texto","Abrí el archivo y verificá"], skippable:false },
+  { id:87, module:"6", moduleName:"Módulo 6: Integración", title:"Ej 87: Verificar contenido", context:"📌 Pantalla Principal", instruction:"<strong>Paso 1:</strong> Abra Este Equipo (doble clic).<br><strong>Paso 2:</strong> Entre a Descargas.<br><strong>Paso 3:</strong> Haga clic en '✅ Verificar archivo'.<br><strong>Paso 4:</strong> Confirme que el contenido es correcto.", steps:["dblclick-este-equipo","open-descargas","verify-file"], hints:["¿Qué contiene?","El texto","1) Este Equipo 2) Descargas 3) Verificar"], skippable:false },
   { id:88, module:"6", moduleName:"Módulo 6: Integración", title:"Ej 88: Organizar archivos", context:"📌 Ventana de Este Equipo", instruction:"<strong>Paso 1:</strong> Seleccione un archivo.<br><strong>Paso 2:</strong> Arrástrelo a una carpeta.<br><strong>Paso 3:</strong> Suelte para moverlo.", steps:["move-file"], hints:["¿Cómo organizás?","Arrastrar","Arrastrá el archivo a la carpeta"], skippable:false },
-  { id:89, module:"6", moduleName:"Módulo 6: Integración", title:"Ej 89: Verificar organización", context:"📌 Ventana de Este Equipo", instruction:"<strong>Paso 1:</strong> Abra la carpeta destino.<br><strong>Paso 2:</strong> Verifique que el archivo está dentro.<br><strong>Paso 3:</strong> Haga clic en '✅ Verificar archivo'.", steps:["verify-file"], hints:["¿Está en la carpeta?","Sí","Abrí la carpeta y verificá"], skippable:false },
-  { id:90, module:"6", moduleName:"Módulo 6: Integración", title:"Ej 90: Autoevaluación M6", context:"📌 Pantalla Principal", instruction:"<strong>Autoevaluación M6.</strong><br><strong>Paso 1:</strong> WordPad: escriba, aplique formato y guarde.<br><strong>Paso 2:</strong> Facturador: emita factura.<br><strong>Paso 3:</strong> Correo: adjunte nota y factura, envíe.<br><strong>Paso 4:</strong> Verifique en Enviados.", steps:["type-phrase","bold","center","save-file","emit-invoice","dblclick-correo","attach-file","attach-file","send-mail","check-sent"], hints:["Repasá","Todo el ciclo","Paso a paso como ej. 84"], skippable:false },
+  { id:89, module:"6", moduleName:"Módulo 6: Integración", title:"Ej 89: Verificar organización", context:"📌 Pantalla Principal", instruction:"<strong>Paso 1:</strong> Abra Este Equipo (doble clic).<br><strong>Paso 2:</strong> Entre a Descargas.<br><strong>Paso 3:</strong> Haga clic en '✅ Verificar archivo'.<br><strong>Paso 4:</strong> Confirme que el archivo está en la carpeta.", steps:["dblclick-este-equipo","open-descargas","verify-file"], hints:["¿Está en la carpeta?","Sí","1) Este Equipo 2) Descargas 3) Verificar"], skippable:false },
+  { id:90, module:"6", moduleName:"Módulo 6: Integración", title:"Ej 90: Autoevaluación M6", context:"📌 Pantalla Principal", instruction:"<strong>Autoevaluación M6.</strong><br><strong>Paso 1:</strong> Abra WordPad, escriba y aplique formato. Guarde.<br><strong>Paso 2:</strong> Abra el Facturador y emita factura.<br><strong>Paso 3:</strong> Abra Correo, adjunte nota y factura, envíe.<br><strong>Paso 4:</strong> Verifique en Enviados.", steps:["dblclick-wordpad","type-phrase","bold","center","save-file","dblclick-facturador","emit-invoice","dblclick-correo","attach-file","attach-file","send-mail","check-sent"], hints:["Repasá","Todo el ciclo","1) WordPad 2) Escribir 3) Formato 4) Guardar 5) Facturador 6) Emitir 7) Correo 8) Adjuntar x2 9) Enviar 10) Enviados"], skippable:false },
 
-  // M7: Refuerzo (91-95)
-  { id:91, module:"7", moduleName:"Módulo 7: Refuerzo", title:"Ej 91: Cerrar ventana trabada", context:"📌 Ventana Abierta", instruction:"<strong>Paso 1:</strong> Si una ventana no responde, mire la esquina superior derecha.<br><strong>Paso 2:</strong> Haga clic en la cruz [X].<br><strong>Paso 3:</strong> Si no cierra, use el botón 'Forzar cierre' (rojo).", steps:["close-window"], hints:["¿Cómo cerrás una ventana trabada?","Clic en [X]","Si no cierra, usá 'Forzar cierre'"], skippable:true },
-  { id:92, module:"7", moduleName:"Módulo 7: Refuerzo", title:"Ej 92: Forzar cierre", context:"📌 Ventana Abierta", instruction:"<strong>Paso 1:</strong> Ubique el botón rojo 'Forzar cierre'.<br><strong>Paso 2:</strong> Haga clic en él.<br><strong>Paso 3:</strong> La ventana se cerrará a la fuerza.", steps:["force-close"], hints:["¿Qué botón aparece?","El rojo","Clic en 'Forzar cierre'"], skippable:true },
-  { id:93, module:"7", moduleName:"Módulo 7: Refuerzo", title:"Ej 93: Resetear ejercicio", context:"📌 Pantalla Principal", instruction:"<strong>Paso 1:</strong> Si se equivocó en un ejercicio, busque el botón 'Reiniciar'.<br><strong>Paso 2:</strong> Haga clic en él.<br><strong>Paso 3:</strong> El ejercicio vuelve a empezar.", steps:["reset-exercise"], hints:["¿Cómo reiniciás?","Botón Reiniciar","Clic en 'Reiniciar'"], skippable:true },
-  { id:94, module:"7", moduleName:"Módulo 7: Refuerzo", title:"Ej 94: Repetir ejercicio fallado", context:"📌 Pantalla Principal", instruction:"<strong>Paso 1:</strong> Si falló un ejercicio, abra el panel de logros (🏆).<br><strong>Paso 2:</strong> Haga clic en '🔁 Repetir ejercicio'.<br><strong>Paso 3:</strong> El ejercicio fallado se recarga.", steps:["repeat-exercise"], hints:["¿Cómo repetís?","Botón Repetir","Clic en 'Repetir'"], skippable:true },
-  { id:95, module:"7", moduleName:"Módulo 7: Refuerzo", title:"Ej 95: Ver panel de logros", context:"📌 Barra de tareas", instruction:"<strong>Paso 1:</strong> Mire la barra de tareas (abajo).<br><strong>Paso 2:</strong> Ubique el ícono 🏆.<br><strong>Paso 3:</strong> Haga clic para abrir el panel de logros.", steps:["open-achievements"], hints:["¿Dónde ves tu progreso?","Panel de logros","Clic en 🏆"], skippable:true },
+  // M7: Refuerzo (91-94) — DEFINITIVO
+  { id:91, module:"7", moduleName:"Módulo 7: Refuerzo", title:"Ej 91: Cerrar ventana trabada", context:"📌 Ventana Abierta", instruction:"<strong>Paso 1:</strong> Mire la ventana que dice 'Ventana trabada'.<br><strong>Paso 2:</strong> Haga clic en la cruz [X] (arriba a la derecha).<br><strong>Paso 3:</strong> La ventana se cerrará.", steps:["close-window"], hints:["¿Cómo cerrás una ventana trabada?","Clic en [X]","Hacé clic en [X]"], skippable:true },
+  { id:92, module:"7", moduleName:"Módulo 7: Refuerzo", title:"Ej 92: Forzar cierre", context:"📌 Ventana Abierta", instruction:"<strong>Paso 1:</strong> Mire la ventana que dice 'Ventana trabada'.<br><strong>Paso 2:</strong> El botón [X] no funciona.<br><strong>Paso 3:</strong> Haga clic en el botón rojo 'Forzar cierre' (abajo de la ventana).", steps:["force-close"], hints:["¿Qué botón aparece?","El rojo","Clic en 'Forzar cierre'"], skippable:true },
+  { id:93, module:"7", moduleName:"Módulo 7: Refuerzo", title:"Ej 93: Ver panel de logros", context:"📌 Barra de tareas", instruction:"<strong>Paso 1:</strong> Mire la barra de tareas (abajo).<br><strong>Paso 2:</strong> Ubique el ícono 🏆.<br><strong>Paso 3:</strong> Haga clic para abrir el panel de logros y ver tu progreso.", steps:["open-achievements"], hints:["¿Dónde ves tu progreso?","Panel de logros","Clic en 🏆"], skippable:true },
+  { id:94, module:"7", moduleName:"Módulo 7: Refuerzo", title:"Ej 94: Repetir ejercicio fallado", context:"📌 Panel de logros", instruction:"<strong>Paso 1:</strong> Abra el panel de logros (🏆).<br><strong>Paso 2:</strong> Haga clic en '🔁 Repetir ejercicio'.<br><strong>Paso 3:</strong> El ejercicio fallado se recarga.", steps:["open-achievements","repeat-exercise"], hints:["¿Cómo repetís?","Abrir panel + clic en Repetir","1) Clic en 🏆 2) Clic en '🔁 Repetir'"], skippable:true },
 
-  // M8: Repasamos (96-100)
-  { id:96, module:"8", moduleName:"Módulo 8: Repasamos", title:"Ej 96: Repasamos M1-M2", context:"📌 Pantalla Principal", instruction:"<strong>Repaso M1-M2.</strong><br><strong>Paso 1:</strong> Abra Este Equipo (doble clic).<br><strong>Paso 2:</strong> Entre a Descargas.<br><strong>Paso 3:</strong> Vuelva atrás con la flecha ←.", steps:["dblclick-este-equipo","open-descargas","go-back"], hints:["Repaso de PC y Archivos","Este Equipo → Descargas","1) Este Equipo 2) Descargas 3) Volver"], skippable:false },
-  { id:97, module:"8", moduleName:"Módulo 8: Repasamos", title:"Ej 97: Repasamos M3 (WordPad)", context:"📌 Ventana de WordPad", instruction:"<strong>Repaso M3.</strong><br><strong>Paso 1:</strong> Escriba una frase en WordPad.<br><strong>Paso 2:</strong> Selecciónela y aplique negrita (B).<br><strong>Paso 3:</strong> Guarde con un nombre.", steps:["type-phrase","bold","save-file"], hints:["Repaso de WordPad","Escribir y formatear","1) Escribir 2) Negrita 3) Guardar"], skippable:true },
-  { id:98, module:"8", moduleName:"Módulo 8: Repasamos", title:"Ej 98: Repasamos M4 (Correo)", context:"📌 Ventana de Correo", instruction:"<strong>Repaso M4.</strong><br><strong>Paso 1:</strong> Abra Correo.<br><strong>Paso 2:</strong> Complete Para y Asunto.<br><strong>Paso 3:</strong> Adjunte un archivo (📎).<br><strong>Paso 4:</strong> Envíe.", steps:["mail-to","mail-subject","attach-file","send-mail"], hints:["Repaso de Correo","Correo completo","1) Para 2) Asunto 3) Adjuntar 4) Enviar"], skippable:false },
-  { id:99, module:"8", moduleName:"Módulo 8: Repasamos", title:"Ej 99: Repasamos M5 (Facturador)", context:"📌 Pantalla Principal", instruction:"<strong>Repaso M5.</strong><br><strong>Paso 1:</strong> Abra el Facturador.<br><strong>Paso 2:</strong> Emita una factura.<br><strong>Paso 3:</strong> Abra Este Equipo → Descargas → Verificar.", steps:["emit-invoice","dblclick-este-equipo","open-descargas","verify-file"], hints:["Repaso de Facturador","Emitir y verificar","1) Emitir 2) Descargas 3) Verificar"], skippable:true },
-  { id:100, module:"8", moduleName:"Módulo 8: Repasamos", title:"Ej 100: Repasamos M6 (Integración)", context:"📌 Pantalla Principal", instruction:"<strong>Repaso M6.</strong><br><strong>Paso 1:</strong> Escriba una nota en WordPad y guárdela.<br><strong>Paso 2:</strong> Emita una factura.<br><strong>Paso 3:</strong> Abra Correo, adjunte ambos y envíe.<br><strong>Paso 4:</strong> Verifique en Enviados.", steps:["type-phrase","bold","save-file","emit-invoice","dblclick-correo","attach-file","send-mail","check-sent"], hints:["Repaso de Integración","Todo el flujo","1) WordPad 2) Guardar 3) Factura 4) Correo 5) Adjuntar 6) Enviar 7) Enviados"], skippable:false }
+  // M8: Repasamos (95-100)
+  { id:95, module:"8", moduleName:"Módulo 8: Repasamos", title:"Ej 95: Repasamos M1-M2", context:"📌 Pantalla Principal", instruction:"<strong>Repaso M1-M2.</strong><br><strong>Paso 1:</strong> Abra Este Equipo (doble clic).<br><strong>Paso 2:</strong> Entre a Descargas (clic en la carpeta).<br><strong>Paso 3:</strong> Vuelva atrás con la flecha ←.", steps:["dblclick-este-equipo","open-descargas","go-back"], hints:["Repaso de PC y Archivos","Este Equipo → Descargas","1) Este Equipo 2) Descargas 3) Volver"], skippable:false },
+  { id:96, module:"8", moduleName:"Módulo 8: Repasamos", title:"Ej 96: Repasamos M3 (WordPad)", context:"📌 Pantalla Principal", instruction:"<strong>Repaso M3.</strong><br><strong>Paso 1:</strong> Abra WordPad (doble clic en el ícono).<br><strong>Paso 2:</strong> Escriba una frase (mínimo 10 caracteres).<br><strong>Paso 3:</strong> Seleccione el texto y aplique negrita (B).<br><strong>Paso 4:</strong> Guarde con un nombre.", steps:["dblclick-wordpad","type-phrase","bold","save-file"], hints:["Repaso de WordPad","Abrir, escribir y formatear","1) Abrir WordPad 2) Escribir 3) Negrita 4) Guardar"], skippable:true },
+  { id:97, module:"8", moduleName:"Módulo 8: Repasamos", title:"Ej 97: Repasamos M4 (Correo)", context:"📌 Pantalla Principal", instruction:"<strong>Repaso M4.</strong><br><strong>Paso 1:</strong> Abra Correo (doble clic en el ícono).<br><strong>Paso 2:</strong> Complete el campo 'Para' (destinatario).<br><strong>Paso 3:</strong> Complete el campo 'Asunto'.<br><strong>Paso 4:</strong> Adjunte un archivo (📎).<br><strong>Paso 5:</strong> Envíe el correo.", steps:["dblclick-correo","mail-to","mail-subject","attach-file","send-mail"], hints:["Repaso de Correo","Abrir, escribir y enviar","1) Abrir Correo 2) Para 3) Asunto 4) Adjuntar 5) Enviar"], skippable:false },
+  { id:98, module:"8", moduleName:"Módulo 8: Repasamos", title:"Ej 98: Repasamos M5 (Facturador)", context:"📌 Pantalla Principal", instruction:"<strong>Repaso M5.</strong><br><strong>Paso 1:</strong> Abra el Facturador (doble clic en el ícono).<br><strong>Paso 2:</strong> Complete Cliente y Monto.<br><strong>Paso 3:</strong> Haga clic en 'Emitir Factura y Guardar'.<br><strong>Paso 4:</strong> Abra Este Equipo → Descargas.<br><strong>Paso 5:</strong> Haga clic en '✅ Verificar archivo'.", steps:["dblclick-facturador","emit-invoice","dblclick-este-equipo","open-descargas","verify-file"], hints:["Repaso de Facturador","Abrir, emitir y verificar","1) Abrir Facturador 2) Emitir 3) Este Equipo 4) Descargas 5) Verificar"], skippable:true },
+  { id:99, module:"8", moduleName:"Módulo 8: Repasamos", title:"Ej 99: Repasamos M6 (Integración)", context:"📌 Pantalla Principal", instruction:"<strong>Repaso M6.</strong><br><strong>Paso 1:</strong> Abra WordPad (doble clic) y escriba una nota.<br><strong>Paso 2:</strong> Aplique negrita y guarde en Descargas.<br><strong>Paso 3:</strong> Abra el Facturador y emita una factura.<br><strong>Paso 4:</strong> Abra Correo, adjunte nota y factura, y envíe.<br><strong>Paso 5:</strong> Verifique en Enviados.", steps:["dblclick-wordpad","type-phrase","bold","save-file","dblclick-facturador","emit-invoice","dblclick-correo","attach-file","send-mail","check-sent"], hints:["Repaso de Integración","Todo el flujo","1) WordPad 2) Escribir 3) Negrita 4) Guardar 5) Facturador 6) Emitir 7) Correo 8) Adjuntar 9) Enviar 10) Enviados"], skippable:false },
+  { id:100, module:"8", moduleName:"Módulo 8: Repasamos", title:"Ej 100: Repaso final integrador", context:"📌 Pantalla Principal", instruction:"<strong>Repaso final integrador.</strong><br><strong>Paso 1:</strong> Abra WordPad, escriba una nota y aplique negrita.<br><strong>Paso 2:</strong> Guarde la nota en Descargas.<br><strong>Paso 3:</strong> Abra el Facturador y emita una factura.<br><strong>Paso 4:</strong> Abra Correo, adjunte ambos y envíe.<br><strong>Paso 5:</strong> Verifique en Enviados.<br><strong>Paso 6:</strong> Abra el panel de logros para confirmar tu progreso.", steps:["dblclick-wordpad","type-phrase","bold","save-file","dblclick-facturador","emit-invoice","dblclick-correo","attach-file","send-mail","check-sent","open-achievements"], hints:["Repaso final integrador","Todo el flujo","1) WordPad 2) Escribir 3) Negrita 4) Guardar 5) Facturador 6) Emitir 7) Correo 8) Adjuntar 9) Enviar 10) Enviados 11) Logros"], skippable:false }
 ];
 
 const examenesFinales = [
@@ -459,9 +462,13 @@ let state = {
   facturaGuardada: false, facturaCliente: 'Guillermo López', facturaMonto: '15000',
   mailData: { to:'', subject:'', body:'', attached:[] },
   wordpadText: '', folderCreated: false,
-  examenesAprobados: [], ultimaPropuesta: null
+  examenesAprobados: [], ultimaPropuesta: null,
+  currentIdx: 0
 };
-function saveState() { try { localStorage.setItem('cursoDigitalState', JSON.stringify(state)); } catch(e) {} }
+function saveState() {
+  state.currentIdx = currentIdx;
+  try { localStorage.setItem('cursoDigitalState', JSON.stringify(state)); } catch(e) {}
+}
 function loadState() { try { const s = localStorage.getItem('cursoDigitalState'); if (s) state = Object.assign(state, JSON.parse(s)); } catch(e) {} }
 loadState();
 
@@ -491,6 +498,7 @@ const sidebarExam = document.getElementById('sidebar-exam');
 const navNormal = document.getElementById('nav-normal');
 const examReadyBanner = document.getElementById('exam-ready-banner');
 const examProgressElem = document.getElementById('exam-progress');
+const forceCloseBtn = document.getElementById('force-close-btn');
 
 function updateClock() {
   const now = new Date();
@@ -526,10 +534,10 @@ function populateExerciseDropdown() {
       const opt = document.createElement('option');
       opt.value = idx;
       let omitido = false;
-      if (ex.id === 97 && !moduloHechoReal('3') && !moduloSaltado('3')) omitido = true;
-      if (ex.id === 99 && !moduloHechoReal('5') && !moduloSaltado('5')) omitido = true;
-      if (ex.id === 97 && moduloSaltado('3')) omitido = true;
-      if (ex.id === 99 && moduloSaltado('5')) omitido = true;
+      if (ex.id === 96 && !moduloHechoReal('3') && !moduloSaltado('3')) omitido = true;
+      if (ex.id === 98 && !moduloHechoReal('5') && !moduloSaltado('5')) omitido = true;
+      if (ex.id === 96 && moduloSaltado('3')) omitido = true;
+      if (ex.id === 98 && moduloSaltado('5')) omitido = true;
       if (omitido) {
         opt.textContent = ex.title + ' — omitido';
         opt.style.color = '#6c757d';
@@ -576,6 +584,28 @@ function loadExercise(idx) {
   clearSelections();
   startMenu.style.display = 'none';
   appWindow.style.display = 'none';
+  forceCloseBtn.style.display = 'none';
+  achPanel.classList.remove('open');
+  
+  if (ex.id === 91 || ex.id === 92) {
+    const btnX = document.querySelector('.btn-close');
+    if (ex.id === 91) {
+      windowTitle.textContent = 'Ventana trabada (simulación)';
+      windowBody.innerHTML = '<div style="padding:20px;text-align:center;color:#dc3545;font-weight:bold;">⚠️ Ventana trabada.<br><br>Hacé clic en la cruz <strong>[X]</strong> para cerrarla.</div>';
+      forceCloseBtn.style.display = 'none';
+      if (btnX) btnX.style.display = 'block';
+    } else {
+      windowTitle.textContent = 'Ventana trabada - [X] deshabilitado';
+      windowBody.innerHTML = '<div style="padding:20px;text-align:center;color:#dc3545;font-weight:bold;">⚠️ Ventana trabada.<br><br>La cruz <strong>[X]</strong> no funciona.<br>Usá el botón <strong>"Forzar cierre"</strong>.</div>';
+      forceCloseBtn.style.display = 'block';
+      if (btnX) btnX.style.display = 'none';
+    }
+    appWindow.style.display = 'flex';
+  } else {
+    const btnX = document.querySelector('.btn-close');
+    if (btnX) btnX.style.display = 'block';
+  }
+  
   btnPrev.disabled = currentIdx === 0;
   btnNext.disabled = currentIdx === exercises.length - 1;
   if ([9,11,13,16,26,41,56].includes(ex.id)) {
@@ -593,10 +623,10 @@ function navigate(dir) {
   const next = currentIdx + dir;
   if (next >= 0 && next < exercises.length) {
     const t = exercises[next];
-    if (t.id === 97 && !moduloHechoReal('3') && !moduloSaltado('3')) { navigate(1); return; }
-    if (t.id === 99 && !moduloHechoReal('5') && !moduloSaltado('5')) { navigate(1); return; }
-    if (t.id === 97 && moduloSaltado('3')) { navigate(1); return; }
-    if (t.id === 99 && moduloSaltado('5')) { navigate(1); return; }
+    if (t.id === 96 && !moduloHechoReal('3') && !moduloSaltado('3')) { navigate(1); return; }
+    if (t.id === 98 && !moduloHechoReal('5') && !moduloSaltado('5')) { navigate(1); return; }
+    if (t.id === 96 && moduloSaltado('3')) { navigate(1); return; }
+    if (t.id === 98 && moduloSaltado('5')) { navigate(1); return; }
     if (moduleSelectElem.value !== 'all' && t.module !== moduleSelectElem.value) {
       moduleSelectElem.value = t.module; populateExerciseDropdown();
     }
@@ -644,6 +674,9 @@ function validateAction(actionName) {
       if (hintLevel === 1) state.autonomy++;
       saveState(); showBanner('✅ ¡Muy bien! Ejercicio ' + ex.id + ' completado','');
       checkLogros();
+      if (ex.id === 94) {
+        return;
+      }
       setTimeout(() => { if (currentIdx < exercises.length - 1) navigate(1); }, 800);
     } else saveState();
   } else {
@@ -662,7 +695,8 @@ const LOGROS_DEF = [
   {id:'integration', name:'🏅 Primera integración completa', cond:()=>state.completed.includes(84)},
   {id:'optional', name:'🏅 Módulo opcional completado', cond:()=>moduloHechoReal('3')||moduloHechoReal('5')},
   {id:'repaso', name:'🏅 Módulo 8: Repasamos completo', cond:()=>repasoCompleto()},
-  {id:'maestria', name:'🏅 Maestría: 3 exámenes aprobados', cond:()=>state.examenesAprobados.length>=3}
+  {id:'maestria', name:'🏅 Maestría: 3 exámenes aprobados', cond:()=>state.examenesAprobados.length>=3},
+  {id:'cert', name:'🏅 Certificación: 100 ejercicios completados', cond:()=>state.completed.length>=100}
 ];
 function checkLogros() {
   LOGROS_DEF.forEach(l => {
@@ -677,6 +711,10 @@ function toggleAchievements(e) {
   if (e) e.stopPropagation();
   achPanel.classList.toggle('open');
   updateAchievementsUI();
+  const ex = exercises[currentIdx];
+  if (!examMode && ex && ex.steps[currentStepIdx] === 'open-achievements') {
+    validateAction('open-achievements');
+  }
 }
 function verLogros() { achPanel.classList.add('open'); updateAchievementsUI(); }
 
@@ -734,10 +772,23 @@ function updateAchievementsUI() {
 }
 
 function repeatExercise() {
-  if (state.failed.length === 0) return;
+  const ex = exercises[currentIdx];
+  if (ex && ex.steps[currentStepIdx] === 'repeat-exercise') {
+    validateAction('repeat-exercise');
+    showBanner('✅ ¡Muy bien! Hiciste clic en Repetir. Ejercicio completado.','');
+    return;
+  }
+  if (state.failed.length === 0) {
+    showBanner('No hay ejercicios fallados para repetir','');
+    return;
+  }
   const last = state.failed[state.failed.length-1];
   const idx = exercises.findIndex(e => e.id === last);
-  if (idx >= 0) { loadExercise(idx); achPanel.classList.remove('open'); showBanner('🔁 Repitiendo ejercicio ' + last,''); }
+  if (idx >= 0) {
+    loadExercise(idx);
+    achPanel.classList.remove('open');
+    showBanner('🔁 Repitiendo ejercicio ' + last,'');
+  }
 }
 function repeatBlock() {
   const ex = exercises[currentIdx];
@@ -793,7 +844,6 @@ function toggleStartMenu(e) {
   e.stopPropagation();
   const wasOpen = startMenu.style.display === 'block';
   startMenu.style.display = wasOpen ? 'none' : 'block';
-  // Solo validar click-start si el ejercicio actual lo espera
   const ex = exercises[currentIdx];
   if (!examMode && ex && ex.steps[currentStepIdx] === 'click-start') {
     validateAction('click-start');
@@ -814,7 +864,11 @@ function handleStartItem(item) {
     validateAction('start-'+item);
   }
 }
-function closeAppWindow() { appWindow.style.display = 'none'; validateAction('close-window'); }
+function closeAppWindow() {
+  appWindow.style.display = 'none';
+  forceCloseBtn.style.display = 'none';
+  validateAction('close-window');
+}
 
 function openEsteEquipoApp() {
   windowTitle.textContent = 'Este Equipo - Mis Archivos';
@@ -827,6 +881,7 @@ function openEsteEquipoApp() {
       <li style="padding:8px;background:#f1f3f5;margin-bottom:6px;border-radius:4px;cursor:pointer;" onclick="createFolder()">➕ Nueva carpeta</li>
     </ul>`;
   appWindow.style.display = 'flex';
+  forceCloseBtn.style.display = 'none';
 }
 function openDescargasApp() {
   if (!examMode) validateAction('open-descargas');
@@ -840,6 +895,7 @@ function openDescargasApp() {
   }
   windowBody.innerHTML = c;
   appWindow.style.display = 'flex';
+  forceCloseBtn.style.display = 'none';
 }
 function validarVerify() {
   validateAction('verify-file');
@@ -865,11 +921,11 @@ function openWordpadApp() {
     </div>
     <div id="wp-area" contenteditable="true" style="min-height:160px;border:1px solid #ced4da;border-radius:4px;padding:8px;font-size:14px;background:#fff;" oninput="wpInput()"></div>`;
   appWindow.style.display = 'flex';
+  forceCloseBtn.style.display = 'none';
 }
 function wpInput() {
   const area = document.getElementById('wp-area');
   state.wordpadText = area.textContent;
-  // Solo validar el paso que el ejercicio actual espera
   const ex = exercises[currentIdx];
   if (!examMode && ex) {
     const expected = ex.steps[currentStepIdx];
@@ -900,12 +956,11 @@ function openFacturadorApp() {
     <div class="app-form-group"><label>Monto ($):</label><input type="text" class="app-form-control" id="fac-monto" value="${montoVal}" oninput="validateAction('fac-amount')"></div>
     <button class="app-btn" type="button" onclick="emitirFactura()">Emitir Factura y Guardar</button>`;
   appWindow.style.display = 'flex';
-  // En examen, si el paso es fac-client o fac-amount, validar AMBOS (están precargados)
+  forceCloseBtn.style.display = 'none';
   if (examMode) {
     const step = examActual.steps[examStepIdx];
     if (step && step.key === 'fac-client') {
       validateAction('fac-client');
-      // Después de validar cliente, si el siguiente paso es fac-amount, validarlo también (precargado)
       if (examActual.steps[examStepIdx]?.key === 'fac-amount') {
         validateAction('fac-amount');
       }
@@ -933,6 +988,7 @@ function openCorreoApp() {
     <button class="app-btn" type="button" onclick="sendMail()">Enviar Correo</button>
     <button class="app-btn" type="button" onclick="checkSent()">Ver Enviados</button>`;
   appWindow.style.display = 'flex';
+  forceCloseBtn.style.display = 'none';
 }
 function attachMail() {
   state.mailData.attached.push('archivo_'+(state.mailData.attached.length+1));
@@ -951,6 +1007,7 @@ function openPapeleraApp() {
   windowTitle.textContent = 'Papelera de Reciclaje';
   windowBody.innerHTML = '<div style="color:#6c757d;text-align:center;padding:25px;">🗑️ Papelera vacía</div>';
   appWindow.style.display = 'flex';
+  forceCloseBtn.style.display = 'none';
 }
 function actualizarDesafioEvaluador() {
   const montos = [15000,32000,48000,65000,92000];
@@ -961,12 +1018,24 @@ function actualizarDesafioEvaluador() {
   showBanner('🔄 Desafío actualizado: ' + state.facturaCliente + ' - $' + state.facturaMonto,'');
 }
 
+function forzarCierre() {
+  appWindow.style.display = 'none';
+  forceCloseBtn.style.display = 'none';
+  const ex = exercises[currentIdx];
+  if (!examMode && ex && ex.steps[currentStepIdx] === 'force-close') {
+    validateAction('force-close');
+    showBanner('Ventana cerrada a la fuerza','');
+  } else {
+    showBanner('Ventana cerrada','');
+  }
+}
+
 function repasoCompleto() {
-  if (!state.completed.includes(96)) return false;
-  if (!state.completed.includes(98)) return false;
-  if (!state.completed.includes(100)) return false;
-  if (!moduloSaltado('3') && !state.completed.includes(97)) return false;
-  if (!moduloSaltado('5') && !state.completed.includes(99)) return false;
+  if (!state.completed.includes(95)) return false;
+  if (!state.completed.includes(97)) return false;
+  if (!state.completed.includes(99)) return false;
+  if (!moduloSaltado('3') && !state.completed.includes(96)) return false;
+  if (!moduloSaltado('5') && !state.completed.includes(98)) return false;
   const m3ok = moduloHecho('3');
   const m5ok = moduloHecho('5');
   if (!m3ok && !m5ok) return false;
@@ -1013,6 +1082,7 @@ function iniciarExamen() {
   state.mailData = { to:'', subject:'', body:'', attached:[] };
   state.wordpadText = '';
   appWindow.style.display = 'none';
+  forceCloseBtn.style.display = 'none';
   const primerPaso = examActual.steps[0].key;
   const map = {'dblclick-wordpad':'icon-wordpad','dblclick-facturador':'icon-facturador','dblclick-correo':'icon-correo'};
   if (map[primerPaso]) { const el = document.getElementById(map[primerPaso]); if (el) { el.classList.add('blink'); setTimeout(()=>el.classList.remove('blink'),1200); } }
@@ -1103,6 +1173,7 @@ function cancelarExamen() {
   document.getElementById('exam-result-box').style.display = 'none';
   document.getElementById('exam-extra-btns').innerHTML = '';
   appWindow.style.display = 'none';
+  forceCloseBtn.style.display = 'none';
   hintBtn.textContent = '💡 Pista 1/3';
   hintBox.style.display = 'none';
   document.querySelectorAll('.desktop-icon').forEach(el => el.classList.remove('blink'));
@@ -1113,7 +1184,8 @@ function cancelarExamen() {
 function init() {
   populateExerciseDropdown();
   autoHelpToggle.checked = (state.mode === 'auto');
-  loadExercise(0);
+  const idxInicial = (typeof state.currentIdx === 'number' && state.currentIdx >= 0 && state.currentIdx < exercises.length) ? state.currentIdx : 0;
+  loadExercise(idxInicial);
   updateAchievementsUI();
   checkExamReady();
   setInterval(updateAchievementsUI, 30000);
